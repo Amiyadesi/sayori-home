@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Amiya's Desk | Blog, Godot Projects, Homelab Notes</title>
+		<link rel="icon" href="./favicon.png" type="image/png" />
+		<link rel="canonical" href="https://sayori.org/" />
+		<link rel="alternate" hreflang="zh" href="https://sayori.org/zh/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/en/" />
+		<link rel="sitemap" href="https://sayori.org/sitemap.xml" />
+		<link rel="alternate" type="text/plain" title="Amiya's Desk LLM context" href="https://sayori.org/llms.txt" />
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV2MY3FGDK"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+			gtag("config", "G-KV2MY3FGDK");
+		</script>
+		<script>
+			(() => {
+				const crawlerPattern = /bot|crawl|spider|slurp|preview|facebookexternalhit|twitterbot|telegrambot|discordbot|gptbot|claudebot|perplexitybot|google-extended|ccbot|bytespider|applebot/i;
+				if (crawlerPattern.test(navigator.userAgent || "")) return;
+				const languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+				const target = languages.some((language) => language.toLowerCase().startsWith("zh")) ? "./zh/" : "./en/";
+				window.location.replace(target);
+			})();
+		</script>
+		<meta name="description" content="Amiya's Desk is Amiya_desi's personal public desk for writing, Godot game projects, homelab notes, Cloudflare and Obsidian workflows, public tools, and contact links." />
+		<meta name="keywords" content="Amiya_desi, Amiya's Desk, sayori.org, personal blog, Godot, indie game development, homelab, Cloudflare, Obsidian, AI-assisted development" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<meta property="og:site_name" content="Amiya's Desk" />
+		<meta property="og:title" content="Amiya's Desk | Blog, Godot Projects, Homelab Notes" />
+		<meta property="og:description" content="Amiya_desi's personal public desk for writing, Godot projects, homelab notes, creator tools, and durable public links." />
+		<meta property="og:url" content="https://sayori.org/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<meta property="og:image:alt" content="Amiya's Desk line-art social preview" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Amiya's Desk | Blog, Godot Projects, Homelab Notes" />
+		<meta name="twitter:description" content="Amiya_desi's personal public desk for writing, Godot projects, homelab notes, creator tools, and durable public links." />
+		<meta name="twitter:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<meta name="twitter:image:alt" content="Amiya's Desk line-art social preview" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Person",
+						"@id": "https://sayori.org/#person",
+						"name": "Amiya_desi",
+						"alternateName": "Amiya",
+						"url": "https://sayori.org/",
+						"email": "mailto:me@sayori.org",
+						"sameAs": [
+							"https://www.wikidata.org/wiki/Q140378992",
+							"https://github.com/Amiyadesi",
+							"https://blog.sayori.org/",
+							"https://space.bilibili.com/3546919890585725",
+							"https://www.youtube.com/@Amiya_desi",
+							"https://x.com/KirstAdali78973",
+							"https://www.nodeloc.com/u/amiya_desi/summary"
+						],
+						"knowsAbout": [
+							"Godot game development",
+							"indie game prototypes",
+							"homelab operations",
+							"Cloudflare Pages and Tunnel",
+							"AI-assisted development workflows"
+						]
+					},
+					{
+						"@type": ["Organization", "Brand"],
+						"@id": "https://sayori.org/#brand",
+						"name": "Amiya's Desk",
+						"alternateName": "Amiya的书桌",
+						"url": "https://sayori.org/",
+						"description": "The personal publishing and project desk of Amiya_desi.",
+						"logo": "https://sayori.org/assets/generated/sayori-lineart.webp",
+						"email": "mailto:me@sayori.org",
+						"sameAs": [
+							"https://www.wikidata.org/wiki/Q140378510"
+						],
+						"keywords": [
+							"Amiya_desi",
+							"personal blog",
+							"Godot game development",
+							"homelab operations",
+							"Cloudflare",
+							"Obsidian writing workflow",
+							"AI-assisted development"
+						],
+						"founder": { "@id": "https://sayori.org/#person" },
+						"owner": { "@id": "https://sayori.org/#person" },
+						"contactPoint": {
+							"@type": "ContactPoint",
+							"contactType": "public contact",
+							"email": "me@sayori.org",
+							"url": "https://sayori.org/",
+							"availableLanguage": ["zh-CN", "en"]
+						}
+					},
+					{
+						"@type": "WebSite",
+						"@id": "https://sayori.org/#website",
+						"name": "Amiya's Desk",
+						"alternateName": "Amiya的书桌",
+						"url": "https://sayori.org/",
+						"description": "Amiya_desi's personal public desk for writing, Godot game projects, homelab notes, Cloudflare and Obsidian workflows, public tools, and contact links.",
+						"inLanguage": ["en", "zh-CN"],
+						"publisher": { "@id": "https://sayori.org/#brand" },
+						"creator": { "@id": "https://sayori.org/#person" },
+						"about": { "@id": "https://sayori.org/#person" },
+						"hasPart": [
+							{ "@id": "https://blog.sayori.org/#blog" },
+							{ "@id": "https://sayori.org/#public-entry-list" }
+						]
+					},
+					{
+						"@type": "WebPage",
+						"@id": "https://sayori.org/#webpage",
+						"name": "Amiya's Desk",
+						"url": "https://sayori.org/",
+						"description": "A bilingual entry point for Amiya_desi's public writing, projects, tools, and contact links.",
+						"inLanguage": ["en", "zh-CN"],
+						"isPartOf": { "@id": "https://sayori.org/#website" },
+						"about": { "@id": "https://sayori.org/#person" },
+						"mainEntity": { "@id": "https://sayori.org/#public-entry-list" }
+					},
+					{
+						"@type": "ItemList",
+						"@id": "https://sayori.org/#public-entry-list",
+						"name": "Amiya's Desk public entries",
+						"itemListElement": [
+							{
+								"@type": "ListItem",
+								"position": 1,
+								"name": "Blog",
+								"description": "Articles, notes, project writeups, and retrospectives.",
+								"url": "https://blog.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 2,
+								"name": "GeoScore",
+								"description": "A public SEO and GEO audit tool for public domains.",
+								"url": "https://geo.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 3,
+								"name": "Amiya Whiteboard",
+								"description": "A lightweight browser whiteboard for sketches and rough diagrams.",
+								"url": "https://board.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 4,
+								"name": "Guestbook",
+								"description": "A public place to leave notes and feedback.",
+								"url": "https://blog.sayori.org/guestbook/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 5,
+								"name": "GitHub",
+								"description": "Public code and project repositories by Amiya_desi.",
+								"url": "https://github.com/Amiyadesi"
+							}
+						]
+					},
+					{
+						"@type": "BreadcrumbList",
+						"@id": "https://sayori.org/#breadcrumb",
+						"itemListElement": [
+							{
+								"@type": "ListItem",
+								"position": 1,
+								"name": "Amiya's Desk",
+								"item": "https://sayori.org/"
+							}
+						]
+					},
+					{
+						"@type": "FAQPage",
+						"@id": "https://sayori.org/#faq",
+						"url": "https://sayori.org/",
+						"name": "Amiya's Desk common questions",
+						"mainEntity": [
+							{
+								"@type": "Question",
+								"name": "What is sayori.org?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "sayori.org is Amiya_desi's personal public entry point for the blog, Godot projects, homelab and Cloudflare notes, Obsidian workflows, public tools, GitHub, Bilibili, and contact links."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Is this a commercial service site?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "No. It is a personal public identity and project entry. It does not publish fake local-business addresses, phone numbers, price lists, service pages, or commercial delivery promises."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Where should visitors start?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Choose the Chinese or English entry for the curated home surface, continue to blog.sayori.org for notes, tutorials, project logs, archive pages, RSS, and random articles, or use the public links for GitHub, GeoScore, the whiteboard, the guestbook, and email contact."
+								}
+							}
+						]
+					}
+				]
+			}
+		</script>
+		<style>
+			html,
+			body {
+				margin: 0;
+				min-height: 100%;
+				background: #a8d4e6;
+			}
+
+			body {
+				display: grid;
+				place-items: center;
+				min-height: 100vh;
+				font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', system-ui, sans-serif;
+				color: #2a2a2a;
+			}
+
+			.fallback-note {
+				width: min(46rem, calc(100vw - 3rem));
+				padding: clamp(1.5rem, 4vw, 2.4rem);
+				border-radius: 6px;
+				background: #fdfcf7;
+				box-shadow: 0 18px 42px rgba(40, 50, 60, 0.2);
+				text-align: center;
+				transform: rotate(-1deg);
+				animation: paperDrop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+			}
+
+			.fallback-note h1 {
+				margin: 0 0 1rem;
+				font-size: clamp(1.7rem, 7vw, 3rem);
+				font-weight: 600;
+			}
+
+			.fallback-note h2 {
+				margin: 1.4rem auto 0.6rem;
+				max-width: 40rem;
+				font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+				font-weight: 700;
+				text-align: left;
+			}
+
+			.fallback-note p {
+				margin: 0 auto 1.1rem;
+				max-width: 40rem;
+				line-height: 1.75;
+			}
+
+			.fallback-note ul {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+				gap: 0.7rem;
+				margin: 0 0 1.5rem;
+				padding: 0;
+				list-style: none;
+				text-align: left;
+			}
+
+			.fallback-note li {
+				padding: 0.65rem 0.8rem;
+				border: 1px dashed rgba(42, 42, 42, 0.2);
+				border-radius: 6px;
+				background: rgba(255, 247, 251, 0.75);
+			}
+
+			.fallback-note section {
+				margin-top: 1rem;
+			}
+
+			.langs {
+				display: flex;
+				justify-content: center;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+
+			.langs a {
+				padding: 0.6rem 1.2rem;
+				border-radius: 4px;
+				background: #fff7fb;
+				color: #2a2a2a;
+				text-decoration: none;
+				box-shadow: 2px 4px 10px rgba(40, 50, 60, 0.14);
+				transition: transform 0.2s ease;
+			}
+
+			.langs a:hover {
+				transform: translateY(-2px);
+			}
+
+			.primary-links {
+				margin-top: 1rem;
+				font-size: 0.95rem;
+			}
+
+			.primary-links a {
+				color: inherit;
+			}
+
+			.fallback-faq {
+				margin: 1rem auto 0;
+				max-width: 40rem;
+				text-align: left;
+			}
+
+			.fallback-faq details {
+				border-top: 1px dashed rgba(42, 42, 42, 0.18);
+			}
+
+			.fallback-faq summary {
+				cursor: pointer;
+				padding: 0.55rem 0;
+				font-weight: 700;
+			}
+
+			.fallback-faq p {
+				margin-bottom: 0.75rem;
+				font-size: 0.94rem;
+			}
+
+			@keyframes paperDrop {
+				from {
+					opacity: 0;
+					transform: translateY(-32px) rotate(-3deg);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0) rotate(-1deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="fallback-note" aria-label="Amiya's Desk">
+			<h1>Amiya's Desk</h1>
+			<p>Amiya's Desk is the personal public entry point for Amiya_desi. It collects long-form blog posts, homelab and Cloudflare notes, Godot game projects, Obsidian writing workflow records, AI-assisted development experiments, public tools, GitHub repositories, Bilibili links, a guestbook, and a stable email contact. The root page is intentionally simple so visitors, search engines, and AI answer engines can understand the site before choosing the Chinese or English entrance.</p>
+			<p lang="zh-CN">Amiya的书桌：Amiya_desi 的个人公开入口，收纳博客文章、Godot 游戏作品、服务器和 Cloudflare 折腾、Obsidian 写作流、公开小工具、留言板和联系方式。</p>
+			<section aria-labelledby="collects-heading">
+				<h2 id="collects-heading">What This Desk Collects</h2>
+				<p>The blog at blog.sayori.org is the main archive. It includes tutorials, technical notes, project retrospectives, diary-style reflections, resource indexes, and experiments around Linux servers, Docker, Cloudflare Pages and Tunnel, DNS, self-hosted services, Godot, C#, indie game prototypes, workflow automation, and practical uses of AI coding assistants. The writing is closer to a public notebook than a marketing funnel: each article tries to keep the problem, constraints, decisions, steps, and limits visible.</p>
+			</section>
+			<section aria-labelledby="start-heading">
+				<h2 id="start-heading">Where To Start</h2>
+				<p>Use the language buttons below if you want the curated home surface. Use the blog link if you want the newest posts, tags, archive, RSS feed, or a random article jump. Use GitHub for code and public repositories. Use GeoScore when you want to inspect a domain's search and GEO readiness. Use the browser whiteboard for quick sketches, and the guestbook when you want to leave a public note. The stable contact address is me@sayori.org.</p>
+			</section>
+			<section aria-labelledby="boundary-heading">
+				<h2 id="boundary-heading">Contact And Boundaries</h2>
+				<p>This is not a local business, agency, or commercial service page. It does not claim office locations, phone support, packages, price ranges, service outcomes, or guaranteed delivery timelines. Public facts here are limited to the person, the site identity, published writing, project entries, public tools, social links, and contact routes. That boundary is deliberate: improving SEO and GEO should make the existing personal site easier to understand, not turn it into something it is not.</p>
+			</section>
+			<ul>
+				<li><strong>Blog:</strong> notes, essays, projects, and retrospectives.</li>
+				<li><strong>Homelab:</strong> Linux, Docker, Cloudflare, backups, and public services.</li>
+				<li><strong>Games:</strong> Godot, C#, prototypes, jams, and tools.</li>
+				<li><strong>Tools:</strong> resource shelf, GeoScore, whiteboard, and guestbook.</li>
+			</ul>
+			<div class="langs" aria-label="Choose language">
+				<a href="./zh/">中文入口</a>
+				<a href="./en/">English Entry</a>
+			</div>
+			<p class="primary-links">
+				<a href="https://blog.sayori.org/">Blog</a> ·
+				<a href="https://github.com/Amiyadesi">GitHub</a> ·
+				<a href="mailto:me@sayori.org">me@sayori.org</a>
+			</p>
+			<section class="fallback-faq" aria-label="Common questions">
+				<details>
+					<summary>What is sayori.org?</summary>
+					<p>sayori.org is Amiya_desi's personal public entry point for the blog, Godot projects, homelab and Cloudflare notes, Obsidian workflows, public tools, GitHub, Bilibili, and contact links.</p>
+				</details>
+				<details>
+					<summary>Is this a commercial service site?</summary>
+					<p>No. It is a personal public identity and project entry. It does not publish fake local-business addresses, phone numbers, price lists, service pages, or commercial delivery promises.</p>
+				</details>
+				<details>
+					<summary>Where should visitors start?</summary>
+					<p>Choose the Chinese or English entry for the curated home surface, continue to blog.sayori.org for notes, tutorials, project logs, archive pages, RSS, and random articles, or use the public links for GitHub, GeoScore, the whiteboard, the guestbook, and email contact.</p>
+				</details>
+			</section>
+		</main>
+		<script src="./umami.notebook.js?v=20260701-umami"></script>
+	</body>
+</html>

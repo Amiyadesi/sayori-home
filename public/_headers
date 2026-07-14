@@ -1,0 +1,53 @@
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/
+  Cache-Control: no-cache
+
+/index.html
+  Cache-Control: no-cache
+
+/zh/
+  Cache-Control: no-cache
+
+/zh/index.html
+  Cache-Control: no-cache
+
+/en/
+  Cache-Control: no-cache
+
+/en/index.html
+  Cache-Control: no-cache
+
+/styles.notebook.css
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/styles.notebook.min.css
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/script.notebook.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/script.notebook.min.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/analytics.notebook.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/umami.notebook.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/assets/svg/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/generated/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/data/*
+  Cache-Control: public, max-age=3600

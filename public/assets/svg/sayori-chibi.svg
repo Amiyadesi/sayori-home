@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" fill="none" stroke="#5a4a3a" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Chibi body (round, cute proportions) -->
+  <!-- Big head -->
+  <circle cx="60" cy="50" r="35" stroke-width="2.2"/>
+  <!-- Hair poof -->
+  <path d="M28 42 Q35 20 50 22 Q55 12 62 16 Q70 10 75 20 Q88 18 92 42" stroke-width="2"/>
+  <!-- Bangs -->
+  <path d="M35 38 Q42 28 48 38" stroke-width="1.4"/>
+  <path d="M48 35 Q55 24 62 35" stroke-width="1.4"/>
+  <path d="M62 35 Q69 24 76 38" stroke-width="1.4"/>
+  <!-- Side hair -->
+  <path d="M30 48 Q25 65 28 80" stroke-width="1.5"/>
+  <path d="M90 48 Q95 65 92 80" stroke-width="1.5"/>
+  <!-- Eyes (big, sparkly chibi eyes) -->
+  <ellipse cx="48" cy="52" rx="6" ry="7" fill="#5a4a3a" stroke="none"/>
+  <ellipse cx="72" cy="52" rx="6" ry="7" fill="#5a4a3a" stroke="none"/>
+  <!-- Eye highlights -->
+  <circle cx="46" cy="49" r="2.5" fill="#fff" stroke="none"/>
+  <circle cx="70" cy="49" r="2.5" fill="#fff" stroke="none"/>
+  <circle cx="50" cy="55" r="1.2" fill="#fff" stroke="none"/>
+  <circle cx="74" cy="55" r="1.2" fill="#fff" stroke="none"/>
+  <!-- Blush -->
+  <ellipse cx="40" cy="60" rx="5" ry="3" fill="#f4a0a0" stroke="none" opacity="0.4"/>
+  <ellipse cx="80" cy="60" rx="5" ry="3" fill="#f4a0a0" stroke="none" opacity="0.4"/>
+  <!-- Mouth (happy open) -->
+  <path d="M53 66 Q60 72 67 66" stroke-width="1.5"/>
+  <path d="M55 66 Q60 69 65 66" stroke-width="0.8" fill="#f4a0a0" stroke="none" opacity="0.3"/>
+  <!-- Red bow -->
+  <path d="M52 20 Q44 12 38 16 Q35 20 42 22 Q48 23 52 20" fill="#e85d75" stroke="#c94058" stroke-width="1"/>
+  <path d="M52 20 Q60 12 66 16 Q69 20 62 22 Q56 23 52 20" fill="#e85d75" stroke="#c94058" stroke-width="1"/>
+  <circle cx="52" cy="20" r="2.5" fill="#c94058" stroke="none"/>
+  <!-- Tiny body -->
+  <path d="M48 84 Q45 88 42 92 Q38 100 36 108" stroke-width="1.8"/>
+  <path d="M72 84 Q75 88 78 92 Q82 100 84 108" stroke-width="1.8"/>
+  <!-- Collar -->
+  <path d="M48 86 L60 96 L72 86" stroke-width="1.3"/>
+  <!-- Skirt -->
+  <path d="M36 108 Q60 105 84 108" stroke-width="1.5"/>
+  <path d="M34 112 Q60 110 86 112" stroke-width="1.2" opacity="0.6"/>
+  <!-- Tiny legs -->
+  <path d="M48 112 L46 128" stroke-width="1.5"/>
+  <path d="M72 112 L74 128" stroke-width="1.5"/>
+  <!-- Tiny arms (waving) -->
+  <path d="M42 92 Q35 88 30 82" stroke-width="1.5"/>
+  <path d="M78 92 Q85 86 90 78" stroke-width="1.5"/>
+  <!-- Hand wave lines -->
+  <path d="M92 74 Q96 72 94 68" stroke-width="0.8" opacity="0.5"/>
+  <path d="M95 76 Q99 74 97 70" stroke-width="0.8" opacity="0.5"/>
+  <!-- Sparkle near face -->
+  <path d="M20 35 L22 30 L24 35 L22 37 Z" fill="none" stroke-width="0.8" opacity="0.5"/>
+  <path d="M95 30 L97 26 L99 30 L97 32 Z" fill="none" stroke-width="0.8" opacity="0.5"/>
+</svg>

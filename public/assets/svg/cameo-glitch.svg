@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <clipPath id="slice-a"><rect x="0" y="72" width="300" height="28"/></clipPath>
+    <clipPath id="slice-b"><rect x="0" y="134" width="300" height="24"/></clipPath>
+    <clipPath id="slice-c"><rect x="0" y="222" width="300" height="32"/></clipPath>
+    <radialGradient id="glitch-terminal-glow" cx="53%" cy="43%" r="64%">
+      <stop offset="0" stop-color="#ff4f86" stop-opacity="0.28"/>
+      <stop offset="0.52" stop-color="#75e7ff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#05080d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="300" height="360" fill="url(#glitch-terminal-glow)"/>
+  <g id="figure" stroke="#d6fbff" stroke-width="3">
+    <path d="M88 92 Q78 138 85 198 Q91 250 108 338" opacity="0.5"/>
+    <path d="M212 92 Q226 139 216 202 Q209 254 190 338" opacity="0.5"/>
+    <ellipse cx="150" cy="105" rx="51" ry="47"/>
+    <path d="M93 93 Q104 58 124 67 Q131 47 151 64 Q170 47 179 69 Q198 64 208 96"/>
+    <path d="M106 92 Q114 68 129 85 M129 84 Q140 61 153 84 M153 84 Q167 59 183 91" stroke-width="2"/>
+    <path d="M100 104 Q94 145 101 194 M200 104 Q207 146 201 194"/>
+    <ellipse cx="128" cy="112" rx="6" ry="7.5" fill="#d6fbff" stroke="none"/>
+    <ellipse cx="173" cy="112" rx="6" ry="7.5" fill="#d6fbff" stroke="none"/>
+    <path d="M132 134 Q150 146 169 134"/>
+    <path d="M135 162 L135 182 M167 162 L167 182"/>
+    <path d="M134 181 L150 207 L169 181"/>
+    <path d="M134 182 Q103 189 79 210 Q55 232 45 268"/>
+    <path d="M169 182 Q199 189 222 211 Q245 235 254 270"/>
+    <path d="M45 268 Q40 304 54 358 M254 270 Q260 305 244 358"/>
+    <path d="M66 319 Q145 307 234 319" opacity="0.76"/>
+  </g>
+  <g clip-path="url(#slice-a)" stroke="#ff4f86" stroke-width="3.2" opacity="0.95">
+    <use href="#figure">
+      <animate attributeName="transform" values="translate(0 0);translate(16 0);translate(-10 0);translate(0 0)" dur="0.24s" repeatCount="indefinite"/>
+    </use>
+  </g>
+  <g clip-path="url(#slice-b)" stroke="#75e7ff" stroke-width="3" opacity="0.95">
+    <use href="#figure">
+      <animate attributeName="transform" values="translate(0 0);translate(-18 0);translate(8 0);translate(0 0)" dur="0.31s" repeatCount="indefinite"/>
+    </use>
+  </g>
+  <g clip-path="url(#slice-c)" stroke="#9dffbd" stroke-width="2.5" opacity="0.82">
+    <use href="#figure">
+      <animate attributeName="transform" values="translate(0 0);translate(12 0);translate(-13 0);translate(0 0)" dur="0.36s" repeatCount="indefinite"/>
+    </use>
+  </g>
+  <g stroke-width="1" opacity="0.64">
+    <path d="M0 52 H300" stroke="#ff4f86">
+      <animate attributeName="transform" values="translate(0 0);translate(0 180);translate(0 28);translate(0 0)" dur="1.15s" repeatCount="indefinite"/>
+    </path>
+    <path d="M0 163 H300" stroke="#75e7ff">
+      <animate attributeName="transform" values="translate(0 0);translate(0 -108);translate(0 70);translate(0 0)" dur="0.98s" repeatCount="indefinite"/>
+    </path>
+    <rect x="54" y="132" width="192" height="4" fill="#ff4f86" opacity="0.55">
+      <animate attributeName="opacity" values="0.55;0;0.8;0;0.55" dur="0.22s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="78" y="231" width="144" height="3" fill="#75e7ff" opacity="0.45">
+      <animate attributeName="opacity" values="0.45;0;0.7;0;0.45" dur="0.18s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>

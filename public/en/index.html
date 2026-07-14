@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#a8d4e6" />
+		<meta name="description" content="Amiya's Desk is Amiya_desi's personal public desk for blog posts, Godot game projects, homelab and Cloudflare notes, Obsidian workflows, public tools, and contact links." />
+		<meta name="keywords" content="Amiya_desi, Amiya's Desk, sayori.org, personal blog, Godot, indie game development, homelab, Cloudflare, Obsidian, AI-assisted development" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<title>Amiya's Desk · sayori.org</title>
+		<link rel="icon" href="../favicon.png" type="image/png" />
+		<link rel="canonical" href="https://sayori.org/en/" />
+		<link rel="alternate" hreflang="zh" href="https://sayori.org/zh/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/en/" />
+		<link rel="preload" as="image" href="../assets/generated/sayori-lineart.webp" type="image/webp" fetchpriority="high" />
+		<meta property="og:site_name" content="Amiya's Desk" />
+		<meta property="og:title" content="Amiya's Desk · sayori.org" />
+		<meta property="og:description" content="Amiya_desi's personal public desk for writing, Godot projects, homelab and Cloudflare notes, Obsidian workflows, public tools, and contact links." />
+		<meta property="og:url" content="https://sayori.org/en/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<meta property="og:image:alt" content="Amiya's Desk line-art social preview" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Amiya's Desk · sayori.org" />
+		<meta name="twitter:description" content="Amiya_desi's personal public desk for writing, Godot projects, homelab and Cloudflare notes, Obsidian workflows, public tools, and contact links." />
+		<meta name="twitter:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<meta name="twitter:image:alt" content="Amiya's Desk line-art social preview" />
+		<link rel="stylesheet" href="../styles.notebook.min.css?v=20260623-seo-perf" />
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV2MY3FGDK"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+			gtag("config", "G-KV2MY3FGDK");
+		</script>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Person",
+						"@id": "https://sayori.org/#person",
+						"name": "Amiya_desi",
+						"alternateName": "Amiya",
+						"url": "https://sayori.org/",
+						"email": "mailto:me@sayori.org",
+						"sameAs": [
+							"https://github.com/Amiyadesi",
+							"https://blog.sayori.org/",
+							"https://space.bilibili.com/3546919890585725",
+							"https://www.youtube.com/@Amiya_desi",
+							"https://x.com/KirstAdali78973",
+							"https://www.nodeloc.com/u/amiya_desi/summary"
+						],
+						"knowsAbout": [
+							"Godot game development",
+							"indie game prototypes",
+							"homelab operations",
+							"Cloudflare Pages and Tunnel",
+							"AI-assisted development workflows"
+						]
+					},
+					{
+						"@type": ["Organization", "Brand"],
+						"@id": "https://sayori.org/#brand",
+						"name": "Amiya's Desk",
+						"alternateName": "Amiya的书桌",
+						"url": "https://sayori.org/",
+						"description": "The personal publishing and project desk of Amiya_desi.",
+						"logo": "https://sayori.org/assets/generated/sayori-lineart.webp",
+						"email": "mailto:me@sayori.org",
+						"keywords": [
+							"Amiya_desi",
+							"personal blog",
+							"Godot game development",
+							"homelab operations",
+							"Cloudflare",
+							"Obsidian writing workflow",
+							"AI-assisted development"
+						],
+						"founder": { "@id": "https://sayori.org/#person" },
+						"owner": { "@id": "https://sayori.org/#person" },
+						"contactPoint": {
+							"@type": "ContactPoint",
+							"contactType": "public contact",
+							"email": "me@sayori.org",
+							"url": "https://sayori.org/",
+							"availableLanguage": ["zh-CN", "en"]
+						}
+					},
+					{
+						"@type": "WebSite",
+						"@id": "https://sayori.org/#website",
+						"name": "Amiya's Desk",
+						"alternateName": "Amiya的书桌",
+						"url": "https://sayori.org/",
+						"description": "Amiya_desi's personal public desk for writing, Godot game projects, homelab and Cloudflare notes, Obsidian workflows, public tools, and contact links.",
+						"inLanguage": ["en", "zh-CN"],
+						"publisher": { "@id": "https://sayori.org/#brand" },
+						"creator": { "@id": "https://sayori.org/#person" },
+						"about": { "@id": "https://sayori.org/#person" },
+						"hasPart": [
+							{ "@id": "https://blog.sayori.org/#blog" },
+							{ "@id": "https://sayori.org/en/#public-entry-list" }
+						]
+					},
+					{
+						"@type": "WebPage",
+						"@id": "https://sayori.org/en/#webpage",
+						"name": "Amiya's Desk",
+						"url": "https://sayori.org/en/",
+						"description": "Amiya_desi's personal public desk for writing, Godot projects, homelab and Cloudflare notes, Obsidian workflows, public tools, and contact links.",
+						"inLanguage": "en",
+						"isPartOf": { "@id": "https://sayori.org/#website" },
+						"about": { "@id": "https://sayori.org/#person" },
+						"mainEntity": { "@id": "https://sayori.org/en/#public-entry-list" },
+						"primaryImageOfPage": {
+							"@type": "ImageObject",
+							"url": "https://sayori.org/assets/generated/sayori-lineart.webp"
+						}
+					},
+					{
+						"@type": "ItemList",
+						"@id": "https://sayori.org/en/#public-entry-list",
+						"name": "Amiya's Desk public entries",
+						"itemListElement": [
+							{
+								"@type": "ListItem",
+								"position": 1,
+								"name": "Blog",
+								"description": "Articles, notes, project writeups, and retrospectives.",
+								"url": "https://blog.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 2,
+								"name": "GeoScore",
+								"description": "A public SEO and GEO audit tool for public domains.",
+								"url": "https://geo.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 3,
+								"name": "Amiya Whiteboard",
+								"description": "A browser whiteboard for sketches, quick explanations, and rough diagrams.",
+								"url": "https://board.sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 4,
+								"name": "Guestbook",
+								"description": "A public place to leave small notes, feedback, and reading responses.",
+								"url": "https://blog.sayori.org/guestbook/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 5,
+								"name": "GitHub",
+								"description": "Public code and project repositories by Amiya_desi.",
+								"url": "https://github.com/Amiyadesi"
+							}
+						]
+					},
+					{
+						"@type": "BreadcrumbList",
+						"@id": "https://sayori.org/en/#breadcrumb",
+						"itemListElement": [
+							{
+								"@type": "ListItem",
+								"position": 1,
+								"name": "Amiya's Desk",
+								"item": "https://sayori.org/"
+							},
+							{
+								"@type": "ListItem",
+								"position": 2,
+								"name": "English Entry",
+								"item": "https://sayori.org/en/"
+							}
+						]
+					},
+					{
+						"@type": "FAQPage",
+						"@id": "https://sayori.org/en/#faq",
+						"url": "https://sayori.org/en/",
+						"name": "Amiya's Desk common questions",
+						"mainEntity": [
+							{
+								"@type": "Question",
+								"name": "What is sayori.org?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "It is Amiya_desi's personal public entry point for the blog, Godot game projects, public tools, homelab and Cloudflare notes, Obsidian workflows, GitHub, Bilibili, and contact links."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "What does the blog cover?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "blog.sayori.org covers tutorials, homelab notes, Godot development, AI-assisted development retrospectives, resource indexes, project logs, and some personal daily echoes."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Is this a commercial service or local business site?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "No. This is a personal public identity and work entry. It does not publish fake addresses, phone numbers, price lists, local service pages, or commercial delivery promises."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "How can I contact or learn more?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Use me@sayori.org, or continue through the public links on this page: GitHub, Blog, Bilibili, Linux.do, GeoScore, the whiteboard, and the guestbook."
+								}
+							}
+						]
+					}
+				]
+			}
+		</script>
+	</head>
+	<body>
+		<div class="desk-surface">
+			<div class="dream-motion" aria-hidden="true">
+				<div class="desk-light desk-light-1"></div>
+				<div class="desk-light desk-light-2"></div>
+				<div class="dream-particles" id="dream-particles"></div>
+				<i class="paper-float paper-float-1"></i>
+				<i class="paper-float paper-float-2"></i>
+				<i class="paper-float paper-float-3"></i>
+				<i class="paper-float paper-float-4"></i>
+			</div>
+			<div class="desk-deco tape-1" aria-hidden="true"></div>
+			<div class="desk-deco tape-2" aria-hidden="true"></div>
+			<button class="desk-deco sticker-heart" type="button" aria-label="Click for hearts" id="sticker-heart">♡</button>
+			<div class="heart-burst" id="heart-burst" aria-hidden="true"></div>
+			<div class="side-notes-layer" id="side-notes-layer" aria-label="Guestbook notes"></div>
+			<button class="desk-piano" type="button" aria-label="Play music" id="piano-btn">
+				<svg viewBox="0 0 180 128" aria-hidden="true">
+					<path class="piano-shadow" d="M27 91 Q75 104 142 91" />
+					<path class="piano-case" d="M27 34 Q79 22 146 35 L154 78 Q94 94 22 79 Z" />
+					<path class="piano-lid" d="M34 36 Q78 15 140 31 Q107 45 62 48 Q43 49 34 36 Z" />
+					<path class="piano-front" d="M27 59 Q84 71 151 58" />
+					<path class="piano-keys" d="M39 61 Q88 70 135 60" />
+					<path class="piano-keys" d="M45 65 L43 79 M58 67 L56 82 M72 69 L70 84 M86 70 L84 86 M101 69 L99 84 M116 66 L114 80 M130 63 L128 77" />
+					<path class="piano-leg" d="M45 81 Q41 97 36 108" />
+					<path class="piano-leg" d="M128 79 Q132 96 139 106" />
+					<path class="piano-stool" d="M72 99 Q93 105 113 99" />
+					<path class="piano-note piano-note-1" d="M135 22 L135 5 M135 5 Q145 9 146 17 M135 22 Q127 20 127 26 Q128 32 136 29" />
+					<path class="piano-note piano-note-2" d="M54 25 L54 10 M54 10 Q62 11 66 18 M54 25 Q47 24 47 30 Q48 35 55 32" />
+				</svg>
+			</button>
+			<div class="music-panel piano-panel" id="piano-player" hidden inert>
+				<iframe id="piano-frame" frameborder="no" border="0" marginwidth="0" marginheight="0" allow="autoplay; encrypted-media" loading="eager" title="Your Reality — Dan Salvato / Team Salvato"></iframe>
+			</div>
+			<div class="music-panel hidden-player" id="truth-player" hidden inert>
+				<iframe id="truth-frame" frameborder="no" border="0" marginwidth="0" marginheight="0" allow="autoplay; encrypted-media" loading="eager" title="Sayo-Nara — Dan Salvato / Team Salvato"></iframe>
+			</div>
+			<div class="desk-deco coffee-ring" aria-hidden="true"></div>
+
+			<svg class="bg-doodle bg-cloud" viewBox="0 0 200 80" aria-hidden="true">
+				<path d="M30 60 Q35 30 60 35 Q70 15 100 25 Q130 10 145 35 Q175 40 165 60 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+			</svg>
+			<svg class="bg-doodle bg-cloud-2" viewBox="0 0 160 60" aria-hidden="true">
+				<path d="M20 45 Q25 20 50 25 Q60 8 85 20 Q115 15 125 35 Q145 40 130 50 Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+			</svg>
+
+			<main class="notebook-page">
+				<div class="paper-glow" aria-hidden="true"></div>
+				<div class="page-holes" aria-hidden="true">
+					<span></span><span></span><span></span><span></span>
+				</div>
+
+				<button class="music-btn" type="button" aria-label="Play music">
+					<span class="music-icon" aria-hidden="true">♪</span>
+					<span class="music-label">music</span>
+				</button>
+				<div class="music-panel" id="music-player" hidden inert>
+					<iframe id="music-frame" frameborder="no" border="0" marginwidth="0" marginheight="0" allow="autoplay; encrypted-media" loading="eager" title="Ohayou Sayori! — Dan Salvato / Team Salvato"></iframe>
+				</div>
+
+				<header class="page-header">
+					<div class="date-row">
+						<span class="date-main" id="date-display">--/--</span>
+						<span class="weather-info" id="weather-display"></span>
+					</div>
+					<h1 class="page-title">
+						<span class="title-text">a few notes</span>
+					</h1>
+				</header>
+
+				<div class="page-content">
+					<nav class="entries" aria-label="Entries">
+						<a href="https://blog.sayori.org/" class="entry">
+							<span class="entry-num">01</span>
+							<span class="entry-body">
+								<span class="entry-title">Blog</span>
+								<span class="entry-desc">— posts, notes, and rambles</span>
+							</span>
+							<span class="entry-arrow" aria-hidden="true">→</span>
+							<span class="entry-underline" aria-hidden="true"></span>
+						</a>
+						<a href="https://space.bilibili.com/3546919890585725" class="entry" target="_blank" rel="noopener">
+							<span class="entry-num">03</span>
+							<span class="entry-body">
+								<span class="entry-title">Bilibili</span>
+								<span class="entry-desc">— videos, games, and build notes</span>
+							</span>
+							<span class="entry-arrow" aria-hidden="true">→</span>
+							<span class="entry-underline" aria-hidden="true"></span>
+						</a>
+						<button class="entry entry-button about-entry" type="button" id="about-open" aria-controls="profile-note" aria-expanded="false">
+							<span class="entry-num">04</span>
+							<span class="entry-body">
+								<span class="entry-title">About me</span>
+								<span class="entry-desc">— public card and contact</span>
+							</span>
+							<span class="entry-arrow" aria-hidden="true">↓</span>
+							<span class="entry-underline" aria-hidden="true"></span>
+						</button>
+						<button class="entry entry-button services-entry" type="button" id="services-open" aria-controls="services-note" aria-expanded="false">
+							<span class="entry-num">05</span>
+							<span class="entry-body">
+								<span class="entry-title">Tools &amp; Links</span>
+								<span class="entry-desc">— tools, projects, and links</span>
+							</span>
+							<span class="entry-arrow" aria-hidden="true">↓</span>
+							<span class="entry-underline" aria-hidden="true"></span>
+						</button>
+						<button class="entry entry-button intro-entry" type="button" id="intro-open" aria-controls="intro-note" aria-expanded="false">
+							<span class="entry-num">02</span>
+							<span class="entry-body">
+								<span class="entry-title">Site intro</span>
+								<span class="entry-desc">— a quick video tour of the desk</span>
+							</span>
+							<span class="entry-arrow" aria-hidden="true">↓</span>
+							<span class="entry-underline" aria-hidden="true"></span>
+						</button>
+					</nav>
+
+					<div class="margin-note" aria-hidden="true">
+						<span class="margin-arrow">↳</span>
+						<span class="margin-text">whatever comes to mind.</span>
+					</div>
+
+					<div class="notebook-extras">
+						<div class="sketch-area" aria-hidden="true">
+							<svg class="doodle doodle-cloud-1" viewBox="0 0 120 60">
+								<path d="M20 45 Q25 20 45 25 Q50 10 70 20 Q90 10 95 30 Q110 35 100 45 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+							</svg>
+							<svg class="doodle doodle-cloud-2" viewBox="0 0 80 40">
+								<path d="M10 30 Q15 12 30 16 Q35 6 50 14 Q62 8 65 20 Q75 22 68 30 Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+							</svg>
+							<svg class="doodle doodle-star" viewBox="0 0 40 40">
+								<path d="M20 5 L23 15 L34 15 L25 22 L28 33 L20 26 L12 33 L15 22 L6 15 L17 15 Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<svg class="doodle doodle-swirl" viewBox="0 0 50 50">
+								<path d="M25 25 C25 20 30 18 32 22 C34 26 28 30 25 28 C22 26 20 22 24 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+							</svg>
+							<svg class="doodle doodle-arrow" viewBox="0 0 80 40">
+								<path d="M5 20 Q25 5 50 18 L46 12 M50 18 L44 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<div class="ink-drops" id="ink-drops" aria-hidden="true"></div>
+						<canvas class="pencil-canvas" id="pencil-canvas" aria-hidden="true"></canvas>
+						<div class="sticky-note" id="sticky-note" aria-hidden="true">
+							<span class="sticky-pin"></span>
+							<div class="sticky-text" id="sticky-text"></div>
+						</div>
+					</div>
+				</div>
+
+				<footer class="page-footer">
+					<span class="fan-notice">Amiya_desi's solo creator workbench</span>
+					<span class="page-ver"><a href="../zh/" style="color:inherit;opacity:0.7;">中文</a> · v.2026</span>
+				</footer>
+
+				<button class="corner-fold" type="button" aria-label="Flip page">
+					<span class="fold-hint">peek?</span>
+				</button>
+				<div class="paper-tear-strip" aria-hidden="true"></div>
+			</main>
+
+			<div class="sayori-sketch" id="sayori-img">
+				<img
+					src="../assets/generated/sayori-lineart.webp"
+					alt=""
+					loading="eager"
+					fetchpriority="high"
+					decoding="async"
+					class="sayori-art sayori-art-front"
+				/>
+				<img
+					src="../assets/generated/sayori-lineart.webp"
+					alt=""
+					aria-hidden="true"
+					class="sayori-art sayori-art-chibi"
+				/>
+				<img
+					src="../assets/generated/sayori-lineart.webp"
+					alt=""
+					aria-hidden="true"
+					class="sayori-art sayori-art-ghost"
+				/>
+				<span class="sayori-drag-zone" id="sayori-drag-zone" aria-hidden="true"></span>
+			</div>
+
+			<section class="intro-note" id="intro-note" hidden inert aria-label="sayori.org site introduction">
+				<button class="profile-back" type="button" id="intro-close" aria-label="Back to main page">← Back</button>
+				<span class="profile-pin" aria-hidden="true"></span>
+				<header class="intro-head">
+					<p class="profile-kicker">02 / Site intro</p>
+					<h2>Start With A Short Tour</h2>
+					<p>This Bilibili video walks through sayori.org: the blog, whiteboard, guestbook, public tools and links, and why they live on the same desk.</p>
+				</header>
+				<div class="intro-video-shell">
+					<iframe
+						id="intro-video-frame"
+						title="sayori.org site introduction - Bilibili"
+						data-src="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1pNVz6JEpZ&amp;p=1&amp;autoplay=0"
+						loading="lazy"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allow="fullscreen; picture-in-picture"
+						allowfullscreen
+					></iframe>
+				</div>
+				<footer class="intro-actions">
+					<a id="intro-video-link" href="https://www.bilibili.com/video/BV1pNVz6JEpZ/" target="_blank" rel="noopener">Open original video on Bilibili</a>
+				</footer>
+			</section>
+
+			<section class="profile-note" id="profile-note" hidden inert aria-label="About Amiya">
+				<button class="profile-back" type="button" id="about-close" aria-label="Back to main page">← Back</button>
+				<span class="profile-pin" aria-hidden="true"></span>
+				<header class="profile-head">
+					<p class="profile-kicker">04 / Solo creator card</p>
+					<h2>Amiya_desi</h2>
+					<p>Amiya_desi is the public identity I keep for long-running personal work: Godot games, personal websites, homelab notes, Cloudflare workflows, Obsidian writing systems, AI-assisted development notes, tools, posts, and retrospectives. This entry keeps the stable public pieces together: blog posts, GameJam projects, GitHub repositories, GeoScore, a small whiteboard, a guestbook, and public contact links. I use AI for debugging, retrieval, refactoring, docs, and retrospectives, but treat it as an amplifier rather than a substitute for the work itself.</p>
+				</header>
+				<div class="profile-columns">
+					<div class="profile-block">
+						<h3>Public Directions</h3>
+						<ul>
+							<li>Game development: Godot 4.x, GDScript, and C# for 2D prototypes, state machines, event buses, object pools, resources/save systems, and editor tooling.</li>
+							<li>Gameplay expression: platformer movement, time rewind, input buffering/coyote time, level pacing, feel tuning, and meta-leaning narrative puzzle prototypes.</li>
+							<li>Publishing surface: personal site, blog, Bilibili, GitHub, GameJam projects, and public tools and links, slowly turning the portfolio into a growing doorway.</li>
+							<li>Web / homelab: static sites, blog content pipelines, Linux, Docker, Cloudflare Pages / Tunnel, and ops scripts.</li>
+						</ul>
+					</div>
+					<div class="profile-block">
+						<h3>Project Notes</h3>
+						<ul>
+							<li><a href="https://github.com/Amiyadesi/Wake_up_at_the_border" target="_blank" rel="noopener">WakeUpAtTheBorder</a>: Godot 2D narrative platformer about a border-crossing premise, 2nd place in GodotHub 3rd Dev Contest.</li>
+							<li><a href="https://github.com/Amiyadesi/time-runner" target="_blank" rel="noopener">TimeRuner</a>: C# action platformer built around 5-second rewind and compact level pacing, 034GameJam best time-themed game.</li>
+							<li><a href="https://github.com/Amiyadesi/enahnce_save_system" target="_blank" rel="noopener">EnhanceSaveSystem</a>: Godot save plugin focused on maintainable save engineering: AES-GCM, gzip, atomic writes, and migrations.</li>
+							<li><a href="https://github.com/Amiyadesi/ThatGameJam" target="_blank" rel="noopener">Mio's Windowanderer</a> / <a href="https://github.com/Amiyadesi/ggj" target="_blank" rel="noopener">Masquerade of Girls</a>: multi-window puzzle and text-puzzle GameJam work.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="profile-learning">
+					<span>Godot games and plugin development</span>
+					<span>Servers / Cloudflare / Docker</span>
+					<span>Obsidian writing and content pipelines</span>
+					<span>Boundaries and retrospectives for AI-assisted development</span>
+					<span>Story, drawing, and music fundamentals</span>
+					<span>Personal brand and project publishing</span>
+				</div>
+				<section class="profile-faq">
+					<h3>Common Questions</h3>
+					<details>
+						<summary>What is sayori.org?</summary>
+						<p>It is Amiya_desi's personal public entry point for the blog, Godot game projects, public tools, homelab and Cloudflare notes, Obsidian workflows, GitHub, Bilibili, and contact links.</p>
+					</details>
+					<details>
+						<summary>What does the blog cover?</summary>
+						<p>blog.sayori.org covers tutorials, homelab notes, Godot development, AI-assisted development retrospectives, resource indexes, project logs, and some personal daily echoes.</p>
+					</details>
+					<details>
+						<summary>Is this a commercial service or local business site?</summary>
+						<p>No. This is a personal public identity and work entry. It does not publish fake addresses, phone numbers, price lists, local service pages, or commercial delivery promises.</p>
+					</details>
+					<details>
+						<summary>How can I contact or learn more?</summary>
+						<p>Use me@sayori.org, or continue through the public links on this page: GitHub, Blog, Bilibili, Linux.do, GeoScore, the whiteboard, and the guestbook.</p>
+					</details>
+				</section>
+				<footer class="profile-contact">
+					<a href="mailto:me@sayori.org" class="profile-email" id="profile-email" data-email="me@sayori.org">me@sayori.org</a>
+					<div class="profile-links" aria-label="Public links">
+						<a href="https://github.com/Amiyadesi" target="_blank" rel="noopener">GitHub</a>
+						<a href="https://blog.sayori.org/" target="_blank" rel="noopener">Blog</a>
+						<a href="https://space.bilibili.com/3546919890585725" target="_blank" rel="noopener">Bilibili</a>
+						<a href="https://www.youtube.com/@Amiya_desi" target="_blank" rel="noopener">YouTube</a>
+						<a href="https://x.com/KirstAdali78973" target="_blank" rel="noopener">X</a>
+						<a href="https://linux.do/u/Amiya_desi" target="_blank" rel="noopener">Linux.do</a>
+						<a href="https://www.nodeloc.com/u/amiya_desi/summary" target="_blank" rel="noopener">NodeLoc</a>
+					</div>
+				</footer>
+			</section>
+
+			<section class="services-note" id="services-note" hidden inert aria-label="Tools &amp; Links">
+				<button class="profile-back" type="button" id="services-close" aria-label="Back to main page">← Back</button>
+				<span class="profile-pin" aria-hidden="true"></span>
+				<header class="services-head">
+					<p class="profile-kicker">05 / Tools &amp; Links</p>
+					<h2>Tools &amp; Links</h2>
+					<p>Public tools, project entries, and links: resource shelf, GeoScore, whiteboard, guestbook, and a tiny shop.</p>
+				</header>
+				<div class="services-board">
+					<a class="service-note service-note-large" href="https://blog.sayori.org/posts/resource-index/" target="_blank" rel="noopener">
+						<span class="service-index">LINKS</span>
+						<strong>Resource Shelf</strong>
+						<em>Tools, assets, and notes I keep coming back to. More drawer than directory.</em>
+					</a>
+					<a class="service-note service-note-large" href="https://board.sayori.org/" target="_blank" rel="noopener">
+						<span class="service-index">BOARD</span>
+						<strong>Amiya Whiteboard</strong>
+						<em>A small browser whiteboard for sketches, rough diagrams, and messy ideas.</em>
+					</a>
+					<a class="service-note service-note-large" href="https://geo.sayori.org/" target="_blank" rel="noopener">
+						<span class="service-index">GEO</span>
+						<strong>GeoScore</strong>
+						<em>A public SEO / GEO audit tool for public domains, structured data, page signals, and content hints.</em>
+					</a>
+					<a class="service-note service-note-large" href="https://blog.sayori.org/guestbook/" target="_blank" rel="noopener">
+						<span class="service-index">NOTE</span>
+						<strong>Guestbook</strong>
+						<em>Leave a small note, hello, reading response, or feedback after wandering through.</em>
+					</a>
+					<a class="service-note service-note-large" href="https://ldc.sayori.org/" target="_blank" rel="noopener">
+						<span class="service-index">SHOP</span>
+						<strong>LDC Shop</strong>
+						<em>A tiny points-trading experiment. Real listings will get clearer notes later.</em>
+					</a>
+				</div>
+				<p class="services-footnote">Other services stay private until they are actually worth showing.</p>
+			</section>
+		</div>
+
+		<div class="flash-plane" aria-hidden="true"></div>
+		<div class="glitch-field" aria-hidden="true"></div>
+		<div class="spooky-flash" aria-hidden="true"></div>
+		<div class="restore-field" aria-hidden="true">
+			<div class="warm-bloom" aria-hidden="true"></div>
+		</div>
+		<div class="noise-overlay" aria-hidden="true"></div>
+
+		<section class="truth-layer" aria-label="Terminal" hidden>
+			<div class="truth-ambient" aria-hidden="true">
+				<span class="truth-current truth-current-1"></span>
+				<span class="truth-current truth-current-2"></span>
+				<span class="truth-current truth-current-3"></span>
+			</div>
+			<div class="truth-grid" aria-hidden="true"></div>
+			<div class="data-stream" id="data-stream" aria-hidden="true"></div>
+			<canvas class="matrix-canvas" id="matrix-canvas" aria-hidden="true"></canvas>
+			<div class="truth-glitch-slices" id="truth-glitch-slices" aria-hidden="true"></div>
+			<div class="truth-cameo" id="truth-cameo" aria-hidden="true">
+				<img src="" alt="" decoding="async" />
+				<span class="truth-cameo-label"></span>
+			</div>
+			<div class="terminal-window" id="terminal-window">
+				<div class="terminal-title" id="terminal-title">
+					<button class="title-dot dot-close" type="button" aria-label="Close terminal"></button>
+					<button class="title-dot dot-minimize" type="button" aria-label="Minimize"></button>
+					<span class="title-dot dot-maximize"></span>
+					<p>sayori.exe — terminal</p>
+				</div>
+				<div class="terminal-body" id="terminal-body">
+					<div class="terminal-output" id="terminal-output"></div>
+				</div>
+				<div class="terminal-input-line">
+					<span class="prompt-char">&gt;</span>
+					<input
+						id="terminal-input"
+						type="text"
+						autocomplete="off"
+						spellcheck="false"
+						placeholder="/help"
+						aria-label="Enter command"
+					/>
+				</div>
+			</div>
+			<div class="scanlines" aria-hidden="true"></div>
+		</section>
+
+		<script src="../script.notebook.min.js?v=20260623-seo-perf"></script>
+		<script src="../analytics.notebook.js?v=20260616-analytics"></script>
+		<script src="../umami.notebook.js?v=20260701-umami"></script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+# Amiya's Desk
+
+> Amiya's Desk is Amiya_desi's personal public entry point for writing, project records, Godot game work, homelab notes, public tools, and contact links.
+
+## Context
+
+- Site: https://sayori.org/
+- Owner: Amiya_desi
+- Public contact: me@sayori.org
+- Languages: Chinese and English
+- Purpose: personal identity, public writing, project records, creator tools, and durable links.
+
+This is a personal public desk, not a local business or commercial service site. Public facts are limited to writing, projects, tools, contact links, and technical interests such as Godot, homelab operations, Cloudflare, Obsidian, and AI-assisted development workflows.
+
+## Core Links
+
+- Home: https://sayori.org/
+- Chinese entry: https://sayori.org/zh/
+- English entry: https://sayori.org/en/
+- Blog: https://blog.sayori.org/
+- GitHub: https://github.com/Amiyadesi
+
+## Public Tools And Project Entries
+
+- Blog articles and notes: https://blog.sayori.org/
+- Resource shelf: https://blog.sayori.org/posts/resource-index/
+- GeoScore SEO/GEO audit tool: https://geo.sayori.org/
+- Browser whiteboard: https://board.sayori.org/
+- Guestbook: https://blog.sayori.org/guestbook/
+- RSS feed: https://blog.sayori.org/rss.xml
+
+## Crawl Policy
+
+Search indexing, real-time AI grounding, AI citation, and model training uses are allowed for public content. The canonical sitemap is linked above, and llms.txt is advertised from the site's HTML head.

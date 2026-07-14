@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 330" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <filter id="pencil" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="22" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.9"/>
+    </filter>
+  </defs>
+  <g filter="url(#pencil)">
+    <g stroke="#5c5147" stroke-width="3.1" opacity="0.9">
+      <path d="M75 83 Q70 118 73 164 Q76 208 87 244" opacity="0.42"/>
+      <path d="M164 81 Q171 117 167 166 Q163 208 151 245" opacity="0.42"/>
+      <path d="M80 92 Q62 132 66 184 Q68 217 78 254" opacity="0.34"/>
+      <path d="M158 93 Q178 139 173 190 Q169 225 158 257" opacity="0.34"/>
+
+      <ellipse cx="120" cy="91" rx="47" ry="43"/>
+      <path d="M76 78 Q86 49 103 57 Q109 39 122 52 Q136 38 142 58 Q158 54 166 82"/>
+      <path d="M82 78 Q92 55 106 72" stroke-width="2.1"/>
+      <path d="M101 72 Q113 48 124 73" stroke-width="2.1"/>
+      <path d="M123 72 Q135 50 146 78" stroke-width="2.1"/>
+      <path d="M79 92 Q74 126 78 166" stroke-width="2.1"/>
+      <path d="M161 91 Q167 128 162 167" stroke-width="2.1"/>
+    </g>
+
+    <g stroke="#5c5147" stroke-width="2.1" opacity="0.72">
+      <path d="M84 89 Q94 78 107 81"/>
+      <path d="M132 81 Q146 78 155 90"/>
+      <path d="M101 108 Q120 119 139 108" stroke-width="2.5"/>
+      <path d="M82 76 Q78 93 80 109"/>
+      <path d="M158 76 Q163 94 160 110"/>
+    </g>
+
+    <g fill="#5c5147" stroke="none">
+      <ellipse cx="101" cy="96" rx="5.8" ry="7.2"/>
+      <ellipse cx="139" cy="96" rx="5.8" ry="7.2"/>
+      <circle cx="99" cy="93" r="1.7" fill="#fff"/>
+      <circle cx="137" cy="93" r="1.7" fill="#fff"/>
+    </g>
+
+    <g fill="#f3a7a5" stroke="none" opacity="0.36">
+      <ellipse cx="91" cy="108" rx="8" ry="4"/>
+      <ellipse cx="149" cy="108" rx="8" ry="4"/>
+    </g>
+
+    <g stroke="#5c5147" stroke-width="3" opacity="0.82">
+      <path d="M107 134 L107 153"/>
+      <path d="M132 134 L132 153"/>
+      <path d="M106 152 L119 174 L134 152"/>
+      <path d="M106 153 Q82 159 64 176 Q46 192 39 219"/>
+      <path d="M134 153 Q159 158 177 177 Q194 196 199 222"/>
+      <path d="M40 220 Q35 250 42 283 Q47 306 54 324"/>
+      <path d="M199 222 Q202 249 196 282 Q191 307 183 324"/>
+      <path d="M58 253 Q86 247 119 251 Q151 247 184 253" stroke-width="2.2"/>
+      <path d="M62 284 Q113 277 181 284" stroke-width="1.7" opacity="0.62"/>
+    </g>
+
+    <g stroke="#5c5147" stroke-width="2.4" opacity="0.64">
+      <path d="M44 210 Q25 238 31 262 Q36 280 51 290"/>
+      <path d="M194 215 Q209 240 204 263 Q200 280 185 292"/>
+      <path d="M51 290 Q60 298 72 299"/>
+      <path d="M186 292 Q176 300 163 300"/>
+    </g>
+
+    <g stroke="#5c5147" stroke-width="1.8" opacity="0.58">
+      <rect x="34" y="268" width="34" height="46" rx="2" transform="rotate(-7 34 268)"/>
+      <path d="M41 281 L63 278 M42 291 L62 288 M44 301 L59 299"/>
+      <path d="M189 245 Q197 250 205 243" opacity="0.46"/>
+      <path d="M27 111 L32 102 L37 111" opacity="0.4"/>
+      <path d="M197 76 Q204 70 211 77 Q204 84 197 76" opacity="0.4"/>
+    </g>
+
+    <g stroke="#c9445b" stroke-width="1.8" fill="#e95d75">
+      <path d="M108 55 Q95 44 84 49 Q76 55 91 62 Q102 66 108 55"/>
+      <path d="M109 55 Q123 42 134 49 Q142 56 127 63 Q116 66 109 55"/>
+      <circle cx="109" cy="55" r="4" fill="#c9445b" stroke="none"/>
+      <path d="M90 62 Q83 72 80 84" fill="none"/>
+      <path d="M127 63 Q137 74 140 87" fill="none"/>
+    </g>
+
+    <g stroke="#5c5147" stroke-width="1.2" opacity="0.22">
+      <path d="M70 81 Q105 70 159 80"/>
+      <path d="M74 87 Q108 75 164 89"/>
+      <path d="M67 183 Q111 171 173 184"/>
+      <path d="M54 252 Q110 239 191 253"/>
+    </g>
+  </g>
+</svg>

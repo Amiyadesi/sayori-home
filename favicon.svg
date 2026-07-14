@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Amiya的书桌">
+  <rect width="64" height="64" fill="#9fd3df"/>
+  <path d="M0 0h64v64H0z" fill="#9fd3df"/>
+  <path d="M2 6h60v52H2z" fill="#9fd3df" opacity=".45"/>
+  <g transform="rotate(-7 32 32)">
+    <path d="M9 10h48v45H9z" fill="#fffdf8" stroke="#e9e1d6" stroke-width="1.2"/>
+    <path d="M9 18h48" stroke="#d98475" stroke-width="1.4"/>
+    <path d="M13 10v45" stroke="#e6a7a2" stroke-width="1"/>
+    <path d="M9 25h48M9 31h48M9 37h48M9 43h48M9 49h48" stroke="#c7c3bb" stroke-width=".9"/>
+    <circle cx="9" cy="23" r="2.2" fill="#9fd3df" stroke="#7fb9c8" stroke-width=".8"/>
+    <circle cx="9" cy="40" r="2.2" fill="#9fd3df" stroke="#7fb9c8" stroke-width=".8"/>
+    <path d="M18 16c2.5-3.5 4.8 2.5 1.2 3.6-3.8-1.5-1.4-7 1.2-3.2" fill="none" stroke="#4f4f4f" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M24 16.5c3.5-1.5 5.6-1.2 7.5.7m-6 2.2c2.5-.6 4.7-.3 6.6.8" stroke="#4f4f4f" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M38 27c1.7-2.3 4.7-1.7 5.2.7 3-.5 5.4 1.2 5.3 3.2-1.8 1.5-7.8 1.5-13.5.3.4-1.7 1.4-3 3-4.2Z" fill="none" stroke="#777" stroke-width="1.1" stroke-linecap="round" opacity=".75"/>
+    <path d="M22 42c2.4-4.2 8.4-3.4 9.5 1.2m-11 3.5c3 2.1 8.2 2.2 11-.2" fill="none" stroke="#4f4f4f" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="24.5" cy="43.5" r="1.2" fill="#4f4f4f"/>
+    <circle cx="29.5" cy="43.5" r="1.2" fill="#4f4f4f"/>
+    <path d="M42 43c2.2-3.8 7.5-3.1 8.5.9m-9.2 3c2.6 1.8 7.1 1.9 9.4-.2" fill="none" stroke="#4f4f4f" stroke-width="1.7" stroke-linecap="round"/>
+    <circle cx="44.3" cy="44.2" r="1.1" fill="#4f4f4f"/>
+    <circle cx="48.9" cy="44.2" r="1.1" fill="#4f4f4f"/>
+    <path d="M53 38c.9-1.8 2.8-.7 2.1 1.1 1.8-.3 2.2 1.8.5 2.4-1.7-.5-2.7-1.5-2.6-3.5Z" fill="none" stroke="#f0a3be" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+</svg>

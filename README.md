@@ -35,7 +35,7 @@ $env:CONTENT_DIR = './content'
 node .\scripts\sync-home-content.mjs
 ```
 
-没有设置 `CONTENT_DIR` 时，脚本仍兼容旧的 `../articles` 本地目录。JSON 写错时脚本会直接退出，避免部署半坏页面。
+没有设置 `CONTENT_DIR` 时，脚本默认读取同级 `../sayori-articles` 本地仓库。JSON 写错时脚本会直接退出，避免部署半坏页面。
 
 版权说明：
 

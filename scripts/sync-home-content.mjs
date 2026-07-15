@@ -5,10 +5,11 @@ import { fileURLToPath } from "node:url";
 const scriptFile = fileURLToPath(import.meta.url);
 const homeRoot = path.resolve(path.dirname(scriptFile), "..");
 const repoRoot = path.resolve(homeRoot, "..");
+const localReposRoot = repoRoot;
 const configuredContentDir = String(process.env.CONTENT_DIR || "").trim();
 const contentRoot = configuredContentDir
 	? path.resolve(homeRoot, configuredContentDir)
-	: path.join(repoRoot, "articles");
+	: path.join(localReposRoot, "sayori-articles");
 const sourceRoot = path.join(contentRoot, "home");
 const dataRoot = path.join(homeRoot, "public", "assets", "data");
 

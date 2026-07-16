@@ -27,6 +27,8 @@ try {
 	writeJson(path.join(contentRoot, "home", "truth.en.json"), {
 		responses: {}, eggs: {}, fallback: {}, greeting: {}, marker: "en-truth",
 	});
+	write(path.join(contentRoot, "assets", "sponsor", "reward-code.png"), "reward-code");
+	write(path.join(homeRoot, "public", "assets", "sponsor", "stale-code.png"), "stale");
 
 	const result = spawnSync(process.execPath, [scriptDest], {
 		cwd: tmpRoot,
@@ -44,6 +46,19 @@ try {
 	assert.equal(zhHome.language, "zh");
 	assert.equal(enLines.marker, "en-truth");
 	assert.equal(enLines.language, "en");
+	assert.equal(
+		fs.readFileSync(
+			path.join(homeRoot, "public", "assets", "sponsor", "reward-code.png"),
+			"utf8",
+		),
+		"reward-code",
+	);
+	assert.equal(
+		fs.existsSync(
+			path.join(homeRoot, "public", "assets", "sponsor", "stale-code.png"),
+		),
+		false,
+	);
 } finally {
 	fs.rmSync(tmpRoot, { recursive: true, force: true });
 }
@@ -55,4 +70,9 @@ function writeJson(filePath, value) {
 
 function readJson(filePath) {
 	return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+
+function write(filePath, value) {
+	fs.mkdirSync(path.dirname(filePath), { recursive: true });
+	fs.writeFileSync(filePath, value, "utf8");
 }

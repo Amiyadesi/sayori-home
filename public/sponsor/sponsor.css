@@ -1,0 +1,190 @@
+body.sponsor-page {
+	min-height: 100vh;
+	padding: clamp(1rem, 4vw, 4rem) clamp(1rem, 5vw, 5rem);
+	background:
+		radial-gradient(circle at 15% 8%, rgba(255, 255, 255, 0.58), transparent 30%),
+		radial-gradient(circle at 88% 90%, rgba(255, 183, 197, 0.26), transparent 34%),
+		repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.12) 3px 4px),
+		linear-gradient(145deg, #b9dfec 0%, var(--desk) 48%, #91c7dc 100%);
+}
+
+.sponsor-shell {
+	width: min(100%, 1120px);
+	margin: 0 auto;
+}
+
+.sponsor-back {
+	display: inline-flex;
+	margin-bottom: 1rem;
+	color: rgba(42, 42, 42, 0.72);
+	font-size: var(--font-small);
+	font-weight: 700;
+	transition: transform 160ms ease, color 160ms ease;
+}
+
+.sponsor-back:hover {
+	color: var(--pink-deep);
+	transform: translateX(-3px);
+}
+
+.sponsor-sheet {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid rgba(126, 119, 103, 0.28);
+	border-radius: 1rem;
+	padding: clamp(2rem, 5vw, 4.5rem);
+	background:
+		repeating-linear-gradient(180deg, transparent 0 calc(var(--line-h) - 1px), rgba(126, 119, 103, 0.1) var(--line-h)),
+		linear-gradient(100deg, rgba(253, 252, 247, 0.96), rgba(248, 246, 237, 0.94));
+	box-shadow: 0 24px 65px rgba(40, 50, 60, 0.2);
+}
+
+.sponsor-sheet::before {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: clamp(1.2rem, 3.3vw, 3.4rem);
+	width: 1px;
+	background: rgba(217, 112, 112, 0.38);
+	content: "";
+}
+
+.sponsor-tape {
+	position: absolute;
+	top: -0.45rem;
+	width: clamp(4.5rem, 12vw, 8rem);
+	height: 1.35rem;
+	background: rgba(255, 241, 178, 0.67);
+	box-shadow: 0 2px 4px rgba(40, 50, 60, 0.1);
+}
+
+.sponsor-tape-left {
+	left: 12%;
+	transform: rotate(-4deg);
+}
+
+.sponsor-tape-right {
+	right: 12%;
+	transform: rotate(5deg);
+}
+
+.sponsor-kicker,
+.sponsor-intro,
+.sponsor-note,
+.sponsor-grid {
+	position: relative;
+	z-index: 1;
+}
+
+.sponsor-kicker {
+	margin-left: clamp(1rem, 3vw, 2.2rem);
+	color: var(--pink-deep);
+	font-family: "JetBrains Mono", "Cascadia Mono", monospace;
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+}
+
+.sponsor-sheet h1 {
+	margin: 0.2rem 0 0.8rem clamp(1rem, 3vw, 2.2rem);
+	color: var(--ink);
+	font-size: clamp(2.4rem, 7vw, 4.6rem);
+	line-height: 1;
+}
+
+.sponsor-intro {
+	max-width: 45rem;
+	margin-left: clamp(1rem, 3vw, 2.2rem);
+	color: rgba(42, 42, 42, 0.7);
+	font-size: clamp(0.98rem, 2vw, 1.12rem);
+}
+
+.sponsor-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1rem, 2.5vw, 1.65rem);
+	margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.sponsor-card {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border: 1px solid rgba(126, 119, 103, 0.32);
+	border-radius: 0.85rem;
+	background: rgba(255, 255, 255, 0.64);
+	box-shadow: 0 12px 22px rgba(40, 50, 60, 0.12);
+}
+
+a.sponsor-card {
+	transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+a.sponsor-card:hover {
+	border-color: rgba(255, 138, 163, 0.8);
+	box-shadow: 0 20px 30px rgba(40, 50, 60, 0.18);
+	transform: translateY(-5px) rotate(-0.45deg);
+}
+
+.sponsor-card img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	object-fit: cover;
+	background: rgba(20, 20, 24, 0.06);
+}
+
+.sponsor-card-static img {
+	object-fit: contain;
+	background: #17191d;
+}
+
+.sponsor-card-label {
+	position: absolute;
+	right: 0.75rem;
+	bottom: 0.75rem;
+	display: grid;
+	gap: 0.1rem;
+	padding: 0.46rem 0.7rem;
+	border-radius: 0.65rem;
+	background: rgba(253, 252, 247, 0.92);
+	box-shadow: 0 5px 16px rgba(0, 0, 0, 0.13);
+	color: var(--ink);
+	font-weight: 800;
+}
+
+.sponsor-card-label small {
+	color: var(--pencil);
+	font-size: 0.72rem;
+	font-weight: 500;
+}
+
+.sponsor-note {
+	max-width: 47rem;
+	margin: clamp(1.8rem, 4vw, 2.6rem) auto 0;
+	border-top: 1px dashed rgba(126, 119, 103, 0.38);
+	padding-top: 1.25rem;
+	color: var(--pencil);
+	font-size: var(--font-small);
+	text-align: center;
+}
+
+@media (max-width: 820px) {
+	.sponsor-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 560px) {
+	body.sponsor-page {
+		padding: 0.75rem;
+	}
+
+	.sponsor-sheet {
+		border-radius: 0.7rem;
+	}
+
+	.sponsor-grid {
+		grid-template-columns: 1fr;
+	}
+}

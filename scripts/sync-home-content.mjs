@@ -12,6 +12,13 @@ const contentRoot = configuredContentDir
 	: path.join(localReposRoot, "sayori-articles");
 const sourceRoot = path.join(contentRoot, "home");
 const dataRoot = path.join(homeRoot, "public", "assets", "data");
+const sponsorAssetsSource = path.join(contentRoot, "assets", "sponsor");
+const sponsorAssetsDestination = path.join(
+	homeRoot,
+	"public",
+	"assets",
+	"sponsor",
+);
 
 const LANGS = ["zh", "en"];
 const REQUIRED_SURFACE_KEYS = ["meta", "surface", "profile", "services"];
@@ -47,7 +54,23 @@ function main() {
 		writeJson(path.join(dataRoot, `lines-${lang}.json`), truthConfig);
 	}
 
-	console.log("[sync-home-content] content/home -> sayori-home/public/assets/data");
+	syncSponsorAssets();
+
+	console.log(
+		"[sync-home-content] content/home and content/assets/sponsor -> sayori-home/public/assets",
+	);
+}
+
+function syncSponsorAssets() {
+	if (!fs.existsSync(sponsorAssetsSource)) {
+		fail(
+			`source directory missing: ${path.relative(repoRoot, sponsorAssetsSource)}`,
+		);
+	}
+
+	// Sponsor assets are sourced exclusively from sayori-articles; remove stale files.
+	fs.rmSync(sponsorAssetsDestination, { recursive: true, force: true });
+	fs.cpSync(sponsorAssetsSource, sponsorAssetsDestination, { recursive: true });
 }
 
 function readJson(filename) {

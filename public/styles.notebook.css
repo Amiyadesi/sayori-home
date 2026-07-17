@@ -1533,6 +1533,29 @@ body.services-open .services-note {
 	line-height: 1.55;
 	color: rgba(42,42,42,0.68);
 }
+.service-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	margin-top: auto;
+}
+.service-actions a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	padding: 0.3rem 0.55rem;
+	border: 1px solid rgba(63,109,128,0.22);
+	border-radius: 5px;
+	background: rgba(255,255,255,0.55);
+	color: #3f6d80;
+	font: 600 0.78rem/1.2 var(--surface-font);
+	text-decoration: none;
+}
+.service-actions a:hover,
+.service-actions a:focus-visible {
+	background: rgba(168,212,230,0.22);
+	outline: none;
+}
 .services-footnote {
 	margin-top: 1rem;
 	padding-left: 0.4rem;

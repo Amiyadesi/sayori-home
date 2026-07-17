@@ -24,7 +24,10 @@ This is a personal public desk, not a local business or commercial service site.
 
 - Blog articles and notes: https://blog.sayori.org/
 - Resource shelf: https://blog.sayori.org/posts/resource-index/
-- GeoScore SEO/GEO audit tool: https://geo.sayori.org/
+- GeoScore SEO/GEO audit service: https://geo.sayori.org/
+- GeoScore source: https://github.com/Amiyadesi/geoscore
+- Search Gateway service and API docs: https://search.sayori.org/
+- Search Gateway source: https://github.com/Amiyadesi/search-gateway
 - Browser whiteboard: https://board.sayori.org/
 - Guestbook: https://blog.sayori.org/guestbook/
 - RSS feed: https://blog.sayori.org/rss.xml

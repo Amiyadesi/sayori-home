@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>公共服务 · Amiya的书桌</title>
+		<meta name="description" content="Amiya_desi 个人维护的公共数字服务、开源项目、邀请制计划与私有基础设施边界" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<link rel="canonical" href="https://sayori.org/zh/services/" />
+		<link rel="alternate" hreflang="zh" href="https://sayori.org/zh/services/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+		<link rel="icon" href="../../favicon.png" type="image/png" />
+		<link rel="stylesheet" href="../../services/services.css" />
+		<meta property="og:site_name" content="Amiya的书桌" />
+		<meta property="og:title" content="公共服务 · Amiya的书桌" />
+		<meta property="og:description" content="公开运行、开源自部署、邀请制计划和私有基础设施的清晰边界" />
+		<meta property="og:url" content="https://sayori.org/zh/services/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebPage",
+				"@id": "https://sayori.org/zh/services/#webpage",
+				"name": "Amiya的书桌公共服务",
+				"url": "https://sayori.org/zh/services/",
+				"description": "Amiya_desi 个人维护的公共数字服务、开源项目、邀请制计划与私有基础设施边界",
+				"inLanguage": "zh-CN",
+				"isPartOf": { "@id": "https://sayori.org/#website" },
+				"about": { "@id": "https://sayori.org/#person" },
+				"mainEntity": {
+					"@type": "ItemList",
+					"name": "当前公共服务与开源项目",
+					"itemListElement": [
+						{ "@type": "ListItem", "position": 1, "name": "GeoScore", "url": "https://geo.sayori.org/" },
+						{ "@type": "ListItem", "position": 2, "name": "Amiya的书桌博客", "url": "https://blog.sayori.org/" },
+						{ "@type": "ListItem", "position": 3, "name": "Search Gateway 源码", "url": "https://github.com/Amiyadesi/search-gateway" }
+					]
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">跳到主要内容</a>
+		<header class="site-header">
+			<a class="brand" href="../"><span class="brand-mark" aria-hidden="true">A</span>Amiya的书桌</a>
+			<nav class="top-nav" aria-label="页面导航">
+				<a href="#service-status">当前服务</a>
+				<a href="#planned-services">计划</a>
+				<a href="#operating-boundaries">边界</a>
+				<a href="../../en/services/" lang="en">EN</a>
+			</nav>
+		</header>
+
+		<main id="main-content">
+			<section class="hero" aria-labelledby="page-title">
+				<div class="hero-inner">
+					<div class="hero-copy">
+						<p class="eyebrow">sayori.org / public services</p>
+						<h1 id="page-title">Amiya的书桌公共服务</h1>
+						<p class="lead">这是个人维护、非商业、尽力而为的公共数字服务清单</p>
+						<p class="hero-note">我不是公益组织，也不承诺企业级 SLA。这个页面只把目前能直接使用、能够自己部署、正在小范围试验和保持私有的东西讲清楚</p>
+						<div class="status-key" aria-label="服务状态图例">
+							<span class="status-stamp" data-status="public">公开运行</span>
+							<span class="status-stamp" data-status="source">开源自部署</span>
+							<span class="status-stamp" data-status="invite">邀请制计划</span>
+							<span class="status-stamp" data-status="private">私有基础设施</span>
+						</div>
+					</div>
+					<img class="hero-art" src="../../assets/generated/sayori-lineart.webp" alt="" />
+				</div>
+			</section>
+
+			<section class="content-band" id="service-status" aria-labelledby="service-status-title">
+				<div class="section-inner">
+					<header class="section-heading">
+						<h2 id="service-status-title">现在可以使用的服务</h2>
+						<p>能直接打开的就给出入口，只适合自己部署的就只给源码，不把内部实例包装成公共 API</p>
+					</header>
+					<div class="service-grid">
+						<article class="service-card">
+							<span class="status-stamp" data-status="public">公开运行</span>
+							<h3>GeoScore</h3>
+							<p>面向公开网页的 SEO 与 GEO 事实审计，提供站点画像、Evidence Map、优先修复项和 Markdown 报告</p>
+							<div class="service-meta"><span>无需注册</span><span>只审查公网网页</span><span>MIT 开源</span></div>
+							<div class="service-links">
+								<a href="https://geo.sayori.org/">打开服务</a>
+								<a href="https://github.com/Amiyadesi/geoscore">查看源码</a>
+							</div>
+						</article>
+						<article class="service-card">
+							<span class="status-stamp" data-status="public">公开运行</span>
+							<h3>公开技术文章与 RSS</h3>
+							<p>记录建站、自托管、Cloudflare、Godot、AI 辅助开发和项目复盘。文章可以网页阅读，也可以通过 RSS 订阅</p>
+							<div class="service-meta"><span>无需账号</span><span>允许公开引用</span><span>持续整理</span></div>
+							<div class="service-links">
+								<a href="https://blog.sayori.org/">进入博客</a>
+								<a href="https://blog.sayori.org/rss.xml">订阅 RSS</a>
+							</div>
+						</article>
+						<article class="service-card">
+							<span class="status-stamp" data-status="source">开源自部署</span>
+							<h3>Search Gateway</h3>
+							<p>统一多个搜索来源、保留证据快照，并提供兼容接口与 MCP 接入方式的开源项目</p>
+							<div class="service-meta"><span>Python</span><span>Docker</span><span>MIT 开源</span></div>
+							<div class="service-links">
+								<a href="https://github.com/Amiyadesi/search-gateway">源码与自部署文档</a>
+							</div>
+						</article>
+						<article class="service-card">
+							<span class="status-stamp" data-status="public">公开运行</span>
+							<h3>留言与问题反馈</h3>
+							<p>可以提交读后感、服务问题和改进建议。涉及滥用、隐私或安全的问题也可以直接发邮件</p>
+							<div class="service-meta"><span>公开留言</span><span>邮件联系</span><span>人工处理</span></div>
+							<div class="service-links">
+								<a href="https://blog.sayori.org/guestbook/">打开留言板</a>
+								<a href="mailto:me@sayori.org">发送邮件</a>
+							</div>
+						</article>
+					</div>
+					<div class="source-note">
+						<strong>Search Gateway 的线上实例不是公共搜索 API</strong>
+						当前实例只供站长自己的站点与维护任务使用，不开放共享 Token、匿名调用或公共额度。需要这项能力时，请使用开源仓库部署自己的实例
+					</div>
+				</div>
+			</section>
+
+			<section class="content-band" id="planned-services" aria-labelledby="planned-services-title">
+				<div class="section-inner">
+					<header class="section-heading">
+						<h2 id="planned-services-title">适合小范围试验的方向</h2>
+						<p>这些不是已经承诺上线的产品，只是更值得占用维护精力的低风险方向。先通过邀请和人工审核验证需求，再决定是否长期提供</p>
+					</header>
+					<div class="plan-grid">
+						<article class="plan-card">
+							<span class="status-stamp" data-status="invite">邀请制计划</span>
+							<h3>网站体检互助</h3>
+							<p>为个人博客、开源项目页和小型社区主页跑一次 GeoScore，再补充人工判断和可复验的修复顺序</p>
+						</article>
+						<article class="plan-card">
+							<span class="status-stamp" data-status="invite">邀请制计划</span>
+							<h3>静态站上线协助</h3>
+							<p>帮助小型非商业项目整理仓库、部署 Cloudflare Pages 或 GitHub Pages，并留下可自行维护的文档</p>
+						</article>
+						<article class="plan-card">
+							<span class="status-stamp" data-status="invite">邀请制计划</span>
+							<h3>搜索证据额度</h3>
+							<p>给开源文档核对或社区资料整理提供少量 Search Gateway 查询额度，不开放匿名注册和批量抓取</p>
+						</article>
+						<article class="plan-card">
+							<span class="status-stamp" data-status="invite">邀请制计划</span>
+							<h3>RSS 通知中转</h3>
+							<p>为缺少订阅能力的小站试验 RSS 到邮件或 Webhook 的低频通知，不处理营销群发</p>
+						</article>
+						<article class="plan-card">
+							<span class="status-stamp" data-status="private">私有基础设施</span>
+							<h3>短期证据快照</h3>
+							<p>优先考虑把闲置对象存储用于 GeoScore 的短期证据快照，而不是重新开放匿名文件上传</p>
+						</article>
+						<article class="plan-card">
+							<span class="status-stamp" data-status="private">私有基础设施</span>
+							<h3>加密备份</h3>
+							<p>把剩余存储用于站点配置、文章源和关键数据的加密备份，保留恢复演练记录</p>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<section class="content-band" id="operating-boundaries" aria-labelledby="operating-boundaries-title">
+				<div class="section-inner">
+					<header class="section-heading">
+						<h2 id="operating-boundaries-title">使用边界与停止规则</h2>
+						<p>小型个人服务只有把边界讲清楚，才不会因为一时热情变成长期失控的维护债</p>
+					</header>
+					<div class="boundary-grid">
+						<ul class="boundary-list">
+							<li>服务按尽力而为原则维护，不承诺可用性、响应时间或永久保存</li>
+							<li>公开服务优先不要求注册，确需账号或数据保存时会单独说明</li>
+							<li>遇到滥用、爬虫压力、额度耗尽或安全风险时可以限流、暂停或关闭</li>
+							<li>不会把私有存储、内部搜索实例或管理 Token 当成公共资源发布</li>
+							<li>不提供匿名文件托管、营销群发、紧急通信或高风险账户服务</li>
+							<li>滥用、隐私与安全问题统一联系 me@sayori.org</li>
+						</ul>
+						<aside class="private-note">
+							<h3>为什么不继续堆服务</h3>
+							<p>每多一个公开入口，都意味着域名、监控、依赖更新、垃圾内容处理和故障恢复</p>
+							<p>因此优先保留能复用现有能力、没有公开上传面、可以限额并且容易下线的服务。暂停的实验不会继续出现在首页和搜索入口里</p>
+							<div class="service-links">
+								<a href="https://status.sayori.org/">查看运行状态</a>
+								<a href="mailto:me@sayori.org">联系维护者</a>
+							</div>
+						</aside>
+					</div>
+				</div>
+			</section>
+
+			<section class="content-band" aria-labelledby="faq-title">
+				<div class="section-inner">
+					<header class="section-heading">
+						<h2 id="faq-title">常见问题</h2>
+						<p>这个页面描述当前公开边界，不是服务合同，也不是未来功能承诺</p>
+					</header>
+					<div class="faq-list">
+						<details>
+							<summary>这些服务是公益服务吗</summary>
+							<p>更准确的说法是个人维护、非商业、尽力而为的公共数字服务。sayori.org 不是注册公益组织</p>
+						</details>
+						<details>
+							<summary>可以申请 Search Gateway Token 吗</summary>
+							<p>当前没有公开申请入口。源码可以自行部署，少量公益用途的试验额度会采用人工邀请和明确限额</p>
+						</details>
+						<details>
+							<summary>为什么不提供公共文件床</summary>
+							<p>匿名上传会带来滥用、版权、成本和内容治理压力。闲置存储更适合短期证据快照与加密备份</p>
+						</details>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<p>Amiya_desi 个人维护 · 最后更新 2026-07-18</p>
+			<nav aria-label="页脚导航">
+				<a href="../">返回书桌</a>
+				<a href="https://blog.sayori.org/">博客</a>
+				<a href="https://github.com/Amiyadesi">GitHub</a>
+				<a href="mailto:me@sayori.org">联系</a>
+			</nav>
+		</footer>
+	</body>
+</html>

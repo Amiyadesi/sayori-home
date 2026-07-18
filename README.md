@@ -13,6 +13,9 @@
 - `index.html` — 根路径，按 `navigator.language` 重定向到 `/zh/` 或 `/en/`
 - `zh/index.html` — 中文版页面
 - `en/index.html` — 英文版页面
+- `services/index.html` — 公共服务页的语言入口
+- `zh/services/index.html` / `en/services/index.html` — 公共服务、开源项目、邀请制计划与使用边界
+- `services/services.css` — 公共服务页共享样式
 - `styles.notebook.css` — 共享样式
 - `script.notebook.js` — 共享脚本（按路径加载对应语言数据）
 - `assets/data/home-zh.json` / `assets/data/home-en.json` — 表层纸面配置
@@ -24,7 +27,7 @@
 主站内容由公开的 [sayori-articles](https://github.com/Amiyadesi/sayori-articles)
 仓库中的 `home/` 管理：
 
-- `surface.zh.json` / `surface.en.json`：标题、入口、关于我、小服务、音乐按钮、贴纸短句。
+- `surface.zh.json` / `surface.en.json`：标题、入口、关于我、公共服务快捷入口、音乐按钮、贴纸短句。
 - `truth.zh.json` / `truth.en.json`：终端命令、隐藏彩蛋、角色 `.chr` 对话、终端标题和提示。
 
 同步命令：

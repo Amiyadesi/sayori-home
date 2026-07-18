@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Public Services · Amiya's Desk</title>
+		<meta name="description" content="Public, self-hostable, invitation-only, and private service boundaries maintained by Amiya_desi." />
+		<link rel="canonical" href="https://sayori.org/services/" />
+		<link rel="alternate" hreflang="zh" href="https://sayori.org/zh/services/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+		<link rel="icon" href="../favicon.png" type="image/png" />
+		<link rel="stylesheet" href="./services.css" />
+		<script>
+			(() => {
+				const crawlerPattern = /bot|crawl|spider|slurp|preview|facebookexternalhit|twitterbot|telegrambot|discordbot|gptbot|claudebot|perplexitybot|google-extended|ccbot|bytespider|applebot/i;
+				if (crawlerPattern.test(navigator.userAgent || "")) return;
+				const languages = navigator.languages?.length ? navigator.languages : [navigator.language || ""];
+				const target = languages.some((language) => language.toLowerCase().startsWith("zh")) ? "../zh/services/" : "../en/services/";
+				window.location.replace(target);
+			})();
+		</script>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<header class="site-header">
+			<a class="brand" href="../"><span class="brand-mark" aria-hidden="true">A</span>Amiya's Desk</a>
+			<nav class="top-nav" aria-label="Language">
+				<a href="../zh/services/" lang="zh-CN">中文</a>
+				<a href="../en/services/">English</a>
+			</nav>
+		</header>
+		<main id="main-content">
+			<section class="hero">
+				<div class="hero-inner">
+					<div class="hero-copy">
+						<p class="eyebrow">sayori.org / services</p>
+						<h1>Public services · 公共服务</h1>
+						<p class="lead">Choose a language for the maintained service list, operating boundaries, and invitation-only plans</p>
+						<div class="service-links">
+							<a href="../zh/services/" lang="zh-CN">查看中文说明</a>
+							<a href="../en/services/">Read in English</a>
+							<a href="https://geo.sayori.org/">GeoScore</a>
+							<a href="https://blog.sayori.org/">Blog</a>
+							<a href="https://github.com/Amiyadesi/search-gateway">Search Gateway source</a>
+						</div>
+					</div>
+					<img class="hero-art" src="../assets/generated/sayori-lineart.webp" alt="" />
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

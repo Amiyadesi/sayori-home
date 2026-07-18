@@ -227,6 +227,26 @@
 			}
 		</script>
 		<style>
+			.skip-link {
+				position: fixed;
+				top: 0.75rem;
+				left: 0.75rem;
+				z-index: 100;
+				padding: 0.6rem 0.85rem;
+				border: 2px solid #2a2a2a;
+				border-radius: 4px;
+				background: #fdfcf7;
+				color: #2a2a2a;
+				font-weight: 700;
+				text-decoration: none;
+				transform: translateY(calc(-100% - 1.5rem));
+				transition: transform 0.16s ease;
+			}
+
+			.skip-link:focus {
+				transform: translateY(0);
+			}
+
 			html,
 			body {
 				margin: 0;
@@ -358,7 +378,8 @@
 		</style>
 	</head>
 	<body>
-		<main class="fallback-note" aria-label="Amiya's Desk">
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<main id="main-content" class="fallback-note" aria-label="Amiya's Desk">
 			<h1>Amiya's Desk</h1>
 			<p>Amiya's Desk is the personal public entry point for Amiya_desi. It collects long-form blog posts, homelab and Cloudflare notes, Godot game projects, Obsidian writing workflow records, AI-assisted development experiments, public tools, GitHub repositories, Bilibili links, a guestbook, and a stable email contact. The root page is intentionally simple so visitors, search engines, and AI answer engines can understand the site before choosing the Chinese or English entrance.</p>
 			<p lang="zh-CN">Amiya的书桌：Amiya_desi 的个人公开入口，收纳博客文章、Godot 游戏作品、服务器和 Cloudflare 折腾、Obsidian 写作流、公开小工具、留言板和联系方式。</p>
@@ -380,11 +401,11 @@
 				<li><strong>Games:</strong> Godot, C#, prototypes, jams, and tools.</li>
 				<li><strong>Tools:</strong> resource shelf, GeoScore, Search Gateway, whiteboard, and guestbook.</li>
 			</ul>
-			<div class="langs" aria-label="Choose language">
+			<nav class="langs" aria-label="Choose language">
 				<a href="./zh/">中文入口</a>
 				<a href="./en/">English Entry</a>
-			</div>
-			<p class="primary-links">
+			</nav>
+			<nav class="primary-links" aria-label="Primary links">
 				<a href="https://blog.sayori.org/">Blog</a> ·
 				<a href="https://geo.sayori.org/">GeoScore</a> ·
 				<a href="https://github.com/Amiyadesi/geoscore">GeoScore source</a> ·
@@ -392,7 +413,7 @@
 				<a href="https://github.com/Amiyadesi/search-gateway">Search Gateway source</a> ·
 				<a href="https://github.com/Amiyadesi">GitHub</a> ·
 				<a href="mailto:me@sayori.org">me@sayori.org</a>
-			</p>
+			</nav>
 			<section class="fallback-faq" aria-label="Common questions">
 				<details>
 					<summary>What is sayori.org?</summary>

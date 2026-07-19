@@ -67,6 +67,23 @@ test("the public services pages document status and operating boundaries", () =>
 	}
 });
 
+test("the public GeoScore API is discoverable without exposing Search Gateway", () => {
+	for (const relativePath of [
+		"public/services/index.html",
+		"public/zh/services/index.html",
+		"public/en/services/index.html",
+		"public/llms.txt",
+	]) {
+		const content = read(relativePath);
+		assert.ok(content.includes("https://geo-api.sayori.org"), `${relativePath}: GeoScore API`);
+	}
+	for (const relativePath of ["public/zh/services/index.html", "public/en/services/index.html", "public/llms.txt"]) {
+		const content = read(relativePath);
+		assert.ok(content.includes("https://geo-api.sayori.org/openapi.json"), `${relativePath}: OpenAPI`);
+		assert.ok(!content.includes("https://search.sayori.org"), `${relativePath}: hosted Search Gateway`);
+	}
+});
+
 function read(relativePath) {
 	return fs.readFileSync(path.join(root, relativePath), "utf8");
 }

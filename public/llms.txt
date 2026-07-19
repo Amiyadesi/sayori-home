@@ -28,13 +28,15 @@ This is a personal public desk, not a local business or commercial service site.
 - Blog articles and notes: https://blog.sayori.org/
 - Resource shelf: https://blog.sayori.org/posts/resource-index/
 - GeoScore SEO/GEO audit service: https://geo.sayori.org/
+- GeoScore public audit API: https://geo-api.sayori.org/
+- GeoScore OpenAPI document: https://geo-api.sayori.org/openapi.json
 - GeoScore source: https://github.com/Amiyadesi/geoscore
 - Search Gateway source and self-hosting guide: https://github.com/Amiyadesi/search-gateway
 - Guestbook: https://blog.sayori.org/guestbook/
 - RSS feed: https://blog.sayori.org/rss.xml
 - Service status: https://status.sayori.org/
 
-The hosted Search Gateway instance is private infrastructure and is not a public API. Paused experiments, private storage, and internal management endpoints are not public services.
+The GeoScore audit API is public under its documented limits and accepts public hostnames only. The hosted Search Gateway instance remains private infrastructure and is not a public API. Paused experiments, private storage, and internal management endpoints are not public services.
 
 ## Crawl Policy
 

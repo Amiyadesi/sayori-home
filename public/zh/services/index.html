@@ -34,8 +34,9 @@
 					"name": "当前公共服务与开源项目",
 					"itemListElement": [
 						{ "@type": "ListItem", "position": 1, "name": "GeoScore", "url": "https://geo.sayori.org/" },
-						{ "@type": "ListItem", "position": 2, "name": "Amiya的书桌博客", "url": "https://blog.sayori.org/" },
-						{ "@type": "ListItem", "position": 3, "name": "Search Gateway 源码", "url": "https://github.com/Amiyadesi/search-gateway" }
+						{ "@type": "ListItem", "position": 2, "name": "GeoScore 公开审计 API", "url": "https://geo-api.sayori.org/openapi.json" },
+						{ "@type": "ListItem", "position": 3, "name": "Amiya的书桌博客", "url": "https://blog.sayori.org/" },
+						{ "@type": "ListItem", "position": 4, "name": "Search Gateway 源码", "url": "https://github.com/Amiyadesi/search-gateway" }
 					]
 				}
 			}
@@ -91,6 +92,16 @@
 						</article>
 						<article class="service-card">
 							<span class="status-stamp" data-status="public">公开运行</span>
+							<h3>GeoScore 公开审计 API</h3>
+							<p>为公开域名提供事实审计、PageSpeed 证据、Evidence Map 与 FixPack 接口，使用 SSE 和 JSON 返回可复验结果</p>
+							<div class="service-meta"><span>OpenAPI 3.1</span><span>公网目标限定</span><span>有限额度</span></div>
+							<div class="service-links">
+								<a href="https://geo-api.sayori.org/openapi.json">查看 OpenAPI</a>
+								<a href="https://geo.sayori.org/docs">阅读使用文档</a>
+							</div>
+						</article>
+						<article class="service-card">
+							<span class="status-stamp" data-status="public">公开运行</span>
 							<h3>公开技术文章与 RSS</h3>
 							<p>记录建站、自托管、Cloudflare、Godot、AI 辅助开发和项目复盘。文章可以网页阅读，也可以通过 RSS 订阅</p>
 							<div class="service-meta"><span>无需账号</span><span>允许公开引用</span><span>持续整理</span></div>
@@ -120,8 +131,8 @@
 						</article>
 					</div>
 					<div class="source-note">
-						<strong>Search Gateway 的线上实例不是公共搜索 API</strong>
-						当前实例只供站长自己的站点与维护任务使用，不开放共享 Token、匿名调用或公共额度。需要这项能力时，请使用开源仓库部署自己的实例
+						<strong>公开 GeoScore API 与内部 Search Gateway 是两套边界</strong>
+						GeoScore API 可以按公开文档调用，并受线上限流和公网目标校验约束。Search Gateway 实例只供站长自己的站点与维护任务使用，不开放共享 Token、匿名调用或公共额度
 					</div>
 				</div>
 			</section>
@@ -207,6 +218,10 @@
 							<p>更准确的说法是个人维护、非商业、尽力而为的公共数字服务。sayori.org 不是注册公益组织</p>
 						</details>
 						<details>
+							<summary>可以调用 GeoScore API 吗</summary>
+							<p>可以。稳定公开接口写在 OpenAPI 文档中，运行限制以 API 的 /api/meta 响应为准。它只审查公开 hostname，不是任意 URL 代理</p>
+						</details>
+						<details>
 							<summary>可以申请 Search Gateway Token 吗</summary>
 							<p>当前没有公开申请入口。源码可以自行部署，少量公益用途的试验额度会采用人工邀请和明确限额</p>
 						</details>
@@ -220,7 +235,7 @@
 		</main>
 
 		<footer class="site-footer">
-			<p>Amiya_desi 个人维护 · 最后更新 2026-07-18</p>
+			<p>Amiya_desi 个人维护 · 最后更新 2026-07-19</p>
 			<nav aria-label="页脚导航">
 				<a href="../">返回书桌</a>
 				<a href="https://blog.sayori.org/">博客</a>

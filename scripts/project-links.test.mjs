@@ -15,17 +15,17 @@ const publicFiles = [
 	"public/llms.txt",
 ];
 
-const retiredPublicHosts = [
-	"board.sayori.org",
-	"ldc.sayori.org",
-	"media.sayori.org",
-];
+const maintainedPublicHosts = ["board.sayori.org"];
+const retiredPublicHosts = ["ldc.sayori.org", "media.sayori.org"];
 
 test("public surfaces expose the maintained services and self-hostable projects", () => {
 	for (const relativePath of publicFiles) {
 		const content = read(relativePath);
 		assert.ok(content.includes("https://geo.sayori.org/"), `${relativePath}: GeoScore`);
 		assert.ok(content.includes("https://blog.sayori.org/"), `${relativePath}: blog`);
+		for (const host of maintainedPublicHosts) {
+			assert.ok(content.includes(host), `${relativePath}: maintained ${host}`);
+		}
 		assert.ok(
 			content.includes("https://github.com/Amiyadesi/search-gateway"),
 			`${relativePath}: Search Gateway source`,
@@ -52,6 +52,9 @@ test("localized home data points to the full public services page", () => {
 			`home-${lang}.json: full services link`,
 		);
 		const serialized = JSON.stringify(config);
+		for (const host of maintainedPublicHosts) {
+			assert.ok(serialized.includes(host), `home-${lang}.json: maintained ${host}`);
+		}
 		for (const host of retiredPublicHosts) {
 			assert.ok(!serialized.includes(host), `home-${lang}.json: unexpectedly exposes ${host}`);
 		}

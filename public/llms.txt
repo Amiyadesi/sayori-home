@@ -31,6 +31,7 @@ This is a personal public desk, not a local business or commercial service site.
 - GeoScore public audit API: https://geo-api.sayori.org/
 - GeoScore OpenAPI document: https://geo-api.sayori.org/openapi.json
 - GeoScore source: https://github.com/Amiyadesi/geoscore
+- Whiteboard: https://board.sayori.org/
 - Search Gateway source and self-hosting guide: https://github.com/Amiyadesi/search-gateway
 - Guestbook: https://blog.sayori.org/guestbook/
 - RSS feed: https://blog.sayori.org/rss.xml

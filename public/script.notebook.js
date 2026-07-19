@@ -870,8 +870,10 @@ function renderServicesBoard(items) {
 		const link = document.createElement('a');
 		link.className = 'service-note service-note-large';
 		link.href = safeHref(item.href);
-		link.target = '_blank';
-		link.rel = 'noopener';
+		if (item.external !== false) {
+			link.target = '_blank';
+			link.rel = 'noopener';
+		}
 		const index = document.createElement('span');
 		index.className = 'service-index';
 		index.textContent = item.index || '';

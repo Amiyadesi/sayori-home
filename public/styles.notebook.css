@@ -79,6 +79,25 @@ a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 pre { font-family: inherit; margin: 0; }
 
+.skip-link {
+	position: fixed;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 200;
+	padding: 0.6rem 0.85rem;
+	border: 2px solid var(--ink);
+	border-radius: 4px;
+	background: var(--paper);
+	color: var(--ink);
+	font-weight: 700;
+	transform: translateY(calc(-100% - 1.5rem));
+	transition: transform 0.16s ease;
+}
+
+.skip-link:focus {
+	transform: translateY(0);
+}
+
 /* ========== DESK SURFACE ========== */
 
 .desk-surface {

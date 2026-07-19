@@ -1,6 +1,6 @@
 # Amiya's Desk
 
-> Amiya's Desk is Amiya_desi's personal public entry point for writing, project records, Godot game work, homelab notes, public tools, and contact links.
+> Amiya's Desk is Amiya_desi's personal public entry point for writing, project records, Godot game work, homelab notes, public digital services, and contact links.
 
 ## Context
 
@@ -17,20 +17,26 @@ This is a personal public desk, not a local business or commercial service site.
 - Home: https://sayori.org/
 - Chinese entry: https://sayori.org/zh/
 - English entry: https://sayori.org/en/
+- Public services: https://sayori.org/services/
+- Chinese services guide: https://sayori.org/zh/services/
+- English services guide: https://sayori.org/en/services/
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
 
-## Public Tools And Project Entries
+## Public Services And Open Source
 
 - Blog articles and notes: https://blog.sayori.org/
 - Resource shelf: https://blog.sayori.org/posts/resource-index/
 - GeoScore SEO/GEO audit service: https://geo.sayori.org/
+- GeoScore public audit API: https://geo-api.sayori.org/
+- GeoScore OpenAPI document: https://geo-api.sayori.org/openapi.json
 - GeoScore source: https://github.com/Amiyadesi/geoscore
-- Search Gateway service and API docs: https://search.sayori.org/
-- Search Gateway source: https://github.com/Amiyadesi/search-gateway
-- Browser whiteboard: https://board.sayori.org/
+- Search Gateway source and self-hosting guide: https://github.com/Amiyadesi/search-gateway
 - Guestbook: https://blog.sayori.org/guestbook/
 - RSS feed: https://blog.sayori.org/rss.xml
+- Service status: https://status.sayori.org/
+
+The GeoScore audit API is public under its documented limits and accepts public hostnames only. The hosted Search Gateway instance remains private infrastructure and is not a public API. Paused experiments, private storage, and internal management endpoints are not public services.
 
 ## Crawl Policy
 

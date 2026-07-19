@@ -54,15 +54,16 @@ jobs:
           echo "DEPLOYMENT_BUILT_AT=$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')" >> "${GITHUB_ENV}"
           echo "DEPLOYMENT_WORKFLOW_RUN=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "${GITHUB_ENV}"
 
+      - name: Sync public content
+        env:
+          CONTENT_DIR: ./content
+        run: node scripts/sync-home-content.mjs
+
       - name: Run tests
         run: node --test scripts/*.test.mjs
 
-      - name: Sync public content and write manifest
-        env:
-          CONTENT_DIR: ./content
-        run: |
-          node scripts/sync-home-content.mjs
-          node scripts/write-deployment-manifest.mjs public/deployment.json
+      - name: Write deployment manifest
+        run: node scripts/write-deployment-manifest.mjs public/deployment.json
 
       - name: Check production secrets
         if: github.event_name != 'pull_request'

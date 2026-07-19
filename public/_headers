@@ -22,6 +22,18 @@
 /en/index.html
   Cache-Control: no-cache
 
+/services/*
+  Cache-Control: no-cache
+
+/zh/services/*
+  Cache-Control: no-cache
+
+/en/services/*
+  Cache-Control: no-cache
+
+/services/services.css
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
 /styles.notebook.css
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 

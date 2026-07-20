@@ -42,15 +42,22 @@ test("retired and private services are not advertised on public surfaces", () =>
 	}
 });
 
-test("localized home data points to the full public services page", () => {
+test("localized home data exposes the maintained tools and links", () => {
+	const expectedLinks = [
+		"https://blog.sayori.org/posts/resource-index/",
+		"https://board.sayori.org/",
+		"https://geo.sayori.org/",
+		"https://blog.sayori.org/guestbook/",
+	];
+
 	for (const lang of ["zh", "en"]) {
 		const config = JSON.parse(read(`public/assets/data/home-${lang}.json`));
 		const serviceEntry = config.surface.entries.find((entry) => entry.action === "services");
 		assert.ok(serviceEntry, `home-${lang}.json: services panel entry`);
-		assert.ok(
-			config.services.items.some((item) => item.href?.includes("/services/")),
-			`home-${lang}.json: full services link`,
-		);
+		const serviceLinks = config.services.items.map((item) => item.href);
+		for (const link of expectedLinks) {
+			assert.ok(serviceLinks.includes(link), `home-${lang}.json: ${link}`);
+		}
 		const serialized = JSON.stringify(config);
 		for (const host of maintainedPublicHosts) {
 			assert.ok(serialized.includes(host), `home-${lang}.json: maintained ${host}`);

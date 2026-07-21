@@ -10,14 +10,14 @@
 
 当前入口文件在 `public/`：
 
-- `index.html` — 根路径，按 `navigator.language` 重定向到 `/zh/` 或 `/en/`
-- `zh/index.html` — 中文版页面
-- `en/index.html` — 英文版页面
-- `services/index.html` — 公共服务页的语言入口
-- `zh/services/index.html` / `en/services/index.html` — 公共服务、开源项目、邀请制计划与使用边界
+- `index.html` — 唯一主页 URL；按浏览器语言或 `sayori:ui-language` 加载中英文内容
+- `services/index.html` — 唯一公共服务 URL；使用同一语言偏好渲染中英文内容
+- `zh/` / `en/` — 旧链接的 noindex 重定向页，不再作为独立内容入口
+- `i18n-router.js` — 语言检测、偏好保存和同 URL 切换
 - `services/services.css` — 公共服务页共享样式
+- `services/services-i18n.js` — 公共服务页双语内容与渲染
 - `styles.notebook.css` — 共享样式
-- `script.notebook.js` — 共享脚本（按路径加载对应语言数据）
+- `script.notebook.js` — 共享脚本（按当前界面语言加载对应数据）
 - `assets/data/home-zh.json` / `assets/data/home-en.json` — 表层纸面配置
 - `assets/data/lines-zh.json` / `assets/data/lines-en.json` — 底层终端配置
 - `assets/svg/` — 原创手绘 SVG 角色和 cameo 插画

@@ -15,11 +15,8 @@ This is a personal public desk, not a local business or commercial service site.
 ## Core Links
 
 - Home: https://sayori.org/
-- Chinese entry: https://sayori.org/zh/
-- English entry: https://sayori.org/en/
+- The home uses one canonical URL and follows the browser language or the saved local preference: https://sayori.org/
 - Public services: https://sayori.org/services/
-- Chinese services guide: https://sayori.org/zh/services/
-- English services guide: https://sayori.org/en/services/
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
 

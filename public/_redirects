@@ -1,1 +1,14 @@
 https://value.sayori.org/* https://vault.sayori.org/:splat 301
+
+/zh /?lang=zh 301
+/zh/ /?lang=zh 301
+/zh/index.html /?lang=zh 301
+/en /?lang=en 301
+/en/ /?lang=en 301
+/en/index.html /?lang=en 301
+/zh/services /services/?lang=zh 301
+/zh/services/ /services/?lang=zh 301
+/zh/services/index.html /services/?lang=zh 301
+/en/services /services/?lang=en 301
+/en/services/ /services/?lang=en 301
+/en/services/index.html /services/?lang=en 301

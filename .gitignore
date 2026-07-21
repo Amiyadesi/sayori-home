@@ -1,4 +1,6 @@
 .wrangler/
+.playwright-cli/
+output/
 .env
 content/
 

@@ -8,10 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const publicFiles = [
 	"public/index.html",
 	"public/services/index.html",
-	"public/zh/index.html",
-	"public/en/index.html",
-	"public/zh/services/index.html",
-	"public/en/services/index.html",
+	"public/services/services-i18n.js",
 	"public/llms.txt",
 ];
 
@@ -68,26 +65,23 @@ test("localized home data exposes the maintained tools and links", () => {
 	}
 });
 
-test("the public services pages document status and operating boundaries", () => {
-	for (const relativePath of ["public/zh/services/index.html", "public/en/services/index.html"]) {
-		const content = read(relativePath);
-		assert.match(content, /id="service-status"/);
-		assert.match(content, /id="operating-boundaries"/);
-		assert.match(content, /id="planned-services"/);
-	}
+test("the canonical public services page documents status and operating boundaries", () => {
+	const content = read("public/services/index.html");
+	assert.match(content, /id="service-status"/);
+	assert.match(content, /id="operating-boundaries"/);
+	assert.match(content, /id="planned-services"/);
 });
 
 test("the public GeoScore API is discoverable without exposing Search Gateway", () => {
 	for (const relativePath of [
 		"public/services/index.html",
-		"public/zh/services/index.html",
-		"public/en/services/index.html",
+		"public/services/services-i18n.js",
 		"public/llms.txt",
 	]) {
 		const content = read(relativePath);
 		assert.ok(content.includes("https://geo-api.sayori.org"), `${relativePath}: GeoScore API`);
 	}
-	for (const relativePath of ["public/zh/services/index.html", "public/en/services/index.html", "public/llms.txt"]) {
+	for (const relativePath of ["public/services/index.html", "public/services/services-i18n.js", "public/llms.txt"]) {
 		const content = read(relativePath);
 		assert.ok(content.includes("https://geo-api.sayori.org/openapi.json"), `${relativePath}: OpenAPI`);
 		assert.ok(!content.includes("https://search.sayori.org"), `${relativePath}: hosted Search Gateway`);

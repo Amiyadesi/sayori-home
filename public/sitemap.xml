@@ -2,44 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	<url>
 		<loc>https://sayori.org/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/en/" />
-	</url>
-	<url>
-		<loc>https://sayori.org/zh/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/en/" />
-	</url>
-	<url>
-		<loc>https://sayori.org/en/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/en/" />
+		<lastmod>2026-07-21</lastmod>
 	</url>
 	<url>
 		<loc>https://sayori.org/services/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/services/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
-	</url>
-	<url>
-		<loc>https://sayori.org/zh/services/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/services/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
-	</url>
-	<url>
-		<loc>https://sayori.org/en/services/</loc>
-		<lastmod>2026-07-18</lastmod>
-		<xhtml:link rel="alternate" hreflang="zh" href="https://sayori.org/zh/services/" />
-		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
-		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+		<lastmod>2026-07-21</lastmod>
 	</url>
 </urlset>

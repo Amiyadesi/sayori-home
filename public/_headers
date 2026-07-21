@@ -1,4 +1,5 @@
 /*
+  Strict-Transport-Security: max-age=31536000
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -10,28 +11,19 @@
 /index.html
   Cache-Control: no-cache
 
-/zh/
-  Cache-Control: no-cache
-
-/zh/index.html
-  Cache-Control: no-cache
-
-/en/
-  Cache-Control: no-cache
-
-/en/index.html
-  Cache-Control: no-cache
-
 /services/*
   Cache-Control: no-cache
 
-/zh/services/*
-  Cache-Control: no-cache
-
-/en/services/*
-  Cache-Control: no-cache
-
 /services/services.css
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/services/services-i18n.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/services/services-i18n.min.js
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/i18n-router.js
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /styles.notebook.css

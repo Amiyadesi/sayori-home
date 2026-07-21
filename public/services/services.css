@@ -41,21 +41,6 @@ summary:focus-visible {
 	outline-offset: 4px;
 }
 
-.skip-link {
-	position: fixed;
-	top: 0.75rem;
-	left: 0.75rem;
-	z-index: 20;
-	padding: 0.55rem 0.8rem;
-	background: var(--ink);
-	color: #fff;
-	transform: translateY(-180%);
-}
-
-.skip-link:focus {
-	transform: translateY(0);
-}
-
 .site-header,
 .hero-inner,
 .section-inner,

@@ -1,9 +1,9 @@
 const body = document.body;
 const root = document.documentElement;
 
-const PATH_LANG = location.pathname.includes('/en/') ? 'en' : 'zh';
-const HOME_DATA_URL = `../assets/data/home-${PATH_LANG}.json`;
-const TRUTH_DATA_URL = `../assets/data/lines-${PATH_LANG}.json`;
+const PATH_LANG = window.SayoriI18n?.language || (/^zh(?:-|_|$)/i.test(navigator.language || '') ? 'zh' : 'en');
+const HOME_DATA_URL = `/assets/data/home-${PATH_LANG}.json`;
+const TRUTH_DATA_URL = `/assets/data/lines-${PATH_LANG}.json`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const musicProviderOverride = urlParams.get('music');
@@ -88,7 +88,7 @@ const sideNotesLayer = document.getElementById('side-notes-layer');
 const reduceMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
 const coarsePointerQuery = window.matchMedia?.('(pointer: coarse)');
 
-const GENERATED_BASE = '../assets/generated/';
+const GENERATED_BASE = '/assets/generated/';
 const SAYORI_TERMINAL_IMAGES = [
 	GENERATED_BASE + 'terminal-sayori-v2.webp',
 	GENERATED_BASE + 'terminal-sayori-full.webp',
@@ -226,6 +226,7 @@ const surfaceHideJobs = new WeakMap();
 initDate();
 initWeather();
 loadHomeData().finally(() => {
+	window.SayoriI18n?.ready?.();
 	initDreamInteractions();
 	initSideNotes();
 });
@@ -696,7 +697,10 @@ function renderPageVersion(languageLink, version) {
 	wrap.replaceChildren();
 	if (languageLink?.href && languageLink?.label) {
 		const link = document.createElement('a');
-		link.href = safeHref(languageLink.href);
+		link.href = `${location.pathname}${location.search}${location.hash}`;
+		const nextLanguage = PATH_LANG === 'en' ? 'zh' : 'en';
+		link.dataset.sayoriLanguage = nextLanguage;
+		link.lang = nextLanguage === 'zh' ? 'zh-CN' : 'en';
 		link.style.color = 'inherit';
 		link.style.opacity = '0.7';
 		link.textContent = languageLink.label;

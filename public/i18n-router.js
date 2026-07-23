@@ -46,7 +46,7 @@
 	if (queryLanguage) saveLanguage(queryLanguage);
 
 	document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
-	document.documentElement.dataset.sayoriLanguage = currentLanguage;
+	document.documentElement.dataset.sayoriCurrentLanguage = currentLanguage;
 	if (config.pendingUntilReady) {
 		document.documentElement.dataset.sayoriI18nPending = "true";
 	}
@@ -67,7 +67,7 @@
 		currentLanguage = language;
 		saveLanguage(language);
 		document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-		document.documentElement.dataset.sayoriLanguage = language;
+		document.documentElement.dataset.sayoriCurrentLanguage = language;
 		if (typeof window.CustomEvent === "function") {
 			window.dispatchEvent(new CustomEvent("sayori:ui-language-change", {
 				detail: { language },
@@ -78,7 +78,7 @@
 	}
 
 	document.addEventListener("click", (event) => {
-		const control = event.target.closest?.("[data-sayori-language]");
+		const control = event.target.closest?.("a[data-sayori-language], button[data-sayori-language]");
 		if (!control) return;
 		const language = control.dataset.sayoriLanguage;
 		if (language !== "zh" && language !== "en") return;

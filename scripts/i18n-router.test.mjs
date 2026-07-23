@@ -43,6 +43,16 @@ test("manual language controls save the preference and reload the same page", ()
 	assert.equal(result.pathname, "/services/");
 });
 
+test("ordinary page controls never trigger the delegated language reload", () => {
+	const result = runRouter({ browserLanguage: "zh-CN" });
+
+	result.clickOrdinaryControl();
+	assert.equal(result.reloads, 0);
+	assert.equal(result.prevented, false);
+	assert.equal(result.documentDataset.sayoriLanguage, undefined);
+	assert.equal(result.documentDataset.sayoriCurrentLanguage, "zh");
+});
+
 test("canonical pages use one synchronous language router instead of language routes", () => {
 	for (const relativePath of ["public/index.html", "public/services/index.html"]) {
 		const html = read(relativePath);
@@ -123,6 +133,7 @@ function runRouter({
 		get reloads() { return reloads; },
 		get prevented() { return prevented; },
 		get replacedUrl() { return replacedUrl; },
+		get documentDataset() { return documentElement.dataset; },
 		pathname: location.pathname,
 		clickLanguageControl() {
 			assert.ok(delegatedClickHandler, "delegated language handler");
@@ -131,6 +142,20 @@ function runRouter({
 				target: {
 					closest() {
 						return { dataset: { sayoriLanguage: linkLanguage } };
+					},
+				},
+			});
+		},
+		clickOrdinaryControl() {
+			assert.ok(delegatedClickHandler, "delegated language handler");
+			delegatedClickHandler({
+				preventDefault() { prevented = true; },
+				target: {
+					closest(selector) {
+						if (selector.includes("[data-sayori-language]") && documentElement.dataset.sayoriLanguage) {
+							return documentElement;
+						}
+						return null;
 					},
 				},
 			});

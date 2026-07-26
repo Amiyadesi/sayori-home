@@ -1,7 +1,11 @@
 (function () {
+  if (document.documentElement.dataset.sayoriAnalyticsTracker === "active") {
+    return;
+  }
+  document.documentElement.dataset.sayoriAnalyticsTracker = "active";
   const endpoint = "https://blog.sayori.org/api/analytics/event";
   const site = "home";
-  const heartbeatMs = 30000;
+  const heartbeatMs = 60000;
   const storagePrefix = "sayoriHomeAnalytics";
 
   function randomId() {

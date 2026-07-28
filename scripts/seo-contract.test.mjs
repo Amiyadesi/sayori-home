@@ -6,22 +6,31 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("home and services each expose one canonical URL", () => {
+test("home, services and about each expose one canonical URL", () => {
 	const home = read("public/index.html");
 	const services = read("public/services/index.html");
+	const about = read("public/about/index.html");
 
 	assert.equal(canonical(home), "https://sayori.org/");
 	assert.equal(canonical(services), "https://sayori.org/services/");
+	assert.equal(canonical(about), "https://sayori.org/about/");
 	assert.doesNotMatch(home, /hreflang=/);
 	assert.doesNotMatch(services, /hreflang=/);
+	assert.doesNotMatch(about, /hreflang=/);
 	assert.notEqual(title(home), title(services));
+	assert.notEqual(title(home), title(about));
+	assert.notEqual(title(services), title(about));
 });
 
-test("sitemap lists only the two canonical content pages", () => {
+test("sitemap lists only the canonical content pages", () => {
 	const sitemap = read("public/sitemap.xml");
 	const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-	assert.deepEqual(locations, ["https://sayori.org/", "https://sayori.org/services/"]);
+	assert.deepEqual(locations, [
+		"https://sayori.org/",
+		"https://sayori.org/services/",
+		"https://sayori.org/about/",
+	]);
 	assert.doesNotMatch(sitemap, /\/zh\/|\/en\//);
 });
 

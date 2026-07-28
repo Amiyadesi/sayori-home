@@ -49,10 +49,6 @@ const introClose = document.getElementById('intro-close');
 const introNote = document.getElementById('intro-note');
 const introFrame = document.getElementById('intro-video-frame');
 let introVideoLink = document.getElementById('intro-video-link');
-let aboutOpen = document.getElementById('about-open');
-const aboutClose = document.getElementById('about-close');
-const profileNote = document.getElementById('profile-note');
-let profileEmail = document.getElementById('profile-email');
 let servicesOpen = document.getElementById('services-open');
 const servicesClose = document.getElementById('services-close');
 const servicesNote = document.getElementById('services-note');
@@ -244,7 +240,6 @@ pianoBtn?.addEventListener('click', () => toggleMusicPlayer(pianoPlayer, pianoFr
 }));
 bindSurfaceHandlers();
 introClose?.addEventListener('click', () => closeIntroNote());
-aboutClose?.addEventListener('click', () => closeProfileNote());
 servicesClose?.addEventListener('click', () => closeServicesNote());
 document.addEventListener('pointerdown', (e) => {
 	const activeNote = getActiveSurfaceNote();
@@ -570,7 +565,6 @@ function applyHomeData(config) {
 	applyLinkConfig(config.links);
 	applySurfaceConfig(config.surface);
 	applyIntroConfig(config.intro);
-	applyProfileConfig(config.profile);
 	applyServicesConfig(config.services);
 	bindSurfaceHandlers();
 }
@@ -637,7 +631,6 @@ function renderEntries(entries, ariaLabel) {
 		const node = createEntryNode(entry);
 		if (node) nav.append(node);
 	}
-	aboutOpen = document.getElementById('about-open');
 	servicesOpen = document.getElementById('services-open');
 	introOpen = document.getElementById('intro-open');
 	bindSurfaceHandlers();
@@ -645,17 +638,16 @@ function renderEntries(entries, ariaLabel) {
 
 function createEntryNode(entry) {
 	if (!entry || typeof entry !== 'object') return null;
-	const isButton = entry.action === 'intro' || entry.action === 'about' || entry.action === 'services';
+	const isButton = entry.action === 'intro' || entry.action === 'services';
 	const node = isButton ? document.createElement('button') : document.createElement('a');
 	node.className = 'entry';
 	if (isButton) {
 		node.type = 'button';
 		const actionMap = {
 			intro: ['intro-entry', 'intro-open', 'intro-note'],
-			about: ['about-entry', 'about-open', 'profile-note'],
 			services: ['services-entry', 'services-open', 'services-note'],
 		};
-		const [className, id, controls] = actionMap[entry.action] || actionMap.about;
+		const [className, id, controls] = actionMap[entry.action] || actionMap.services;
 		node.classList.add('entry-button', className);
 		node.id = id;
 		node.setAttribute('aria-controls', controls);
@@ -729,130 +721,6 @@ function applyIntroConfig(intro) {
 	}
 }
 
-function applyProfileConfig(profile) {
-	if (!profile || typeof profile !== 'object' || !profileNote) return;
-	setAttr(profileNote, 'aria-label', profile.ariaLabel);
-	setText(profileNote.querySelector('.profile-back'), profile.backLabel);
-	setAttr(profileNote.querySelector('.profile-back'), 'aria-label', profile.backAriaLabel);
-	setText(profileNote.querySelector('.profile-kicker'), profile.kicker);
-	setText(profileNote.querySelector('.profile-head h2'), profile.name);
-	setText(profileNote.querySelector('.profile-head p:not(.profile-kicker)'), profile.intro);
-	renderProfileColumns(profile.columns);
-	renderChipList(profileNote.querySelector('.profile-learning'), profile.learning);
-	renderProfileFaq(profile.faq);
-	renderProfileContact(profile.contact);
-}
-
-function renderProfileColumns(columns) {
-	const wrap = profileNote?.querySelector('.profile-columns');
-	if (!wrap || !Array.isArray(columns) || !columns.length) return;
-	wrap.replaceChildren();
-	for (const column of columns) {
-		const block = document.createElement('div');
-		block.className = 'profile-block';
-		const title = document.createElement('h3');
-		title.textContent = column?.title || '';
-		const list = document.createElement('ul');
-		for (const item of Array.isArray(column?.items) ? column.items : []) {
-			const li = document.createElement('li');
-			appendRichText(li, item);
-			list.append(li);
-		}
-		block.append(title, list);
-		wrap.append(block);
-	}
-}
-
-function appendRichText(parent, item) {
-	if (typeof item === 'string') {
-		parent.textContent = item;
-		return;
-	}
-	if (!item || typeof item !== 'object') return;
-	const text = String(item.text || '');
-	const links = Array.isArray(item.links) ? item.links : [];
-	if (!links.length) {
-		parent.textContent = text;
-		return;
-	}
-
-	let cursor = 0;
-	for (const linkDef of links) {
-		const label = String(linkDef?.label || '');
-		const idx = label ? text.indexOf(label, cursor) : -1;
-		if (idx < 0) continue;
-		parent.append(text.slice(cursor, idx));
-		const link = document.createElement('a');
-		link.href = safeHref(linkDef.href);
-		link.target = '_blank';
-		link.rel = 'noopener';
-		link.textContent = label;
-		parent.append(link);
-		cursor = idx + label.length;
-	}
-	parent.append(text.slice(cursor));
-}
-
-function renderChipList(wrap, items) {
-	if (!wrap || !Array.isArray(items)) return;
-	wrap.replaceChildren();
-	for (const item of items) {
-		if (typeof item !== 'string' || !item.trim()) continue;
-		const chip = document.createElement('span');
-		chip.textContent = item;
-		wrap.append(chip);
-	}
-}
-
-function renderProfileFaq(faq) {
-	const wrap = profileNote?.querySelector('.profile-faq');
-	if (!wrap || !faq || typeof faq !== 'object') return;
-	const items = Array.isArray(faq.items) ? faq.items : [];
-	if (!items.length) {
-		wrap.hidden = true;
-		return;
-	}
-	wrap.hidden = false;
-	wrap.replaceChildren();
-	const title = document.createElement('h3');
-	title.textContent = faq.title || '';
-	wrap.append(title);
-	for (const item of items) {
-		if (!item?.question || !item?.answer) continue;
-		const details = document.createElement('details');
-		const summary = document.createElement('summary');
-		const answer = document.createElement('p');
-		summary.textContent = item.question;
-		answer.textContent = item.answer;
-		details.append(summary, answer);
-		wrap.append(details);
-	}
-}
-
-function renderProfileContact(contact) {
-	if (!contact || typeof contact !== 'object') return;
-	profileEmail = document.getElementById('profile-email');
-	if (contact.email && profileEmail) {
-		profileEmail.href = `mailto:${contact.email}`;
-		profileEmail.dataset.email = contact.email;
-		profileEmail.textContent = contact.email;
-	}
-	const linksWrap = profileNote?.querySelector('.profile-links');
-	if (linksWrap && Array.isArray(contact.links)) {
-		linksWrap.replaceChildren();
-		setAttr(linksWrap, 'aria-label', contact.linksAriaLabel);
-		for (const item of contact.links) {
-			if (!item?.href || !item?.label) continue;
-			const link = document.createElement('a');
-			link.href = safeHref(item.href);
-			link.target = '_blank';
-			link.rel = 'noopener';
-			link.textContent = item.label;
-			linksWrap.append(link);
-		}
-	}
-}
-
 function applyServicesConfig(services) {
 	if (!services || typeof services !== 'object' || !servicesNote) return;
 	setAttr(servicesNote, 'aria-label', services.ariaLabel);
@@ -892,16 +760,9 @@ function renderServicesBoard(items) {
 
 function bindSurfaceHandlers() {
 	introOpen = document.getElementById('intro-open');
-	aboutOpen = document.getElementById('about-open');
 	servicesOpen = document.getElementById('services-open');
-	profileEmail = document.getElementById('profile-email');
 	if (introOpen) introOpen.onclick = () => openIntroNote();
-	if (aboutOpen) aboutOpen.onclick = () => openProfileNote();
 	if (servicesOpen) servicesOpen.onclick = () => openServicesNote();
-	if (profileEmail) profileEmail.onclick = (e) => {
-		e.preventDefault();
-		copyText(profileEmail.dataset.email || profileEmail.textContent.trim(), profileEmail);
-	};
 }
 
 function setText(node, value) {
@@ -962,7 +823,6 @@ function mergePlain(base, override) {
 
 function openIntroNote() {
 	if (!introNote || currentLayer !== 'dream') return;
-	closeProfileNote({ restoreFocus: false });
 	closeServicesNote({ restoreFocus: false });
 	showSurfaceNote(introNote, 'intro-open');
 	introOpen?.setAttribute('aria-expanded', 'true');
@@ -978,26 +838,9 @@ function closeIntroNote(opts = {}) {
 	if (opts.restoreFocus !== false) introOpen?.focus({ preventScroll: true });
 }
 
-function openProfileNote() {
-	if (!profileNote || currentLayer !== 'dream') return;
-	closeIntroNote({ restoreFocus: false });
-	closeServicesNote({ restoreFocus: false });
-	showSurfaceNote(profileNote, 'profile-open');
-	aboutOpen?.setAttribute('aria-expanded', 'true');
-	window.setTimeout(() => profileNote.querySelector('.profile-back')?.focus({ preventScroll: true }), 380);
-}
-
-function closeProfileNote(opts = {}) {
-	if (!profileNote) return;
-	hideSurfaceNote(profileNote, 'profile-open');
-	aboutOpen?.setAttribute('aria-expanded', 'false');
-	if (opts.restoreFocus !== false) aboutOpen?.focus({ preventScroll: true });
-}
-
 function openServicesNote() {
 	if (!servicesNote || currentLayer !== 'dream') return;
 	closeIntroNote({ restoreFocus: false });
-	closeProfileNote({ restoreFocus: false });
 	showSurfaceNote(servicesNote, 'services-open');
 	servicesOpen?.setAttribute('aria-expanded', 'true');
 	window.setTimeout(() => servicesNote.querySelector('.profile-back')?.focus({ preventScroll: true }), 380);
@@ -1011,7 +854,7 @@ function closeServicesNote(opts = {}) {
 }
 
 function initializeSurfaceNoteState() {
-	[introNote, profileNote, servicesNote].forEach((note) => setSurfaceNoteVisible(note, false));
+	[introNote, servicesNote].forEach((note) => setSurfaceNoteVisible(note, false));
 }
 
 function setSurfaceNoteVisible(note, visible) {
@@ -1062,21 +905,10 @@ function getActiveSurfaceNote() {
 	if (body.classList.contains('intro-open') && introNote) {
 		return { note: introNote, openButton: introOpen, close: closeIntroNote };
 	}
-	if (body.classList.contains('profile-open') && profileNote) {
-		return { note: profileNote, openButton: aboutOpen, close: closeProfileNote };
-	}
 	if (body.classList.contains('services-open') && servicesNote) {
 		return { note: servicesNote, openButton: servicesOpen, close: closeServicesNote };
 	}
 	return null;
-}
-
-function copyText(text, target) {
-	if (!text) return;
-	navigator.clipboard?.writeText(text).then(() => {
-		target?.classList.add('is-copied');
-		window.setTimeout(() => target?.classList.remove('is-copied'), 1600);
-	});
 }
 
 
@@ -1086,7 +918,6 @@ async function collapseToTruth() {
 	locked = true;
 	currentLayer = 'transition';
 	closeIntroNote({ restoreFocus: false });
-	closeProfileNote();
 	closeServicesNote({ restoreFocus: false });
 	closeAllMusic();
 	startTruthMusic();

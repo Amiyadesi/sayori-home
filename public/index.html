@@ -194,46 +194,6 @@
 								"item": "https://sayori.org/"
 							}
 						]
-					},
-					{
-						"@type": "FAQPage",
-						"@id": "https://sayori.org/#faq",
-						"url": "https://sayori.org/",
-						"name": "Amiya的书桌常见问题",
-						"mainEntity": [
-							{
-								"@type": "Question",
-								"name": "sayori.org 是什么？",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "这是 Amiya_desi 的个人公开入口，用来整理博客、Godot 游戏作品、公共数字服务、服务器和 Cloudflare 笔记、Obsidian 写作流、GitHub、Bilibili 与联系方式。"
-								}
-							},
-							{
-								"@type": "Question",
-								"name": "博客主要写什么？",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "blog.sayori.org 主要记录教程文章、服务器折腾、Godot 开发、AI 辅助开发复盘、资源索引、项目日志和一些日常回声。"
-								}
-							},
-							{
-								"@type": "Question",
-								"name": "这里提供商业服务或本地业务吗？",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "不提供。这里是个人公开形象和作品入口，不发布虚假地址、电话、价格表、本地服务页或商业交付承诺。"
-								}
-							},
-							{
-								"@type": "Question",
-								"name": "可以从哪里联系或继续了解？",
-								"acceptedAnswer": {
-									"@type": "Answer",
-									"text": "可以通过 me@sayori.org 联系，也可以从这个页面进入 GitHub、博客、Bilibili、Linux.do、GeoScore、公共服务说明和留言板。"
-								}
-							}
-						]
 					}
 				]
 			}
@@ -321,7 +281,7 @@
 							<span class="entry-underline" aria-hidden="true"></span>
 						</a>
 						<a href="https://space.bilibili.com/3546919890585725" class="entry" target="_blank" rel="noopener">
-							<span class="entry-num">03</span>
+							<span class="entry-num">02</span>
 							<span class="entry-body">
 								<span class="entry-title">Bilibili</span>
 								<span class="entry-desc">— 视频、游戏和折腾记录</span>
@@ -329,29 +289,20 @@
 							<span class="entry-arrow" aria-hidden="true">→</span>
 							<span class="entry-underline" aria-hidden="true"></span>
 						</a>
-						<button class="entry entry-button about-entry" type="button" id="about-open" aria-controls="profile-note" aria-expanded="false">
-							<span class="entry-num">04</span>
+						<a href="/about/" class="entry about-entry" id="about-open">
+							<span class="entry-num">03</span>
 							<span class="entry-body">
 								<span class="entry-title">关于我</span>
-								<span class="entry-desc">— 公开名片和联系方式</span>
+								<span class="entry-desc">— 放在桌上的一封信</span>
 							</span>
-							<span class="entry-arrow" aria-hidden="true">↓</span>
+							<span class="entry-arrow" aria-hidden="true">→</span>
 							<span class="entry-underline" aria-hidden="true"></span>
-						</button>
+						</a>
 						<button class="entry entry-button services-entry" type="button" id="services-open" aria-controls="services-note" aria-expanded="false">
-							<span class="entry-num">05</span>
+							<span class="entry-num">04</span>
 							<span class="entry-body">
 								<span class="entry-title">公共服务</span>
 								<span class="entry-desc">— 工具、项目与使用边界</span>
-							</span>
-							<span class="entry-arrow" aria-hidden="true">↓</span>
-							<span class="entry-underline" aria-hidden="true"></span>
-						</button>
-						<button class="entry entry-button intro-entry" type="button" id="intro-open" aria-controls="intro-note" aria-expanded="false">
-							<span class="entry-num">02</span>
-							<span class="entry-body">
-								<span class="entry-title">网站介绍</span>
-								<span class="entry-desc">— 先用一支视频逛逛这里</span>
 							</span>
 							<span class="entry-arrow" aria-hidden="true">↓</span>
 							<span class="entry-underline" aria-hidden="true"></span>
@@ -425,104 +376,11 @@
 				<span class="sayori-drag-zone" id="sayori-drag-zone" aria-hidden="true"></span>
 			</div>
 
-			<section class="intro-note" id="intro-note" hidden inert aria-label="sayori.org 网站介绍">
-				<button class="profile-back" type="button" id="intro-close" aria-label="返回主纸页">← 返回</button>
-				<span class="profile-pin" aria-hidden="true"></span>
-				<header class="intro-head">
-					<p class="profile-kicker">02 / 网站介绍</p>
-					<h2>先看一支介绍</h2>
-					<p>这支 B 站视频会快速带你走一遍 sayori.org：博客、小白板、留言板、公共服务和项目入口，以及我为什么把它们放在同一张书桌上。</p>
-				</header>
-				<div class="intro-video-shell">
-					<iframe
-						id="intro-video-frame"
-						title="sayori.org 网站介绍 - Bilibili"
-						data-src="https://player.bilibili.com/player.html?isOutside=true&amp;bvid=BV1pNVz6JEpZ&amp;p=1&amp;autoplay=0"
-						loading="lazy"
-						referrerpolicy="strict-origin-when-cross-origin"
-						allow="fullscreen; picture-in-picture"
-						allowfullscreen
-					></iframe>
-				</div>
-				<footer class="intro-actions">
-					<a id="intro-video-link" href="https://www.bilibili.com/video/BV1pNVz6JEpZ/" target="_blank" rel="noopener">去 B 站打开原视频</a>
-				</footer>
-			</section>
-
-			<section class="profile-note" id="profile-note" hidden inert aria-label="关于 Amiya">
-				<button class="profile-back" type="button" id="about-close" aria-label="返回主纸页">← 返回</button>
-				<span class="profile-pin" aria-hidden="true"></span>
-				<header class="profile-head">
-					<p class="profile-kicker">04 / 超级个体名片</p>
-					<h2>Amiya_desi</h2>
-					<p>Amiya_desi 是我长期经营的个人公开身份：围绕 Godot 游戏、个人网站、服务器折腾、Cloudflare 工作流、Obsidian 写作流和 AI 辅助开发做作品、工具、文章与复盘。这个入口负责把稳定可公开的东西放在一起：博客文章、GameJam 作品、GitHub 项目、GeoScore、小白板、公共服务说明、留言板和公开联系方式。AI 会用，但只把它当成调试、检索、重构和整理工作的放大器，不让它替代作品本身。</p>
-				</header>
-				<div class="profile-columns">
-					<div class="profile-block">
-						<h3>公开方向</h3>
-						<ul>
-							<li>游戏开发：Godot 4.x、GDScript、C#，能做 2D 玩法原型、状态机、事件总线、对象池、资源/存档系统和编辑器工具。</li>
-							<li>玩法表达：平台跳跃、时间回溯、输入缓冲/容错、关卡节奏、手感调参，以及偏 meta 的叙事和解谜原型。</li>
-							<li>独立发布面：个人网站、博客、Bilibili、GitHub、GameJam 作品和公共数字服务，正在把作品集做成可持续增长的入口。</li>
-							<li>Web / 服务器：静态站、博客内容管线、Linux、Docker、Cloudflare Pages / Tunnel 和日常运维脚本。</li>
-						</ul>
-					</div>
-					<div class="profile-block">
-						<h3>作品记录</h3>
-						<ul>
-							<li><a href="https://github.com/Amiyadesi/Wake_up_at_the_border" target="_blank" rel="noopener">WakeUpAtTheBorder</a>：Godot 2D 横版叙事/边境主题游戏，GodotHub 第三届开发大赛二等奖。</li>
-							<li><a href="https://github.com/Amiyadesi/time-runner" target="_blank" rel="noopener">TimeRuner</a>：C# 动作平台跳跃，核心是 5 秒时间回溯和短关卡节奏，034GameJam 最佳时间题材游戏奖。</li>
-							<li><a href="https://github.com/Amiyadesi/enahnce_save_system" target="_blank" rel="noopener">EnhanceSaveSystem</a>：Godot 存档插件，关注可维护存档工程：AES-GCM、gzip、原子写入和版本迁移。</li>
-							<li><a href="https://github.com/Amiyadesi/ThatGameJam" target="_blank" rel="noopener">Mio's Windowanderer</a> / <a href="https://github.com/Amiyadesi/ggj" target="_blank" rel="noopener">少女们的假面舞会</a>：多窗口解谜、文字解谜和 GameJam 实践。</li>
-						</ul>
-					</div>
-				</div>
-				<div class="profile-learning">
-					<span>Godot 游戏与插件开发</span>
-					<span>服务器 / Cloudflare / Docker</span>
-					<span>Obsidian 写作和内容管线</span>
-					<span>AI 辅助开发的边界与复盘方法</span>
-					<span>故事、绘画、编曲基础</span>
-					<span>个人品牌与作品发布</span>
-				</div>
-				<section class="profile-faq">
-					<h3>常见问题</h3>
-					<details>
-						<summary>sayori.org 是什么？</summary>
-						<p>这是 Amiya_desi 的个人公开入口，用来整理博客、Godot 游戏作品、公共数字服务、服务器和 Cloudflare 笔记、Obsidian 写作流、GitHub、Bilibili 与联系方式。</p>
-					</details>
-					<details>
-						<summary>博客主要写什么？</summary>
-						<p>blog.sayori.org 主要记录教程文章、服务器折腾、Godot 开发、AI 辅助开发复盘、资源索引、项目日志和一些日常回声。</p>
-					</details>
-					<details>
-						<summary>这里提供商业服务或本地业务吗？</summary>
-						<p>不提供。这里是个人公开形象和作品入口，不发布虚假地址、电话、价格表、本地服务页或商业交付承诺。</p>
-					</details>
-					<details>
-						<summary>可以从哪里联系或继续了解？</summary>
-						<p>可以通过 me@sayori.org 联系，也可以从这个页面进入 GitHub、博客、Bilibili、Linux.do、GeoScore、小白板、公共服务说明和留言板。</p>
-					</details>
-				</section>
-				<footer class="profile-contact">
-					<a href="mailto:me@sayori.org" class="profile-email" id="profile-email" data-email="me@sayori.org">me@sayori.org</a>
-					<div class="profile-links" aria-label="公开入口">
-						<a href="https://github.com/Amiyadesi" target="_blank" rel="noopener">GitHub</a>
-						<a href="https://blog.sayori.org/" target="_blank" rel="noopener">Blog</a>
-						<a href="https://space.bilibili.com/3546919890585725" target="_blank" rel="noopener">Bilibili</a>
-						<a href="https://www.youtube.com/@Amiya_desi" target="_blank" rel="noopener">YouTube</a>
-						<a href="https://x.com/KirstAdali78973" target="_blank" rel="noopener">X</a>
-						<a href="https://linux.do/u/Amiya_desi" target="_blank" rel="noopener">Linux.do</a>
-						<a href="https://www.nodeloc.com/u/amiya_desi/summary" target="_blank" rel="noopener">NodeLoc</a>
-					</div>
-				</footer>
-			</section>
-
 			<section class="services-note" id="services-note" hidden inert aria-label="公共服务">
 				<button class="profile-back" type="button" id="services-close" aria-label="返回主纸页">← 返回</button>
 				<span class="profile-pin" aria-hidden="true"></span>
 				<header class="services-head">
-					<p class="profile-kicker">05 / 公共服务</p>
+					<p class="profile-kicker">04 / 公共服务</p>
 					<h2>公共服务</h2>
 					<p>首页只放常用入口。完整状态、使用边界和小范围计划请查看服务说明页。</p>
 				</header>

@@ -23,6 +23,7 @@ const sponsorAssetsDestination = path.join(
 const LANGS = ["zh", "en"];
 const REQUIRED_SURFACE_KEYS = ["meta", "surface", "profile", "services"];
 const REQUIRED_TRUTH_KEYS = ["responses", "eggs", "fallback", "greeting"];
+const REQUIRED_ABOUT_KEYS = ["meta", "letter", "faq", "contact"];
 
 main();
 
@@ -52,6 +53,19 @@ function main() {
 
 		writeJson(path.join(dataRoot, `home-${lang}.json`), homeConfig);
 		writeJson(path.join(dataRoot, `lines-${lang}.json`), truthConfig);
+
+		// about.{lang}.json is optional: only synced when present so the
+		// /about/ page can ship independently of the content repo version.
+		const aboutFile = `about.${lang}.json`;
+		if (fs.existsSync(path.join(sourceRoot, aboutFile))) {
+			const about = readJson(aboutFile);
+			validateObject(about, REQUIRED_ABOUT_KEYS, aboutFile);
+			writeJson(path.join(dataRoot, `about-${lang}.json`), {
+				source: `articles/home/${aboutFile}`,
+				language: lang,
+				...about,
+			});
+		}
 	}
 
 	syncSponsorAssets();

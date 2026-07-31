@@ -18,6 +18,7 @@ This is a personal public desk, not a local business or commercial service site.
 - The home uses one canonical URL and follows the browser language or the saved local preference: https://sayori.org/
 - About (long-term profile letter): https://sayori.org/about/
 - Public services: https://sayori.org/services/
+- Browser tools: https://sayori.org/tools/
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
 

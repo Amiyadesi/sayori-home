@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>小工具台 · Amiya的书桌</title>
+		<meta name="description" content="在浏览器本地处理图片的轻量工具：像素化、图块切片和 PNG 导出。" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<link rel="canonical" href="https://sayori.org/tools/" />
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="stylesheet" href="/tools/tools.css?v=20260731-v2" />
+		<script>
+			window.SAYORI_I18N = { defaultLanguage: "zh" };
+		</script>
+		<script src="/i18n-router.js?v=20260723-click-fix"></script>
+	</head>
+	<body>
+		<header class="tools-header">
+			<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">A</span><span data-i18n="brand">Amiya的书桌</span></a>
+			<nav class="top-nav" aria-label="页面导航">
+				<a href="/" data-i18n="back">回书桌</a>
+				<a href="/tools/" lang="en" data-sayori-language="en">EN</a>
+			</nav>
+		</header>
+
+		<main class="tools-main">
+			<section class="tools-hero" aria-labelledby="tools-title">
+				<p class="eyebrow" data-i18n="eyebrow">sayori.org / tools</p>
+				<h1 id="tools-title" data-i18n="title">小工具台</h1>
+				<p class="lead" data-i18n="intro">几个在浏览器里直接处理素材的小工具，原图不上传，结果自己带走</p>
+				<p class="privacy-note" data-i18n="privacy">所有处理都在当前设备完成，关闭页面后不会留下服务端文件</p>
+			</section>
+
+			<div class="tool-tabs" role="tablist" aria-label="工具选择">
+				<button class="tool-tab is-active" id="tab-pixelizer" type="button" role="tab" aria-selected="true" aria-controls="panel-pixelizer" data-tool-tab="pixelizer">
+					<span aria-hidden="true">▦</span><span data-i18n="pixelTab">像素化</span>
+				</button>
+				<button class="tool-tab" id="tab-tiles" type="button" role="tab" aria-selected="false" aria-controls="panel-tiles" data-tool-tab="tiles">
+					<span aria-hidden="true">⊞</span><span data-i18n="tilesTab">图块切片</span>
+				</button>
+			</div>
+
+			<section class="tool-panel is-active" id="panel-pixelizer" role="tabpanel" aria-labelledby="tab-pixelizer">
+				<header class="panel-heading">
+					<div><p class="panel-kicker" data-i18n="pixelKicker">01 / pixelizer</p><h2 data-i18n="pixelTitle">把图片变成像素画</h2></div>
+					<p data-i18n="pixelIntro">控制像素块大小和颜色数量，预览后下载 PNG</p>
+				</header>
+				<div class="tool-grid">
+					<div class="controls-column">
+						<label class="upload-zone" for="pixel-file">
+							<input id="pixel-file" type="file" accept="image/png,image/jpeg,image/webp" />
+							<span class="upload-icon" aria-hidden="true">＋</span>
+							<strong data-i18n="upload">点击或拖入图片</strong>
+							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
+						</label>
+						<div class="control-card">
+							<label for="pixel-size"><span data-i18n="pixelSize">像素块</span><output id="pixel-size-value">8</output></label>
+							<input id="pixel-size" type="range" min="1" max="32" step="1" value="8" />
+							<label for="palette-count"><span data-i18n="palette">颜色数量</span></label>
+							<select id="palette-count">
+								<option value="0" data-i18n="paletteOriginal">保留原色</option>
+								<option value="8">8</option><option value="16">16</option><option value="32">32</option>
+							</select>
+							<label for="pixel-background"><span data-i18n="background">背景</span></label>
+							<select id="pixel-background">
+								<option value="transparent" data-i18n="backgroundTransparent">透明</option>
+								<option value="white" data-i18n="backgroundWhite">白色</option>
+								<option value="black" data-i18n="backgroundBlack">黑色</option>
+							</select>
+							<label class="check-row" for="pixel-dither"><input id="pixel-dither" type="checkbox" /><span data-i18n="dither">轻微抖动</span></label>
+						</div>
+						<div class="action-row">
+							<button class="button secondary" type="button" data-action="pixel-reset" data-i18n="reset">清空</button>
+							<button class="button primary" type="button" data-action="pixel-download" disabled data-i18n="download">下载 PNG</button>
+						</div>
+					</div>
+					<div class="preview-column">
+						<div class="preview-frame"><div class="preview-label" data-i18n="original">原图</div><canvas id="pixel-source" aria-label="原图预览"></canvas><p class="empty-preview" id="pixel-source-empty" data-i18n="empty">等待图片</p></div>
+						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="result">像素化结果</div><canvas id="pixel-output" aria-label="像素化结果预览"></canvas><p class="empty-preview" id="pixel-output-empty" data-i18n="empty">等待图片</p></div>
+					</div>
+				</div>
+			</section>
+
+			<section class="tool-panel" id="panel-tiles" role="tabpanel" aria-labelledby="tab-tiles" hidden>
+				<header class="panel-heading">
+					<div><p class="panel-kicker" data-i18n="tilesKicker">02 / tile sheet</p><h2 data-i18n="tilesTitle">把素材整理成图块图集</h2></div>
+					<p data-i18n="tilesIntro">输入图块尺寸，自动裁切为规则图集并下载</p>
+				</header>
+				<div class="tool-grid">
+					<div class="controls-column">
+						<label class="upload-zone" for="tiles-file">
+							<input id="tiles-file" type="file" accept="image/png,image/jpeg,image/webp" />
+							<span class="upload-icon" aria-hidden="true">＋</span>
+							<strong data-i18n="upload">点击或拖入图片</strong>
+							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
+						</label>
+						<div class="control-card fields-card">
+							<label for="tile-width"><span data-i18n="tileWidth">图块宽度</span><input id="tile-width" type="number" min="1" max="512" value="16" /></label>
+							<label for="tile-height"><span data-i18n="tileHeight">图块高度</span><input id="tile-height" type="number" min="1" max="512" value="16" /></label>
+							<label for="tile-margin"><span data-i18n="tileMargin">四周边距</span><input id="tile-margin" type="number" min="0" max="512" value="0" /></label>
+							<label for="tile-gap"><span data-i18n="tileGap">图块间距</span><input id="tile-gap" type="number" min="0" max="64" value="0" /></label>
+						</div>
+						<div class="action-row">
+							<button class="button secondary" type="button" data-action="tiles-reset" data-i18n="reset">清空</button>
+							<button class="button primary" type="button" data-action="tiles-download" disabled data-i18n="download">下载 PNG</button>
+						</div>
+					</div>
+					<div class="preview-column">
+						<div class="preview-frame"><div class="preview-label" data-i18n="sourceSheet">原始图集</div><canvas id="tiles-source" aria-label="原始图集预览"></canvas><p class="empty-preview" id="tiles-source-empty" data-i18n="empty">等待图片</p></div>
+						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="tileResult">切片结果</div><canvas id="tiles-output" aria-label="切片结果预览"></canvas><p class="empty-preview" id="tiles-output-empty" data-i18n="empty">等待图片</p><p class="preview-meta" id="tiles-info" aria-live="polite"></p></div>
+					</div>
+				</div>
+			</section>
+
+			<p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
+		</main>
+		<footer class="tools-footer"><span data-i18n="footer">本地处理 · 无需账号 · 结果由你保存</span><a href="/services/" data-i18n="services">公共服务说明</a></footer>
+		<script defer src="/tools/tools.js?v=20260731-v2"></script>
+	</body>
+</html>

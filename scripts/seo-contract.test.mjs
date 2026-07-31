@@ -30,6 +30,7 @@ test("sitemap lists only the canonical content pages", () => {
 		"https://sayori.org/",
 		"https://sayori.org/services/",
 		"https://sayori.org/about/",
+		"https://sayori.org/tools/",
 	]);
 	assert.doesNotMatch(sitemap, /\/zh\/|\/en\//);
 });

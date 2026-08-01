@@ -43,6 +43,7 @@ test("localized home data exposes the maintained tools and links", () => {
 	const expectedLinks = [
 		"https://blog.sayori.org/posts/resource-index/",
 		"https://board.sayori.org/",
+		"https://nav.sayori.org/",
 		"https://geo.sayori.org/",
 		"https://blog.sayori.org/guestbook/",
 	];

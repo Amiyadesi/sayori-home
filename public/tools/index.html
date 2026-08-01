@@ -4,11 +4,11 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>小工具台 · Amiya的书桌</title>
-		<meta name="description" content="在浏览器本地处理图片的轻量工具：像素化、图块切片和 PNG 导出。" />
+		<meta name="description" content="在浏览器本地处理图片的轻量工具：像素化、规则切片、Webtyler 自动补全图集和 PNG 导出。" />
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="https://sayori.org/tools/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
-		<link rel="stylesheet" href="/tools/tools.css?v=20260731-v2" />
+		<link rel="stylesheet" href="/tools/tools.css?v=20260801-autotile" />
 		<script>
 			window.SAYORI_I18N = { defaultLanguage: "zh" };
 		</script>
@@ -37,6 +37,9 @@
 				</button>
 				<button class="tool-tab" id="tab-tiles" type="button" role="tab" aria-selected="false" aria-controls="panel-tiles" data-tool-tab="tiles">
 					<span aria-hidden="true">⊞</span><span data-i18n="tilesTab">图块切片</span>
+				</button>
+				<button class="tool-tab" id="tab-autotile" type="button" role="tab" aria-selected="false" aria-controls="panel-autotile" data-tool-tab="autotile">
+					<span aria-hidden="true">✦</span><span data-i18n="autotileTab">自动补全</span>
 				</button>
 			</div>
 
@@ -112,9 +115,40 @@
 				</div>
 			</section>
 
+			<section class="tool-panel" id="panel-autotile" role="tabpanel" aria-labelledby="tab-autotile" hidden>
+				<header class="panel-heading">
+					<div><p class="panel-kicker" data-i18n="autotileKicker">03 / autotile</p><h2 data-i18n="autotileTitle">生成 47 格自动补全图集</h2></div>
+					<p data-i18n="autotileIntro">把 Webtyler 4×4 输入转换成 Godot 常用的 8×6 图集，最后一格留空</p>
+				</header>
+				<div class="tool-grid">
+					<div class="controls-column">
+						<label class="upload-zone" for="autotile-file">
+							<input id="autotile-file" type="file" accept="image/png,image/jpeg,image/webp" />
+							<span class="upload-icon" aria-hidden="true">＋</span>
+							<strong data-i18n="upload">点击或拖入图片</strong>
+							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
+						</label>
+						<div class="control-card fields-card">
+							<label for="autotile-format"><span data-i18n="autotileFormat">输入格式</span>
+								<select id="autotile-format"><option value="4x4" data-i18n="autotileFormat4x4">Webtyler 4×4</option></select>
+							</label>
+							<label for="autotile-size"><span data-i18n="autotileSize">图块尺寸</span><input id="autotile-size" type="number" min="1" max="512" value="16" /></label>
+						</div>
+						<div class="action-row">
+							<button class="button secondary" type="button" data-action="autotile-reset" data-i18n="reset">清空</button>
+							<button class="button primary" type="button" data-action="autotile-download" disabled data-i18n="download">下载 PNG</button>
+						</div>
+					</div>
+					<div class="preview-column">
+						<div class="preview-frame"><div class="preview-label" data-i18n="autotileSource">4×4 输入</div><canvas id="autotile-source" aria-label="4×4 输入预览"></canvas><p class="empty-preview" data-i18n="empty">等待图片</p></div>
+						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="autotileResult">47 格自动补全结果</div><canvas id="autotile-output" aria-label="47 格自动补全结果预览"></canvas><p class="empty-preview" data-i18n="empty">等待图片</p><p class="preview-meta" id="autotile-info" aria-live="polite"></p></div>
+					</div>
+				</div>
+			</section>
+
 			<p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
 		</main>
 		<footer class="tools-footer"><span data-i18n="footer">本地处理 · 无需账号 · 结果由你保存</span><a href="/services/" data-i18n="services">公共服务说明</a></footer>
-		<script defer src="/tools/tools.js?v=20260731-v2"></script>
+		<script defer src="/tools/tools.js?v=20260801-autotile"></script>
 	</body>
 </html>

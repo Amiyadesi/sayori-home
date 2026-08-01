@@ -41,6 +41,12 @@
 						links: [["https://board.sayori.org/", "打开白板"]],
 					},
 					{
+						status: "public", statusLabel: "公开运行", title: "资源导航",
+						description: "按分类整理常用工具、资料、社区和开源站点，支持站内与外部搜索",
+						meta: ["无需账号", "分类索引", "持续整理"],
+						links: [["https://nav.sayori.org/", "打开导航"]],
+					},
+					{
 						status: "public", statusLabel: "公开运行", title: "GeoScore 公开审计 API",
 						description: "为公开域名提供事实审计、PageSpeed 证据、Evidence Map 与 FixPack 接口，使用 SSE 和 JSON 返回可复验结果",
 						meta: ["OpenAPI 3.1", "公网目标限定", "有限额度"],
@@ -133,6 +139,7 @@
 				items: [
 					{ status: "public", statusLabel: "Public", title: "GeoScore", description: "Evidence-first SEO and GEO audits for public pages, with a site profile, Evidence Map, prioritized fixes, and a Markdown report", meta: ["No registration", "Public pages only", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
 					{ status: "public", statusLabel: "Public", title: "Amiya Whiteboard", description: "A lightweight browser whiteboard for quick sketches, rough diagrams, and explaining a page structure", meta: ["No account", "Temporary sketches", "Save your work"], links: [["https://board.sayori.org/", "Open whiteboard"]] },
+					{ status: "public", statusLabel: "Public", title: "Resource directory", description: "A categorized shelf of useful tools, references, communities, and open-source sites with local and external search", meta: ["No account", "Categorized index", "Ongoing archive"], links: [["https://nav.sayori.org/", "Open directory"]] },
 					{ status: "public", statusLabel: "Public", title: "GeoScore Public Audit API", description: "Factual audits, PageSpeed evidence, Evidence Maps, and FixPacks for public domains, exposed as bounded SSE and JSON endpoints", meta: ["OpenAPI 3.1", "Public targets only", "Limited quota"], links: [["https://geo-api.sayori.org/openapi.json", "Open OpenAPI"], ["https://geo.sayori.org/docs", "Read the guides"]] },
 					{ status: "public", statusLabel: "Public", title: "Public writing and RSS", description: "Notes on websites, self-hosting, Cloudflare, Godot, AI-assisted development, and project retrospectives, available on the web and by RSS", meta: ["No account", "Public citation allowed", "Ongoing archive"], links: [["https://blog.sayori.org/", "Open blog"], ["https://blog.sayori.org/rss.xml", "Subscribe by RSS"]] },
 					{ status: "source", statusLabel: "Self-hostable", title: "Search Gateway", description: "An open-source project that unifies search sources, keeps evidence snapshots, and provides compatible APIs and an MCP integration", meta: ["Python", "Docker", "MIT licensed"], links: [["https://github.com/Amiyadesi/search-gateway", "Source and deployment guide"]] },

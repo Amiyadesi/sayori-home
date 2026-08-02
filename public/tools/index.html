@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>小工具台 · Amiya的书桌</title>
-		<meta name="description" content="在浏览器本地处理图片的轻量工具：像素化、规则切片、Webtyler 自动补全图集和 PNG 导出。" />
+		<title>素材工具台 · Amiya的书桌</title>
+		<meta name="description" content="在浏览器本地处理图片素材：像素化、网格切片和自动补全图集" />
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="https://sayori.org/tools/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
-		<link rel="stylesheet" href="/tools/tools.css?v=20260801-autotile" />
+		<link rel="stylesheet" href="/tools/tools.css?v=20260802-workbench" />
 		<script>
 			window.SAYORI_I18N = { defaultLanguage: "zh" };
 		</script>
@@ -16,139 +16,120 @@
 	</head>
 	<body>
 		<header class="tools-header">
-			<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">A</span><span data-i18n="brand">Amiya的书桌</span></a>
-			<nav class="top-nav" aria-label="页面导航">
-				<a href="/" data-i18n="back">回书桌</a>
-				<a href="/tools/" lang="en" data-sayori-language="en">EN</a>
-			</nav>
+			<a class="brand" href="/">
+				<span class="brand-mark" aria-hidden="true">
+					<svg viewBox="0 0 24 24" focusable="false"><path d="M4 18.5V5.5h10.5a4.5 4.5 0 0 1 0 9H8v4M8 10h6.2a1.5 1.5 0 0 0 0-3H8v8.5" /></svg>
+				</span>
+				<span data-i18n="brand">Amiya的书桌</span>
+			</a>
+			<div class="header-meta">
+				<span class="local-badge"><span class="local-dot" aria-hidden="true"></span><span data-i18n="localBadge">本地处理</span></span>
+				<nav class="top-nav" aria-label="页面导航">
+					<a href="/" data-i18n="back">回书桌</a>
+					<a href="/tools/" lang="en" data-sayori-language="en">EN</a>
+				</nav>
+			</div>
 		</header>
 
 		<main class="tools-main">
 			<section class="tools-hero" aria-labelledby="tools-title">
-				<p class="eyebrow" data-i18n="eyebrow">sayori.org / tools</p>
-				<h1 id="tools-title" data-i18n="title">小工具台</h1>
-				<p class="lead" data-i18n="intro">几个在浏览器里直接处理素材的小工具，原图不上传，结果自己带走</p>
-				<p class="privacy-note" data-i18n="privacy">所有处理都在当前设备完成，关闭页面后不会留下服务端文件</p>
-			</section>
-
-			<div class="tool-tabs" role="tablist" aria-label="工具选择">
-				<button class="tool-tab is-active" id="tab-pixelizer" type="button" role="tab" aria-selected="true" aria-controls="panel-pixelizer" data-tool-tab="pixelizer">
-					<span aria-hidden="true">▦</span><span data-i18n="pixelTab">像素化</span>
-				</button>
-				<button class="tool-tab" id="tab-tiles" type="button" role="tab" aria-selected="false" aria-controls="panel-tiles" data-tool-tab="tiles">
-					<span aria-hidden="true">⊞</span><span data-i18n="tilesTab">图块切片</span>
-				</button>
-				<button class="tool-tab" id="tab-autotile" type="button" role="tab" aria-selected="false" aria-controls="panel-autotile" data-tool-tab="autotile">
-					<span aria-hidden="true">✦</span><span data-i18n="autotileTab">自动补全</span>
-				</button>
-			</div>
-
-			<section class="tool-panel is-active" id="panel-pixelizer" role="tabpanel" aria-labelledby="tab-pixelizer">
-				<header class="panel-heading">
-					<div><p class="panel-kicker" data-i18n="pixelKicker">01 / pixelizer</p><h2 data-i18n="pixelTitle">把图片变成像素画</h2></div>
-					<p data-i18n="pixelIntro">控制像素块大小和颜色数量，预览后下载 PNG</p>
-				</header>
-				<div class="tool-grid">
-					<div class="controls-column">
-						<label class="upload-zone" for="pixel-file">
-							<input id="pixel-file" type="file" accept="image/png,image/jpeg,image/webp" />
-							<span class="upload-icon" aria-hidden="true">＋</span>
-							<strong data-i18n="upload">点击或拖入图片</strong>
-							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
-						</label>
-						<div class="control-card">
-							<label for="pixel-size"><span data-i18n="pixelSize">像素块</span><output id="pixel-size-value">8</output></label>
-							<input id="pixel-size" type="range" min="1" max="32" step="1" value="8" />
-							<label for="palette-count"><span data-i18n="palette">颜色数量</span></label>
-							<select id="palette-count">
-								<option value="0" data-i18n="paletteOriginal">保留原色</option>
-								<option value="8">8</option><option value="16">16</option><option value="32">32</option>
-							</select>
-							<label for="pixel-background"><span data-i18n="background">背景</span></label>
-							<select id="pixel-background">
-								<option value="transparent" data-i18n="backgroundTransparent">透明</option>
-								<option value="white" data-i18n="backgroundWhite">白色</option>
-								<option value="black" data-i18n="backgroundBlack">黑色</option>
-							</select>
-							<label class="check-row" for="pixel-dither"><input id="pixel-dither" type="checkbox" /><span data-i18n="dither">轻微抖动</span></label>
-						</div>
-						<div class="action-row">
-							<button class="button secondary" type="button" data-action="pixel-reset" data-i18n="reset">清空</button>
-							<button class="button primary" type="button" data-action="pixel-download" disabled data-i18n="download">下载 PNG</button>
-						</div>
-					</div>
-					<div class="preview-column">
-						<div class="preview-frame"><div class="preview-label" data-i18n="original">原图</div><canvas id="pixel-source" aria-label="原图预览"></canvas><p class="empty-preview" id="pixel-source-empty" data-i18n="empty">等待图片</p></div>
-						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="result">像素化结果</div><canvas id="pixel-output" aria-label="像素化结果预览"></canvas><p class="empty-preview" id="pixel-output-empty" data-i18n="empty">等待图片</p></div>
-					</div>
+				<div class="hero-copy">
+					<p class="eyebrow" data-i18n="eyebrow">sayori.org / tools</p>
+					<h1 id="tools-title" data-i18n="title">素材工具台</h1>
+					<p class="lead" data-i18n="intro">把图片变成能直接放进游戏和网页的素材</p>
+				</div>
+				<div class="hero-note">
+					<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2M6 10h12v10H6zM12 14v2" /></svg>
+					<span data-i18n="privacy">文件不会上传，刷新页面就会清空</span>
 				</div>
 			</section>
 
-			<section class="tool-panel" id="panel-tiles" role="tabpanel" aria-labelledby="tab-tiles" hidden>
-				<header class="panel-heading">
-					<div><p class="panel-kicker" data-i18n="tilesKicker">02 / tile sheet</p><h2 data-i18n="tilesTitle">把素材整理成图块图集</h2></div>
-					<p data-i18n="tilesIntro">输入图块尺寸，自动裁切为规则图集并下载</p>
-				</header>
-				<div class="tool-grid">
-					<div class="controls-column">
-						<label class="upload-zone" for="tiles-file">
-							<input id="tiles-file" type="file" accept="image/png,image/jpeg,image/webp" />
-							<span class="upload-icon" aria-hidden="true">＋</span>
-							<strong data-i18n="upload">点击或拖入图片</strong>
-							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
-						</label>
-						<div class="control-card fields-card">
-							<label for="tile-width"><span data-i18n="tileWidth">图块宽度</span><input id="tile-width" type="number" min="1" max="512" value="16" /></label>
-							<label for="tile-height"><span data-i18n="tileHeight">图块高度</span><input id="tile-height" type="number" min="1" max="512" value="16" /></label>
-							<label for="tile-margin"><span data-i18n="tileMargin">四周边距</span><input id="tile-margin" type="number" min="0" max="512" value="0" /></label>
-							<label for="tile-gap"><span data-i18n="tileGap">图块间距</span><input id="tile-gap" type="number" min="0" max="64" value="0" /></label>
-						</div>
-						<div class="action-row">
-							<button class="button secondary" type="button" data-action="tiles-reset" data-i18n="reset">清空</button>
-							<button class="button primary" type="button" data-action="tiles-download" disabled data-i18n="download">下载 PNG</button>
-						</div>
+			<section class="tool-workbench" aria-label="素材工具">
+				<aside class="tool-rail">
+					<div class="rail-heading">
+						<span class="rail-label" data-i18n="toolboxLabel">工具箱</span>
+						<strong data-i18n="chooseTool">选择一个工作流</strong>
 					</div>
-					<div class="preview-column">
-						<div class="preview-frame"><div class="preview-label" data-i18n="sourceSheet">原始图集</div><canvas id="tiles-source" aria-label="原始图集预览"></canvas><p class="empty-preview" id="tiles-source-empty" data-i18n="empty">等待图片</p></div>
-						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="tileResult">切片结果</div><canvas id="tiles-output" aria-label="切片结果预览"></canvas><p class="empty-preview" id="tiles-output-empty" data-i18n="empty">等待图片</p><p class="preview-meta" id="tiles-info" aria-live="polite"></p></div>
+					<div class="tool-tabs" role="tablist" aria-label="工具选择">
+						<button class="tool-tab is-active" id="tab-pixelizer" type="button" role="tab" aria-selected="true" aria-controls="panel-pixelizer" data-tool-tab="pixelizer">
+							<span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" /></svg></span>
+							<span class="tab-copy"><strong data-i18n="pixelTab">像素化</strong><small data-i18n="pixelTabHint">做出复古颗粒感</small></span>
+							<span class="tab-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" /></svg></span>
+						</button>
+						<button class="tool-tab" id="tab-tiles" type="button" role="tab" aria-selected="false" aria-controls="panel-tiles" data-tool-tab="tiles">
+							<span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6zM10 7h4M7 10v4M17 10v4M10 17h4" /></svg></span>
+							<span class="tab-copy"><strong data-i18n="tilesTab">网格切片</strong><small data-i18n="tilesTabHint">整理规则图集</small></span>
+							<span class="tab-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" /></svg></span>
+						</button>
+						<button class="tool-tab" id="tab-autotile" type="button" role="tab" aria-selected="false" aria-controls="panel-autotile" data-tool-tab="autotile">
+							<span class="tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5zM19 16l.5 1.5L21 18l-1.5.5L19 20l-.5-1.5L17 18l1.5-.5z" /></svg></span>
+							<span class="tab-copy"><strong data-i18n="autotileTab">自动补全</strong><small data-i18n="autotileTabHint">支持多种输入输出</small></span>
+							<span class="tab-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" /></svg></span>
+						</button>
 					</div>
+					<div class="rail-footnote">
+						<span class="rail-footnote-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3a9 9 0 1 0 9 9M12 7v5l3 2" /></svg></span>
+						<p data-i18n="railNote">适合快速试参数，结果确认后再下载</p>
+					</div>
+				</aside>
+
+				<div class="tool-stage">
+					<section class="tool-panel is-active" id="panel-pixelizer" role="tabpanel" aria-labelledby="tab-pixelizer">
+						<header class="panel-heading">
+							<div><p class="panel-kicker" data-i18n="pixelKicker">01 / pixelizer</p><h2 data-i18n="pixelTitle">把图片变成像素画</h2><p data-i18n="pixelIntro">先拖入图片，再拖动参数看结果</p></div>
+							<div class="panel-output"><span class="output-dot" aria-hidden="true"></span><span data-i18n="outputReady">等待素材</span></div>
+						</header>
+						<div class="workspace-grid">
+							<div class="canvas-zone">
+								<div class="canvas-zone-head"><span data-i18n="previewHeading">实时预览</span><span class="canvas-hint" data-i18n="previewHint">原图与结果会同步更新</span></div>
+								<div class="preview-column">
+									<div class="preview-frame"><div class="preview-label" data-i18n="original">原图</div><canvas id="pixel-source" aria-label="原图预览"></canvas><p class="empty-preview" id="pixel-source-empty" data-i18n="empty">拖入一张图片开始</p></div>
+									<div class="preview-frame result-frame"><div class="preview-label" data-i18n="result">像素化结果</div><canvas id="pixel-output" aria-label="像素化结果预览"></canvas><p class="empty-preview" id="pixel-output-empty" data-i18n="empty">结果会出现在这里</p></div>
+								</div>
+								<p class="preview-meta" id="pixel-info" aria-live="polite"></p>
+							</div>
+							<aside class="inspector">
+								<label class="upload-zone" for="pixel-file">
+									<input id="pixel-file" type="file" accept="image/png,image/jpeg,image/webp" />
+									<span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" /></svg></span>
+									<strong data-i18n="upload">点击或拖入图片</strong>
+									<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
+								</label>
+								<div class="control-card">
+									<div class="control-heading"><span data-i18n="adjustments">调整</span><span class="control-heading-note" data-i18n="live">实时</span></div>
+									<label for="pixel-style"><span data-i18n="pixelStyle">风格</span><select id="pixel-style"><option value="pixel" data-i18n="stylePixel">像素</option><option value="poster" data-i18n="stylePoster">海报</option><option value="noir" data-i18n="styleNoir">黑白</option><option value="duotone" data-i18n="styleDuotone">双色</option><option value="blueprint" data-i18n="styleBlueprint">蓝图</option><option value="soft" data-i18n="styleSoft">柔和</option></select></label>
+									<label class="range-label" for="pixel-size"><span data-i18n="pixelSize">像素块</span><output id="pixel-size-value">8</output></label>
+									<input id="pixel-size" type="range" min="1" max="32" step="1" value="8" />
+									<label for="palette-count"><span data-i18n="palette">颜色数量</span><select id="palette-count"><option value="0" data-i18n="paletteOriginal">保留原色</option><option value="8">8</option><option value="16">16</option><option value="32">32</option></select></label>
+									<label for="pixel-background"><span data-i18n="background">背景</span><select id="pixel-background"><option value="transparent" data-i18n="backgroundTransparent">透明</option><option value="white" data-i18n="backgroundWhite">白色</option><option value="black" data-i18n="backgroundBlack">黑色</option></select></label>
+									<label for="pixel-output-scale"><span data-i18n="outputScale">导出倍率</span><select id="pixel-output-scale"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+									<label class="check-row" for="pixel-dither"><input id="pixel-dither" type="checkbox" /><span data-i18n="dither">轻微抖动</span></label>
+								</div>
+								<div class="action-row"><button class="button secondary" type="button" data-action="pixel-reset"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12a8 8 0 1 0 2.3-5.6L4 8.7M4 4v4.7h4.7" /></svg></span><span data-i18n="reset">清空</span></button><button class="button primary" type="button" data-action="pixel-download" disabled><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 4v11M7 11l5 5 5-5M4 20h16" /></svg></span><span data-i18n="download">下载 PNG</span></button></div>
+							</aside>
+						</div>
+					</section>
+
+					<section class="tool-panel" id="panel-tiles" role="tabpanel" aria-labelledby="tab-tiles" hidden>
+						<header class="panel-heading"><div><p class="panel-kicker" data-i18n="tilesKicker">02 / tile sheet</p><h2 data-i18n="tilesTitle">按网格切片</h2><p data-i18n="tilesIntro">用尺寸和偏移控制每一个图块</p></div><div class="panel-output"><span class="output-dot" aria-hidden="true"></span><span data-i18n="outputReady">等待素材</span></div></header>
+						<div class="workspace-grid">
+							<div class="canvas-zone"><div class="canvas-zone-head"><span data-i18n="previewHeading">实时预览</span><span class="canvas-hint" data-i18n="gridHint">原图会显示切片边界</span></div><div class="preview-column"><div class="preview-frame"><div class="preview-label" data-i18n="sourceSheet">原始图集</div><canvas id="tiles-source" aria-label="原始图集预览"></canvas><p class="empty-preview" id="tiles-source-empty" data-i18n="empty">拖入一张图片开始</p></div><div class="preview-frame result-frame"><div class="preview-label" data-i18n="tileResult">切片结果</div><canvas id="tiles-output" aria-label="切片结果预览"></canvas><p class="empty-preview" id="tiles-output-empty" data-i18n="empty">结果会出现在这里</p></div></div><p class="preview-meta" id="tiles-info" aria-live="polite"></p></div>
+							<aside class="inspector"><label class="upload-zone" for="tiles-file"><input id="tiles-file" type="file" accept="image/png,image/jpeg,image/webp" /><span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" /></svg></span><strong data-i18n="upload">点击或拖入图片</strong><small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small></label><div class="control-card fields-card"><div class="control-heading"><span data-i18n="gridSettings">网格设置</span><span class="control-heading-note" data-i18n="pixels">像素</span></div><label for="tile-width"><span data-i18n="tileWidth">图块宽度</span><input id="tile-width" type="number" min="1" max="512" value="16" /></label><label for="tile-height"><span data-i18n="tileHeight">图块高度</span><input id="tile-height" type="number" min="1" max="512" value="16" /></label><label for="tile-offset-x"><span data-i18n="tileOffsetX">水平偏移</span><input id="tile-offset-x" type="number" min="0" max="512" value="0" /></label><label for="tile-offset-y"><span data-i18n="tileOffsetY">垂直偏移</span><input id="tile-offset-y" type="number" min="0" max="512" value="0" /></label><label for="tile-margin"><span data-i18n="tileMargin">四周边距</span><input id="tile-margin" type="number" min="0" max="512" value="0" /></label><label for="tile-gap"><span data-i18n="tileGap">图块间距</span><input id="tile-gap" type="number" min="0" max="64" value="0" /></label></div><div class="action-row"><button class="button secondary" type="button" data-action="tiles-reset"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12a8 8 0 1 0 2.3-5.6L4 8.7M4 4v4.7h4.7" /></svg></span><span data-i18n="reset">清空</span></button><button class="button primary" type="button" data-action="tiles-download" disabled><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 4v11M7 11l5 5 5-5M4 20h16" /></svg></span><span data-i18n="download">下载 PNG</span></button></div></aside>
+						</div>
+					</section>
+
+					<section class="tool-panel" id="panel-autotile" role="tabpanel" aria-labelledby="tab-autotile" hidden>
+						<header class="panel-heading"><div><p class="panel-kicker" data-i18n="autotileKicker">03 / autotile</p><h2 data-i18n="autotileTitle">生成自动补全图集</h2><p data-i18n="autotileIntro">支持 Webtyler、Basic、Minitiles 和 RPG Maker 输入，并导出多种图集格式</p></div><div class="panel-output"><span class="output-dot" aria-hidden="true"></span><span data-i18n="outputReady">等待素材</span></div></header>
+						<div class="workspace-grid">
+							<div class="canvas-zone"><div class="canvas-zone-head"><span data-i18n="previewHeading">实时预览</span><span class="canvas-hint" data-i18n="autotileHint">右侧输出可直接用于 Godot</span></div><div class="preview-column"><div class="preview-frame"><div class="preview-label" id="autotile-source-label" data-i18n="autotileSource">输入图集</div><canvas id="autotile-source" aria-label="输入图集预览"></canvas><p class="empty-preview" id="autotile-source-empty" data-i18n="empty">拖入一张图片开始</p></div><div class="preview-frame result-frame"><div class="preview-label" data-i18n="autotileResult">自动补全结果</div><canvas id="autotile-output" aria-label="自动补全结果预览"></canvas><p class="empty-preview" id="autotile-output-empty" data-i18n="empty">结果会出现在这里</p></div></div><p class="preview-meta" id="autotile-info" aria-live="polite"></p></div>
+							<aside class="inspector"><label class="upload-zone" for="autotile-file"><input id="autotile-file" type="file" accept="image/png,image/jpeg,image/webp" /><span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 16V4M7 9l5-5 5 5M4 20h16" /></svg></span><strong data-i18n="upload">点击或拖入图片</strong><small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small></label><div class="control-card fields-card"><div class="control-heading"><span data-i18n="autotileSettings">输入设置</span><span class="control-heading-note" data-i18n="pixels">像素</span></div><label for="autotile-format"><span data-i18n="autotileFormat">输入格式</span><select id="autotile-format"><option value="4x4" data-i18n="autotileFormat4x4">Webtyler 4×4</option><option value="3x3" data-i18n="autotileFormat3x3">Webtyler 3×3</option><option value="4x4plus" data-i18n="autotileFormat4x4plus">Webtyler 4×4 Plus</option><option value="3x3plus" data-i18n="autotileFormat3x3plus">Webtyler 3×3 Plus</option><option value="5x3" data-i18n="autotileFormat5x3">Webtyler 5×3</option><option value="5x2" data-i18n="autotileFormat5x2">Webtyler 5×2</option><option value="4x2" data-i18n="autotileFormat4x2">Webtyler 4×2</option><option value="basic" data-i18n="autotileFormatBasic">Basic</option><option value="basicborder" data-i18n="autotileFormatBasicBorder">Basic Border</option><option value="basicfullborder" data-i18n="autotileFormatBasicFullBorder">Basic Full Border</option><option value="basiclongborder" data-i18n="autotileFormatBasicLongBorder">Basic Long Border</option><option value="minitiles" data-i18n="autotileFormatMinitiles">Minitiles</option><option value="rpgmaker" data-i18n="autotileFormatRpgmaker">RPG Maker</option></select></label><label for="autotile-output-format"><span data-i18n="autotileOutput">输出格式</span><select id="autotile-output-format"><option value="godot" data-i18n="autotileOutputGodot">Godot 12×4</option><option value="rpgmaker" data-i18n="autotileOutputRpgmaker">RPG Maker 2×3</option><option value="gamemaker" data-i18n="autotileOutputGamemaker">GameMaker 12×4</option><option value="preview" data-i18n="autotileOutputPreview">预览 12×9</option></select></label><label for="autotile-size"><span data-i18n="autotileSize">图块尺寸</span><input id="autotile-size" type="number" min="1" max="512" value="16" /></label><label for="autotile-left-offset"><span data-i18n="autotileLeft">左偏移</span><input id="autotile-left-offset" type="number" min="-512" max="512" value="0" /></label><label for="autotile-right-offset"><span data-i18n="autotileRight">右偏移</span><input id="autotile-right-offset" type="number" min="-512" max="512" value="0" /></label><label for="autotile-top-offset"><span data-i18n="autotileTop">上偏移</span><input id="autotile-top-offset" type="number" min="-512" max="512" value="0" /></label><label for="autotile-bottom-offset"><span data-i18n="autotileBottom">下偏移</span><input id="autotile-bottom-offset" type="number" min="-512" max="512" value="0" /></label></div><div class="action-row"><button class="button secondary" type="button" data-action="autotile-reset"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12a8 8 0 1 0 2.3-5.6L4 8.7M4 4v4.7h4.7" /></svg></span><span data-i18n="reset">清空</span></button><button class="button primary" type="button" data-action="autotile-download" disabled><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 4v11M7 11l5 5 5-5M4 20h16" /></svg></span><span data-i18n="download">下载 PNG</span></button></div></aside>
+						</div>
+					</section>
+					<p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
 				</div>
 			</section>
-
-			<section class="tool-panel" id="panel-autotile" role="tabpanel" aria-labelledby="tab-autotile" hidden>
-				<header class="panel-heading">
-					<div><p class="panel-kicker" data-i18n="autotileKicker">03 / autotile</p><h2 data-i18n="autotileTitle">生成 47 格自动补全图集</h2></div>
-					<p data-i18n="autotileIntro">把 Webtyler 4×4 输入转换成 Godot 常用的 8×6 图集，最后一格留空</p>
-				</header>
-				<div class="tool-grid">
-					<div class="controls-column">
-						<label class="upload-zone" for="autotile-file">
-							<input id="autotile-file" type="file" accept="image/png,image/jpeg,image/webp" />
-							<span class="upload-icon" aria-hidden="true">＋</span>
-							<strong data-i18n="upload">点击或拖入图片</strong>
-							<small data-i18n="uploadHint">PNG、JPG、WebP，最大 10 MB</small>
-						</label>
-						<div class="control-card fields-card">
-							<label for="autotile-format"><span data-i18n="autotileFormat">输入格式</span>
-								<select id="autotile-format"><option value="4x4" data-i18n="autotileFormat4x4">Webtyler 4×4</option></select>
-							</label>
-							<label for="autotile-size"><span data-i18n="autotileSize">图块尺寸</span><input id="autotile-size" type="number" min="1" max="512" value="16" /></label>
-						</div>
-						<div class="action-row">
-							<button class="button secondary" type="button" data-action="autotile-reset" data-i18n="reset">清空</button>
-							<button class="button primary" type="button" data-action="autotile-download" disabled data-i18n="download">下载 PNG</button>
-						</div>
-					</div>
-					<div class="preview-column">
-						<div class="preview-frame"><div class="preview-label" data-i18n="autotileSource">4×4 输入</div><canvas id="autotile-source" aria-label="4×4 输入预览"></canvas><p class="empty-preview" data-i18n="empty">等待图片</p></div>
-						<div class="preview-frame result-frame"><div class="preview-label" data-i18n="autotileResult">47 格自动补全结果</div><canvas id="autotile-output" aria-label="47 格自动补全结果预览"></canvas><p class="empty-preview" data-i18n="empty">等待图片</p><p class="preview-meta" id="autotile-info" aria-live="polite"></p></div>
-					</div>
-				</div>
-			</section>
-
-			<p class="tool-status" id="tool-status" role="status" aria-live="polite"></p>
 		</main>
 		<footer class="tools-footer"><span data-i18n="footer">本地处理 · 无需账号 · 结果由你保存</span><a href="/services/" data-i18n="services">公共服务说明</a></footer>
-		<script defer src="/tools/tools.js?v=20260801-autotile"></script>
+		<script defer src="/tools/tools.js?v=20260802-workbench"></script>
 	</body>
 </html>

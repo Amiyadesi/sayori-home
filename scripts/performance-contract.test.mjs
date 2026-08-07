@@ -13,8 +13,8 @@ function read(relativePath) {
 test("visible Sayori artwork uses responsive derivatives", () => {
 	for (const relativePath of ["public/index.html", "public/services/index.html"]) {
 		const html = read(relativePath);
-		assert.match(html, /sayori-lineart-256\.webp 256w/);
-		assert.match(html, /sayori-lineart-512\.webp 512w/);
+		assert.match(html, /sayori-lineart-256\.webp\?v=20260807-perf 256w/);
+		assert.match(html, /sayori-lineart-512\.webp\?v=20260807-perf 512w/);
 		assert.match(html, /sayori-lineart\.webp 1024w/);
 		assert.match(html, /width="512"\s+height="512"/);
 	}

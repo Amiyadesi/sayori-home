@@ -193,7 +193,7 @@
 		},
 	};
 
-	const language = window.SayoriI18n?.language === "en" ? "en" : "zh";
+	const language = window.SayoriI18n?.language === "en" || document.documentElement.dataset.sayoriCurrentLanguage === "en" ? "en" : "zh";
 	const copy = CATALOG[language];
 	const nextLanguage = language === "zh" ? "en" : "zh";
 
@@ -316,4 +316,5 @@
 	}
 
 	renderPage();
+	window.SayoriI18n?.ready?.();
 })();

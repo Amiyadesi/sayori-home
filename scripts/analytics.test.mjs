@@ -13,14 +13,17 @@ const source = fs.readFileSync(
 test("analytics heartbeat is bounded and initialized once", () => {
 	assert.match(source, /const heartbeatMs = 60000;/);
 	assert.match(source, /dataset\.sayoriAnalyticsTracker/);
+	assert.match(source, /requestIdleCallback/);
+	assert.match(source, /data-sayori-ga4/);
 });
 
-test("every public analytics entry point cache-busts the reduced heartbeat", () => {
-	for (const relativePath of ["public/index.html", "public/sponsor/index.html"]) {
+test("every public analytics entry point is identified and cache-busted", () => {
+	for (const relativePath of ["public/index.html", "public/about/index.html", "public/sponsor/index.html"]) {
 		const html = fs.readFileSync(path.join(root, relativePath), "utf8");
+		assert.match(html, /data-sayori-analytics-site="[^"]+"/, relativePath);
 		assert.match(
 			html,
-			/analytics\.notebook\.js\?v=20260726-heartbeat-60s/,
+			/analytics\.notebook\.js\?v=20260807-perf2/,
 			relativePath,
 		);
 	}

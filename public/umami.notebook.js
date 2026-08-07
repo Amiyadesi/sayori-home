@@ -8,11 +8,22 @@
     return;
   }
 
-  const script = document.createElement("script");
-  script.defer = true;
-  script.src = scriptSrc;
-  script.dataset.websiteId = websiteId;
-  script.dataset.hostUrl = hostUrl;
-  script.dataset.domains = domains;
-  document.head.appendChild(script);
+  const load = () => {
+    if (document.querySelector(`script[src="${scriptSrc}"]`)) return;
+    const script = document.createElement("script");
+    script.defer = true;
+    script.src = scriptSrc;
+    script.dataset.websiteId = websiteId;
+    script.dataset.hostUrl = hostUrl;
+    script.dataset.domains = domains;
+    document.head.appendChild(script);
+  };
+  const start = () => {
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(load, { timeout: 2500 });
+    } else {
+      load();
+    }
+  };
+  window.setTimeout(start, 1000);
 })();

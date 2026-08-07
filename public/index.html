@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-sayori-analytics-site="home">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -12,12 +12,36 @@
 		<link rel="canonical" href="https://sayori.org/" />
 		<link rel="sitemap" href="https://sayori.org/sitemap.xml" />
 		<link rel="alternate" type="text/plain" title="Amiya's Desk LLM context" href="https://sayori.org/llms.txt" />
-		<link rel="preload" as="image" href="/assets/generated/sayori-lineart.webp" type="image/webp" fetchpriority="high" />
-		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
+		<link rel="preload" as="image" href="/assets/generated/sayori-lineart-512.webp" imagesrcset="/assets/generated/sayori-lineart-256.webp 256w, /assets/generated/sayori-lineart-512.webp 512w, /assets/generated/sayori-lineart.webp 1024w" imagesizes="(max-width: 900px) 118px, 232px" type="image/webp" fetchpriority="high" />
 		<script>
-			window.SAYORI_I18N = { defaultLanguage: "zh", pendingUntilReady: true };
+			(() => {
+				const key = "sayori:ui-language";
+				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
+				let query = null;
+				try {
+					const url = new URL(window.location.href);
+					const value = url.searchParams.get("lang");
+					if (value === "zh" || value === "en") {
+						query = value;
+						url.searchParams.delete("lang");
+						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+						try { window.localStorage.setItem(key, value); } catch {}
+					}
+				} catch {}
+				let stored = null;
+				try {
+					const value = window.localStorage.getItem(key);
+					stored = value === "zh" || value === "en" ? value : null;
+				} catch {}
+				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
+				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+				document.documentElement.dataset.sayoriCurrentLanguage = language;
+				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
+				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
+			})();
 		</script>
-		<script src="/i18n-router.js?v=20260723-click-fix"></script>
+		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
+		<script defer src="/i18n-router.js?v=20260807-perf"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="Amiya的书桌 · sayori.org" />
 		<meta property="og:description" content="Amiya_desi 的个人公开入口：博客、Godot 游戏作品、服务器和 Cloudflare 笔记、Obsidian 写作流、公共数字服务与联系方式。" />
@@ -31,16 +55,7 @@
 		<meta name="twitter:description" content="Amiya_desi 的个人公开入口：博客、Godot 游戏作品、服务器和 Cloudflare 笔记、Obsidian 写作流、公共数字服务与联系方式。" />
 		<meta name="twitter:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
 		<meta name="twitter:image:alt" content="Amiya 的书桌线稿社交预览图" />
-		<link rel="stylesheet" href="/styles.notebook.min.css?v=20260721-single-url" />
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV2MY3FGDK"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-			gtag("config", "G-KV2MY3FGDK");
-		</script>
+		<link rel="stylesheet" href="/styles.notebook.min.css?v=20260807-perf" />
 		<script type="application/ld+json">
 			{
 				"@context": "https://schema.org",
@@ -368,23 +383,35 @@
 
 			<div class="sayori-sketch" id="sayori-img">
 				<img
-					src="/assets/generated/sayori-lineart.webp"
+					src="/assets/generated/sayori-lineart-512.webp"
+					srcset="/assets/generated/sayori-lineart-256.webp 256w, /assets/generated/sayori-lineart-512.webp 512w, /assets/generated/sayori-lineart.webp 1024w"
+					sizes="(max-width: 900px) 118px, 232px"
 					alt=""
 					loading="eager"
 					fetchpriority="high"
 					decoding="async"
+					width="512"
+					height="512"
 					class="sayori-art sayori-art-front"
 				/>
 				<img
-					src="/assets/generated/sayori-lineart.webp"
+					src="/assets/generated/sayori-lineart-256.webp"
 					alt=""
 					aria-hidden="true"
+					loading="eager"
+					decoding="async"
+					width="256"
+					height="256"
 					class="sayori-art sayori-art-chibi"
 				/>
 				<img
-					src="/assets/generated/sayori-lineart.webp"
+					src="/assets/generated/sayori-lineart-256.webp"
 					alt=""
 					aria-hidden="true"
+					loading="eager"
+					decoding="async"
+					width="256"
+					height="256"
 					class="sayori-art sayori-art-ghost"
 				/>
 				<span class="sayori-drag-zone" id="sayori-drag-zone" aria-hidden="true"></span>
@@ -491,8 +518,8 @@
 			<div class="scanlines" aria-hidden="true"></div>
 		</section>
 
-		<script src="/script.notebook.min.js?v=20260721-single-url"></script>
-		<script src="/analytics.notebook.js?v=20260726-heartbeat-60s"></script>
-		<script src="/umami.notebook.js?v=20260701-umami"></script>
+		<script defer src="/script.notebook.min.js?v=20260807-perf2"></script>
+		<script defer src="/analytics.notebook.js?v=20260807-perf2"></script>
+		<script defer src="/umami.notebook.js?v=20260807-perf2"></script>
 	</body>
 </html>

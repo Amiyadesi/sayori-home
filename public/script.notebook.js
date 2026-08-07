@@ -1,7 +1,7 @@
 const body = document.body;
 const root = document.documentElement;
 
-const PATH_LANG = window.SayoriI18n?.language || (/^zh(?:-|_|$)/i.test(navigator.language || '') ? 'zh' : 'en');
+const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || (/^zh(?:-|_|$)/i.test(navigator.language || '') ? 'zh' : 'en');
 const HOME_DATA_URL = `/assets/data/home-${PATH_LANG}.json`;
 const TRUTH_DATA_URL = `/assets/data/lines-${PATH_LANG}.json`;
 
@@ -213,6 +213,7 @@ let currentLayer = 'dream';
 let locked = false;
 let homeData = null;
 let cmdData = null;
+let cmdDataPromise = null;
 let matrixActive = false;
 let matrixRaf = 0;
 let sideNotePool = [];
@@ -220,13 +221,12 @@ const tornSideNoteKeys = new Set();
 const surfaceHideJobs = new WeakMap();
 
 initDate();
-initWeather();
+runWhenIdle(initWeather, 1800);
 loadHomeData().finally(() => {
 	window.SayoriI18n?.ready?.();
 	initDreamInteractions();
 	initSideNotes();
 });
-loadCmdData();
 initMotion();
 
 musicBtn?.addEventListener('click', () => toggleMusicPlayer(musicPlayer, musicFrame, MUSIC.ohayouSayori, musicBtn, {
@@ -549,7 +549,7 @@ function spawnPianoNote() {
 
 async function loadHomeData() {
 	try {
-		const res = await fetch(HOME_DATA_URL, { cache: 'no-cache' });
+		const res = await fetch(HOME_DATA_URL, { cache: 'default' });
 		if (!res.ok) return;
 		homeData = await res.json();
 		applyHomeData(homeData);
@@ -942,7 +942,7 @@ async function collapseToTruth() {
 			currentLayer = 'truth';
 			locked = false;
 			glitchField?.replaceChildren();
-			initTerminal();
+			loadCmdData().finally(() => initTerminal());
 			spawnDataStream();
 		});
 	}, durMs);
@@ -1181,11 +1181,28 @@ function initSideNotes() {
 		sideNotePool = shuffle(cachedNotes);
 		renderSideNotes();
 	}
-	loadGuestbookNotes();
+	runWhenIdle(loadGuestbookNotes, 3000);
 	window.matchMedia?.(SIDE_NOTE_MOBILE_QUERY)?.addEventListener?.('change', () => {
 		sideNotePool = shuffle(readCachedSideNotes());
 		renderSideNotes();
 	});
+}
+
+function runWhenIdle(callback, timeout = 2000) {
+	let called = false;
+	const run = () => {
+		if (called) return;
+		called = true;
+		callback();
+	};
+	const start = () => {
+		if (typeof window.requestIdleCallback === 'function') {
+			window.requestIdleCallback(run, { timeout });
+		} else {
+			run();
+		}
+	};
+	window.setTimeout(start, Math.min(timeout, 1000));
 }
 
 function renderSideNotes() {
@@ -1938,13 +1955,21 @@ function initTerminal() {
 	setTimeout(() => terminalInput?.focus(), 100);
 }
 
-async function loadCmdData() {
-	try {
-		const res = await fetch(TRUTH_DATA_URL, { cache: 'no-cache' });
-		if (!res.ok) return;
-		cmdData = await res.json();
-		applyTruthData(cmdData);
-	} catch {}
+function loadCmdData() {
+	if (cmdData) return Promise.resolve(cmdData);
+	if (cmdDataPromise) return cmdDataPromise;
+	cmdDataPromise = (async () => {
+		try {
+			const res = await fetch(TRUTH_DATA_URL, { cache: 'default' });
+			if (!res.ok) return null;
+			cmdData = await res.json();
+			applyTruthData(cmdData);
+			return cmdData;
+		} catch {
+			return null;
+		}
+	})();
+	return cmdDataPromise;
 }
 
 function initDate() {

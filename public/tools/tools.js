@@ -28,7 +28,7 @@
 		},
 	};
 
-	const language = window.SayoriI18n?.language === "en" ? "en" : "zh";
+	const language = window.SayoriI18n?.language === "en" || document.documentElement.dataset.sayoriCurrentLanguage === "en" ? "en" : "zh";
 	const strings = copy[language];
 	const $ = (selector) => document.querySelector(selector);
 	const state = {
@@ -56,6 +56,7 @@
 		const value = strings[node.dataset.i18n];
 		if (value) node.textContent = value;
 	});
+	window.SayoriI18n?.ready?.();
 
 	function status(message, kind = "") {
 		const node = $("#tool-status");

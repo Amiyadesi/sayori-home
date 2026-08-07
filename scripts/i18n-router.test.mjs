@@ -43,6 +43,13 @@ test("manual language controls save the preference and reload the same page", ()
 	assert.equal(result.pathname, "/services/");
 });
 
+test("the deferred router trusts the language selected by the inline bootstrap", () => {
+	const result = runRouter({ initialLanguage: "en", browserLanguage: "zh-CN", storedLanguage: "zh" });
+
+	assert.equal(result.language, "en");
+	assert.equal(result.documentLanguage, "en");
+});
+
 test("ordinary page controls never trigger the delegated language reload", () => {
 	const result = runRouter({ browserLanguage: "zh-CN" });
 
@@ -53,12 +60,13 @@ test("ordinary page controls never trigger the delegated language reload", () =>
 	assert.equal(result.documentDataset.sayoriCurrentLanguage, "zh");
 });
 
-test("canonical pages use one synchronous language router instead of language routes", () => {
-	for (const relativePath of ["public/index.html", "public/services/index.html"]) {
+test("canonical pages use the inline language bootstrap and deferred router", () => {
+	for (const relativePath of ["public/index.html", "public/about/index.html", "public/services/index.html", "public/tools/index.html"]) {
 		const html = read(relativePath);
 		assert.match(html, /SAYORI_I18N/);
-		assert.match(html, /<script src="\/i18n-router\.js[^\"]*"><\/script>/);
-		assert.doesNotMatch(html, /<script defer src="[^\"]*i18n-router\.js/);
+		assert.match(html, /initialLanguage: language/);
+		assert.match(html, /<script defer src="[^\"]*i18n-router\.js/);
+		assert.doesNotMatch(html, /<script src="\/i18n-router\.js[^\"]*"><\/script>/);
 		assert.doesNotMatch(html, /href="\/(?:zh|en)\//);
 	}
 });
@@ -84,6 +92,7 @@ function runRouter({
 	storedLanguage = null,
 	href = "https://sayori.org/",
 	linkLanguage = null,
+	initialLanguage = null,
 } = {}) {
 	const source = fs.readFileSync(path.join(root, "public/i18n-router.js"), "utf8");
 	const url = new URL(href);
@@ -103,7 +112,7 @@ function runRouter({
 	const context = {
 		URL,
 		window: {
-			SAYORI_I18N: { defaultLanguage: "zh" },
+			SAYORI_I18N: { defaultLanguage: "zh", ...(initialLanguage ? { initialLanguage } : {}) },
 			location,
 			history: {
 				replaceState(_state, _title, value) { replacedUrl = value; },

@@ -15,34 +15,46 @@
   Cache-Control: no-cache
 
 /services/services.css
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /services/services-i18n.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /services/services-i18n.min.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /i18n-router.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /styles.notebook.css
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /styles.notebook.min.css
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /script.notebook.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /script.notebook.min.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /analytics.notebook.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
 
 /umami.notebook.js
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+  Cache-Control: public, max-age=31536000, immutable
+
+/about/about.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/about/about.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/tools/tools.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/tools/tools.js
+  Cache-Control: public, max-age=31536000, immutable
 
 /assets/svg/*
   Cache-Control: public, max-age=31536000, immutable

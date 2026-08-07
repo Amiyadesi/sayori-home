@@ -1,10 +1,53 @@
 (function () {
-  if (document.documentElement.dataset.sayoriAnalyticsTracker === "active") {
+  "use strict";
+
+  const ga4MeasurementId = "G-KV2MY3FGDK";
+  let ga4Started = false;
+
+  function runWhenIdle(callback, timeout = 2500) {
+    let called = false;
+    const run = () => {
+      if (called) return;
+      called = true;
+      callback();
+    };
+    const start = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(run, { timeout });
+      } else {
+        run();
+      }
+    };
+    window.setTimeout(start, Math.min(timeout, 1000));
+  }
+
+  function loadGoogleAnalytics() {
+    if (ga4Started) return;
+    ga4Started = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", ga4MeasurementId);
+    if (document.querySelector('script[data-sayori-ga4="true"]')) return;
+    const script = document.createElement("script");
+    script.async = true;
+    script.dataset.sayoriGa4 = "true";
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4MeasurementId)}`;
+    document.head.appendChild(script);
+  }
+
+  runWhenIdle(loadGoogleAnalytics);
+  window.addEventListener("pointerdown", loadGoogleAnalytics, { once: true, passive: true });
+  window.addEventListener("keydown", loadGoogleAnalytics, { once: true, passive: true });
+
+  const site = document.documentElement.dataset.sayoriAnalyticsSite;
+  if (!site || document.documentElement.dataset.sayoriAnalyticsTracker === "active") {
     return;
   }
   document.documentElement.dataset.sayoriAnalyticsTracker = "active";
   const endpoint = "https://blog.sayori.org/api/analytics/event";
-  const site = "home";
   const heartbeatMs = 60000;
   const storagePrefix = "sayoriHomeAnalytics";
 

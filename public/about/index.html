@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-sayori-analytics-site="about">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -10,11 +10,35 @@
 		<title>关于我 · Amiya的书桌</title>
 		<link rel="icon" href="/favicon.png" type="image/png" />
 		<link rel="canonical" href="https://sayori.org/about/" />
-		<link rel="preload" as="image" href="/assets/generated/sayori-lineart.webp" type="image/webp" />
 		<script>
-			window.SAYORI_I18N = { defaultLanguage: "zh", pendingUntilReady: true };
+			(() => {
+				const key = "sayori:ui-language";
+				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
+				let query = null;
+				try {
+					const url = new URL(window.location.href);
+					const value = url.searchParams.get("lang");
+					if (value === "zh" || value === "en") {
+						query = value;
+						url.searchParams.delete("lang");
+						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+						try { window.localStorage.setItem(key, value); } catch {}
+					}
+				} catch {}
+				let stored = null;
+				try {
+					const value = window.localStorage.getItem(key);
+					stored = value === "zh" || value === "en" ? value : null;
+				} catch {}
+				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
+				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+				document.documentElement.dataset.sayoriCurrentLanguage = language;
+				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
+				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
+			})();
 		</script>
-		<script src="/i18n-router.js?v=20260723-click-fix"></script>
+		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
+		<script defer src="/i18n-router.js?v=20260807-perf"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="关于我 · Amiya的书桌" />
 		<meta property="og:description" content="一封放在书桌上的长信：Amiya_desi 是谁，这个名字怎么来的，做过哪些游戏和网站，以及怎样看待 AI 与创作。" />
@@ -26,7 +50,7 @@
 		<meta name="twitter:title" content="关于我 · Amiya的书桌" />
 		<meta name="twitter:description" content="一封放在书桌上的长信：Amiya_desi 是谁，这个名字怎么来的，做过哪些游戏和网站。" />
 		<meta name="twitter:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
-		<link rel="stylesheet" href="/about/about.css?v=20260728-letter" />
+		<link rel="stylesheet" href="/about/about.css?v=20260807-perf" />
 		<script type="application/ld+json" id="about-schema">
 			{
 				"@context": "https://schema.org",
@@ -97,15 +121,7 @@
 			</span>
 		</footer>
 
-		<script src="/about/about.js?v=20260728-letter"></script>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV2MY3FGDK"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-			gtag("config", "G-KV2MY3FGDK");
-		</script>
+		<script defer src="/about/about.js?v=20260807-perf"></script>
+		<script defer src="/analytics.notebook.js?v=20260807-perf2"></script>
 	</body>
 </html>

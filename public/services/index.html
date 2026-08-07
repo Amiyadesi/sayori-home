@@ -8,11 +8,36 @@
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="https://sayori.org/services/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
-		<link rel="stylesheet" href="/services/services.css?v=20260721-single-url" />
+		<link rel="stylesheet" href="/services/services.css?v=20260807-perf" />
 		<script>
-			window.SAYORI_I18N = { defaultLanguage: "zh" };
+			(() => {
+				const key = "sayori:ui-language";
+				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
+				let query = null;
+				try {
+					const url = new URL(window.location.href);
+					const value = url.searchParams.get("lang");
+					if (value === "zh" || value === "en") {
+						query = value;
+						url.searchParams.delete("lang");
+						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+						try { window.localStorage.setItem(key, value); } catch {}
+					}
+				} catch {}
+				let stored = null;
+				try {
+					const value = window.localStorage.getItem(key);
+					stored = value === "zh" || value === "en" ? value : null;
+				} catch {}
+				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
+				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+				document.documentElement.dataset.sayoriCurrentLanguage = language;
+				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
+				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
+			})();
 		</script>
-		<script src="/i18n-router.js?v=20260723-click-fix"></script>
+		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
+		<script defer src="/i18n-router.js?v=20260807-perf"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="公共服务 · Amiya的书桌" />
 		<meta property="og:description" content="公开运行、开源自部署、邀请制计划和私有基础设施的清晰边界" />
@@ -71,7 +96,7 @@
 							<span class="status-stamp" data-status="private">私有基础设施</span>
 						</div>
 					</div>
-					<img class="hero-art" src="/assets/generated/sayori-lineart.webp" alt="" />
+					<img class="hero-art" src="/assets/generated/sayori-lineart-512.webp" srcset="/assets/generated/sayori-lineart-256.webp 256w, /assets/generated/sayori-lineart-512.webp 512w, /assets/generated/sayori-lineart.webp 1024w" sizes="(max-width: 720px) 180px, 320px" width="512" height="512" alt="" decoding="async" />
 				</div>
 			</section>
 
@@ -263,6 +288,6 @@
 				<a href="mailto:me@sayori.org">联系</a>
 			</nav>
 		</footer>
-		<script src="/services/services-i18n.min.js?v=20260801-nav"></script>
+		<script defer src="/services/services-i18n.min.js?v=20260807-perf"></script>
 	</body>
 </html>

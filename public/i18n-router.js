@@ -41,8 +41,8 @@
 	const browserLanguage = normalizeLanguage(
 		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "zh",
 	);
-	const queryLanguage = readQueryLanguage();
-	let currentLanguage = queryLanguage || readStoredLanguage() || browserLanguage;
+	const queryLanguage = config.initialLanguage ? null : readQueryLanguage();
+	let currentLanguage = normalizeLanguage(config.initialLanguage || queryLanguage || readStoredLanguage() || browserLanguage);
 	if (queryLanguage) saveLanguage(queryLanguage);
 
 	document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";

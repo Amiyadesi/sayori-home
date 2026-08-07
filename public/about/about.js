@@ -1,7 +1,7 @@
 (() => {
 	'use strict';
 
-	const LANG = window.SayoriI18n?.language || (document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en');
+	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || (document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en');
 	const DATA_URL = `/assets/data/about-${LANG}.json`;
 	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json`;
 
@@ -212,11 +212,11 @@
 
 	async function loadData() {
 		try {
-			const res = await fetch(DATA_URL, { cache: 'no-cache' });
+			const res = await fetch(DATA_URL, { cache: 'default' });
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
 			return await res.json();
 		} catch {
-			const res = await fetch(FALLBACK_URL, { cache: 'no-cache' });
+			const res = await fetch(FALLBACK_URL, { cache: 'default' });
 			if (!res.ok) return null;
 			return res.json();
 		}

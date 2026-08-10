@@ -106,7 +106,7 @@ async function startAudio() {
   compressor.connect(audio.destination);
   if (audio.state === 'suspended') await audio.resume();
   await Promise.all(SAMPLE_NAMES.map(async (name) => {
-    buffers[name] = await audio.decodeAudioData(decodeBase64(AUDIO_B64[name]));
+    buffers[name] = await audio.decodeAudioData(decodeBase64(window.AUDIO_B64[name]));
   }));
   overlay.classList.add('is-hidden');
   musicTimer = window.setInterval(playMusicPulse, (60 / BPM) * 4000);

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f3efe8" />
+  <meta name="description" content="Subaru Tap - 菜月昴惨叫音阶应援器" />
+  <title>Subaru Tap</title>
+  <style>
+    :root {
+      --paper: #f3efe8;
+      --ink: #17191d;
+      --red: #df4b52;
+      --blue: #2168e8;
+      --yellow: #f2c94c;
+      --green: #2db28d;
+      --muted: #706d68;
+      --line: rgba(23, 25, 29, .17);
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Arial Narrow", "Microsoft YaHei", system-ui, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none;
+    }
+    button { font: inherit; }
+    #stage { position: fixed; inset: 0; overflow: hidden; isolation: isolate; }
+    #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .wash {
+      position: absolute; inset: -20%; pointer-events: none; opacity: .48;
+      background:
+        linear-gradient(115deg, transparent 0 23%, rgba(33,104,232,.13) 23% 34%, transparent 34% 62%, rgba(223,75,82,.12) 62% 75%, transparent 75%),
+        linear-gradient(25deg, transparent 0 58%, rgba(242,201,76,.15) 58% 72%, transparent 72%);
+      transform: rotate(-4deg);
+    }
+    header {
+      position: absolute; z-index: 5; inset: 0 0 auto; display: flex; justify-content: space-between;
+      align-items: flex-start; padding: max(18px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+      pointer-events: none;
+    }
+    .brand { display: grid; gap: 4px; pointer-events: none; }
+    .brand strong { font-size: clamp(19px, 3.2vw, 34px); letter-spacing: .04em; line-height: .9; }
+    .brand span { color: var(--muted); font-size: 10px; letter-spacing: .16em; font-weight: 700; }
+    .controls { display: flex; gap: 8px; pointer-events: auto; }
+    .control {
+      width: 42px; height: 42px; border: 1px solid var(--line); background: rgba(243,239,232,.74);
+      color: var(--ink); cursor: pointer; display: grid; place-items: center; font-weight: 800;
+      transition: transform .12s ease, background .12s ease, color .12s ease;
+    }
+    .control:hover { background: var(--ink); color: var(--paper); }
+    .control:active { transform: scale(.9); }
+    .control.is-muted { background: var(--ink); color: var(--paper); opacity: .56; }
+    main { position: absolute; inset: 0; display: grid; place-items: center; }
+    .hero {
+      position: relative; width: min(48vw, 390px); aspect-ratio: 4 / 5; min-width: 230px;
+      display: grid; place-items: center; pointer-events: none;
+    }
+    .hero::before, .hero::after {
+      content: ""; position: absolute; border: 2px solid var(--ink); transform: rotate(7deg);
+    }
+    .hero::before { inset: 8% -7% 9% 7%; border-color: var(--red); }
+    .hero::after { inset: -3% 8% 2% -8%; border-color: var(--blue); transform: rotate(-6deg); }
+    .avatar-frame {
+      position: relative; z-index: 1; width: 82%; height: 82%; overflow: hidden; background: var(--ink);
+      border: 8px solid var(--paper); outline: 2px solid var(--ink); box-shadow: 16px 16px 0 var(--yellow);
+      transform: rotate(-2deg); transition: transform .16s ease, filter .16s ease;
+    }
+    .avatar-frame.is-barking { animation: bark .33s cubic-bezier(.2,1.5,.4,1); filter: saturate(1.4) contrast(1.15); }
+    .avatar { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .stamp {
+      position: absolute; z-index: 2; right: -2%; bottom: 6%; padding: 7px 9px; color: var(--paper);
+      background: var(--red); border: 2px solid var(--ink); transform: rotate(8deg); font-size: 12px; font-weight: 900;
+      letter-spacing: .12em;
+    }
+    .note-readout {
+      position: absolute; z-index: 3; top: 5%; left: -10%; min-width: 68px; padding: 9px 10px;
+      border-left: 5px solid var(--blue); background: var(--ink); color: var(--paper); font-size: 18px; font-weight: 900;
+      text-align: center; transform: rotate(-6deg); opacity: .96;
+    }
+    #zones { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(3,1fr); }
+    .zone { position: relative; border: 0; background: transparent; cursor: crosshair; }
+    .zone::after { content: ""; position: absolute; inset: 4px; border: 1px solid transparent; transition: background .12s ease, border-color .12s ease; }
+    .zone.is-hot::after { background: color-mix(in srgb, var(--zone-color) 22%, transparent); border-color: var(--zone-color); }
+    .zone-label { position: absolute; left: 14px; bottom: 12px; color: rgba(23,25,29,.32); font: 900 12px/1 monospace; letter-spacing: .12em; }
+    footer { position: absolute; z-index: 5; left: max(20px, env(safe-area-inset-left)); right: max(20px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: end; pointer-events: none; }
+    .footer-copy { display: grid; gap: 4px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
+    .footer-copy strong { color: var(--ink); font-size: 12px; }
+    #combo { color: var(--ink); font: 900 clamp(24px, 5vw, 48px)/1 monospace; text-align: right; }
+    #overlay { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; background: rgba(243,239,232,.92); transition: opacity .28s ease, visibility .28s ease; }
+    #overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .start-card { display: grid; gap: 12px; text-align: center; transform: rotate(-2deg); }
+    .start-card strong { font-size: clamp(34px, 9vw, 84px); line-height: .8; letter-spacing: -.04em; }
+    .start-card span { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .2em; }
+    .start-card b { justify-self: center; padding: 10px 14px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .14em; }
+    @keyframes bark { 0% { transform: rotate(-2deg) scale(1); } 35% { transform: rotate(3deg) scale(1.08); } 100% { transform: rotate(-2deg) scale(1); } }
+    @media (max-width: 700px) {
+      .hero { width: min(70vw, 330px); }
+      .zone-label { left: 8px; bottom: 8px; font-size: 10px; }
+      .control { width: 38px; height: 38px; }
+      .stamp { right: -7%; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div class="wash" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <header>
+      <div class="brand"><strong>SUBARU TAP</strong><span>菜月昴应援 / SCREAM IN SCALE</span></div>
+      <div class="controls" aria-label="播放控制">
+        <button class="control" id="music-toggle" type="button" aria-label="关闭背景音乐" title="背景音乐">♪</button>
+        <button class="control" id="sfx-toggle" type="button" aria-label="关闭音效" title="惨叫音效">◉</button>
+      </div>
+    </header>
+    <main>
+      <div class="hero" aria-hidden="true">
+        <div class="note-readout" id="note-readout">A3</div>
+        <div class="avatar-frame" id="avatar-frame"><img class="avatar" src="Image/subaru_abstract.png" alt="抽象化菜月昴图像" draggable="false" /></div>
+        <div class="stamp">死んでも守る</div>
+      </div>
+    </main>
+    <div id="zones" aria-label="惨叫音阶区域"></div>
+    <footer>
+      <div class="footer-copy"><strong>3 VOICES / 4 NOTES</strong><span>A MINOR PENTATONIC · Q W E R / A S D F / Z X C V</span></div>
+      <div id="combo" aria-live="polite">00</div>
+    </footer>
+    <div id="overlay">
+      <div class="start-card"><strong>昴</strong><span>一起来给他加油</span><b>触碰任意位置开始</b></div>
+    </div>
+  </div>
+  <script src="audio-data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

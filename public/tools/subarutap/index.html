@@ -104,13 +104,13 @@
       transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
     }
     body:not(.is-live) .avatar-frame { animation: none; }
-    .avatar-frame.is-hit { animation: avatar-hit .28s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.35) contrast(1.12); }
-    .avatar-frame.is-fall { animation: avatar-fall .54s cubic-bezier(.2, .85, .35, 1); filter: saturate(1.28) contrast(1.12); }
-    .avatar-frame.is-squash { animation: avatar-squash .42s cubic-bezier(.2, 1.4, .4, 1); filter: saturate(1.18) contrast(1.08); }
-    .avatar-frame.is-shake { animation: avatar-shake .34s ease-out; filter: saturate(1.4) contrast(1.16); }
-    .avatar-frame.is-freeze { animation: avatar-freeze .48s ease-out; filter: saturate(.7) contrast(1.2) hue-rotate(14deg); }
-    .avatar-frame.is-burst { animation: avatar-burst .38s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.5) contrast(1.18); }
-    .avatar-frame.is-void { animation: avatar-void .56s cubic-bezier(.2, .8, .3, 1); filter: saturate(.55) contrast(1.4) brightness(.72); }
+    .avatar-frame.is-hit .avatar { animation: avatar-hit .28s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.35) contrast(1.12); }
+    .avatar-frame.is-fall .avatar { animation: avatar-fall .54s cubic-bezier(.2, .85, .35, 1); filter: saturate(1.28) contrast(1.12); }
+    .avatar-frame.is-squash .avatar { animation: avatar-squash .42s cubic-bezier(.2, 1.4, .4, 1); filter: saturate(1.18) contrast(1.08); }
+    .avatar-frame.is-shake .avatar { animation: avatar-shake .34s ease-out; filter: saturate(1.4) contrast(1.16); }
+    .avatar-frame.is-freeze .avatar { animation: avatar-freeze .48s ease-out; filter: saturate(.7) contrast(1.2) hue-rotate(14deg); }
+    .avatar-frame.is-burst .avatar { animation: avatar-burst .38s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.5) contrast(1.18); }
+    .avatar-frame.is-void .avatar { animation: avatar-void .56s cubic-bezier(.2, .8, .3, 1); filter: saturate(.55) contrast(1.4) brightness(.72); }
     .corpse {
       position: absolute;
       inset: 0;
@@ -178,7 +178,7 @@
     @keyframes avatar-freeze { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(-2deg) scale(1.12); } 52% { transform: rotate(-1deg) scale(.98); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-burst { 0% { transform: rotate(-2deg) scale(1); } 32% { transform: rotate(2deg) scale(1.24); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-void { 0% { transform: rotate(-2deg) scale(1); } 30% { transform: rotate(-2deg) scale(1.12); } 100% { transform: rotate(5deg) scale(.9); } }
-    @keyframes corpse-drop { 0% { opacity: 0; transform: translateY(0) rotate(-2deg) scale(1); } 18% { opacity: 1; transform: translateY(-2%) rotate(3deg) scale(1.06); } 100% { opacity: 0; transform: translate(16%, 76%) rotate(84deg) scale(.64); } }
+    @keyframes corpse-drop { 0% { opacity: 1; transform: translate(0, 0) rotate(-2deg) scale(1); } 12% { opacity: 1; transform: translate(var(--corpse-mid-x), var(--corpse-mid-y)) rotate(3deg) scale(1.06); } 68% { opacity: 1; transform: translate(var(--corpse-fade-x), var(--corpse-fade-y)) rotate(var(--corpse-fade-rotate)) scale(.78); } 100% { opacity: 0; transform: translate(var(--corpse-x), var(--corpse-y)) rotate(var(--corpse-rotate)) scale(.64); } }
     @keyframes corpse-gray { 0% { filter: grayscale(0) contrast(1.05) drop-shadow(0 16px 20px rgba(0, 0, 0, .4)); } 100% { filter: grayscale(1) brightness(.82) contrast(1.22) drop-shadow(0 16px 20px rgba(0, 0, 0, .18)); } }
     @keyframes avatar-idle { 0% { transform: rotate(-2deg) translateY(0) scale(1.02); } 25% { transform: rotate(88deg) translateY(-2%); } 50% { transform: rotate(178deg) translateY(0) scale(1.02); } 75% { transform: rotate(268deg) translateY(2%); } 100% { transform: rotate(358deg) translateY(0) scale(1.02); } }
     @keyframes control-pulse { 0% { transform: scale(1); } 38% { transform: scale(1.14); } 100% { transform: scale(1); } }
@@ -213,7 +213,7 @@
       </div>
     </div>
   </div>
-  <script src="audio-data.js?v=8"></script>
-  <script src="main.js?v=8"></script>
+  <script src="audio-data.js?v=9"></script>
+  <script src="main.js?v=9"></script>
 </body>
 </html>

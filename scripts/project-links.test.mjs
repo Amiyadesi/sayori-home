@@ -41,7 +41,7 @@ test("retired and private services are not advertised on public surfaces", () =>
 
 test("localized home data exposes the maintained tools and links", () => {
 	const expectedLinks = [
-		"/tool/subarutap/",
+		"/tools/subarutap/",
 		"https://board.sayori.org/",
 		"https://geo.sayori.org/",
 		"https://blog.sayori.org/guestbook/",

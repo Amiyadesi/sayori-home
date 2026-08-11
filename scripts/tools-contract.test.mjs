@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 test("tools page keeps the local image workflow wired", () => {
 	const html = fs.readFileSync(path.join(root, "public/tools/index.html"), "utf8");
 	const js = fs.readFileSync(path.join(root, "public/tools/tools.js"), "utf8");
-	assert.match(html, /class="subaru-tap-link" href="\/tool\/subarutap\/"/);
+	assert.match(html, /class="subaru-tap-link" href="\/tools\/subarutap\/"/);
 	assert.match(js, /subaruTap: "Subaru Tap"/);
 
 	for (const id of ["pixel-background", "pixel-style", "pixel-output-scale", "pixel-info", "tiles-info", "tile-offset-x", "tile-offset-y"]) assert.match(html, new RegExp(`id=\"${id}\"`), `${id} is present`);

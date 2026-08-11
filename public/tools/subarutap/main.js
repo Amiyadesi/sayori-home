@@ -510,7 +510,8 @@ function drawPiece(g, kind, color, x, y, r, rot) {
  *  - 页面背景平滑过渡到新特效的落幕背景色
  * ==========================================================*/
 const FX_IN = 0.55;    // 入场时长（秒）
-const FX_OUT = 0.4;    // 退场时长（秒）
+const FX_LIFE = 0.72;  // 完成一圈后停止
+const FX_OUT = 0.24;   // 停止后的淡出时长（秒）
 
 let fxW = 0, fxH = 0;  // 画布尺寸（CSS 像素）
 let fxList = [];       // 活跃特效（数组顺序 = 叠放顺序）
@@ -972,7 +973,7 @@ function spawnEffect(zi, when) {
   for (const e of fxList) {
     if (e.state !== 'out') { e.state = 'out'; e.outT0 = now; }
   }
-  while (fxList.length > 6) fxList.shift();   // 快速连打时兜底清理
+  while (fxList.length > 4) fxList.shift();   // 快速连打时兜底清理
 
   const inst = buildEffect(type);
   inst.t0 = Math.min(when == null ? now : when, now + 0.05);       // 尽量贴节拍，最多延迟 50ms
@@ -985,13 +986,17 @@ function fxFrame(now) {
 
   for (let i = fxList.length - 1; i >= 0; i--) {
     const inst = fxList[i];
+    const t = now - inst.t0;
+    if (t < 0) continue;                                  // 等待节拍点
+    if (inst.state !== 'out' && t >= FX_LIFE) {
+      inst.state = 'out';
+      inst.outT0 = inst.t0 + FX_LIFE;
+    }
     let outK = 0;
     if (inst.state === 'out') {
       outK = clamp01((now - inst.outT0) / FX_OUT);
       if (outK >= 1) { fxList.splice(i, 1); continue; }   // 退场完毕，移除
     }
-    const t = now - inst.t0;
-    if (t < 0) continue;                                  // 等待节拍点
 
     // 常驻特效整体随节拍呼吸；退场特效整体淡出 + 缩小
     const fade = 1 - smooth(outK);

@@ -3,116 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#f3efe8" />
+  <meta name="theme-color" content="#090b16" />
   <meta name="description" content="Subaru Tap - 菜月昴惨叫音阶应援器" />
-  <title>Subaru Tap</title>
+  <title>Subaru Tap / 死亡回归</title>
   <style>
     :root {
-      --paper: #f3efe8;
-      --ink: #17191d;
-      --red: #df4b52;
-      --blue: #2168e8;
-      --yellow: #f2c94c;
-      --green: #2db28d;
-      --muted: #706d68;
-      --line: rgba(23, 25, 29, .17);
+      --void: #090b16;
+      --night: #11162a;
+      --panel: rgba(18, 23, 43, .82);
+      --panel-strong: rgba(11, 14, 28, .94);
+      --ink: #f4f0ed;
+      --muted: #a7a6b6;
+      --line: rgba(244, 240, 237, .16);
+      --scarlet: #ed596b;
+      --ice: #86cfff;
+      --violet: #a681e8;
+      --gold: #e9c77f;
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
     body {
-      background: var(--paper);
       color: var(--ink);
+      background: var(--void);
       font-family: "Arial Narrow", "Microsoft YaHei", system-ui, sans-serif;
       user-select: none;
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
       touch-action: none;
     }
-    button { font: inherit; }
-    #stage { position: fixed; inset: 0; overflow: hidden; isolation: isolate; }
-    #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-    .wash {
-      position: absolute; inset: -20%; pointer-events: none; opacity: .48;
-      background:
-        linear-gradient(115deg, transparent 0 23%, rgba(33,104,232,.13) 23% 34%, transparent 34% 62%, rgba(223,75,82,.12) 62% 75%, transparent 75%),
-        linear-gradient(25deg, transparent 0 58%, rgba(242,201,76,.15) 58% 72%, transparent 72%);
-      transform: rotate(-4deg);
+    button, a { font: inherit; }
+    button { color: inherit; }
+    #stage {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--void);
+    }
+    #fx { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; }
+    #zoneflash { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+    .zone-flash {
+      position: absolute;
+      opacity: 0;
+      animation: zone-fade .34s ease-out forwards;
     }
     header {
-      position: absolute; z-index: 5; inset: 0 0 auto; display: flex; justify-content: space-between;
-      align-items: flex-start; padding: max(18px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+      position: absolute;
+      z-index: 7;
+      inset: 0 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: max(18px, env(safe-area-inset-top)) max(22px, env(safe-area-inset-right)) 0 max(22px, env(safe-area-inset-left));
       pointer-events: none;
     }
-    .brand { display: grid; gap: 4px; pointer-events: none; }
-    .brand strong { font-size: clamp(19px, 3.2vw, 34px); letter-spacing: .04em; line-height: .9; }
-    .brand span { color: var(--muted); font-size: 10px; letter-spacing: .16em; font-weight: 700; }
-    .controls { display: flex; gap: 8px; pointer-events: auto; }
+    .controls { display: flex; gap: 9px; pointer-events: auto; }
     .control {
-      width: 42px; height: 42px; border: 1px solid var(--line); background: rgba(243,239,232,.74);
-      color: var(--ink); cursor: pointer; display: grid; place-items: center; font-weight: 800;
-      transition: transform .12s ease, background .12s ease, color .12s ease;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: rgba(11, 14, 28, .72);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
     }
-    .control:hover { background: var(--ink); color: var(--paper); }
+    .control:hover, .control:focus-visible { background: var(--scarlet); border-color: var(--scarlet); color: white; outline: none; }
     .control:active { transform: scale(.9); }
-    .control.is-muted { background: var(--ink); color: var(--paper); opacity: .56; }
-    main { position: absolute; inset: 0; display: grid; place-items: center; }
+    .control.is-pulsed { animation: control-pulse .24s ease-out; }
+    .control.is-muted { color: var(--muted); opacity: .58; }
+    main { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; pointer-events: none; }
     .hero {
-      position: relative; width: min(48vw, 390px); aspect-ratio: 4 / 5; min-width: 230px;
-      display: grid; place-items: center; pointer-events: none;
+      position: relative;
+      width: min(42vw, 420px);
+      aspect-ratio: 1;
+      min-width: 220px;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
     }
-    .hero::before, .hero::after {
-      content: ""; position: absolute; border: 2px solid var(--ink); transform: rotate(7deg);
-    }
-    .hero::before { inset: 8% -7% 9% 7%; border-color: var(--red); }
-    .hero::after { inset: -3% 8% 2% -8%; border-color: var(--blue); transform: rotate(-6deg); }
+    .hero::before, .hero::after { display: none; }
     .avatar-frame {
-      position: relative; z-index: 1; width: 82%; height: 82%; overflow: hidden; background: var(--ink);
-      border: 8px solid var(--paper); outline: 2px solid var(--ink); box-shadow: 16px 16px 0 var(--yellow);
-      transform: rotate(-2deg); transition: transform .16s ease, filter .16s ease;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      box-shadow: none;
+      transform: rotate(-2deg);
+      animation: avatar-idle 10s linear infinite;
+      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
     }
-    .avatar-frame.is-barking { animation: bark .33s cubic-bezier(.2,1.5,.4,1); filter: saturate(1.4) contrast(1.15); }
-    .avatar { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .stamp {
-      position: absolute; z-index: 2; right: -2%; bottom: 6%; padding: 7px 9px; color: var(--paper);
-      background: var(--red); border: 2px solid var(--ink); transform: rotate(8deg); font-size: 12px; font-weight: 900;
-      letter-spacing: .12em;
+    body:not(.is-live) .avatar-frame { animation: none; }
+    .avatar-frame.is-hit { animation: avatar-hit .28s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.35) contrast(1.12); }
+    .avatar-frame.is-fall { animation: avatar-fall .54s cubic-bezier(.2, .85, .35, 1); filter: saturate(1.28) contrast(1.12); }
+    .avatar-frame.is-squash { animation: avatar-squash .42s cubic-bezier(.2, 1.4, .4, 1); filter: saturate(1.18) contrast(1.08); }
+    .avatar-frame.is-shake { animation: avatar-shake .34s ease-out; filter: saturate(1.4) contrast(1.16); }
+    .avatar-frame.is-freeze { animation: avatar-freeze .48s ease-out; filter: saturate(.7) contrast(1.2) hue-rotate(14deg); }
+    .avatar-frame.is-burst { animation: avatar-burst .38s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.5) contrast(1.18); }
+    .avatar-frame.is-void { animation: avatar-void .56s cubic-bezier(.2, .8, .3, 1); filter: saturate(.55) contrast(1.4) brightness(.72); }
+    .avatar {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      padding: 6%;
+      filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .5));
     }
-    .note-readout {
-      position: absolute; z-index: 3; top: 5%; left: -10%; min-width: 68px; padding: 9px 10px;
-      border-left: 5px solid var(--blue); background: var(--ink); color: var(--paper); font-size: 18px; font-weight: 900;
-      text-align: center; transform: rotate(-6deg); opacity: .96;
+    body.is-live .avatar { transform: scale(1.12); }
+    #overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      display: grid;
+      place-items: center;
+      background: var(--void);
+      transition: opacity .28s ease, visibility .28s ease;
     }
-    #zones { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(3,1fr); }
-    .zone { position: relative; border: 0; background: transparent; cursor: crosshair; }
-    .zone::after { content: ""; position: absolute; inset: 4px; border: 1px solid transparent; transition: background .12s ease, border-color .12s ease; }
-    .zone.is-hot::after { background: color-mix(in srgb, var(--zone-color) 22%, transparent); border-color: var(--zone-color); }
-    .zone-label { position: absolute; left: 14px; bottom: 12px; color: rgba(23,25,29,.32); font: 900 12px/1 monospace; letter-spacing: .12em; }
-    footer { position: absolute; z-index: 5; left: max(20px, env(safe-area-inset-left)); right: max(20px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: end; pointer-events: none; }
-    .footer-copy { display: grid; gap: 4px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
-    .footer-copy strong { color: var(--ink); font-size: 12px; }
-    #combo { color: var(--ink); font: 900 clamp(24px, 5vw, 48px)/1 monospace; text-align: right; }
-    #overlay { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; background: rgba(243,239,232,.92); transition: opacity .28s ease, visibility .28s ease; }
     #overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .start-card { display: grid; gap: 12px; text-align: center; transform: rotate(-2deg); }
-    .start-card strong { font-size: clamp(34px, 9vw, 84px); line-height: .8; letter-spacing: -.04em; }
-    .start-card span { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .2em; }
-    .start-card b { justify-self: center; padding: 10px 14px; background: var(--ink); color: var(--paper); font-size: 12px; letter-spacing: .14em; }
-    @keyframes bark { 0% { transform: rotate(-2deg) scale(1); } 35% { transform: rotate(3deg) scale(1.08); } 100% { transform: rotate(-2deg) scale(1); } }
+    .start-shell {
+      width: min(430px, 66vw);
+      display: grid;
+      place-items: center;
+    }
+    .entry-art { width: 100%; transform: rotate(-2deg); }
+    .entry-art img { display: block; width: 100%; max-height: 68vh; object-fit: contain; filter: grayscale(1) contrast(1.08); }
+    @keyframes avatar-hit { 0% { transform: rotate(-2deg) scale(1); } 34% { transform: rotate(3deg) scale(1.16); } 100% { transform: rotate(-2deg) scale(1); } }
+    @keyframes avatar-fall { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(4deg) scale(1.12) translateY(-3%); } 100% { transform: rotate(86deg) scale(.82) translate(18%, 16%); } }
+    @keyframes avatar-squash { 0% { transform: rotate(-2deg) scale(1); } 35% { transform: rotate(-1deg) scale(1.15, .72); } 100% { transform: rotate(-2deg) scale(1); } }
+    @keyframes avatar-shake { 0%, 100% { transform: rotate(-2deg) scale(1); } 20% { transform: rotate(-8deg) scale(1.04); } 45% { transform: rotate(7deg) scale(1.08); } 70% { transform: rotate(-4deg) scale(1.03); } }
+    @keyframes avatar-freeze { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(-2deg) scale(1.12); } 52% { transform: rotate(-1deg) scale(.98); } 100% { transform: rotate(-2deg) scale(1); } }
+    @keyframes avatar-burst { 0% { transform: rotate(-2deg) scale(1); } 32% { transform: rotate(2deg) scale(1.24); } 100% { transform: rotate(-2deg) scale(1); } }
+    @keyframes avatar-void { 0% { transform: rotate(-2deg) scale(1); } 30% { transform: rotate(-2deg) scale(1.12); } 100% { transform: rotate(5deg) scale(.9); } }
+    @keyframes avatar-idle { 0% { transform: rotate(-2deg) translateY(0) scale(1.02); } 25% { transform: rotate(88deg) translateY(-2%); } 50% { transform: rotate(178deg) translateY(0) scale(1.02); } 75% { transform: rotate(268deg) translateY(2%); } 100% { transform: rotate(358deg) translateY(0) scale(1.02); } }
+    @keyframes control-pulse { 0% { transform: scale(1); } 38% { transform: scale(1.14); } 100% { transform: scale(1); } }
+    @keyframes zone-fade { 0% { opacity: .78; } 100% { opacity: 0; } }
     @media (max-width: 700px) {
-      .hero { width: min(70vw, 330px); }
-      .zone-label { left: 8px; bottom: 8px; font-size: 10px; }
-      .control { width: 38px; height: 38px; }
-      .stamp { right: -7%; }
+      header { padding-left: 16px; padding-right: 16px; }
+      .hero { width: min(72vw, 340px); }
+      .start-shell { width: min(340px, 72vw); }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   </style>
 </head>
 <body>
   <div id="stage">
-    <div class="wash" aria-hidden="true"></div>
     <canvas id="fx" aria-hidden="true"></canvas>
+    <div id="zoneflash" aria-hidden="true"></div>
     <header>
-      <div class="brand"><strong>SUBARU TAP</strong><span>菜月昴应援 / SCREAM IN SCALE</span></div>
       <div class="controls" aria-label="播放控制">
         <button class="control" id="music-toggle" type="button" aria-label="关闭背景音乐" title="背景音乐">♪</button>
         <button class="control" id="sfx-toggle" type="button" aria-label="关闭音效" title="惨叫音效">◉</button>
@@ -120,21 +165,16 @@
     </header>
     <main>
       <div class="hero" aria-hidden="true">
-        <div class="note-readout" id="note-readout">A3</div>
-        <div class="avatar-frame" id="avatar-frame"><img class="avatar" src="subaru_abstract.png" alt="抽象化菜月昴图像" draggable="false" /></div>
-        <div class="stamp">死んでも守る</div>
+        <div class="avatar-frame" id="avatar-frame"><img class="avatar" id="avatar" src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
       </div>
     </main>
-    <div id="zones" aria-label="惨叫音阶区域"></div>
-    <footer>
-      <div class="footer-copy"><strong>3 VOICES / 4 NOTES</strong><span>A MINOR PENTATONIC · Q W E R / A S D F / Z X C V</span></div>
-      <div id="combo" aria-live="polite">00</div>
-    </footer>
-    <div id="overlay">
-      <div class="start-card"><strong>昴</strong><span>一起来给他加油</span><b>触碰任意位置开始</b></div>
+    <div id="overlay" role="dialog" aria-modal="true" aria-label="点击开始">
+      <div class="start-shell">
+        <div class="entry-art"><img src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
+      </div>
     </div>
   </div>
-  <script src="audio-data.js?v=2"></script>
-  <script src="main.js?v=2"></script>
+  <script src="audio-data.js?v=7"></script>
+  <script src="main.js?v=7"></script>
 </body>
 </html>

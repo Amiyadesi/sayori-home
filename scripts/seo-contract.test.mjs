@@ -6,20 +6,29 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("home, services and about each expose one canonical URL", () => {
+test("public content pages each expose one canonical URL", () => {
 	const home = read("public/index.html");
 	const services = read("public/services/index.html");
 	const about = read("public/about/index.html");
+	const tools = read("public/tools/index.html");
+	const subaruTap = read("public/tools/subarutap/index.html");
 
 	assert.equal(canonical(home), "https://sayori.org/");
 	assert.equal(canonical(services), "https://sayori.org/services/");
 	assert.equal(canonical(about), "https://sayori.org/about/");
+	assert.equal(canonical(tools), "https://sayori.org/tools/");
+	assert.equal(canonical(subaruTap), "https://sayori.org/tools/subarutap/");
 	assert.doesNotMatch(home, /hreflang=/);
 	assert.doesNotMatch(services, /hreflang=/);
 	assert.doesNotMatch(about, /hreflang=/);
 	assert.notEqual(title(home), title(services));
 	assert.notEqual(title(home), title(about));
 	assert.notEqual(title(services), title(about));
+	assert.match(subaruTap, /"@type": "WebApplication"/);
+	assert.match(subaruTap, /https:\/\/github\.com\/Amiyadesi\/subarutap/);
+	assert.match(subaruTap, /<h1 class="sr-only">Subaru Tap/);
+	assert.match(subaruTap, /<nav class="controls"/);
+	assert.match(subaruTap, /subaru_entry-180\.webp 180w/);
 });
 
 test("sitemap lists only the canonical content pages", () => {
@@ -31,6 +40,7 @@ test("sitemap lists only the canonical content pages", () => {
 		"https://sayori.org/services/",
 		"https://sayori.org/about/",
 		"https://sayori.org/tools/",
+		"https://sayori.org/tools/subarutap/",
 	]);
 	assert.doesNotMatch(sitemap, /\/zh\/|\/en\//);
 });
@@ -64,6 +74,7 @@ test("Cloudflare Pages sends HSTS with the existing security headers", () => {
 	const headers = read("public/_headers");
 	assert.match(headers, /Strict-Transport-Security:\s*max-age=31536000/i);
 	assert.match(headers, /X-Content-Type-Options:\s*nosniff/i);
+	assert.match(headers, /\/tools\/subarutap\/Image\/\*[\s\S]*max-age=31536000, immutable/);
 });
 
 function canonical(html) {

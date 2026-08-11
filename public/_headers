@@ -56,6 +56,15 @@
 /tools/tools.js
   Cache-Control: public, max-age=31536000, immutable
 
+/tools/subarutap/Image/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/tools/subarutap/audio-data.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/tools/subarutap/main.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /assets/svg/*
   Cache-Control: public, max-age=31536000, immutable
 

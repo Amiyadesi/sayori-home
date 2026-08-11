@@ -4,9 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#090b16" />
-  <meta name="description" content="Subaru Tap - 菜月昴惨叫音阶应援器" />
+  <meta name="description" content="Subaru Tap 是一个在浏览器里点击演奏菜月昴惨叫音阶、触发死亡回归特效的免费互动小工具。" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://sayori.org/tools/subarutap/" />
+  <link rel="sitemap" href="https://sayori.org/sitemap.xml" />
+  <link rel="alternate" type="text/plain" title="Amiya's Desk LLM context" href="https://sayori.org/llms.txt" />
+  <meta property="og:site_name" content="Amiya的书桌" />
+  <meta property="og:title" content="Subaru Tap · 菜月昴惨叫音阶应援器" />
+  <meta property="og:description" content="点击屏幕演奏菜月昴原版惨叫音阶，并触发死亡回归特效。" />
+  <meta property="og:url" content="https://sayori.org/tools/subarutap/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://sayori.org/tools/subarutap/Image/subaru_cat.png" />
+  <meta property="og:image:width" content="353" />
+  <meta property="og:image:height" content="265" />
+  <meta property="og:image:alt" content="Subaru Tap 菜月昴猫咪图标" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Subaru Tap · 菜月昴惨叫音阶应援器" />
+  <meta name="twitter:description" content="点击屏幕演奏菜月昴原版惨叫音阶，并触发死亡回归特效。" />
+  <meta name="twitter:image" content="https://sayori.org/tools/subarutap/Image/subaru_cat.png" />
   <link rel="icon" href="Image/subaru_cat.png" type="image/png" />
-  <title>Subaru Tap / 死亡回归</title>
+  <title>Subaru Tap · 菜月昴惨叫音阶应援器 | Amiya的书桌</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "@id": "https://sayori.org/tools/subarutap/#application",
+      "name": "Subaru Tap",
+      "alternateName": "菜月昴惨叫音阶应援器",
+      "url": "https://sayori.org/tools/subarutap/",
+      "description": "在浏览器里点击演奏菜月昴惨叫音阶并触发死亡回归特效的互动小工具。",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern browser with Web Audio API and Canvas support",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+      "image": "https://sayori.org/tools/subarutap/Image/subaru_cat.png",
+      "inLanguage": "zh-CN",
+      "creator": { "@id": "https://sayori.org/#person" },
+      "isPartOf": { "@id": "https://sayori.org/#website" },
+      "sameAs": [
+        "https://github.com/Amiyadesi/subarutap",
+        "https://www.bilibili.com/video/BV15TuB6sENQ/"
+      ]
+    }
+  </script>
   <style>
     :root {
       --void: #090b16;
@@ -23,6 +64,29 @@
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    .skip-link {
+      position: fixed;
+      inset: max(12px, env(safe-area-inset-top)) auto auto max(12px, env(safe-area-inset-left));
+      z-index: 99;
+      padding: 9px 13px;
+      color: #fff;
+      background: #090b16;
+      border: 1px solid var(--ice);
+      transform: translateY(-180%);
+      transition: transform .15s ease;
+    }
+    .skip-link:focus { transform: translateY(0); outline: 2px solid var(--ice); outline-offset: 2px; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     body {
       color: var(--ink);
       background: var(--void);
@@ -76,6 +140,7 @@
     .control:active { transform: scale(.9); }
     .control.is-pulsed { animation: control-pulse .24s ease-out; }
     .control.is-muted { color: var(--muted); opacity: .58; }
+    .control svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     main { position: absolute; inset: 0; z-index: 6; display: grid; place-items: center; pointer-events: none; }
     .hero {
       position: relative;
@@ -253,24 +318,27 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
   <div id="stage">
     <canvas id="fx" aria-hidden="true"></canvas>
     <div id="zoneflash" aria-hidden="true"></div>
     <header>
-      <div class="controls" aria-label="播放控制">
+      <nav class="controls" aria-label="页面与播放控制">
+        <a class="control" href="/tools/" aria-label="返回工具页" title="返回工具页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /><path d="M9 12h10" /></svg></a>
         <button class="control" id="music-toggle" type="button" aria-label="关闭背景音乐" title="背景音乐">♪</button>
         <button class="control" id="sfx-toggle" type="button" aria-label="关闭音效" title="惨叫音效">◉</button>
-      </div>
+      </nav>
     </header>
-    <main>
+    <main id="main-content" tabindex="-1">
+      <h1 class="sr-only">Subaru Tap · 菜月昴惨叫音阶应援器</h1>
       <div class="hero" aria-hidden="true">
-        <div class="avatar-frame" id="avatar-frame"><img class="avatar" id="avatar" src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
+        <div class="avatar-frame" id="avatar-frame"><img class="avatar" id="avatar" src="Image/subaru_entry-270.webp" srcset="Image/subaru_entry-180.webp 180w, Image/subaru_entry-270.webp 270w" sizes="(max-width: 600px) 66vw, 270px" width="270" height="317" alt="菜月昴黑白漫画图像" draggable="false" /></div>
       </div>
     </main>
     <div id="overlay" role="dialog" aria-modal="true" aria-label="点击开始">
       <div class="start-shell">
         <a class="bmoe-link" href="https://www.bilibili.com/video/BV15TuB6sENQ/" target="_blank" rel="noopener noreferrer">观看 B萌应援视频</a>
-        <div class="entry-art"><img src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
+        <div class="entry-art"><img src="Image/subaru_entry-270.webp" srcset="Image/subaru_entry-180.webp 180w, Image/subaru_entry-270.webp 270w" sizes="(max-width: 600px) 66vw, 270px" width="270" height="317" alt="菜月昴黑白漫画图像" draggable="false" /></div>
         <button class="start-button" id="start-button" type="button">开始游戏</button>
         <button class="about-button" id="about-button" type="button">关于</button>
       </div>
@@ -279,6 +347,8 @@
           <button class="about-close" id="about-close" type="button" aria-label="关闭关于">×</button>
           <h2 id="about-title">关于</h2>
           <p>作者：<a href="https://sayori.org" target="_blank" rel="noopener noreferrer">Amiya_desi</a></p>
+          <p>项目地址：<a href="https://github.com/Amiyadesi/subarutap" target="_blank" rel="noopener noreferrer">GitHub · Amiyadesi/subarutap</a></p>
+          <p>演示视频：<a href="https://www.bilibili.com/video/BV15TuB6sENQ/#reply117075573997703" target="_blank" rel="noopener noreferrer">在 Bilibili 观看</a></p>
           <p>灵感来源：<a href="https://github.com/MarkCup-Official/Dagou-Tap-New" target="_blank" rel="noopener noreferrer">大狗叫开源项目</a></p>
           <p>声音来源：<a href="https://www.bilibili.com/video/BV1n1qVY3EmT/?share_source=copy_web&amp;vd_source=ef9038113a12a31b9ec1aab42867bce1" target="_blank" rel="noopener noreferrer">【爱昴TV之惨叫总集篇】</a></p>
         </section>

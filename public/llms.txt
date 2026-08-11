@@ -19,6 +19,8 @@ This is a personal public desk, not a local business or commercial service site.
 - About (long-term profile letter): https://sayori.org/about/
 - Public services: https://sayori.org/services/
 - Browser tools: https://sayori.org/tools/
+- Subaru Tap interactive sound game: https://sayori.org/tools/subarutap/
+- Subaru Tap source: https://github.com/Amiyadesi/subarutap
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
 

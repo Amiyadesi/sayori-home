@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#090b16" />
   <meta name="description" content="Subaru Tap - 菜月昴惨叫音阶应援器" />
+  <link rel="icon" href="Image/subaru_cat.png" type="image/png" />
   <title>Subaru Tap / 死亡回归</title>
   <style>
     :root {
@@ -45,7 +46,8 @@
     .zone-flash {
       position: absolute;
       opacity: 0;
-      animation: zone-fade .34s ease-out forwards;
+      mix-blend-mode: screen;
+      animation: zone-fade .28s ease-out forwards;
     }
     header {
       position: absolute;
@@ -109,6 +111,23 @@
     .avatar-frame.is-freeze { animation: avatar-freeze .48s ease-out; filter: saturate(.7) contrast(1.2) hue-rotate(14deg); }
     .avatar-frame.is-burst { animation: avatar-burst .38s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.5) contrast(1.18); }
     .avatar-frame.is-void { animation: avatar-void .56s cubic-bezier(.2, .8, .3, 1); filter: saturate(.55) contrast(1.4) brightness(.72); }
+    .corpse {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      animation: corpse-drop .72s cubic-bezier(.2, .78, .35, 1) forwards;
+    }
+    .corpse img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6%;
+      filter: grayscale(0) contrast(1.05) drop-shadow(0 16px 20px rgba(0, 0, 0, .4));
+      animation: corpse-gray .72s ease-out forwards;
+    }
     .avatar {
       width: 100%;
       height: 100%;
@@ -135,6 +154,23 @@
     }
     .entry-art { width: 100%; transform: rotate(-2deg); }
     .entry-art img { display: block; width: 100%; max-height: 68vh; object-fit: contain; filter: grayscale(1) contrast(1.08); }
+    .start-button {
+      min-width: 180px;
+      margin-top: 18px;
+      padding: 13px 22px;
+      border: 1px solid rgba(244, 240, 237, .42);
+      border-radius: 2px;
+      color: var(--ink);
+      background: var(--scarlet);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .24);
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: .04em;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .start-button:hover, .start-button:focus-visible { filter: brightness(1.12); outline: none; }
+    .start-button:active { transform: scale(.94); }
+    .start-button.is-loading { opacity: .68; cursor: wait; }
     @keyframes avatar-hit { 0% { transform: rotate(-2deg) scale(1); } 34% { transform: rotate(3deg) scale(1.16); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-fall { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(4deg) scale(1.12) translateY(-3%); } 100% { transform: rotate(86deg) scale(.82) translate(18%, 16%); } }
     @keyframes avatar-squash { 0% { transform: rotate(-2deg) scale(1); } 35% { transform: rotate(-1deg) scale(1.15, .72); } 100% { transform: rotate(-2deg) scale(1); } }
@@ -142,6 +178,8 @@
     @keyframes avatar-freeze { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(-2deg) scale(1.12); } 52% { transform: rotate(-1deg) scale(.98); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-burst { 0% { transform: rotate(-2deg) scale(1); } 32% { transform: rotate(2deg) scale(1.24); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-void { 0% { transform: rotate(-2deg) scale(1); } 30% { transform: rotate(-2deg) scale(1.12); } 100% { transform: rotate(5deg) scale(.9); } }
+    @keyframes corpse-drop { 0% { opacity: 0; transform: translateY(0) rotate(-2deg) scale(1); } 18% { opacity: 1; transform: translateY(-2%) rotate(3deg) scale(1.06); } 100% { opacity: 0; transform: translate(16%, 76%) rotate(84deg) scale(.64); } }
+    @keyframes corpse-gray { 0% { filter: grayscale(0) contrast(1.05) drop-shadow(0 16px 20px rgba(0, 0, 0, .4)); } 100% { filter: grayscale(1) brightness(.82) contrast(1.22) drop-shadow(0 16px 20px rgba(0, 0, 0, .18)); } }
     @keyframes avatar-idle { 0% { transform: rotate(-2deg) translateY(0) scale(1.02); } 25% { transform: rotate(88deg) translateY(-2%); } 50% { transform: rotate(178deg) translateY(0) scale(1.02); } 75% { transform: rotate(268deg) translateY(2%); } 100% { transform: rotate(358deg) translateY(0) scale(1.02); } }
     @keyframes control-pulse { 0% { transform: scale(1); } 38% { transform: scale(1.14); } 100% { transform: scale(1); } }
     @keyframes zone-fade { 0% { opacity: .78; } 100% { opacity: 0; } }
@@ -171,10 +209,11 @@
     <div id="overlay" role="dialog" aria-modal="true" aria-label="点击开始">
       <div class="start-shell">
         <div class="entry-art"><img src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
+        <button class="start-button" id="start-button" type="button">开始游戏</button>
       </div>
     </div>
   </div>
-  <script src="audio-data.js?v=7"></script>
-  <script src="main.js?v=7"></script>
+  <script src="audio-data.js?v=8"></script>
+  <script src="main.js?v=8"></script>
 </body>
 </html>

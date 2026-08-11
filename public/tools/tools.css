@@ -50,6 +50,19 @@ button { -webkit-tap-highlight-color: transparent; }
 .brand-mark svg, .hero-note svg, .tab-icon svg, .tab-arrow svg, .rail-footnote-icon svg, .upload-icon svg, .button-icon svg { display: block; width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .brand-mark svg { width: 20px; height: 20px; stroke-width: 1.75; }
 .header-meta, .top-nav { display: flex; align-items: center; gap: 18px; }
+.subaru-tap-link {
+	padding: 8px 12px;
+	color: #fff;
+	background: var(--coral-dark);
+	border: 1px solid var(--coral-dark);
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: .04em;
+	box-shadow: var(--shadow-small);
+}
+.subaru-tap-link:hover, .subaru-tap-link:focus-visible { background: var(--stage); border-color: var(--stage); outline: none; }
 .top-nav { gap: 16px; font-size: 13px; font-weight: 650; }
 .top-nav a { color: var(--muted); text-decoration: none; }
 .top-nav a:hover, .top-nav a:focus-visible { color: var(--coral-dark); }
@@ -177,6 +190,8 @@ button { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 520px) {
 	.tools-header { min-height: 62px; }
 	.local-badge { display: none; }
+	.header-meta { gap: 10px; }
+	.subaru-tap-link { padding: 7px 9px; }
 	.tools-hero h1 { font-size: 46px; }
 	.panel-heading { display: block; }
 	.panel-output { margin-top: 14px; }

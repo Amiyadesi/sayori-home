@@ -3,7 +3,7 @@
 
 	const copy = {
 		zh: {
-			brand: "Amiya的书桌", back: "回书桌", localBadge: "本地处理", eyebrow: "sayori.org / tools", title: "素材工具台", intro: "把图片变成能直接放进游戏和网页的素材", privacy: "文件不会上传，刷新页面就会清空",
+			brand: "Amiya的书桌", back: "回书桌", subaruTap: "Subaru Tap", localBadge: "本地处理", eyebrow: "sayori.org / tools", title: "素材工具台", intro: "把图片变成能直接放进游戏和网页的素材", privacy: "文件不会上传，刷新页面就会清空",
 			toolboxLabel: "工具箱", chooseTool: "选择一个工作流", railNote: "适合快速试参数，结果确认后再下载",
 			pixelTab: "像素化", pixelTabHint: "做出复古颗粒感", tilesTab: "网格切片", tilesTabHint: "整理规则图集", autotileTab: "自动补全", autotileTabHint: "支持多种输入输出",
 			pixelKicker: "01 / pixelizer", pixelTitle: "把图片变成像素画", pixelIntro: "先拖入图片，再拖动参数看结果", tilesKicker: "02 / tile sheet", tilesTitle: "按网格切片", tilesIntro: "用尺寸和偏移控制每一个图块", autotileKicker: "03 / autotile", autotileTitle: "生成自动补全图集", autotileIntro: "支持 Webtyler、Basic、Minitiles 和 RPG Maker 输入，并导出多种图集格式",
@@ -15,7 +15,7 @@
 			noImage: "先选择一张图片", tooLarge: "图片超过 10 MB", badImage: "图片无法读取", noTiles: "当前偏移和尺寸无法切出完整图块", badAutotile: "当前偏移下没有完整的输入图块", pixelStats: (width, height, pixelSize, palette, style) => `${width} × ${height}px · 像素块 ${pixelSize}${palette ? ` · ${palette} 色` : ""}${style ? ` · ${style}` : ""}`, tileStats: (columns, rows, width, height) => `${columns} × ${rows} 个图块 · 输出 ${width} × ${height}px`, autotileStats: (format, output, width, height) => `${format} → ${output} · 输出 ${width} × ${height}px`, pasteReady: "已从剪贴板读取图片", ready: "已生成，可以下载", downloaded: "已开始下载", cleared: "已清空",
 		},
 		en: {
-			brand: "Amiya's Desk", back: "Back to desk", localBadge: "Runs locally", eyebrow: "sayori.org / tools", title: "Asset workbench", intro: "Turn images into assets you can use in games and on the web", privacy: "Files never leave this device and clear when you refresh",
+			brand: "Amiya's Desk", back: "Back to desk", subaruTap: "Subaru Tap", localBadge: "Runs locally", eyebrow: "sayori.org / tools", title: "Asset workbench", intro: "Turn images into assets you can use in games and on the web", privacy: "Files never leave this device and clear when you refresh",
 			toolboxLabel: "Toolbox", chooseTool: "Choose a workflow", railNote: "Try parameters quickly, then download when it looks right",
 			pixelTab: "Pixelizer", pixelTabHint: "Make a retro grain", tilesTab: "Grid slicer", tilesTabHint: "Organize a tile sheet", autotileTab: "Auto-tile", autotileTabHint: "Many input and output formats",
 			pixelKicker: "01 / pixelizer", pixelTitle: "Turn an image into pixel art", pixelIntro: "Drop in an image, then tune the result live", tilesKicker: "02 / tile sheet", tilesTitle: "Slice a regular grid", tilesIntro: "Use size and offset to control every tile", autotileKicker: "03 / autotile", autotileTitle: "Build an autotile atlas", autotileIntro: "Convert Webtyler, Basic, Minitiles, or RPG Maker inputs into several atlas formats",

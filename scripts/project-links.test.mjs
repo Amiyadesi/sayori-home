@@ -41,6 +41,7 @@ test("retired and private services are not advertised on public surfaces", () =>
 
 test("localized home data exposes the maintained tools and links", () => {
 	const expectedLinks = [
+		"/tool/subarutap/",
 		"https://board.sayori.org/",
 		"https://geo.sayori.org/",
 		"https://blog.sayori.org/guestbook/",
@@ -57,7 +58,7 @@ test("localized home data exposes the maintained tools and links", () => {
 		}
 		const serialized = JSON.stringify(config);
 		assert.ok(!serialized.includes("https://blog.sayori.org/posts/resource-index/"), `home-${lang}.json: retired resource article`);
-		assert.ok(!config.surface.entries.some((entry) => entry.action === "intro"), `home-${lang}.json: retired intro entry`);
+		assert.ok(config.surface.entries.some((entry) => entry.action === "intro"), `home-${lang}.json: intro entry`);
 		for (const host of maintainedPublicHosts) {
 			assert.ok(serialized.includes(host), `home-${lang}.json: maintained ${host}`);
 		}

@@ -40,6 +40,15 @@
 		<script defer src="/i18n-router.js?v=20260807-perf"></script>
 	</head>
 	<body>
+		<style>
+			.skip-link{position:fixed;inset-block-start:.75rem;inset-inline-start:.75rem;z-index:9999;max-width:calc(100vw - 1.5rem);padding:.55rem .8rem;border-radius:999px;background:#2a2a2a;color:#fff;font:600 .875rem/1.2 system-ui,sans-serif;text-decoration:none;transform:translateY(-200%);transition:transform .15s ease}
+			.skip-link:focus-visible{transform:translateY(0);outline:3px solid #ff8aa3;outline-offset:3px}
+			.skip-link [lang="en"]{display:none}
+			html[lang="en"] .skip-link [lang="zh-CN"]{display:none}
+			html[lang="en"] .skip-link [lang="en"]{display:inline}
+			@media (prefers-reduced-motion:reduce){.skip-link{transition:none}}
+		</style>
+		<a class="skip-link" href="#main-content"><span lang="zh-CN">跳到主要内容</span><span lang="en">Skip to main content</span></a>
 		<header class="tools-header">
 			<a class="brand" href="/">
 				<span class="brand-mark" aria-hidden="true">
@@ -57,7 +66,7 @@
 			</div>
 		</header>
 
-		<main class="tools-main">
+		<main class="tools-main" id="main-content">
 			<section class="tools-hero" aria-labelledby="tools-title">
 				<div class="hero-copy">
 					<p class="eyebrow" data-i18n="eyebrow">sayori.org / tools</p>

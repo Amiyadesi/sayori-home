@@ -109,6 +109,10 @@ const fx2d = fx.getContext('2d');
 const zoneflash = document.getElementById('zoneflash');
 const overlay = document.getElementById('overlay');
 const startButton = document.getElementById('start-button');
+const startShell = document.querySelector('.start-shell');
+const aboutButton = document.getElementById('about-button');
+const aboutModal = document.getElementById('about-modal');
+const aboutClose = document.getElementById('about-close');
 const hero = document.querySelector('.hero');
 const avatar = document.getElementById('avatar');
 const avatarFrame = document.getElementById('avatar-frame');
@@ -367,6 +371,13 @@ function flashZone(index, color) {
   zoneflash.append(flash);
 }
 
+function avatarRotation() {
+  const transform = getComputedStyle(avatarFrame).transform;
+  if (transform === 'none') return -2;
+  const matrix = new DOMMatrixReadOnly(transform);
+  return Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
+}
+
 function spawnCorpse(type) {
   const corpse = document.createElement('div');
   corpse.className = 'corpse corpse-' + type;
@@ -375,11 +386,15 @@ function spawnCorpse(type) {
   const distance = Math.min(innerWidth, innerHeight) * 0.42;
   const launchX = Math.cos(angle) * distance;
   const launchY = Math.sin(angle) * distance;
+  const startRotation = avatarRotation();
+  const spin = corpseLaunchIndex % 2 ? -150 : 150;
   corpse.style.setProperty('--corpse-mid-x', (-launchX * 0.05).toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-mid-y', (-launchY * 0.05).toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-x', launchX.toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-y', launchY.toFixed(1) + 'px');
-  corpse.style.setProperty('--corpse-rotate', (corpseLaunchIndex % 2 ? -150 : 150) + 'deg');
+  corpse.style.setProperty('--corpse-start-rotate', startRotation.toFixed(1) + 'deg');
+  corpse.style.setProperty('--corpse-mid-rotate', (startRotation + spin * 0.08).toFixed(1) + 'deg');
+  corpse.style.setProperty('--corpse-end-rotate', (startRotation + spin).toFixed(1) + 'deg');
   const image = avatar.cloneNode(false);
   image.removeAttribute('id');
   image.alt = '';
@@ -1015,6 +1030,7 @@ function drawFx() {
   } else {
     beatP = 0;
   }
+  avatarFrame.style.setProperty('--avatar-pulse', (1 + (musicOn ? beatP : 0) * 0.12).toFixed(3));
   fxFrame(now);
   requestAnimationFrame(drawFx);
 }
@@ -1041,6 +1057,11 @@ stage.addEventListener('pointerdown', (event) => {
 
 window.addEventListener('keydown', (event) => {
   if (event.repeat) return;
+  if (event.code === 'Escape' && aboutModal.classList.contains('is-open')) {
+    event.preventDefault();
+    closeAbout();
+    return;
+  }
   const zone = keyToZone(event.code);
   if (zone === null) {
     if (!started) void startAudio().catch((error) => console.error('Audio initialization failed:', error));
@@ -1062,14 +1083,40 @@ async function beginGame() {
   }
 }
 
+function openAbout() {
+  aboutModal.classList.add('is-open');
+  aboutModal.setAttribute('aria-hidden', 'false');
+  startShell.inert = true;
+  aboutClose.focus();
+}
+
+function closeAbout() {
+  aboutModal.classList.remove('is-open');
+  aboutModal.setAttribute('aria-hidden', 'true');
+  startShell.inert = false;
+  aboutButton.focus();
+}
+
 overlay.addEventListener('pointerdown', (event) => {
-  if (event.target.closest('button')) return;
+  if (event.target.closest('button, a') || aboutModal.classList.contains('is-open')) return;
   event.preventDefault();
   void beginGame();
 });
 startButton.addEventListener('click', (event) => {
   event.stopPropagation();
   void beginGame();
+});
+aboutButton.addEventListener('click', (event) => {
+  event.stopPropagation();
+  openAbout();
+});
+aboutClose.addEventListener('click', (event) => {
+  event.stopPropagation();
+  closeAbout();
+});
+aboutModal.addEventListener('pointerdown', (event) => {
+  event.stopPropagation();
+  if (event.target === aboutModal) closeAbout();
 });
 
 musicToggle.addEventListener('click', async (event) => {

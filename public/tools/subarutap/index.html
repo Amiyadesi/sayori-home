@@ -76,10 +76,10 @@
     .control:active { transform: scale(.9); }
     .control.is-pulsed { animation: control-pulse .24s ease-out; }
     .control.is-muted { color: var(--muted); opacity: .58; }
-    main { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; pointer-events: none; }
+    main { position: absolute; inset: 0; z-index: 6; display: grid; place-items: center; pointer-events: none; }
     .hero {
       position: relative;
-      width: min(42vw, 420px);
+      width: min(52vw, 520px);
       aspect-ratio: 1;
       min-width: 220px;
       display: grid;
@@ -88,6 +88,7 @@
     }
     .hero::before, .hero::after { display: none; }
     .avatar-frame {
+      --avatar-pulse: 1;
       position: relative;
       z-index: 1;
       width: 100%;
@@ -100,10 +101,11 @@
       outline: 0;
       box-shadow: none;
       transform: rotate(-2deg);
+      scale: var(--avatar-pulse);
       animation: avatar-idle 10s linear infinite;
-      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+      transition: filter .16s ease, box-shadow .16s ease;
     }
-    body:not(.is-live) .avatar-frame { animation: none; }
+    body:not(.is-live) .avatar-frame { animation: none; scale: 1; }
     .avatar-frame.is-hit .avatar { animation: avatar-hit .28s cubic-bezier(.2, 1.5, .4, 1); filter: saturate(1.35) contrast(1.12); }
     .avatar-frame.is-fall .avatar { animation: avatar-fall .54s cubic-bezier(.2, .85, .35, 1); filter: saturate(1.28) contrast(1.12); }
     .avatar-frame.is-squash .avatar { animation: avatar-squash .42s cubic-bezier(.2, 1.4, .4, 1); filter: saturate(1.18) contrast(1.08); }
@@ -125,6 +127,7 @@
       height: 100%;
       object-fit: contain;
       padding: 6%;
+      transform: scale(1.12);
       filter: grayscale(0) contrast(1.05) drop-shadow(0 16px 20px rgba(0, 0, 0, .4));
       animation: corpse-gray .72s ease-out forwards;
     }
@@ -136,7 +139,7 @@
       padding: 6%;
       filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .5));
     }
-    body.is-live .avatar { transform: scale(1.12); }
+    body.is-live #avatar { transform: scale(1.12); transform-origin: 50% 62%; }
     #overlay {
       position: absolute;
       inset: 0;
@@ -171,6 +174,57 @@
     .start-button:hover, .start-button:focus-visible { filter: brightness(1.12); outline: none; }
     .start-button:active { transform: scale(.94); }
     .start-button.is-loading { opacity: .68; cursor: wait; }
+    .about-button {
+      margin-top: 10px;
+      padding: 8px 18px;
+      border: 0;
+      border-bottom: 1px dashed rgba(244, 240, 237, .48);
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      letter-spacing: .12em;
+    }
+    .about-button:hover, .about-button:focus-visible { color: var(--scarlet); outline: none; }
+    .about-modal {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(9, 11, 22, .84);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .18s ease, visibility .18s ease;
+    }
+    .about-modal.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .about-panel {
+      position: relative;
+      width: min(620px, 100%);
+      padding: clamp(30px, 6vw, 62px);
+      border: 1px solid rgba(244, 240, 237, .24);
+      background: var(--night);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .42);
+      text-align: left;
+    }
+    .about-panel h2 { margin: 0 0 28px; font-size: clamp(28px, 5vw, 44px); letter-spacing: .12em; }
+    .about-panel p { margin: 18px 0; color: var(--muted); line-height: 1.7; }
+    .about-panel a { color: var(--ink); text-underline-offset: 5px; }
+    .about-panel a:hover, .about-panel a:focus-visible { color: var(--scarlet); outline: none; }
+    .about-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font-size: 30px;
+    }
+    .about-close:hover, .about-close:focus-visible { color: var(--scarlet); outline: none; }
     @keyframes avatar-hit { 0% { transform: rotate(-2deg) scale(1); } 34% { transform: rotate(3deg) scale(1.16); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-fall { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(4deg) scale(1.12) translateY(-3%); } 100% { transform: rotate(86deg) scale(.82) translate(18%, 16%); } }
     @keyframes avatar-squash { 0% { transform: rotate(-2deg) scale(1); } 35% { transform: rotate(-1deg) scale(1.15, .72); } 100% { transform: rotate(-2deg) scale(1); } }
@@ -178,17 +232,17 @@
     @keyframes avatar-freeze { 0% { transform: rotate(-2deg) scale(1); } 28% { transform: rotate(-2deg) scale(1.12); } 52% { transform: rotate(-1deg) scale(.98); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-burst { 0% { transform: rotate(-2deg) scale(1); } 32% { transform: rotate(2deg) scale(1.24); } 100% { transform: rotate(-2deg) scale(1); } }
     @keyframes avatar-void { 0% { transform: rotate(-2deg) scale(1); } 30% { transform: rotate(-2deg) scale(1.12); } 100% { transform: rotate(5deg) scale(.9); } }
-    @keyframes corpse-drop { 0% { opacity: 1; transform: translate(0, 0) rotate(-2deg) scale(1); } 12% { opacity: 1; transform: translate(var(--corpse-mid-x), var(--corpse-mid-y)) rotate(3deg) scale(1.06); } 68% { opacity: 1; transform: translate(var(--corpse-x), var(--corpse-y)) rotate(var(--corpse-rotate)) scale(.72); } 100% { opacity: 0; transform: translate(var(--corpse-x), var(--corpse-y)) rotate(var(--corpse-rotate)) scale(.72); } }
+    @keyframes corpse-drop { 0% { opacity: 1; transform: translate(0, 0) rotate(var(--corpse-start-rotate)) scale(1); } 12% { opacity: 1; transform: translate(var(--corpse-mid-x), var(--corpse-mid-y)) rotate(var(--corpse-mid-rotate)) scale(1.06); } 68% { opacity: 1; transform: translate(var(--corpse-x), var(--corpse-y)) rotate(var(--corpse-end-rotate)) scale(.72); } 100% { opacity: 0; transform: translate(var(--corpse-x), var(--corpse-y)) rotate(var(--corpse-end-rotate)) scale(.72); } }
     @keyframes corpse-gray { 0% { filter: grayscale(0) contrast(1.05) drop-shadow(0 16px 20px rgba(0, 0, 0, .4)); } 100% { filter: grayscale(1) brightness(.82) contrast(1.22) drop-shadow(0 16px 20px rgba(0, 0, 0, .18)); } }
-    @keyframes avatar-idle { 0% { transform: rotate(-2deg) translateY(0) scale(1.02); } 25% { transform: rotate(88deg) translateY(-2%); } 50% { transform: rotate(178deg) translateY(0) scale(1.02); } 75% { transform: rotate(268deg) translateY(2%); } 100% { transform: rotate(358deg) translateY(0) scale(1.02); } }
+    @keyframes avatar-idle { 0% { transform: rotate(-2deg) translateY(0); } 25% { transform: rotate(88deg) translateY(-2%); } 50% { transform: rotate(178deg) translateY(0); } 75% { transform: rotate(268deg) translateY(2%); } 100% { transform: rotate(358deg) translateY(0); } }
     @keyframes control-pulse { 0% { transform: scale(1); } 38% { transform: scale(1.14); } 100% { transform: scale(1); } }
     @keyframes zone-fade { 0% { opacity: .78; } 100% { opacity: 0; } }
     @media (max-width: 700px) {
       header { padding-left: 16px; padding-right: 16px; }
-      .hero { width: min(72vw, 340px); }
+      .hero { width: min(82vw, 420px); }
       .start-shell { width: min(340px, 72vw); }
     }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } .avatar-frame { scale: 1 !important; } }
   </style>
 </head>
 <body>
@@ -210,10 +264,20 @@
       <div class="start-shell">
         <div class="entry-art"><img src="Image/subaru_entry.png" alt="菜月昴黑白漫画图像" draggable="false" /></div>
         <button class="start-button" id="start-button" type="button">开始游戏</button>
+        <button class="about-button" id="about-button" type="button">关于</button>
+      </div>
+      <div class="about-modal" id="about-modal" aria-hidden="true">
+        <section class="about-panel" role="dialog" aria-modal="true" aria-labelledby="about-title">
+          <button class="about-close" id="about-close" type="button" aria-label="关闭关于">×</button>
+          <h2 id="about-title">关于</h2>
+          <p>作者：<a href="https://sayori.org" target="_blank" rel="noopener noreferrer">Amiya_desi</a></p>
+          <p>灵感来源：<a href="https://github.com/MarkCup-Official/Dagou-Tap-New" target="_blank" rel="noopener noreferrer">大狗叫开源项目</a></p>
+          <p>声音来源：<a href="https://www.bilibili.com/video/BV1n1qVY3EmT/?share_source=copy_web&amp;vd_source=ef9038113a12a31b9ec1aab42867bce1" target="_blank" rel="noopener noreferrer">【爱昴TV之惨叫总集篇】</a></p>
+        </section>
       </div>
     </div>
   </div>
-  <script src="audio-data.js?v=10"></script>
-  <script src="main.js?v=10"></script>
+  <script src="audio-data.js?v=12"></script>
+  <script src="main.js?v=12"></script>
 </body>
 </html>

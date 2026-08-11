@@ -372,16 +372,13 @@ function spawnCorpse(type) {
   corpse.className = 'corpse corpse-' + type;
   corpseLaunchIndex = (corpseLaunchIndex + 5) % 24;
   const angle = corpseLaunchIndex * Math.PI / 12;
-  const distance = Math.hypot(innerWidth, innerHeight) * 0.62;
+  const distance = Math.min(innerWidth, innerHeight) * 0.42;
   const launchX = Math.cos(angle) * distance;
   const launchY = Math.sin(angle) * distance;
   corpse.style.setProperty('--corpse-mid-x', (-launchX * 0.05).toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-mid-y', (-launchY * 0.05).toFixed(1) + 'px');
-  corpse.style.setProperty('--corpse-fade-x', (launchX * 0.68).toFixed(1) + 'px');
-  corpse.style.setProperty('--corpse-fade-y', (launchY * 0.68).toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-x', launchX.toFixed(1) + 'px');
   corpse.style.setProperty('--corpse-y', launchY.toFixed(1) + 'px');
-  corpse.style.setProperty('--corpse-fade-rotate', (corpseLaunchIndex % 2 ? -96 : 96) + 'deg');
   corpse.style.setProperty('--corpse-rotate', (corpseLaunchIndex % 2 ? -150 : 150) + 'deg');
   const image = avatar.cloneNode(false);
   image.removeAttribute('id');

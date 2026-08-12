@@ -205,17 +205,10 @@
 							},
 							{
 								"@type": "ListItem",
-								"position": 9,
+								"position": 8,
 								"name": "小工具台",
 								"description": "在浏览器本地处理图片的像素化和图块切片工具。",
 								"url": "https://sayori.org/tools/"
-							},
-							{
-								"@type": "ListItem",
-								"position": 10,
-								"name": "Subaru Tap",
-								"description": "点击屏幕演奏菜月昴惨叫音阶并触发死亡回归特效的互动小工具。",
-								"url": "https://sayori.org/tools/subarutap/"
 							}
 						]
 					},
@@ -236,15 +229,6 @@
 		</script>
 	</head>
 	<body>
-		<style>
-			.skip-link{position:fixed;inset-block-start:.75rem;inset-inline-start:.75rem;z-index:9999;max-width:calc(100vw - 1.5rem);padding:.55rem .8rem;border-radius:999px;background:#2a2a2a;color:#fff;font:600 .875rem/1.2 system-ui,sans-serif;text-decoration:none;transform:translateY(-200%);transition:transform .15s ease}
-			.skip-link:focus-visible{transform:translateY(0);outline:3px solid #ff8aa3;outline-offset:3px}
-			.skip-link [lang="en"]{display:none}
-			html[lang="en"] .skip-link [lang="zh-CN"]{display:none}
-			html[lang="en"] .skip-link [lang="en"]{display:inline}
-			@media (prefers-reduced-motion:reduce){.skip-link{transition:none}}
-		</style>
-		<a class="skip-link" href="#main-content"><span lang="zh-CN">跳到主要内容</span><span lang="en">Skip to main content</span></a>
 		<div class="desk-surface">
 			<div class="dream-motion" aria-hidden="true">
 				<div class="desk-light desk-light-1"></div>
@@ -506,7 +490,7 @@
 			<canvas class="matrix-canvas" id="matrix-canvas" aria-hidden="true"></canvas>
 			<div class="truth-glitch-slices" id="truth-glitch-slices" aria-hidden="true"></div>
 			<div class="truth-cameo" id="truth-cameo" aria-hidden="true">
-				<img src="" alt="" decoding="async" width="520" height="680" />
+				<img src="" alt="" decoding="async" />
 				<span class="truth-cameo-label"></span>
 			</div>
 			<div class="terminal-window" id="terminal-window">

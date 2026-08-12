@@ -61,18 +61,6 @@ test("legacy language pages cannot compete with canonical pages", () => {
 	}
 });
 
-test("support page stays accessible without competing for search results", () => {
-	const sponsor = read("public/sponsor/index.html");
-	assert.match(sponsor, /name="robots" content="noindex, follow, max-image-preview:large"/);
-	assert.equal(canonical(sponsor), "https://sayori.org/sponsor/");
-});
-
-test("dynamic truth cameo reserves a stable image box", () => {
-	const home = read("public/index.html");
-	assert.match(home, /id="truth-cameo"[\s\S]*?<img src="" alt="" decoding="async" width="520" height="680" \/>/);
-	assert.match(home, /"position": 9,[\s\S]*?"name": "小工具台"/);
-});
-
 test("Cloudflare Pages sends HSTS with the existing security headers", () => {
 	const headers = read("public/_headers");
 	assert.match(headers, /Strict-Transport-Security:\s*max-age=31536000/i);

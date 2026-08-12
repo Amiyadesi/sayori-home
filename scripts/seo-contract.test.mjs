@@ -12,6 +12,7 @@ test("public content pages each expose one canonical URL", () => {
 	const about = read("public/about/index.html");
 	const tools = read("public/tools/index.html");
 	const subaruTap = read("public/tools/subarutap/index.html");
+	const subaruTapJs = read("public/tools/subarutap/main.js");
 
 	assert.equal(canonical(home), "https://sayori.org/");
 	assert.equal(canonical(services), "https://sayori.org/services/");
@@ -29,6 +30,8 @@ test("public content pages each expose one canonical URL", () => {
 	assert.match(subaruTap, /<h1 class="sr-only">Subaru Tap/);
 	assert.match(subaruTap, /<nav class="controls"/);
 	assert.match(subaruTap, /subaru_entry-180\.webp 180w/);
+	assert.match(subaruTap, /main\.js\?v=13/);
+	assert.match(subaruTapJs, /avatar\.removeAttribute\('srcset'\)[\s\S]*avatar\.src = 'Image\/subaru_cat\.png'/);
 });
 
 test("sitemap lists only the canonical content pages", () => {

@@ -189,6 +189,8 @@ async function startAudio() {
     musicBus.connect(context.destination);
     noiseBuffer = createNoiseBuffer(context);
     started = true;
+    avatar.removeAttribute('srcset');
+    avatar.removeAttribute('sizes');
     avatar.src = 'Image/subaru_cat.png';
     avatar.alt = 'Subaru 猫形象';
     document.body.classList.add('is-live');

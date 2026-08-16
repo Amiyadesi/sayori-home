@@ -3,19 +3,19 @@
 
 	const CATALOG = {
 		zh: {
-			documentTitle: "公共服务 · Amiya的书桌",
-			description: "Amiya_desi 个人维护的公共数字服务、开源自部署项目、邀请制计划和私有基础设施边界。",
+			documentTitle: "软件与服务 · Amiya的书桌",
+			description: "独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务。",
 			siteName: "Amiya的书桌",
 			nav: [
-				["#service-status", "当前服务"],
+				["#service-status", "当前软件"],
 				["#planned-services", "计划"],
 				["#operating-boundaries", "边界"],
 			],
 			hero: {
-				eyebrow: "sayori.org / 公共服务",
-				title: "Amiya的书桌公共服务",
-				lead: "由个人维护、非商业、尽力而为的公共数字服务清单",
-				note: "我不是公益组织，也不提供企业级 SLA。这里明确区分公开运行、开源自部署、邀请制和私有基础设施",
+				eyebrow: "sayori.org / 软件与服务",
+				title: "Amiya_desi 的软件与服务",
+				lead: "独立开发和维护 Web 软件服务、开发者工具与 Godot 游戏",
+				note: "GeoScore 是当前主要 SaaS，现阶段免费开放，没有付费订阅或站内结账。其他软件和游戏按真实开发进度展示",
 				legend: "服务状态说明",
 				statuses: [
 					["public", "公开运行"],
@@ -25,13 +25,13 @@
 				],
 			},
 			current: {
-				title: "现在可以使用",
-				intro: "公开服务给出直接入口；适合自行部署的项目只提供源码，不把内部实例包装成公共 API",
+				title: "当前软件与项目",
+				intro: "可用软件给出直接入口；适合自行部署的项目给出源码；尚未发行的项目不会伪装成已经销售的产品",
 				items: [
 					{
-						status: "public", statusLabel: "公开运行", title: "GeoScore",
+						status: "public", statusLabel: "当前 SaaS", title: "GeoScore",
 						description: "面向公开网页的 SEO 与 GEO 事实审计，提供站点画像、Evidence Map、优先修复项和 Markdown 报告",
-						meta: ["无需注册", "只审查公网网页", "MIT 开源"],
+						meta: ["当前免费", "无需注册", "MIT 开源"],
 						links: [["https://geo.sayori.org/", "打开服务"], ["https://github.com/Amiyadesi/geoscore", "查看源码"]],
 					},
 					{
@@ -79,7 +79,7 @@
 				intro: "这些不是已经承诺上线的产品，只是更值得占用维护精力的低风险方向。先通过邀请和人工审核验证需求，再决定是否长期提供",
 				items: [
 					["invite", "邀请制计划", "网站体检互助", "为个人博客、开源项目页和小型社区主页跑一次 GeoScore，再补充人工判断和可复验的修复顺序"],
-					["invite", "邀请制计划", "静态站上线协助", "帮助小型非商业项目整理仓库、部署 Cloudflare Pages 或 GitHub Pages，并留下可自行维护的文档"],
+					["invite", "邀请制计划", "静态站上线协助", "帮助个人或开源项目整理仓库、部署 Cloudflare Pages 或 GitHub Pages，并留下可自行维护的文档"],
 					["invite", "邀请制计划", "搜索证据额度", "给开源文档核对或社区资料整理提供少量 Search Gateway 查询额度，不开放匿名注册和批量抓取"],
 					["invite", "邀请制计划", "RSS 通知中转", "为缺少订阅能力的小站试验 RSS 到邮件或 Webhook 的低频通知，不处理营销群发"],
 					["private", "私有基础设施", "短期证据快照", "优先考虑把闲置对象存储用于 GeoScore 的短期证据快照，而不是重新开放匿名文件上传"],
@@ -106,38 +106,38 @@
 			},
 			faq: {
 				title: "常见问题",
-				intro: "这个页面描述当前公开边界，不是服务合同，也不是未来功能承诺",
+				intro: "这个页面描述当前软件、业务方向和公开边界，不是尚未发布产品的购买承诺",
 				items: [
-					["这些服务是公益服务吗", "更准确的说法是个人维护、非商业、尽力而为的公共数字服务。sayori.org 不是注册公益组织"],
+					["Amiya_desi 开发什么", "目前以 GeoScore 这类 Web 软件服务为主，也开发 Godot 游戏、桌面与开发者工具和开源软件"],
+					["现在有付费方案吗", "没有。GeoScore 当前免费开放，网站没有付费订阅或结账。未来上线收费方案或软件销售时，会先公开价格、交付、退款和取消规则"],
 					["可以调用 GeoScore API 吗", "可以。稳定公开接口写在 OpenAPI 文档中，运行限制以 API 的 /api/meta 响应为准。它只审查公开 hostname，不是任意 URL 代理"],
-					["可以申请 Search Gateway Token 吗", "当前没有公开申请入口。源码可以自行部署，少量公益用途的试验额度会采用人工邀请和明确限额"],
-					["为什么不提供公共文件床", "匿名上传会带来滥用、版权、成本和内容治理压力。闲置存储更适合短期证据快照与加密备份"],
+					["可以申请 Search Gateway Token 吗", "当前没有公开申请入口。源码可以自行部署，小范围试验额度采用人工邀请和明确限额"],
 				],
 			},
 			footer: {
-				text: "Amiya_desi 个人维护 · 最后更新 2026-07-21",
+				text: "Amiya_desi · 独立软件开发者 · 最后更新 2026-08-16",
 				links: [["/", "返回书桌"], ["https://blog.sayori.org/", "博客"], ["https://github.com/Amiyadesi", "GitHub"], ["mailto:me@sayori.org", "联系"]],
 				label: "页脚导航",
 			},
 		},
 		en: {
-			documentTitle: "Public Services · Amiya's Desk",
-			description: "Public digital services, self-hostable projects, invitation-only plans, and private infrastructure boundaries maintained by Amiya_desi.",
+			documentTitle: "Software & Services · Amiya's Desk",
+			description: "Web software, Godot games, open-source tools, and public services developed and maintained by independent software developer Amiya_desi.",
 			siteName: "Amiya's Desk",
-			nav: [["#service-status", "Current services"], ["#planned-services", "Plans"], ["#operating-boundaries", "Boundaries"]],
+			nav: [["#service-status", "Current software"], ["#planned-services", "Plans"], ["#operating-boundaries", "Boundaries"]],
 			hero: {
-				eyebrow: "sayori.org / public services",
-				title: "Amiya's Desk public services",
-				lead: "A personally maintained, non-commercial, best-effort list of public digital services",
-				note: "I am not a nonprofit organization and do not promise an enterprise SLA. This page separates what is public, self-hostable, invitation-only, or intentionally private",
+				eyebrow: "sayori.org / software and services",
+				title: "Software and services by Amiya_desi",
+				lead: "Independently developed web software, developer tools, and Godot games",
+				note: "GeoScore is the main SaaS project and is currently free, with no paid subscription or on-site checkout. Other software and games are shown at their actual development stage",
 				legend: "Service status legend",
 				statuses: [["public", "Public"], ["source", "Self-hostable"], ["invite", "Invitation plan"], ["private", "Private infrastructure"]],
 			},
 			current: {
-				title: "Available now",
-				intro: "Public services get a direct link. Projects meant for self-hosting get a source link instead of presenting an internal instance as a public API",
+				title: "Current software and projects",
+				intro: "Available software gets a direct link; self-hostable projects get source links; unreleased projects are not presented as products already for sale",
 				items: [
-					{ status: "public", statusLabel: "Public", title: "GeoScore", description: "Evidence-first SEO and GEO audits for public pages, with a site profile, Evidence Map, prioritized fixes, and a Markdown report", meta: ["No registration", "Public pages only", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
+					{ status: "public", statusLabel: "Current SaaS", title: "GeoScore", description: "Evidence-first SEO and GEO audits for public pages, with a site profile, Evidence Map, prioritized fixes, and a Markdown report", meta: ["Currently free", "No registration", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
 					{ status: "public", statusLabel: "Public", title: "Amiya Whiteboard", description: "A lightweight browser whiteboard for quick sketches, rough diagrams, and explaining a page structure", meta: ["No account", "Temporary sketches", "Save your work"], links: [["https://board.sayori.org/", "Open whiteboard"]] },
 					{ status: "public", statusLabel: "Public", title: "Resource directory", description: "A categorized shelf of useful tools, references, communities, and open-source sites with local and external search", meta: ["No account", "Categorized index", "Ongoing archive"], links: [["https://nav.sayori.org/", "Open directory"]] },
 					{ status: "public", statusLabel: "Public", title: "GeoScore Public Audit API", description: "Factual audits, PageSpeed evidence, Evidence Maps, and FixPacks for public domains, exposed as bounded SSE and JSON endpoints", meta: ["OpenAPI 3.1", "Public targets only", "Limited quota"], links: [["https://geo-api.sayori.org/openapi.json", "Open OpenAPI"], ["https://geo.sayori.org/docs", "Read the guides"]] },
@@ -153,7 +153,7 @@
 				intro: "These are not promised products. They start with invitations and manual review so demand, abuse risk, and maintenance cost can be measured before any long-term commitment",
 				items: [
 					["invite", "Invitation plan", "Website audit exchange", "Run GeoScore for personal blogs, open-source project pages, and small communities, then add a short human review and a verifiable repair order"],
-					["invite", "Invitation plan", "Static site launch help", "Help small non-commercial projects prepare a repository, deploy to Cloudflare Pages or GitHub Pages, and leave maintainable documentation"],
+					["invite", "Invitation plan", "Static site launch help", "Help personal or open-source projects prepare a repository, deploy to Cloudflare Pages or GitHub Pages, and leave maintainable documentation"],
 					["invite", "Invitation plan", "Search evidence quota", "Provide a small Search Gateway quota for open-source documentation checks or community research, without anonymous signup or bulk crawling"],
 					["invite", "Invitation plan", "RSS notification relay", "Test low-frequency RSS-to-email or webhook notifications for small sites that lack subscription tooling, excluding marketing campaigns"],
 					["private", "Private infrastructure", "Short-lived evidence snapshots", "Prefer using idle object storage for short-lived GeoScore evidence snapshots instead of reopening anonymous file uploads"],
@@ -177,16 +177,16 @@
 			},
 			faq: {
 				title: "Common questions",
-				intro: "This page describes current public boundaries, not a service contract or a promise of future features",
+				intro: "This page describes current software, business direction, and public boundaries, not a purchase promise for unreleased products",
 				items: [
-					["Are these nonprofit services", "The accurate description is personally maintained, non-commercial, best-effort public digital services. sayori.org is not a registered nonprofit organization"],
+					["What does Amiya_desi develop", "The current focus is web software such as GeoScore, alongside Godot games, desktop and developer tools, and open-source software"],
+					["Are paid plans available now", "No. GeoScore is currently free, and this site has no paid subscription or checkout. Prices, delivery, refund, and cancellation terms will be published before any paid plan or software sale launches"],
 					["Can I call the GeoScore API", "Yes. Stable public endpoints are listed in the OpenAPI document, and current limits come from /api/meta. The API audits public hostnames and is not an arbitrary URL proxy"],
-					["Can I request a Search Gateway token", "There is no public request flow. You can self-host the source. Small public-interest experiments may use manual invitations and explicit quotas"],
-					["Why is there no public file host", "Anonymous uploads create abuse, copyright, cost, and moderation pressure. Idle storage is more useful for short-lived evidence snapshots and encrypted backups"],
+					["Can I request a Search Gateway token", "There is no public request flow. You can self-host the source. Small experiments use manual invitations and explicit quotas"],
 				],
 			},
 			footer: {
-				text: "Personally maintained by Amiya_desi · Updated 2026-07-21",
+				text: "Amiya_desi · Independent software developer · Updated 2026-08-16",
 				links: [["/", "Back to desk"], ["https://blog.sayori.org/", "Blog"], ["https://github.com/Amiyadesi", "GitHub"], ["mailto:me@sayori.org", "Contact"]],
 				label: "Footer navigation",
 			},

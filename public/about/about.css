@@ -406,7 +406,7 @@ button { font: inherit; border: none; background: none; cursor: pointer; -webkit
 /* ---------- responsive & motion ---------- */
 
 @media (max-width: 640px) {
-	.letter-paper { transform: rotate(-0.4deg); }
+	.letter-paper { animation: none; transform: none; }
 	.letter-sign { text-align: left; }
 	.desk-foot { position: static; text-align: center; margin-top: 1.6rem; text-shadow: none; }
 	.desk-surface { padding-bottom: 2.5rem; }

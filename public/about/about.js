@@ -202,6 +202,7 @@
 	}
 
 	function updateFootLink() {
+		setText($('foot-notice'), LANG === 'zh' ? 'Amiya_desi · 独立软件开发者' : 'Amiya_desi · Independent software developer');
 		const link = document.querySelector('.desk-foot a[data-sayori-language]');
 		if (!link) return;
 		const next = LANG === 'zh' ? 'en' : 'zh';

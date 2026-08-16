@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>公共服务 · Amiya的书桌</title>
-		<meta name="description" content="Amiya_desi 个人维护的公共数字服务、开源项目、邀请制计划与私有基础设施边界" />
+		<title>软件与服务 · Amiya的书桌</title>
+		<meta name="description" content="独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务" />
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="https://sayori.org/services/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
@@ -39,8 +39,8 @@
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
 		<script defer src="/i18n-router.js?v=20260807-perf"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
-		<meta property="og:title" content="公共服务 · Amiya的书桌" />
-		<meta property="og:description" content="公开运行、开源自部署、邀请制计划和私有基础设施的清晰边界" />
+		<meta property="og:title" content="软件与服务 · Amiya的书桌" />
+		<meta property="og:description" content="GeoScore Web 软件服务、Godot 游戏、开源工具与开发计划" />
 		<meta property="og:url" content="https://sayori.org/services/" />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
@@ -49,15 +49,15 @@
 				"@context": "https://schema.org",
 				"@type": "WebPage",
 				"@id": "https://sayori.org/services/#webpage",
-				"name": "Amiya的书桌公共服务",
+				"name": "Amiya_desi 的软件与服务",
 				"url": "https://sayori.org/services/",
-				"description": "Amiya_desi 个人维护的公共数字服务、开源项目、邀请制计划与私有基础设施边界",
+				"description": "独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务",
 				"inLanguage": ["zh-CN", "en"],
 				"isPartOf": { "@id": "https://sayori.org/#website" },
 				"about": { "@id": "https://sayori.org/#person" },
 				"mainEntity": {
 					"@type": "ItemList",
-					"name": "当前公共服务与开源项目",
+					"name": "当前软件、服务与开源项目",
 					"itemListElement": [
 						{ "@type": "ListItem", "position": 1, "name": "GeoScore", "url": "https://geo.sayori.org/" },
 						{ "@type": "ListItem", "position": 2, "name": "GeoScore 公开审计 API", "url": "https://geo-api.sayori.org/openapi.json" },
@@ -74,7 +74,7 @@
 		<header class="site-header">
 			<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">A</span>Amiya的书桌</a>
 			<nav class="top-nav" aria-label="页面导航">
-				<a href="#service-status">当前服务</a>
+				<a href="#service-status">当前软件</a>
 				<a href="#planned-services">计划</a>
 				<a href="#operating-boundaries">边界</a>
 				<a href="/services/" lang="en" data-sayori-language="en">EN</a>
@@ -85,10 +85,10 @@
 			<section class="hero" aria-labelledby="page-title">
 				<div class="hero-inner">
 					<div class="hero-copy">
-						<p class="eyebrow">sayori.org / public services</p>
-						<h1 id="page-title">Amiya的书桌公共服务</h1>
-						<p class="lead">这是个人维护、非商业、尽力而为的公共数字服务清单</p>
-						<p class="hero-note">我不是公益组织，也不承诺企业级 SLA。这个页面只把目前能直接使用、能够自己部署、正在小范围试验和保持私有的东西讲清楚</p>
+						<p class="eyebrow">sayori.org / 软件与服务</p>
+						<h1 id="page-title">Amiya_desi 的软件与服务</h1>
+						<p class="lead">独立开发和维护 Web 软件服务、开发者工具与 Godot 游戏</p>
+						<p class="hero-note">GeoScore 是当前主要 SaaS，现阶段免费开放，没有付费订阅或站内结账。其他软件和游戏按真实开发进度展示</p>
 						<div class="status-key" aria-label="服务状态图例">
 							<span class="status-stamp" data-status="public">公开运行</span>
 							<span class="status-stamp" data-status="source">开源自部署</span>
@@ -103,15 +103,15 @@
 			<section class="content-band" id="service-status" aria-labelledby="service-status-title">
 				<div class="section-inner">
 					<header class="section-heading">
-						<h2 id="service-status-title">现在可以使用的服务</h2>
-						<p>能直接打开的就给出入口，只适合自己部署的就只给源码，不把内部实例包装成公共 API</p>
+						<h2 id="service-status-title">当前软件与项目</h2>
+						<p>可用软件给出直接入口；适合自行部署的项目给出源码；尚未发行的项目不会伪装成已经销售的产品</p>
 					</header>
 					<div class="service-grid">
 						<article class="service-card">
-							<span class="status-stamp" data-status="public">公开运行</span>
+							<span class="status-stamp" data-status="public">当前 SaaS</span>
 							<h3>GeoScore</h3>
 							<p>面向公开网页的 SEO 与 GEO 事实审计，提供站点画像、Evidence Map、优先修复项和 Markdown 报告</p>
-							<div class="service-meta"><span>无需注册</span><span>只审查公网网页</span><span>MIT 开源</span></div>
+							<div class="service-meta"><span>当前免费</span><span>无需注册</span><span>MIT 开源</span></div>
 							<div class="service-links">
 								<a href="https://geo.sayori.org/">打开服务</a>
 								<a href="https://github.com/Amiyadesi/geoscore">查看源码</a>
@@ -197,7 +197,7 @@
 						<article class="plan-card">
 							<span class="status-stamp" data-status="invite">邀请制计划</span>
 							<h3>静态站上线协助</h3>
-							<p>帮助小型非商业项目整理仓库、部署 Cloudflare Pages 或 GitHub Pages，并留下可自行维护的文档</p>
+							<p>帮助个人或开源项目整理仓库、部署 Cloudflare Pages 或 GitHub Pages，并留下可自行维护的文档</p>
 						</article>
 						<article class="plan-card">
 							<span class="status-stamp" data-status="invite">邀请制计划</span>
@@ -255,12 +255,16 @@
 				<div class="section-inner">
 					<header class="section-heading">
 						<h2 id="faq-title">常见问题</h2>
-						<p>这个页面描述当前公开边界，不是服务合同，也不是未来功能承诺</p>
+						<p>这个页面描述当前软件、业务方向和公开边界，不是尚未发布产品的购买承诺</p>
 					</header>
 					<div class="faq-list">
 						<details>
-							<summary>这些服务是公益服务吗</summary>
-							<p>更准确的说法是个人维护、非商业、尽力而为的公共数字服务。sayori.org 不是注册公益组织</p>
+							<summary>Amiya_desi 开发什么</summary>
+							<p>目前以 GeoScore 这类 Web 软件服务为主，也开发 Godot 游戏、桌面与开发者工具和开源软件</p>
+						</details>
+						<details>
+							<summary>现在有付费方案吗</summary>
+							<p>没有。GeoScore 当前免费开放，网站没有付费订阅或结账。未来上线收费方案或软件销售时，会先公开价格、交付、退款和取消规则</p>
 						</details>
 						<details>
 							<summary>可以调用 GeoScore API 吗</summary>
@@ -268,11 +272,7 @@
 						</details>
 						<details>
 							<summary>可以申请 Search Gateway Token 吗</summary>
-							<p>当前没有公开申请入口。源码可以自行部署，少量公益用途的试验额度会采用人工邀请和明确限额</p>
-						</details>
-						<details>
-							<summary>为什么不提供公共文件床</summary>
-							<p>匿名上传会带来滥用、版权、成本和内容治理压力。闲置存储更适合短期证据快照与加密备份</p>
+							<p>当前没有公开申请入口。源码可以自行部署，小范围试验额度采用人工邀请和明确限额</p>
 						</details>
 					</div>
 				</div>
@@ -280,7 +280,7 @@
 		</main>
 
 		<footer class="site-footer">
-			<p>Amiya_desi 个人维护 · 最后更新 2026-07-19</p>
+			<p>Amiya_desi · 独立软件开发者 · 最后更新 2026-08-16</p>
 			<nav aria-label="页脚导航">
 				<a href="/">返回书桌</a>
 				<a href="https://blog.sayori.org/">博客</a>
@@ -288,6 +288,6 @@
 				<a href="mailto:me@sayori.org">联系</a>
 			</nav>
 		</footer>
-		<script defer src="/services/services-i18n.min.js?v=20260807-perf"></script>
+		<script defer src="/services/services-i18n.min.js?v=20260816-business"></script>
 	</body>
 </html>

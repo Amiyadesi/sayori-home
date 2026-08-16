@@ -81,6 +81,27 @@ test("the canonical public services page documents status and operating boundari
 	assert.match(content, /id="planned-services"/);
 });
 
+test("public business identity is consistent and does not claim active checkout", () => {
+	const businessFiles = [
+		"public/index.html",
+		"public/services/index.html",
+		"public/services/services-i18n.js",
+		"public/llms.txt",
+		"public/assets/data/home-zh.json",
+		"public/assets/data/home-en.json",
+		"public/assets/data/about-zh.json",
+		"public/assets/data/about-en.json",
+	];
+	const content = businessFiles.map(read).join("\n");
+
+	assert.match(content, /Amiya_desi/);
+	assert.match(content, /GeoScore/);
+	assert.match(content, /me@sayori\.org/);
+	assert.match(content, /独立软件开发者|independent software developer/i);
+	assert.match(content, /没有付费|暂未提供付费|no paid|does not currently offer a paid/i);
+	assert.doesNotMatch(content, /非商业|non-commercial|不提供商业服务|commercial service site/i);
+});
+
 test("the public GeoScore API is discoverable without exposing Search Gateway", () => {
 	for (const relativePath of [
 		"public/services/index.html",

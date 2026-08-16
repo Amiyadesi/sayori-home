@@ -1,6 +1,6 @@
 # Amiya's Desk
 
-> Amiya's Desk is Amiya_desi's personal public entry point for writing, project records, Godot game work, homelab notes, public digital services, and contact links.
+> Amiya's Desk is the personal site of independent software developer Amiya_desi, covering web software, Godot games, open-source tools, writing, and contact details.
 
 ## Context
 
@@ -8,16 +8,17 @@
 - Owner: Amiya_desi
 - Public contact: me@sayori.org
 - Languages: Chinese and English
-- Purpose: personal identity, public writing, project records, creator tools, and durable links.
+- Public business name: Amiya_desi
+- Purpose: independent software development, public writing, project records, creator tools, and durable links.
 
-This is a personal public desk, not a local business or commercial service site. Public facts are limited to writing, projects, tools, contact links, and technical interests such as Godot, homelab operations, Cloudflare, Obsidian, and AI-assisted development workflows.
+Amiya_desi develops and maintains web software services, developer tools, open-source software, and Godot games. GeoScore is the main SaaS project currently online. It is free to use at present, and sayori.org does not currently offer a paid subscription or on-site checkout. Prices, delivery, refund, and cancellation terms will be published before any paid plan or software sale launches.
 
 ## Core Links
 
 - Home: https://sayori.org/
 - The home uses one canonical URL and follows the browser language or the saved local preference: https://sayori.org/
 - About (long-term profile letter): https://sayori.org/about/
-- Public services: https://sayori.org/services/
+- Software and services: https://sayori.org/services/
 - Browser tools: https://sayori.org/tools/
 - Subaru Tap interactive sound game: https://sayori.org/tools/subarutap/
 - Subaru Tap source: https://github.com/Amiyadesi/subarutap

@@ -34,6 +34,23 @@ Amiya_desi uses Godot for game development and explores time mechanics, multi-wi
 - Goal: complete and publish my first Steam game
 - Approach: bring lessons from small experiments into a more complete work, then document the decisions and results
 
+## Public Services And Open Source
+
+- Blog articles and notes: https://blog.sayori.org/
+- Resource shelf: https://blog.sayori.org/posts/resource-index/
+- GeoScore SEO/GEO audit service: https://geo.sayori.org/
+- GeoScore public audit API: https://geo-api.sayori.org/
+- GeoScore OpenAPI document: https://geo-api.sayori.org/openapi.json
+- GeoScore source: https://github.com/Amiyadesi/geoscore
+- Whiteboard: https://board.sayori.org/
+- Resource directory: https://nav.sayori.org/
+- Search Gateway source and self-hosting guide: https://github.com/Amiyadesi/search-gateway
+- Guestbook: https://blog.sayori.org/guestbook/
+- RSS feed: https://blog.sayori.org/rss.xml
+- Service status: https://status.sayori.org/
+
+The GeoScore audit API is public under its documented limits and accepts public hostnames only; the hosted Search Gateway instance remains private infrastructure and is not a public API; paused experiments, private storage, and internal management endpoints are not public services
+
 ## Public links
 
 - About: https://sayori.org/about/

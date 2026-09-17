@@ -9,35 +9,9 @@
 		<link rel="canonical" href="https://sayori.org/services/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
 		<link rel="stylesheet" href="/services/services.css?v=20260807-perf" />
-		<script>
-			(() => {
-				const key = "sayori:ui-language";
-				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
-				let query = null;
-				try {
-					const url = new URL(window.location.href);
-					const value = url.searchParams.get("lang");
-					if (value === "zh" || value === "en") {
-						query = value;
-						url.searchParams.delete("lang");
-						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-						try { window.localStorage.setItem(key, value); } catch {}
-					}
-				} catch {}
-				let stored = null;
-				try {
-					const value = window.localStorage.getItem(key);
-					stored = value === "zh" || value === "en" ? value : null;
-				} catch {}
-				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
-				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-				document.documentElement.dataset.sayoriCurrentLanguage = language;
-				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
-				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
-			})();
-		</script>
+		<script src="/i18n-bootstrap.js?v=20260917-trilingual"></script>
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
-		<script defer src="/i18n-router.js?v=20260807-perf"></script>
+		<script defer src="/i18n-router.js?v=20260917-trilingual"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="软件与服务 · Amiya的书桌" />
 		<meta property="og:description" content="GeoScore Web 软件服务、Godot 游戏、开源工具与开发计划" />
@@ -288,6 +262,8 @@
 				<a href="mailto:me@sayori.org">联系</a>
 			</nav>
 		</footer>
-		<script defer src="/services/services-i18n.min.js?v=20260816-business"></script>
+		<script>
+			document.write(`<script defer src="/services/services-i18n.${document.documentElement.dataset.sayoriCurrentLanguage === "zh-Hant" ? "zh-hant." : ""}js?v=20260917-trilingual"><\/script>`);
+		</script>
 	</body>
 </html>

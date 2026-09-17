@@ -14,6 +14,7 @@ try {
 	const scriptDest = path.join(homeRoot, "scripts", "sync-home-content.mjs");
 	fs.mkdirSync(path.dirname(scriptDest), { recursive: true });
 	fs.copyFileSync(scriptPath, scriptDest);
+	fs.cpSync(path.join(path.resolve(path.dirname(scriptPath), ".."), "node_modules", "opencc-js"), path.join(homeRoot, "node_modules", "opencc-js"), { recursive: true });
 
 	writeJson(path.join(contentRoot, "home", "surface.zh.json"), {
 		meta: {}, surface: {}, profile: {}, services: {}, marker: "zh-surface",
@@ -29,6 +30,8 @@ try {
 	});
 	write(path.join(contentRoot, "assets", "sponsor", "reward-code.png"), "reward-code");
 	write(path.join(homeRoot, "public", "assets", "sponsor", "stale-code.png"), "stale");
+	write(path.join(homeRoot, "public", "services", "services-i18n.js"), "window.copy = '简体';");
+	write(path.join(homeRoot, "public", "tools", "tools.js"), "window.copy = '简体';");
 
 	const result = spawnSync(process.execPath, [scriptDest], {
 		cwd: tmpRoot,
@@ -42,10 +45,14 @@ try {
 
 	const zhHome = readJson(path.join(homeRoot, "public", "assets", "data", "home-zh.json"));
 	const enLines = readJson(path.join(homeRoot, "public", "assets", "data", "lines-en.json"));
+	const hantHome = readJson(path.join(homeRoot, "public", "assets", "data", "home-zh-hant.json"));
 	assert.equal(zhHome.marker, "zh-surface");
 	assert.equal(zhHome.language, "zh");
 	assert.equal(enLines.marker, "en-truth");
 	assert.equal(enLines.language, "en");
+	assert.equal(hantHome.language, "zh-hant");
+	assert.equal(hantHome.marker, "zh-surface");
+	assert.match(fs.readFileSync(path.join(homeRoot, "public", "services", "services-i18n.zh-hant.js"), "utf8"), /簡體/);
 	assert.equal(
 		fs.readFileSync(
 			path.join(homeRoot, "public", "assets", "sponsor", "reward-code.png"),

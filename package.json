@@ -1,0 +1,11 @@
+{
+	"name": "sayori-home",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"test": "node --test scripts/*.test.mjs functions/**/*.test.mjs"
+	},
+	"dependencies": {
+		"opencc-js": "1.4.2"
+	}
+}

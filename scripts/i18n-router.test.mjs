@@ -7,12 +7,13 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("Chinese browser locales use Chinese without changing the URL", () => {
+test("Simplified and Traditional browser locales stay distinct", () => {
 	const result = runRouter({ browserLanguage: "zh-CN" });
-
-	assert.equal(result.language, "zh");
+	assert.equal(result.language, "zh-Hans");
 	assert.equal(result.documentLanguage, "zh-CN");
 	assert.equal(result.reloads, 0);
+	assert.equal(runRouter({ browserLanguage: "zh-TW" }).language, "zh-Hant");
+	assert.equal(runRouter({ browserLanguage: "zh-TW" }).documentLanguage, "zh-Hant");
 });
 
 test("a saved manual language overrides the browser locale", () => {
@@ -43,7 +44,7 @@ test("manual language controls save the preference and reload the same page", ()
 	assert.equal(result.pathname, "/services/");
 });
 
-test("the deferred router trusts the language selected by the inline bootstrap", () => {
+test("the deferred router trusts the language selected by the bootstrap", () => {
 	const result = runRouter({ initialLanguage: "en", browserLanguage: "zh-CN", storedLanguage: "zh" });
 
 	assert.equal(result.language, "en");
@@ -57,14 +58,13 @@ test("ordinary page controls never trigger the delegated language reload", () =>
 	assert.equal(result.reloads, 0);
 	assert.equal(result.prevented, false);
 	assert.equal(result.documentDataset.sayoriLanguage, undefined);
-	assert.equal(result.documentDataset.sayoriCurrentLanguage, "zh");
+	assert.equal(result.documentDataset.sayoriCurrentLanguage, "zh-Hans");
 });
 
 test("canonical pages use the inline language bootstrap and deferred router", () => {
 	for (const relativePath of ["public/index.html", "public/about/index.html", "public/services/index.html", "public/tools/index.html"]) {
 		const html = read(relativePath);
-		assert.match(html, /SAYORI_I18N/);
-		assert.match(html, /initialLanguage: language/);
+		assert.match(html, /i18n-bootstrap\.js/);
 		assert.match(html, /<script defer src="[^\"]*i18n-router\.js/);
 		assert.doesNotMatch(html, /<script src="\/i18n-router\.js[^\"]*"><\/script>/);
 		assert.doesNotMatch(html, /href="\/(?:zh|en)\//);
@@ -98,10 +98,12 @@ function runRouter({
 	const url = new URL(href);
 	let savedLanguage = storedLanguage;
 	let delegatedClickHandler = null;
+	let delegatedChangeHandler = null;
 	let reloads = 0;
 	let prevented = false;
 	let replacedUrl = null;
 	const documentElement = { lang: "", dataset: {} };
+	const head = { append() {} };
 	const location = {
 		href,
 		pathname: url.pathname,
@@ -113,6 +115,7 @@ function runRouter({
 		URL,
 		window: {
 			SAYORI_I18N: { defaultLanguage: "zh", ...(initialLanguage ? { initialLanguage } : {}) },
+			dispatchEvent() {},
 			location,
 			history: {
 				replaceState(_state, _title, value) { replacedUrl = value; },
@@ -125,8 +128,21 @@ function runRouter({
 		},
 		document: {
 			documentElement,
+			head,
+			cookie: "",
+			querySelectorAll() { return []; },
+			createElement(tag) {
+				return {
+					tag,
+					className: "",
+					dataset: {},
+					append() {},
+					setAttribute() {},
+				};
+			},
 			addEventListener(event, handler) {
 				if (event === "click") delegatedClickHandler = handler;
+				if (event === "change") delegatedChangeHandler = handler;
 			},
 		},
 	};
@@ -134,6 +150,7 @@ function runRouter({
 	context.window.navigator = context.navigator;
 	context.window.localStorage = context.localStorage;
 	context.window.document = context.document;
+	context.window.CustomEvent = class CustomEvent {};
 	vm.runInNewContext(source, context);
 	return {
 		get language() { return context.window.SayoriI18n.language; },
@@ -168,6 +185,10 @@ function runRouter({
 					},
 				},
 			});
+		},
+		changeLanguage(language) {
+			assert.ok(delegatedChangeHandler, "delegated change handler");
+			delegatedChangeHandler({ target: { closest: () => ({ value: language }) } });
 		},
 	};
 }

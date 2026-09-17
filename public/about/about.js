@@ -1,8 +1,9 @@
 (() => {
 	'use strict';
 
-	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || (document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en');
-	const DATA_URL = `/assets/data/about-${LANG}.json?v=20260917-profile`;
+	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
+	const DATA_LANG = LANG === 'zh-Hant' ? 'zh-hant' : LANG === 'zh-Hans' ? 'zh' : 'en';
+	const DATA_URL = `/assets/data/about-${DATA_LANG}.json?v=20260917-profile`;
 	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json?v=20260917-profile`;
 
 	const $ = (id) => document.getElementById(id);
@@ -212,13 +213,9 @@
 	}
 
 	function updateFootLink() {
-		setText($('foot-notice'), LANG === 'zh' ? 'Amiya_desi · 独立软件开发者' : 'Amiya_desi · Independent software developer');
+		setText($('foot-notice'), LANG === 'en' ? 'Amiya_desi · Independent software developer' : LANG === 'zh-Hant' ? 'Amiya_desi · 獨立軟體開發者' : 'Amiya_desi · 独立软件开发者');
 		const link = document.querySelector('.desk-foot a[data-sayori-language]');
-		if (!link) return;
-		const next = LANG === 'zh' ? 'en' : 'zh';
-		link.dataset.sayoriLanguage = next;
-		link.lang = next === 'zh' ? 'zh-CN' : 'en';
-		link.textContent = next === 'zh' ? '中文' : 'EN';
+		if (link) link.replaceWith(window.SayoriI18n.createSelect());
 	}
 
 	async function loadData() {

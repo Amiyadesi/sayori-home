@@ -14,35 +14,9 @@
 		<link rel="sitemap" href="https://sayori.org/sitemap.xml" />
 		<link rel="alternate" type="text/plain" title="Amiya's Desk LLM context" href="https://sayori.org/llms.txt" />
 		<link rel="preload" as="image" href="/assets/generated/sayori-lineart-512.webp?v=20260807-perf" imagesrcset="/assets/generated/sayori-lineart-256.webp?v=20260807-perf 256w, /assets/generated/sayori-lineart-512.webp?v=20260807-perf 512w, /assets/generated/sayori-lineart.webp 1024w" imagesizes="(max-width: 900px) 118px, 232px" type="image/webp" fetchpriority="high" />
-		<script>
-			(() => {
-				const key = "sayori:ui-language";
-				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
-				let query = null;
-				try {
-					const url = new URL(window.location.href);
-					const value = url.searchParams.get("lang");
-					if (value === "zh" || value === "en") {
-						query = value;
-						url.searchParams.delete("lang");
-						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-						try { window.localStorage.setItem(key, value); } catch {}
-					}
-				} catch {}
-				let stored = null;
-				try {
-					const value = window.localStorage.getItem(key);
-					stored = value === "zh" || value === "en" ? value : null;
-				} catch {}
-				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
-				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-				document.documentElement.dataset.sayoriCurrentLanguage = language;
-				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
-				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
-			})();
-		</script>
+		<script src="/i18n-bootstrap.js?v=20260917-trilingual"></script>
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
-		<script defer src="/i18n-router.js?v=20260807-perf"></script>
+		<script defer src="/i18n-router.js?v=20260917-trilingual"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="Amiya_desi｜独立游戏、网站工具与创作记录" />
 		<meta property="og:description" content="Amiya_desi的个人主站，汇集Godot独立游戏、网站工具、开源项目与创作记录；了解我的作品、开发方向、博客和公开账号" />
@@ -522,7 +496,7 @@
 			<div class="scanlines" aria-hidden="true"></div>
 		</section>
 
-		<script defer src="/script.notebook.min.js?v=20260807-perf2"></script>
+		<script defer src="/script.notebook.js?v=20260917-trilingual"></script>
 		<script defer src="/analytics.notebook.js?v=20260807-perf2"></script>
 		<script defer src="/umami.notebook.js?v=20260807-perf2"></script>
 	</body>

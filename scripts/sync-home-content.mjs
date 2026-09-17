@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import OpenCC from "opencc-js";
 
 const scriptFile = fileURLToPath(import.meta.url);
 const homeRoot = path.resolve(path.dirname(scriptFile), "..");
@@ -21,6 +22,7 @@ const sponsorAssetsDestination = path.join(
 );
 
 const LANGS = ["zh", "en"];
+const toTraditional = OpenCC.Converter({ from: "cn", to: "t" });
 const REQUIRED_SURFACE_KEYS = ["meta", "surface", "profile", "services"];
 const REQUIRED_TRUTH_KEYS = ["responses", "eggs", "fallback", "greeting"];
 const REQUIRED_ABOUT_KEYS = ["meta", "letter", "faq", "contact"];
@@ -68,11 +70,59 @@ function main() {
 		}
 	}
 
+	writeTraditionalData("surface", "home", REQUIRED_SURFACE_KEYS);
+	writeTraditionalData("truth", "lines", REQUIRED_TRUTH_KEYS);
+	if (fs.existsSync(path.join(sourceRoot, "about.zh.json"))) {
+		writeTraditionalData("about", "about", REQUIRED_ABOUT_KEYS);
+	}
+	writeTraditionalScript("services/services-i18n.js", "services/services-i18n.zh-hant.js");
+	writeTraditionalScript("tools/tools.js", "tools/tools.zh-hant.js");
+
 	syncSponsorAssets();
 
 	console.log(
 		"[sync-home-content] content/home and content/assets/sponsor -> sayori-home/public/assets",
 	);
+}
+
+function writeTraditionalScript(sourceName, outputName) {
+	const source = fs.readFileSync(path.join(homeRoot, "public", sourceName), "utf8");
+	fs.writeFileSync(path.join(homeRoot, "public", outputName), toTraditional(source), "utf8");
+}
+
+function writeTraditionalData(sourceName, outputName, requiredKeys) {
+	const sourceFile = `${sourceName}.zh.json`;
+	const overrideFile = `${sourceName}.zh-hant.json`;
+	const source = readJson(sourceFile);
+	const overridePath = path.join(sourceRoot, overrideFile);
+	const converted = convertValue(source);
+	const value = fs.existsSync(overridePath)
+		? merge(converted, readJson(overrideFile))
+		: converted;
+	validateObject(value, requiredKeys, overrideFile);
+	writeJson(path.join(dataRoot, `${outputName}-zh-hant.json`), {
+		source: `articles/home/${fs.existsSync(overridePath) ? overrideFile : sourceFile}`,
+		language: "zh-hant",
+		...value,
+	});
+}
+
+function convertValue(value) {
+	if (typeof value === "string") return toTraditional(value);
+	if (Array.isArray(value)) return value.map(convertValue);
+	if (!value || typeof value !== "object") return value;
+	return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, convertValue(item)]));
+}
+
+function merge(base, override) {
+	if (!override || typeof override !== "object" || Array.isArray(override)) return override;
+	const output = { ...base };
+	for (const [key, value] of Object.entries(override)) {
+		output[key] = value && typeof value === "object" && !Array.isArray(value)
+			? merge(base?.[key] || {}, value)
+			: value;
+	}
+	return output;
 }
 
 function syncSponsorAssets() {

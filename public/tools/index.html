@@ -9,35 +9,9 @@
 		<link rel="canonical" href="https://sayori.org/tools/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
 		<link rel="stylesheet" href="/tools/tools.css?v=20260807-perf" />
-		<script>
-			(() => {
-				const key = "sayori:ui-language";
-				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
-				let query = null;
-				try {
-					const url = new URL(window.location.href);
-					const value = url.searchParams.get("lang");
-					if (value === "zh" || value === "en") {
-						query = value;
-						url.searchParams.delete("lang");
-						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-						try { window.localStorage.setItem(key, value); } catch {}
-					}
-				} catch {}
-				let stored = null;
-				try {
-					const value = window.localStorage.getItem(key);
-					stored = value === "zh" || value === "en" ? value : null;
-				} catch {}
-				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
-				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-				document.documentElement.dataset.sayoriCurrentLanguage = language;
-				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
-				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
-			})();
-		</script>
+		<script src="/i18n-bootstrap.js?v=20260917-trilingual"></script>
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
-		<script defer src="/i18n-router.js?v=20260807-perf"></script>
+		<script defer src="/i18n-router.js?v=20260917-trilingual"></script>
 	</head>
 	<body>
 		<header class="tools-header">
@@ -156,6 +130,8 @@
 			</section>
 		</main>
 		<footer class="tools-footer"><span data-i18n="footer">本地处理 · 无需账号 · 结果由你保存</span><a href="/services/" data-i18n="services">公共服务说明</a></footer>
-		<script defer src="/tools/tools.js?v=20260807-perf"></script>
+		<script>
+			document.write(`<script defer src="/tools/tools.${document.documentElement.dataset.sayoriCurrentLanguage === "zh-Hant" ? "zh-hant." : ""}js?v=20260917-trilingual"><\/script>`);
+		</script>
 	</body>
 </html>

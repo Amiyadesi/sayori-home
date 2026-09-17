@@ -3,15 +3,20 @@
 
 	const STORAGE_KEY = "sayori:ui-language";
 	const config = window.SAYORI_I18N || {};
+	const LANGUAGES = ["zh-Hans", "zh-Hant", "en"];
+	const LABELS = { "zh-Hans": "简体中文", "zh-Hant": "繁體中文", en: "English" };
 
 	function normalizeLanguage(value) {
-		return /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
+		const input = String(value || "").toLowerCase();
+		if (["zh-hant", "zh-tw", "zh-hk", "tw"].includes(input)) return "zh-Hant";
+		if (["zh-hans", "zh-cn", "zh", "cn"].includes(input)) return "zh-Hans";
+		return "en";
 	}
 
 	function readStoredLanguage() {
 		try {
 			const value = localStorage.getItem(STORAGE_KEY);
-			return value === "zh" || value === "en" ? value : null;
+			return value ? normalizeLanguage(value) : null;
 		} catch {
 			return null;
 		}
@@ -23,29 +28,31 @@
 		} catch {
 			// The current page can still use the selected language without storage.
 		}
+		document.cookie = `sayori_locale=${encodeURIComponent(value)}; Domain=.sayori.org; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
+		document.cookie = "sayori_locale_auto=; Domain=.sayori.org; Path=/; Max-Age=0; SameSite=Lax; Secure";
 	}
 
 	function readQueryLanguage() {
 		try {
 			const url = new URL(window.location.href);
 			const value = url.searchParams.get("lang");
-			if (value !== "zh" && value !== "en") return null;
+			if (!value || !["zh", "zh-hans", "zh-hant", "en"].includes(value.toLowerCase())) return null;
 			url.searchParams.delete("lang");
 			window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-			return value;
+			return normalizeLanguage(value);
 		} catch {
 			return null;
 		}
 	}
 
 	const browserLanguage = normalizeLanguage(
-		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "zh",
+		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "en",
 	);
 	const queryLanguage = config.initialLanguage ? null : readQueryLanguage();
 	let currentLanguage = normalizeLanguage(config.initialLanguage || queryLanguage || readStoredLanguage() || browserLanguage);
 	if (queryLanguage) saveLanguage(queryLanguage);
 
-	document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
+	document.documentElement.lang = htmlLanguage(currentLanguage);
 	document.documentElement.dataset.sayoriCurrentLanguage = currentLanguage;
 	if (config.pendingUntilReady) {
 		document.documentElement.dataset.sayoriI18nPending = "true";
@@ -66,10 +73,10 @@
 		const language = normalizeLanguage(value);
 		currentLanguage = language;
 		saveLanguage(language);
-		document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+		document.documentElement.lang = htmlLanguage(language);
 		document.documentElement.dataset.sayoriCurrentLanguage = language;
 		if (typeof window.CustomEvent === "function") {
-			window.dispatchEvent(new CustomEvent("sayori:ui-language-change", {
+			window.dispatchEvent(new window.CustomEvent("sayori:ui-language-change", {
 				detail: { language },
 			}));
 		}
@@ -81,10 +88,42 @@
 		const control = event.target.closest?.("a[data-sayori-language], button[data-sayori-language]");
 		if (!control) return;
 		const language = control.dataset.sayoriLanguage;
-		if (language !== "zh" && language !== "en") return;
+		if (!LANGUAGES.includes(language)) return;
 		event.preventDefault?.();
 		setLanguage(language);
 	});
+
+	document.addEventListener("change", (event) => {
+		const control = event.target.closest?.("select[data-sayori-language-select]");
+		if (!control || !LANGUAGES.includes(control.value)) return;
+		setLanguage(control.value);
+	});
+
+	function htmlLanguage(language) {
+		return language === "zh-Hans" ? "zh-CN" : language === "zh-Hant" ? "zh-Hant" : "en";
+	}
+
+	function createSelect() {
+		const select = document.createElement("select");
+		select.className = "sayori-language-select";
+		select.dataset.sayoriLanguageSelect = "true";
+		select.setAttribute("aria-label", "Language");
+		for (const language of LANGUAGES) {
+			const option = document.createElement("option");
+			option.value = language;
+			option.textContent = LABELS[language];
+			select.append(option);
+		}
+		select.value = currentLanguage;
+		return select;
+	}
+
+	for (const control of document.querySelectorAll("[data-sayori-language]")) {
+		control.replaceWith(createSelect());
+	}
+	const style = document.createElement("style");
+	style.textContent = ".sayori-language-select{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer;padding:.15rem .25rem}.sayori-language-select:focus-visible{outline:2px solid currentColor;outline-offset:2px}";
+	document.head.append(style);
 
 	window.SayoriI18n = {
 		STORAGE_KEY,
@@ -92,6 +131,7 @@
 			return currentLanguage;
 		},
 		normalizeLanguage,
+		createSelect,
 		ready,
 		setLanguage,
 	};

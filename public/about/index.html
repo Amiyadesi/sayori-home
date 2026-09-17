@@ -10,35 +10,9 @@
 		<title>关于Amiya_desi｜独立开发者与创作者</title>
 		<link rel="icon" href="/favicon.png" type="image/png" />
 		<link rel="canonical" href="https://sayori.org/about/" />
-		<script>
-			(() => {
-				const key = "sayori:ui-language";
-				const normalize = (value) => /^zh(?:-|_|$)/i.test(String(value || "")) ? "zh" : "en";
-				let query = null;
-				try {
-					const url = new URL(window.location.href);
-					const value = url.searchParams.get("lang");
-					if (value === "zh" || value === "en") {
-						query = value;
-						url.searchParams.delete("lang");
-						window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-						try { window.localStorage.setItem(key, value); } catch {}
-					}
-				} catch {}
-				let stored = null;
-				try {
-					const value = window.localStorage.getItem(key);
-					stored = value === "zh" || value === "en" ? value : null;
-				} catch {}
-				const language = query || stored || normalize(navigator.languages?.[0] || navigator.language || "zh");
-				document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
-				document.documentElement.dataset.sayoriCurrentLanguage = language;
-				if (language === "en") document.documentElement.dataset.sayoriI18nPending = "true";
-				window.SAYORI_I18N = { defaultLanguage: "zh", initialLanguage: language, pendingUntilReady: language === "en" };
-			})();
-		</script>
+		<script src="/i18n-bootstrap.js?v=20260917-trilingual"></script>
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
-		<script defer src="/i18n-router.js?v=20260807-perf"></script>
+		<script defer src="/i18n-router.js?v=20260917-trilingual"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="关于Amiya_desi｜独立开发者与创作者" />
 		<meta property="og:description" content="认识独立开发者Amiya_desi：以Godot游戏为创作主线，也制作网站与工具，查看项目、实践方向、获奖作品和交流入口" />

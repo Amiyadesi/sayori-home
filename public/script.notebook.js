@@ -1,9 +1,10 @@
 const body = document.body;
 const root = document.documentElement;
 
-const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || (/^zh(?:-|_|$)/i.test(navigator.language || '') ? 'zh' : 'en');
-const HOME_DATA_URL = `/assets/data/home-${PATH_LANG}.json`;
-const TRUTH_DATA_URL = `/assets/data/lines-${PATH_LANG}.json`;
+const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
+const DATA_LANG = PATH_LANG === 'zh-Hant' ? 'zh-hant' : PATH_LANG === 'zh-Hans' ? 'zh' : 'en';
+const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json`;
+const TRUTH_DATA_URL = `/assets/data/lines-${DATA_LANG}.json`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const musicProviderOverride = urlParams.get('music');
@@ -687,17 +688,8 @@ function renderPageVersion(languageLink, version) {
 	const wrap = document.querySelector('.page-ver');
 	if (!wrap) return;
 	wrap.replaceChildren();
-	if (languageLink?.href && languageLink?.label) {
-		const link = document.createElement('a');
-		link.href = `${location.pathname}${location.search}${location.hash}`;
-		const nextLanguage = PATH_LANG === 'en' ? 'zh' : 'en';
-		link.dataset.sayoriLanguage = nextLanguage;
-		link.lang = nextLanguage === 'zh' ? 'zh-CN' : 'en';
-		link.style.color = 'inherit';
-		link.style.opacity = '0.7';
-		link.textContent = languageLink.label;
-		wrap.append(link);
-	}
+	const select = window.SayoriI18n?.createSelect?.();
+	if (select) wrap.append(select);
 	if (version) {
 		if (wrap.childNodes.length) wrap.append(' · ');
 		wrap.append(version);

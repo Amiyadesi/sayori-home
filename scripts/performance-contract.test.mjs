@@ -40,6 +40,7 @@ test("non-critical home requests are scheduled after the initial script path", (
 test("versioned scripts and derived images are immutable", () => {
 	const headers = read("public/_headers");
 	assert.match(headers, /\/i18n-router\.js[\s\S]*max-age=31536000, immutable/);
+	assert.match(headers, /\/i18n-bootstrap\.js[\s\S]*max-age=31536000, immutable/);
 	assert.match(headers, /\/analytics\.notebook\.js[\s\S]*max-age=31536000, immutable/);
 	assert.match(headers, /\/assets\/generated\/\*[\s\S]*max-age=31536000, immutable/);
 	assert.ok(fs.statSync(path.join(root, "public/assets/generated/sayori-lineart-256.webp")).size > 0);

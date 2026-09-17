@@ -1,47 +1,51 @@
 # Amiya's Desk
 
-> Amiya's Desk is the personal site of independent software developer Amiya_desi, covering web software, Godot games, open-source tools, writing, and contact details.
+> Amiya_desi is an independent developer focused on indie games, while also building websites, tools, open-source projects, and public creative notes
 
-## Context
+## Identity
 
-- Site: https://sayori.org/
-- Owner: Amiya_desi
-- Public contact: me@sayori.org
-- Languages: Chinese and English
-- Public business name: Amiya_desi
-- Purpose: independent software development, public writing, project records, creator tools, and durable links.
-
-Amiya_desi develops and maintains web software services, developer tools, open-source software, and Godot games. GeoScore is the main SaaS project currently online. It is free to use at present, and sayori.org does not currently offer a paid subscription or on-site checkout. Prices, delivery, refund, and cancellation terms will be published before any paid plan or software sale launches.
-
-## Core Links
-
-- Home: https://sayori.org/
-- The home uses one canonical URL and follows the browser language or the saved local preference: https://sayori.org/
-- About (long-term profile letter): https://sayori.org/about/
-- Software and services: https://sayori.org/services/
-- Browser tools: https://sayori.org/tools/
-- Subaru Tap interactive sound game: https://sayori.org/tools/subarutap/
-- Subaru Tap source: https://github.com/Amiyadesi/subarutap
+- Creator: Amiya_desi
+- Main site: https://sayori.org/
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
+- Public contact: me@sayori.org
+- Main language: Chinese, with selected English pages
+- Site role: personal creator hub for games, tools, writing, and project records
 
-## Public Services And Open Source
+Amiya_desi uses Godot for game development and explores time mechanics, multi-window interaction, narrative puzzles, websites, browser tools, Docker, VPS, Cloudflare, and n8n-assisted content workflows
 
-- Blog articles and notes: https://blog.sayori.org/
-- Resource shelf: https://blog.sayori.org/posts/resource-index/
-- GeoScore SEO/GEO audit service: https://geo.sayori.org/
-- GeoScore public audit API: https://geo-api.sayori.org/
-- GeoScore OpenAPI document: https://geo-api.sayori.org/openapi.json
-- GeoScore source: https://github.com/Amiyadesi/geoscore
-- Whiteboard: https://board.sayori.org/
-- Resource directory: https://nav.sayori.org/
-- Search Gateway source and self-hosting guide: https://github.com/Amiyadesi/search-gateway
+## Representative projects
+
+- DelayTrace: a Godot game about time delay, recorded actions, and replay, a satisfying recent Jam result with a playable public build
+  https://amiya-desi.itch.io/delaytrace
+- TimeRewindLinker: a puzzle experiment with time rewind, replayed actions, and links to echoes of the past
+  https://amiya-desi.itch.io/time-rewind-linker
+- 梦醒边界: a Godot game mixing puzzles, dialogue, and combat, awarded second prize in the third GodotHub themed Jam track
+  https://amiya-desi.itch.io/wake-up-at-the-border
+- Mio’s Window Wanderer: a multi-window narrative prototype I helped make
+  https://amiya-desi.itch.io/thatgamejam
+- GeoScore: a public-web SEO and GEO audit tool
+  https://geo.sayori.org/
+- Enhanced Save System: a modular Godot save plugin with GDScript and C# implementations
+  https://github.com/Amiyadesi/enhance_save_system
+
+## Current direction
+
+- Goal: complete and publish my first Steam game
+- Approach: bring lessons from small experiments into a more complete work, then document the decisions and results
+
+## Public links
+
+- About: https://sayori.org/about/
+- itch.io: https://amiya-desi.itch.io/
+- Bilibili: https://space.bilibili.com/3546919890585725
+- YouTube: https://www.youtube.com/@Amiya_desi
+- X: https://x.com/KirstAdali78973
+- Linux.do: https://linux.do/u/Amiya_desi
+- NodeLoc: https://www.nodeloc.com/u/amiya_desi/summary
 - Guestbook: https://blog.sayori.org/guestbook/
-- RSS feed: https://blog.sayori.org/rss.xml
-- Service status: https://status.sayori.org/
+- Support: https://blog.sayori.org/sponsor/
 
-The GeoScore audit API is public under its documented limits and accepts public hostnames only. The hosted Search Gateway instance remains private infrastructure and is not a public API. Paused experiments, private storage, and internal management endpoints are not public services.
+## Crawl policy
 
-## Crawl Policy
-
-Search indexing, real-time AI grounding, AI citation, and model training uses are allowed for public content. The canonical sitemap is linked above, and llms.txt is advertised from the site's HTML head.
+Search indexing, real-time AI grounding, AI citation, and model training uses are allowed for public content; the canonical sitemap and this file are advertised from the site HTML

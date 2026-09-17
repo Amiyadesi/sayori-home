@@ -2,8 +2,8 @@
 	'use strict';
 
 	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || (document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en');
-	const DATA_URL = `/assets/data/about-${LANG}.json`;
-	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json`;
+	const DATA_URL = `/assets/data/about-${LANG}.json?v=20260917-profile`;
+	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json?v=20260917-profile`;
 
 	const $ = (id) => document.getElementById(id);
 
@@ -49,9 +49,19 @@
 
 	function renderMeta(meta) {
 		if (!meta) return;
-		if (typeof meta.title === 'string') document.title = meta.title;
-		const desc = document.querySelector('meta[name="description"]');
-		if (desc && typeof meta.description === 'string') desc.setAttribute('content', meta.description);
+		const title = typeof meta.title === 'string' ? meta.title : '';
+		const description = typeof meta.description === 'string' ? meta.description : '';
+		if (title) {
+			document.title = title;
+			for (const node of document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]')) {
+				node.setAttribute('content', title);
+			}
+		}
+		if (description) {
+			for (const node of document.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]')) {
+				node.setAttribute('content', description);
+			}
+		}
 	}
 
 	function renderLetter(letter) {

@@ -4,7 +4,7 @@
 	const CATALOG = {
 		zh: {
 			documentTitle: "软件与服务 · Amiya的书桌",
-			description: "独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务。",
+			description: "Godot 独立游戏开发者 Amiya_desi 维护的 Web 工具、开源项目与公开服务；品牌主线是独立游戏与创作工作台。",
 			siteName: "Amiya的书桌",
 			nav: [
 				["#service-status", "当前软件"],
@@ -14,8 +14,8 @@
 			hero: {
 				eyebrow: "sayori.org / 软件与服务",
 				title: "Amiya_desi 的软件与服务",
-				lead: "独立开发和维护 Web 软件服务、开发者工具与 Godot 游戏",
-				note: "GeoScore 是当前主要 SaaS，现阶段免费开放，没有付费订阅或站内结账。其他软件和游戏按真实开发进度展示",
+				lead: "独立开发和维护 Web 工具、开源项目与 Godot 游戏",
+				note: "品牌主线是独立游戏与创作工作台；GeoScore 等公开工具可按需使用，不代表主业方向。",
 				legend: "服务状态说明",
 				statuses: [
 					["public", "公开运行"],
@@ -29,9 +29,9 @@
 				intro: "可用软件给出直接入口；适合自行部署的项目给出源码；尚未发行的项目不会伪装成已经销售的产品",
 				items: [
 					{
-						status: "public", statusLabel: "当前 SaaS", title: "GeoScore",
-						description: "面向公开网页的 SEO 与 GEO 事实审计，提供站点画像、Evidence Map、优先修复项和 Markdown 报告",
-						meta: ["当前免费", "无需注册", "MIT 开源"],
+						status: "public", statusLabel: "公开工具", title: "GeoScore",
+						description: "面向公开网页的 SEO / GEO 事实审计。有免费额度；完整报告与持续监控等能力走 Site Pass（一次性）。",
+						meta: ["公开工具", "有免费额度", "MIT 开源"],
 						links: [["https://geo.sayori.org/", "打开服务"], ["https://github.com/Amiyadesi/geoscore", "查看源码"]],
 					},
 					{
@@ -108,28 +108,28 @@
 				title: "常见问题",
 				intro: "这个页面描述当前软件、业务方向和公开边界，不是尚未发布产品的购买承诺",
 				items: [
-					["Amiya_desi 开发什么", "目前以 GeoScore 这类 Web 软件服务为主，也开发 Godot 游戏、桌面与开发者工具和开源软件"],
-					["现在有付费方案吗", "没有。GeoScore 当前免费开放，网站没有付费订阅或结账。未来上线收费方案或软件销售时，会先公开价格、交付、退款和取消规则"],
+					["Amiya_desi 开发什么", "主线是 Godot 独立游戏（时间机制 / 多窗口 / 叙事解谜），也维护网站、开源项目与公开旁路工具"],
+					["现在有付费方案吗", "无订阅。GeoScore 提供免费额度；完整报告与持续监控等能力可走一次性 Site Pass，细则以产品页为准"],
 					["可以调用 GeoScore API 吗", "可以。稳定公开接口写在 OpenAPI 文档中，运行限制以 API 的 /api/meta 响应为准。它只审查公开 hostname，不是任意 URL 代理"],
 					["可以申请 Search Gateway Token 吗", "当前没有公开申请入口。源码可以自行部署，小范围试验额度采用人工邀请和明确限额"],
 				],
 			},
 			footer: {
-				text: "Amiya_desi · 独立软件开发者 · 最后更新 2026-08-16",
+				text: "Amiya_desi · Godot 独立游戏开发者 · 最后更新 2026-09-23",
 				links: [["/", "返回书桌"], ["https://blog.sayori.org/", "博客"], ["https://github.com/Amiyadesi", "GitHub"], ["mailto:me@sayori.org", "联系"]],
 				label: "页脚导航",
 			},
 		},
 		en: {
 			documentTitle: "Software & Services · Amiya's Desk",
-			description: "Web software, Godot games, open-source tools, and public services developed and maintained by independent software developer Amiya_desi.",
+			description: "Web tools, open-source projects, and public services by Godot indie game developer Amiya_desi. The brand focus is indie games and a maker's desk.",
 			siteName: "Amiya's Desk",
 			nav: [["#service-status", "Current software"], ["#planned-services", "Plans"], ["#operating-boundaries", "Boundaries"]],
 			hero: {
 				eyebrow: "sayori.org / software and services",
 				title: "Software and services by Amiya_desi",
-				lead: "Independently developed web software, developer tools, and Godot games",
-				note: "GeoScore is the main SaaS project and is currently free, with no paid subscription or on-site checkout. Other software and games are shown at their actual development stage",
+				lead: "Independent tools, open-source projects, and Godot games",
+				note: "The brand focus is indie games and a maker's desk—public utilities like GeoScore are optional side tools, not the main line.",
 				legend: "Service status legend",
 				statuses: [["public", "Public"], ["source", "Self-hostable"], ["invite", "Invitation plan"], ["private", "Private infrastructure"]],
 			},
@@ -137,7 +137,7 @@
 				title: "Current software and projects",
 				intro: "Available software gets a direct link; self-hostable projects get source links; unreleased projects are not presented as products already for sale",
 				items: [
-					{ status: "public", statusLabel: "Current SaaS", title: "GeoScore", description: "Evidence-first SEO and GEO audits for public pages, with a site profile, Evidence Map, prioritized fixes, and a Markdown report", meta: ["Currently free", "No registration", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
+					{ status: "public", statusLabel: "Public tool", title: "GeoScore", description: "Fact-based SEO/GEO audits for public pages. Free quota available; full reports and monitoring need a one-time Site Pass.", meta: ["Public tool", "Free quota", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
 					{ status: "public", statusLabel: "Public", title: "Amiya Whiteboard", description: "A lightweight browser whiteboard for quick sketches, rough diagrams, and explaining a page structure", meta: ["No account", "Temporary sketches", "Save your work"], links: [["https://board.sayori.org/", "Open whiteboard"]] },
 					{ status: "public", statusLabel: "Public", title: "Resource directory", description: "A categorized shelf of useful tools, references, communities, and open-source sites with local and external search", meta: ["No account", "Categorized index", "Ongoing archive"], links: [["https://nav.sayori.org/", "Open directory"]] },
 					{ status: "public", statusLabel: "Public", title: "GeoScore Public Audit API", description: "Factual audits, PageSpeed evidence, Evidence Maps, and FixPacks for public domains, exposed as bounded SSE and JSON endpoints", meta: ["OpenAPI 3.1", "Public targets only", "Limited quota"], links: [["https://geo-api.sayori.org/openapi.json", "Open OpenAPI"], ["https://geo.sayori.org/docs", "Read the guides"]] },
@@ -179,14 +179,14 @@
 				title: "Common questions",
 				intro: "This page describes current software, business direction, and public boundaries, not a purchase promise for unreleased products",
 				items: [
-					["What does Amiya_desi develop", "The current focus is web software such as GeoScore, alongside Godot games, desktop and developer tools, and open-source software"],
-					["Are paid plans available now", "No. GeoScore is currently free, and this site has no paid subscription or checkout. Prices, delivery, refund, and cancellation terms will be published before any paid plan or software sale launches"],
+					["What does Amiya_desi develop", "The main line is Godot indie games (time mechanics / multi-window / narrative puzzle), alongside websites, open-source projects, and optional public side tools"],
+					["Are paid plans available now", "No subscription. GeoScore has a free quota; fuller reports and monitoring can use a one-time Site Pass—details on the product page"],
 					["Can I call the GeoScore API", "Yes. Stable public endpoints are listed in the OpenAPI document, and current limits come from /api/meta. The API audits public hostnames and is not an arbitrary URL proxy"],
 					["Can I request a Search Gateway token", "There is no public request flow. You can self-host the source. Small experiments use manual invitations and explicit quotas"],
 				],
 			},
 			footer: {
-				text: "Amiya_desi · Independent software developer · Updated 2026-08-16",
+				text: "Amiya_desi · Godot indie game developer · Updated 2026-09-23",
 				links: [["/", "Back to desk"], ["https://blog.sayori.org/", "Blog"], ["https://github.com/Amiyadesi", "GitHub"], ["mailto:me@sayori.org", "Contact"]],
 				label: "Footer navigation",
 			},

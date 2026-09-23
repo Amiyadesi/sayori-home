@@ -1,6 +1,6 @@
 # Amiya's Desk
 
-> Amiya_desi is an independent developer focused on indie games, while also building websites, tools, open-source projects, and public creative notes
+> Amiya_desi is a Godot indie game developer focused on time mechanics, multi-window interaction, and narrative puzzles; websites and public tools are side work
 
 ## Identity
 
@@ -16,18 +16,18 @@ Amiya_desi uses Godot for game development and explores time mechanics, multi-wi
 
 ## Representative projects
 
+- 梦醒边界 / WakeUpAtTheBorder: a Godot game mixing puzzles, dialogue, and combat, awarded second prize in the third GodotHub themed Jam track
+  https://amiya-desi.itch.io/wake-up-at-the-border
 - DelayTrace: a Godot game about time delay, recorded actions, and replay, a satisfying recent Jam result with a playable public build
   https://amiya-desi.itch.io/delaytrace
 - TimeRewindLinker: a puzzle experiment with time rewind, replayed actions, and links to echoes of the past
   https://amiya-desi.itch.io/time-rewind-linker
-- 梦醒边界: a Godot game mixing puzzles, dialogue, and combat, awarded second prize in the third GodotHub themed Jam track
-  https://amiya-desi.itch.io/wake-up-at-the-border
-- Mio’s Window Wanderer: a multi-window narrative prototype I helped make
-  https://amiya-desi.itch.io/thatgamejam
-- GeoScore: a public-web SEO and GEO audit tool
-  https://geo.sayori.org/
 - Enhanced Save System: a modular Godot save plugin with GDScript and C# implementations
   https://github.com/Amiyadesi/enhance_save_system
+- GeoScore: a public-web SEO/GEO side tool with a free quota; fuller reports can use a one-time Site Pass
+  https://geo.sayori.org/
+- Mio’s Window Wanderer: a multi-window narrative prototype I helped make
+  https://amiya-desi.itch.io/thatgamejam
 
 ## Current direction
 

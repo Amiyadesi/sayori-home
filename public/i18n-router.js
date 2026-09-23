@@ -37,8 +37,6 @@
 			const url = new URL(window.location.href);
 			const value = url.searchParams.get("lang");
 			if (!value || !["zh", "zh-hans", "zh-hant", "en"].includes(value.toLowerCase())) return null;
-			url.searchParams.delete("lang");
-			window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
 			return normalizeLanguage(value);
 		} catch {
 			return null;
@@ -69,6 +67,12 @@
 		readyTimer = setTimeout(ready, 3000);
 	}
 
+	function languageQueryValue(language) {
+		if (language === "zh-Hans") return "zh";
+		if (language === "zh-Hant") return "zh-hant";
+		return "en";
+	}
+
 	function setLanguage(value, { reload = config.reloadOnChange !== false } = {}) {
 		const language = normalizeLanguage(value);
 		currentLanguage = language;
@@ -80,7 +84,22 @@
 				detail: { language },
 			}));
 		}
-		if (reload && typeof window.location.reload === "function") window.location.reload();
+		if (reload && typeof window.location !== "undefined") {
+			try {
+				const url = new URL(window.location.href);
+				const next = languageQueryValue(language);
+				if (url.searchParams.get("lang") === next) {
+					if (typeof window.location.reload === "function") window.location.reload();
+				} else {
+					url.searchParams.set("lang", next);
+					const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+					if (typeof window.location.assign === "function") window.location.assign(nextUrl);
+					else window.location.href = nextUrl;
+				}
+			} catch {
+				if (typeof window.location.reload === "function") window.location.reload();
+			}
+		}
 		return language;
 	}
 

@@ -97,8 +97,12 @@ test("public business identity is consistent and does not claim active checkout"
 	assert.match(content, /Amiya_desi/);
 	assert.match(content, /GeoScore/);
 	assert.match(content, /me@sayori\.org/);
-	assert.match(content, /独立软件开发者|independent software developer/i);
-	assert.match(content, /没有付费|暂未提供付费|no paid|does not currently offer a paid/i);
+	assert.match(content, /独立游戏|Godot|indie game|独立软件开发者|independent software developer/i);
+	assert.match(content, /无订阅|Site Pass|没有付费|暂未提供付费|no subscription|no paid|does not currently offer a paid/i);
+	// SaaS-first labels must be gone from committed public surfaces (synced JSON follows articles merge).
+	for (const relativePath of ["public/index.html", "public/services/index.html", "public/services/services-i18n.js"]) {
+		assert.doesNotMatch(read(relativePath), /当前 SaaS|Current SaaS|主要 SaaS|main SaaS/i);
+	}
 	assert.doesNotMatch(content, /非商业|non-commercial|不提供商业服务|commercial service site/i);
 });
 

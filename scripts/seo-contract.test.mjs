@@ -19,9 +19,14 @@ test("public content pages each expose one canonical URL", () => {
 	assert.equal(canonical(about), "https://sayori.org/about/");
 	assert.equal(canonical(tools), "https://sayori.org/tools/");
 	assert.equal(canonical(subaruTap), "https://sayori.org/tools/subarutap/");
-	assert.doesNotMatch(home, /hreflang=/);
+	assert.match(home, /hreflang="zh-CN"/);
+	assert.match(home, /hreflang="en"/);
+	assert.match(home, /hreflang="x-default"/);
+	assert.match(home, /href="https:\/\/sayori\.org\/\?lang=en"/);
+	assert.match(about, /hreflang="zh-CN"/);
+	assert.match(about, /hreflang="en"/);
+	assert.match(about, /href="https:\/\/sayori\.org\/about\/\?lang=en"/);
 	assert.doesNotMatch(services, /hreflang=/);
-	assert.doesNotMatch(about, /hreflang=/);
 	assert.notEqual(title(home), title(services));
 	assert.notEqual(title(home), title(about));
 	assert.notEqual(title(services), title(about));
@@ -79,3 +84,12 @@ function title(html) {
 function read(relativePath) {
 	return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
+
+test("EN language switcher does not self-link to the identical zh path", () => {
+	const home = read("public/index.html");
+	const about = read("public/about/index.html");
+	assert.match(home, /href="\/\?lang=en"[^>]*data-sayori-language="en"/);
+	assert.match(about, /href="\/about\/\?lang=en"[^>]*data-sayori-language="en"/);
+	assert.doesNotMatch(home, /<a href="\/"[^>]*data-sayori-language="en"/);
+	assert.doesNotMatch(about, /<a href="\/about\/"[^>]*data-sayori-language="en"/);
+});

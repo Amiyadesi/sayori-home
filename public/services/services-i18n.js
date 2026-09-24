@@ -4,7 +4,7 @@
 	const CATALOG = {
 		zh: {
 			documentTitle: "软件与服务 · Amiya的书桌",
-			description: "Godot 独立游戏开发者 Amiya_desi 维护的 Web 工具、开源项目与公开服务；品牌主线是独立游戏与创作工作台。",
+			description: "Amiya_desi 维护的游戏实验、网站工具与公开服务；当前重点作品 DelayTrace，GeoScore 等为旁路公开工具。",
 			siteName: "Amiya的书桌",
 			nav: [
 				["#service-status", "当前软件"],
@@ -15,7 +15,7 @@
 				eyebrow: "sayori.org / 软件与服务",
 				title: "Amiya_desi 的软件与服务",
 				lead: "独立开发和维护 Web 工具、开源项目与 Godot 游戏",
-				note: "品牌主线是独立游戏与创作工作台；GeoScore 等公开工具可按需使用，不代表主业方向。",
+				note: "当前主站侧重游戏实验与公开创作（重点作品 DelayTrace）；GeoScore 等公开工具可按需使用，作为旁路工具保留。",
 				legend: "服务状态说明",
 				statuses: [
 					["public", "公开运行"],
@@ -108,7 +108,7 @@
 				title: "常见问题",
 				intro: "这个页面描述当前软件、业务方向和公开边界，不是尚未发布产品的购买承诺",
 				items: [
-					["Amiya_desi 开发什么", "主线是 Godot 独立游戏（时间机制 / 多窗口 / 叙事解谜），也维护网站、开源项目与公开旁路工具"],
+					["Amiya_desi 开发什么", "做游戏实验与公开创作（重点作品 DelayTrace），也维护网站、开源项目与公开旁路工具"],
 					["现在有付费方案吗", "无订阅。GeoScore 提供免费额度；完整报告与持续监控等能力可走一次性 Site Pass，细则以产品页为准"],
 					["可以调用 GeoScore API 吗", "可以。稳定公开接口写在 OpenAPI 文档中，运行限制以 API 的 /api/meta 响应为准。它只审查公开 hostname，不是任意 URL 代理"],
 					["可以申请 Search Gateway Token 吗", "当前没有公开申请入口。源码可以自行部署，小范围试验额度采用人工邀请和明确限额"],
@@ -122,14 +122,14 @@
 		},
 		en: {
 			documentTitle: "Software & Services · Amiya's Desk",
-			description: "Web tools, open-source projects, and public services by Godot indie game developer Amiya_desi. The brand focus is indie games and a maker's desk.",
+			description: "Game experiments, web tools, and public services by Amiya_desi. Featured work: DelayTrace. GeoScore and similar utilities remain optional side tools.",
 			siteName: "Amiya's Desk",
 			nav: [["#service-status", "Current software"], ["#planned-services", "Plans"], ["#operating-boundaries", "Boundaries"]],
 			hero: {
 				eyebrow: "sayori.org / software and services",
 				title: "Software and services by Amiya_desi",
 				lead: "Independent tools, open-source projects, and Godot games",
-				note: "The brand focus is indie games and a maker's desk—public utilities like GeoScore are optional side tools, not the main line.",
+				note: "This site focuses on game experiments and public work (featured: DelayTrace). Public utilities like GeoScore remain optional side tools.",
 				legend: "Service status legend",
 				statuses: [["public", "Public"], ["source", "Self-hostable"], ["invite", "Invitation plan"], ["private", "Private infrastructure"]],
 			},
@@ -179,14 +179,14 @@
 				title: "Common questions",
 				intro: "This page describes current software, business direction, and public boundaries, not a purchase promise for unreleased products",
 				items: [
-					["What does Amiya_desi develop", "The main line is Godot indie games (time mechanics / multi-window / narrative puzzle), alongside websites, open-source projects, and optional public side tools"],
+					["What does Amiya_desi develop", "Game experiments and public work (featured: DelayTrace), alongside websites, open-source projects, and optional public side tools"],
 					["Are paid plans available now", "No subscription. GeoScore has a free quota; fuller reports and monitoring can use a one-time Site Pass—details on the product page"],
 					["Can I call the GeoScore API", "Yes. Stable public endpoints are listed in the OpenAPI document, and current limits come from /api/meta. The API audits public hostnames and is not an arbitrary URL proxy"],
 					["Can I request a Search Gateway token", "There is no public request flow. You can self-host the source. Small experiments use manual invitations and explicit quotas"],
 				],
 			},
 			footer: {
-				text: "Amiya_desi · Godot indie game developer · Updated 2026-09-23",
+				text: "Amiya_desi · games, tools, and public notes · Updated 2026-09-24",
 				links: [["/", "Back to desk"], ["https://blog.sayori.org/", "Blog"], ["https://github.com/Amiyadesi", "GitHub"], ["mailto:me@sayori.org", "Contact"]],
 				label: "Footer navigation",
 			},

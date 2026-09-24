@@ -4,7 +4,7 @@
 	const CATALOG = {
 		zh: {
 			documentTitle: "軟件與服務 · Amiya的書桌",
-			description: "Godot 獨立遊戲開發者 Amiya_desi 維護的 Web 工具、開源項目與公開服務；品牌主線是獨立遊戲與創作工作臺。",
+			description: "Amiya_desi 維護的遊戲實驗、網站工具與公開服務；當前重點作品 DelayTrace，GeoScore 等為旁路公開工具。",
 			siteName: "Amiya的書桌",
 			nav: [
 				["#service-status", "當前軟件"],
@@ -15,7 +15,7 @@
 				eyebrow: "sayori.org / 軟件與服務",
 				title: "Amiya_desi 的軟件與服務",
 				lead: "獨立開發和維護 Web 工具、開源項目與 Godot 遊戲",
-				note: "品牌主線是獨立遊戲與創作工作臺；GeoScore 等公開工具可按需使用，不代表主業方向。",
+				note: "當前主站側重遊戲實驗與公開創作（重點作品 DelayTrace）；GeoScore 等公開工具可按需使用，作為旁路工具保留。",
 				legend: "服務狀態說明",
 				statuses: [
 					["public", "公開運行"],
@@ -108,7 +108,7 @@
 				title: "常見問題",
 				intro: "這個頁面描述當前軟件、業務方向和公開邊界，不是尚未發佈產品的購買承諾",
 				items: [
-					["Amiya_desi 開發什麼", "主線是 Godot 獨立遊戲（時間機制 / 多窗口 / 敘事解謎），也維護網站、開源項目與公開旁路工具"],
+					["Amiya_desi 開發什麼", "做遊戲實驗與公開創作（重點作品 DelayTrace），也維護網站、開源項目與公開旁路工具"],
 					["現在有付費方案嗎", "無訂閱。GeoScore 提供免費額度；完整報告與持續監控等能力可走一次性 Site Pass，細則以產品頁爲準"],
 					["可以調用 GeoScore API 嗎", "可以。穩定公開接口寫在 OpenAPI 文檔中，運行限制以 API 的 /api/meta 響應爲準。它只審查公開 hostname，不是任意 URL 代理"],
 					["可以申請 Search Gateway Token 嗎", "當前沒有公開申請入口。源碼可以自行部署，小範圍試驗額度採用人工邀請和明確限額"],

@@ -1,6 +1,6 @@
 # Amiya's Desk
 
-> Amiya_desi is a Godot indie game developer focused on time mechanics, multi-window interaction, and narrative puzzles; websites and public tools are side work
+> Amiya_desi makes indie games, websites, and tools. Featured playable work: DelayTrace. Public utilities like GeoScore are side tools, not the main line
 
 ## Identity
 

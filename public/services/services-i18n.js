@@ -15,7 +15,7 @@
 				eyebrow: "sayori.org / 软件与服务",
 				title: "Amiya_desi 的软件与服务",
 				lead: "独立开发和维护 Web 工具、开源项目与 Godot 游戏",
-				note: "当前主站侧重游戏实验与公开创作（重点作品 DelayTrace）；GeoScore 等公开工具可按需使用，作为旁路工具保留。",
+				note: "当前主站侧重独立游戏与公开创作（重点作品 DelayTrace）；GeoScore 等公开工具可按需使用，不代表主业方向。",
 				legend: "服务状态说明",
 				statuses: [
 					["public", "公开运行"],

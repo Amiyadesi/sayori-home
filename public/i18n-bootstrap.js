@@ -33,8 +33,7 @@
 		if (raw && ["zh", "zh-hans", "zh-hant", "en"].includes(raw.toLowerCase())) {
 			query = normalize(raw);
 			save(query);
-			url.searchParams.delete("lang");
-			history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+			// Keep ?lang= visible so EN/中文 are not same-URL self-links.
 		}
 	} catch {}
 

@@ -213,7 +213,7 @@
 	}
 
 	function updateFootLink() {
-		setText($('foot-notice'), LANG === 'en' ? 'Amiya_desi · Independent software developer' : LANG === 'zh-Hant' ? 'Amiya_desi · 獨立軟體開發者' : 'Amiya_desi · 独立软件开发者');
+		setText($('foot-notice'), LANG === 'en' ? 'Amiya_desi · indie games, web tools & notes' : LANG === 'zh-Hant' ? 'Amiya_desi · 獨立遊戲、網站工具與創作記錄' : 'Amiya_desi · 独立游戏、网站工具与创作记录');
 		const link = document.querySelector('.desk-foot a[data-sayori-language]');
 		if (link) link.replaceWith(window.SayoriI18n.createSelect());
 	}

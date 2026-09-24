@@ -23,7 +23,7 @@ test("a saved manual language overrides the browser locale", () => {
 	assert.equal(result.documentLanguage, "en");
 });
 
-test("legacy lang query sets the preference and is removed from the visible URL", () => {
+test("lang query sets the preference and stays visible on the URL", () => {
 	const result = runRouter({
 		href: "https://sayori.org/services/?lang=en&music=youtube#status",
 		browserLanguage: "zh-CN",
@@ -31,17 +31,19 @@ test("legacy lang query sets the preference and is removed from the visible URL"
 
 	assert.equal(result.language, "en");
 	assert.equal(result.savedLanguage, "en");
-	assert.equal(result.replacedUrl, "/services/?music=youtube#status");
+	assert.equal(result.replacedUrl, null);
+	assert.equal(result.pathname, "/services/");
+	assert.match(result.href || "", /lang=en/);
 });
 
-test("manual language controls save the preference and reload the same page", () => {
+test("manual language controls save the preference and navigate with ?lang=", () => {
 	const result = runRouter({ href: "https://sayori.org/services/?music=youtube", linkLanguage: "en" });
 
 	result.clickLanguageControl();
 	assert.equal(result.savedLanguage, "en");
-	assert.equal(result.reloads, 1);
 	assert.equal(result.prevented, true);
-	assert.equal(result.pathname, "/services/");
+	assert.equal(result.assignedUrl, "/services/?music=youtube&lang=en");
+	assert.equal(result.reloads, 0);
 });
 
 test("the deferred router trusts the language selected by the bootstrap", () => {
@@ -102,6 +104,7 @@ function runRouter({
 	let reloads = 0;
 	let prevented = false;
 	let replacedUrl = null;
+	let assignedUrl = null;
 	const documentElement = { lang: "", dataset: {} };
 	const head = { append() {} };
 	const location = {
@@ -110,6 +113,7 @@ function runRouter({
 		search: url.search,
 		hash: url.hash,
 		reload() { reloads += 1; },
+		assign(value) { assignedUrl = value; },
 	};
 	const context = {
 		URL,
@@ -159,6 +163,8 @@ function runRouter({
 		get reloads() { return reloads; },
 		get prevented() { return prevented; },
 		get replacedUrl() { return replacedUrl; },
+		get assignedUrl() { return assignedUrl; },
+		get href() { return location.href; },
 		get documentDataset() { return documentElement.dataset; },
 		pathname: location.pathname,
 		clickLanguageControl() {

@@ -7,42 +7,78 @@
 		<meta name="description" content="独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务" />
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="https://sayori.org/services/" />
+		<link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
 		<link rel="icon" href="/favicon.png" type="image/png" />
 		<link rel="stylesheet" href="/services/services.css?v=20260807-perf" />
-		<script src="/i18n-bootstrap.js?v=20260917-trilingual"></script>
+		<script src="/i18n-bootstrap.js?v=20260926-localized-routes"></script>
 		<style>html[data-sayori-i18n-pending] body{visibility:hidden}</style>
-		<script defer src="/i18n-router.js?v=20260917-trilingual"></script>
+		<script defer src="/i18n-router.js?v=20260926-localized-routes"></script>
 		<meta property="og:site_name" content="Amiya的书桌" />
 		<meta property="og:title" content="软件与服务 · Amiya的书桌" />
-		<meta property="og:description" content="GeoScore Web 软件服务、Godot 游戏、开源工具与开发计划" />
+		<meta property="og:description" content="独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务" />
 		<meta property="og:url" content="https://sayori.org/services/" />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
-		<script type="application/ld+json">
+		<script type="application/ld+json">{
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	"@id": "https://sayori.org/services/#webpage",
+	"name": "软件与服务 · Amiya的书桌",
+	"url": "https://sayori.org/services/",
+	"description": "独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务",
+	"inLanguage": "zh-CN",
+	"isPartOf": {
+		"@id": "https://sayori.org/#website"
+	},
+	"about": {
+		"@id": "https://sayori.org/#person"
+	},
+	"mainEntity": {
+		"@type": "ItemList",
+		"name": "当前软件、服务与开源项目",
+		"itemListElement": [
 			{
-				"@context": "https://schema.org",
-				"@type": "WebPage",
-				"@id": "https://sayori.org/services/#webpage",
-				"name": "Amiya_desi 的软件与服务",
-				"url": "https://sayori.org/services/",
-				"description": "独立软件开发者 Amiya_desi 开发和维护的 Web 软件、Godot 游戏、开源工具与公开服务",
-				"inLanguage": ["zh-CN", "en"],
-				"isPartOf": { "@id": "https://sayori.org/#website" },
-				"about": { "@id": "https://sayori.org/#person" },
-				"mainEntity": {
-					"@type": "ItemList",
-					"name": "当前软件、服务与开源项目",
-					"itemListElement": [
-						{ "@type": "ListItem", "position": 1, "name": "GeoScore", "url": "https://geo.sayori.org/" },
-						{ "@type": "ListItem", "position": 2, "name": "GeoScore 公开审计 API", "url": "https://geo-api.sayori.org/openapi.json" },
-						{ "@type": "ListItem", "position": 3, "name": "Amiya 的白板", "url": "https://board.sayori.org/" },
-						{ "@type": "ListItem", "position": 4, "name": "资源导航", "url": "https://nav.sayori.org/" },
-						{ "@type": "ListItem", "position": 5, "name": "Amiya的书桌博客", "url": "https://blog.sayori.org/" },
-						{ "@type": "ListItem", "position": 6, "name": "Search Gateway 源码", "url": "https://github.com/Amiyadesi/search-gateway" }
-					]
-				}
+				"@type": "ListItem",
+				"position": 1,
+				"name": "GeoScore",
+				"url": "https://geo.sayori.org/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "GeoScore 公开审计 API",
+				"url": "https://geo-api.sayori.org/openapi.json"
+			},
+			{
+				"@type": "ListItem",
+				"position": 3,
+				"name": "Amiya 的白板",
+				"url": "https://board.sayori.org/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 4,
+				"name": "资源导航",
+				"url": "https://nav.sayori.org/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 5,
+				"name": "Amiya的书桌博客",
+				"url": "https://blog.sayori.org/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 6,
+				"name": "Search Gateway 源码",
+				"url": "https://github.com/Amiyadesi/search-gateway"
 			}
-		</script>
+		]
+	}
+}</script>
 	</head>
 	<body>
 		<header class="site-header">
@@ -263,7 +299,7 @@
 			</nav>
 		</footer>
 		<script>
-			document.write(`<script defer src="/services/services-i18n.${document.documentElement.dataset.sayoriCurrentLanguage === "zh-Hant" ? "zh-hant." : ""}js?v=20260917-trilingual"><\/script>`);
+			document.write(`<script defer src="/services/services-i18n.js?v=20260926-localized-routes"><\/script>`);
 		</script>
 	</body>
 </html>

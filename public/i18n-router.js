@@ -5,6 +5,7 @@
 	const config = window.SAYORI_I18N || {};
 	const LANGUAGES = ["zh-Hans", "zh-Hant", "en"];
 	const LABELS = { "zh-Hans": "简体中文", "zh-Hant": "繁體中文", en: "English" };
+	const PREFIXES = [["/zh-hant", "zh-Hant"], ["/en", "en"]];
 
 	function normalizeLanguage(value) {
 		const input = String(value || "").toLowerCase();
@@ -25,11 +26,29 @@
 	function saveLanguage(value) {
 		try {
 			localStorage.setItem(STORAGE_KEY, value);
-		} catch {
-			// The current page can still use the selected language without storage.
-		}
+		} catch {}
 		document.cookie = `sayori_locale=${encodeURIComponent(value)}; Domain=.sayori.org; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
 		document.cookie = "sayori_locale_auto=; Domain=.sayori.org; Path=/; Max-Age=0; SameSite=Lax; Secure";
+	}
+
+	function stripLocale(path) {
+		for (const [prefix] of PREFIXES) {
+			if (path === prefix || path.startsWith(prefix + "/")) return path.slice(prefix.length) || "/";
+		}
+		return path || "/";
+	}
+
+	function isLocalizedPage(path) {
+		const base = stripLocale(path);
+		return base === "/" || /^\/(?:about|services)\/?$/.test(base);
+	}
+
+	function localizedPath(path, language) {
+		const base = stripLocale(path);
+		if (!isLocalizedPage(base)) return path;
+		if (language === "en") return base === "/" ? "/en/" : "/en" + base;
+		if (language === "zh-Hant") return base === "/" ? "/zh-hant/" : "/zh-hant" + base;
+		return base;
 	}
 
 	function readQueryLanguage() {
@@ -45,18 +64,22 @@
 		}
 	}
 
+	const routeLanguage = (() => {
+		const path = window.location.pathname;
+		if (path === "/en" || path.startsWith("/en/")) return "en";
+		if (path === "/zh-hant" || path.startsWith("/zh-hant/")) return "zh-Hant";
+		return null;
+	})();
 	const browserLanguage = normalizeLanguage(
-		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "en",
+		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "zh-CN",
 	);
 	const queryLanguage = config.initialLanguage ? null : readQueryLanguage();
-	let currentLanguage = normalizeLanguage(config.initialLanguage || queryLanguage || readStoredLanguage() || browserLanguage);
+	let currentLanguage = normalizeLanguage(config.initialLanguage || routeLanguage || queryLanguage || readStoredLanguage() || browserLanguage);
 	if (queryLanguage) saveLanguage(queryLanguage);
 
 	document.documentElement.lang = htmlLanguage(currentLanguage);
 	document.documentElement.dataset.sayoriCurrentLanguage = currentLanguage;
-	if (config.pendingUntilReady) {
-		document.documentElement.dataset.sayoriI18nPending = "true";
-	}
+	if (config.pendingUntilReady) document.documentElement.dataset.sayoriI18nPending = "true";
 
 	let readyTimer = null;
 	function ready() {
@@ -65,9 +88,7 @@
 		readyTimer = null;
 	}
 
-	if (config.pendingUntilReady && typeof setTimeout === "function") {
-		readyTimer = setTimeout(ready, 3000);
-	}
+	if (config.pendingUntilReady && typeof setTimeout === "function") readyTimer = setTimeout(ready, 3000);
 
 	function setLanguage(value, { reload = config.reloadOnChange !== false } = {}) {
 		const language = normalizeLanguage(value);
@@ -80,17 +101,34 @@
 				detail: { language },
 			}));
 		}
-		if (reload && typeof window.location.reload === "function") window.location.reload();
+		if (reload && typeof window.location.assign === "function") {
+			const targetPath = localizedPath(window.location.pathname, language);
+			if (targetPath !== window.location.pathname) {
+				window.location.assign(`${targetPath}${window.location.search}${window.location.hash}`);
+			} else if (typeof window.location.reload === "function") {
+				window.location.reload();
+			}
+		}
 		return language;
 	}
 
 	document.addEventListener("click", (event) => {
 		const control = event.target.closest?.("a[data-sayori-language], button[data-sayori-language]");
-		if (!control) return;
-		const language = control.dataset.sayoriLanguage;
-		if (!LANGUAGES.includes(language)) return;
-		event.preventDefault?.();
-		setLanguage(language);
+		if (control) {
+			const language = control.dataset.sayoriLanguage;
+			if (!LANGUAGES.includes(language)) return;
+			event.preventDefault?.();
+			setLanguage(language);
+			return;
+		}
+		const anchor = event.target.closest?.("a[href]");
+		if (!anchor || anchor.target === "_blank" || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || (event.button !== undefined && event.button !== 0)) return;
+		try {
+			const target = new URL(anchor.href, window.location.href);
+			if (target.origin !== window.location.origin) return;
+			const localized = localizedPath(target.pathname, currentLanguage);
+			if (localized !== target.pathname) anchor.href = `${localized}${target.search}${target.hash}`;
+		} catch {}
 	});
 
 	document.addEventListener("change", (event) => {
@@ -118,21 +156,19 @@
 		return select;
 	}
 
-	for (const control of document.querySelectorAll("[data-sayori-language]")) {
-		control.replaceWith(createSelect());
-	}
+	for (const control of document.querySelectorAll("[data-sayori-language]")) control.replaceWith(createSelect());
 	const style = document.createElement("style");
 	style.textContent = ".sayori-language-select{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer;padding:.15rem .25rem}.sayori-language-select:focus-visible{outline:2px solid currentColor;outline-offset:2px}";
 	document.head.append(style);
 
 	window.SayoriI18n = {
 		STORAGE_KEY,
-		get language() {
-			return currentLanguage;
-		},
+		get language() { return currentLanguage; },
 		normalizeLanguage,
 		createSelect,
+		localizedPath,
 		ready,
 		setLanguage,
 	};
+
 })();

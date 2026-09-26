@@ -1,14 +1,26 @@
 https://value.sayori.org/* https://vault.sayori.org/:splat 301
 
+# Legacy Simplified Chinese aliases: the bootstrap moves ?lang to the matching locale URL.
 /zh /?lang=zh 301
 /zh/ /?lang=zh 301
 /zh/index.html /?lang=zh 301
-/en /?lang=en 301
-/en/ /?lang=en 301
-/en/index.html /?lang=en 301
+/zh/about /about/?lang=zh 301
+/zh/about/ /about/?lang=zh 301
+/zh/about/index.html /about/?lang=zh 301
 /zh/services /services/?lang=zh 301
 /zh/services/ /services/?lang=zh 301
 /zh/services/index.html /services/?lang=zh 301
-/en/services /services/?lang=en 301
-/en/services/ /services/?lang=en 301
-/en/services/index.html /services/?lang=en 301
+
+# Real locale pages use canonical trailing-slash URLs.
+/en /en/ 301
+/en/index.html /en/ 301
+/en/about /en/about/ 301
+/en/about/index.html /en/about/ 301
+/en/services /en/services/ 301
+/en/services/index.html /en/services/ 301
+/zh-hant /zh-hant/ 301
+/zh-hant/index.html /zh-hant/ 301
+/zh-hant/about /zh-hant/about/ 301
+/zh-hant/about/index.html /zh-hant/about/ 301
+/zh-hant/services /zh-hant/services/ 301
+/zh-hant/services/index.html /zh-hant/services/ 301

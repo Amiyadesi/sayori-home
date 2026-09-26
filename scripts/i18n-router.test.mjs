@@ -7,83 +7,87 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("Simplified and Traditional browser locales stay distinct", () => {
-	const result = runRouter({ browserLanguage: "zh-CN" });
-	assert.equal(result.language, "zh-Hans");
-	assert.equal(result.documentLanguage, "zh-CN");
-	assert.equal(result.reloads, 0);
-	assert.equal(runRouter({ browserLanguage: "zh-TW" }).language, "zh-Hant");
-	assert.equal(runRouter({ browserLanguage: "zh-TW" }).documentLanguage, "zh-Hant");
+test("locale-aware paths map the home, about, and services pages", () => {
+	const result = runRouter({ href: "https://sayori.org/about/" });
+	assert.equal(result.localizedPath("/", "en"), "/en/");
+	assert.equal(result.localizedPath("/about/", "en"), "/en/about/");
+	assert.equal(result.localizedPath("/services/", "zh-Hant"), "/zh-hant/services/");
+	assert.equal(result.localizedPath("/en/about/", "zh-Hans"), "/about/");
+	assert.equal(result.localizedPath("/tools/", "en"), "/tools/");
 });
 
-test("a saved manual language overrides the browser locale", () => {
-	const result = runRouter({ browserLanguage: "zh-CN", storedLanguage: "en" });
-
-	assert.equal(result.language, "en");
-	assert.equal(result.documentLanguage, "en");
-});
-
-test("legacy lang query sets the preference and is removed from the visible URL", () => {
-	const result = runRouter({
-		href: "https://sayori.org/services/?lang=en&music=youtube#status",
+test("the locale in a real URL takes precedence over browser preferences", () => {
+	const english = runRouter({
+		href: "https://sayori.org/en/about/",
 		browserLanguage: "zh-CN",
 	});
+	assert.equal(english.language, "en");
+	assert.equal(english.documentLanguage, "en");
 
-	assert.equal(result.language, "en");
-	assert.equal(result.savedLanguage, "en");
-	assert.equal(result.replacedUrl, "/services/?music=youtube#status");
+	const traditional = runRouter({
+		href: "https://sayori.org/zh-hant/",
+		browserLanguage: "en-US",
+	});
+	assert.equal(traditional.language, "zh-Hant");
+	assert.equal(traditional.documentLanguage, "zh-Hant");
 });
 
-test("manual language controls save the preference and reload the same page", () => {
-	const result = runRouter({ href: "https://sayori.org/services/?music=youtube", linkLanguage: "en" });
-
+test("manual language selection navigates to the matching localized URL", () => {
+	const result = runRouter({
+		href: "https://sayori.org/services/?music=youtube#status",
+		browserLanguage: "zh-CN",
+		linkLanguage: "en",
+	});
 	result.clickLanguageControl();
 	assert.equal(result.savedLanguage, "en");
-	assert.equal(result.reloads, 1);
 	assert.equal(result.prevented, true);
-	assert.equal(result.pathname, "/services/");
-});
-
-test("the deferred router trusts the language selected by the bootstrap", () => {
-	const result = runRouter({ initialLanguage: "en", browserLanguage: "zh-CN", storedLanguage: "zh" });
-
-	assert.equal(result.language, "en");
-	assert.equal(result.documentLanguage, "en");
-});
-
-test("ordinary page controls never trigger the delegated language reload", () => {
-	const result = runRouter({ browserLanguage: "zh-CN" });
-
-	result.clickOrdinaryControl();
+	assert.equal(result.assignedUrl, "/en/services/?music=youtube#status");
 	assert.equal(result.reloads, 0);
-	assert.equal(result.prevented, false);
-	assert.equal(result.documentDataset.sayoriLanguage, undefined);
-	assert.equal(result.documentDataset.sayoriCurrentLanguage, "zh-Hans");
 });
 
-test("canonical pages use the inline language bootstrap and deferred router", () => {
-	for (const relativePath of ["public/index.html", "public/about/index.html", "public/services/index.html", "public/tools/index.html"]) {
+test("switching from one localized page preserves its page type", () => {
+	const result = runRouter({
+		href: "https://sayori.org/en/about/",
+		linkLanguage: "zh-Hant",
+	});
+	result.clickLanguageControl();
+	assert.equal(result.assignedUrl, "/zh-hant/about/");
+});
+
+test("ordinary same-site links are rewritten to the current language route", () => {
+	const result = runRouter({
+		href: "https://sayori.org/en/",
+		browserLanguage: "zh-CN",
+	});
+	const anchor = { href: "https://sayori.org/about/", target: "" };
+	result.clickLink(anchor);
+	assert.equal(anchor.href, "/en/about/");
+});
+
+test("localized landing and profile pages load the language bootstrap and router", () => {
+	const paths = [
+		"public/index.html",
+		"public/en/index.html",
+		"public/zh-hant/index.html",
+		"public/about/index.html",
+		"public/en/about/index.html",
+		"public/zh-hant/about/index.html",
+		"public/services/index.html",
+		"public/en/services/index.html",
+		"public/zh-hant/services/index.html",
+	];
+	for (const relativePath of paths) {
 		const html = read(relativePath);
 		assert.match(html, /i18n-bootstrap\.js/);
-		assert.match(html, /<script defer src="[^\"]*i18n-router\.js/);
-		assert.doesNotMatch(html, /<script src="\/i18n-router\.js[^\"]*"><\/script>/);
-		assert.doesNotMatch(html, /href="\/(?:zh|en)\//);
+		assert.match(html, /<script defer src="[^"]*i18n-router\.js/);
+		assert.doesNotMatch(html, /<script src="\/i18n-router\.js[^"]*"><\/script>/);
 	}
 });
 
-test("legacy language pages are noindex redirects to the canonical URL", () => {
-	const expectations = [
-		["public/zh/index.html", "https://sayori.org/", "zh"],
-		["public/en/index.html", "https://sayori.org/", "en"],
-		["public/zh/services/index.html", "https://sayori.org/services/", "zh"],
-		["public/en/services/index.html", "https://sayori.org/services/", "en"],
-	];
-
-	for (const [relativePath, canonical, language] of expectations) {
+test("legacy Simplified Chinese aliases remain noindex compatibility pages", () => {
+	for (const relativePath of ["public/zh/index.html", "public/zh/services/index.html"]) {
 		const html = read(relativePath);
 		assert.match(html, /name="robots" content="noindex,follow"/);
-		assert.ok(html.includes(`rel="canonical" href="${canonical}"`), relativePath);
-		assert.ok(html.includes(`sayori:ui-language", "${language}"`), relativePath);
 	}
 });
 
@@ -101,24 +105,26 @@ function runRouter({
 	let delegatedChangeHandler = null;
 	let reloads = 0;
 	let prevented = false;
-	let replacedUrl = null;
+	let assignedUrl = null;
 	const documentElement = { lang: "", dataset: {} };
 	const head = { append() {} };
 	const location = {
 		href,
 		pathname: url.pathname,
+		origin: url.origin,
 		search: url.search,
 		hash: url.hash,
+		assign(value) { assignedUrl = value; },
 		reload() { reloads += 1; },
 	};
 	const context = {
 		URL,
 		window: {
-			SAYORI_I18N: { defaultLanguage: "zh", ...(initialLanguage ? { initialLanguage } : {}) },
+			SAYORI_I18N: { defaultLanguage: "zh-Hans", ...(initialLanguage ? { initialLanguage } : {}) },
 			dispatchEvent() {},
 			location,
 			history: {
-				replaceState(_state, _title, value) { replacedUrl = value; },
+				replaceState() {},
 			},
 		},
 		navigator: { language: browserLanguage, languages: [browserLanguage] },
@@ -158,37 +164,31 @@ function runRouter({
 		get savedLanguage() { return savedLanguage; },
 		get reloads() { return reloads; },
 		get prevented() { return prevented; },
-		get replacedUrl() { return replacedUrl; },
-		get documentDataset() { return documentElement.dataset; },
-		pathname: location.pathname,
+		get assignedUrl() { return assignedUrl; },
+		localizedPath: context.window.SayoriI18n.localizedPath,
 		clickLanguageControl() {
 			assert.ok(delegatedClickHandler, "delegated language handler");
 			delegatedClickHandler({
 				preventDefault() { prevented = true; },
 				target: {
-					closest() {
-						return { dataset: { sayoriLanguage: linkLanguage } };
+					closest(selector) {
+						return selector.includes("[data-sayori-language]")
+							? { dataset: { sayoriLanguage: linkLanguage } }
+							: null;
 					},
 				},
 			});
 		},
-		clickOrdinaryControl() {
-			assert.ok(delegatedClickHandler, "delegated language handler");
+		clickLink(anchor) {
+			assert.ok(delegatedClickHandler, "delegated link handler");
 			delegatedClickHandler({
-				preventDefault() { prevented = true; },
 				target: {
 					closest(selector) {
-						if (selector.includes("[data-sayori-language]") && documentElement.dataset.sayoriLanguage) {
-							return documentElement;
-						}
-						return null;
+						return selector.includes("[data-sayori-language]") ? null : anchor;
 					},
 				},
+				button: 0,
 			});
-		},
-		changeLanguage(language) {
-			assert.ok(delegatedChangeHandler, "delegated change handler");
-			delegatedChangeHandler({ target: { closest: () => ({ value: language }) } });
 		},
 	};
 }

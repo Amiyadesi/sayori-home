@@ -577,6 +577,49 @@ function applyMetaConfig(meta) {
 	setMeta('theme-color', meta.themeColor, 'name');
 }
 
+function renderHero(hero) {
+	if (!hero || typeof hero !== 'object') return;
+	setText(document.getElementById('home-eyebrow'), hero.eyebrow);
+	setText(document.getElementById('home-tagline'), hero.tagline);
+	for (const [id, cta] of [['home-play', hero.primaryCta], ['home-devlogs', hero.secondaryCta]]) {
+		const link = document.getElementById(id);
+		if (!link || !cta || typeof cta !== 'object') continue;
+		link.href = localizedHref(cta.href);
+		setText(link, cta.label);
+	}
+}
+
+function renderProjects(projects) {
+	if (!projects || typeof projects !== 'object') return;
+	setText(document.getElementById('project-showcase-title'), projects.title);
+	setText(document.getElementById('project-showcase-intro'), projects.intro);
+	const grid = document.getElementById('project-cards');
+	if (!grid || !Array.isArray(projects.items)) return;
+	grid.replaceChildren();
+	for (const project of projects.items) {
+		if (!project || typeof project !== 'object' || !project.title || !project.href) continue;
+		const card = document.createElement('a');
+		card.className = 'project-card';
+		card.href = safeHref(project.href);
+		card.target = '_blank';
+		card.rel = 'noopener noreferrer';
+		const title = document.createElement('span');
+		title.className = 'project-card-title';
+		title.textContent = project.title;
+		const description = document.createElement('span');
+		description.className = 'project-card-description';
+		description.textContent = project.description || '';
+		card.append(title, description);
+		if (project.badge) {
+			const badge = document.createElement('span');
+			badge.className = 'project-card-badge';
+			badge.textContent = project.badge;
+			card.append(badge);
+		}
+		grid.append(card);
+	}
+}
+
 function setMeta(key, value, attr = 'name') {
 	if (typeof value !== 'string' || !value.trim()) return;
 	let tag = document.head.querySelector(`meta[${attr}="${key}"]`);
@@ -616,6 +659,8 @@ function applySurfaceConfig(surface) {
 	if (Array.isArray(surface.stickyQuotes) && surface.stickyQuotes.length) {
 		STICKY_QUOTES = surface.stickyQuotes.filter((item) => typeof item === 'string' && item.trim());
 	}
+	renderHero(surface.hero);
+	renderProjects(surface.projects);
 	renderEntries(surface.entries, surface.entryAriaLabel);
 	renderPageVersion(surface.languageLink, surface.version);
 	if (stickyText && STICKY_QUOTES.length) {
@@ -654,7 +699,7 @@ function createEntryNode(entry) {
 		node.setAttribute('aria-controls', controls);
 		node.setAttribute('aria-expanded', 'false');
 	} else {
-		node.href = safeHref(entry.href);
+		node.href = localizedHref(entry.href);
 		if (entry.external) {
 			node.target = '_blank';
 			node.rel = 'noopener';
@@ -765,6 +810,21 @@ function setText(node, value) {
 function setAttr(node, attr, value) {
 	if (!node || typeof value !== 'string' || !value.trim()) return;
 	node.setAttribute(attr, value);
+}
+
+function localizedHref(value) {
+	const safe = safeHref(value);
+	if (!safe) return '#';
+	try {
+		const target = new URL(safe, window.location.href);
+		if (!['sayori.org', 'blog.sayori.org'].includes(target.hostname)) return safe;
+		const locale = window.SayoriI18n?.language || PATH_LANG;
+		const path = target.pathname.replace(/^\/(?:en|zh-hant)(?=\/|$)/, '') || '/';
+		const prefix = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-hant' : '';
+		if (!['/', '/about/', '/services/'].includes(path)) return safe;
+		target.pathname = prefix ? prefix + (path === '/' ? '/' : path) : path;
+		return target.href;
+	} catch { return safe; }
 }
 
 function safeHref(value) {

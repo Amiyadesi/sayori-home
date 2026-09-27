@@ -1,0 +1,235 @@
+/* Brand landing sections: preserve the notebook motif while making the page scroll. */
+html,
+body {
+	min-height: 100%;
+	height: auto;
+}
+
+body {
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+}
+
+.desk-surface {
+	display: block !important;
+	height: auto !important;
+	min-height: 100vh;
+	overflow: visible !important;
+	padding: clamp(1rem, 3vh, 2rem) 0 3rem;
+}
+
+.notebook-page {
+	width: min(900px, 96vw) !important;
+	height: auto !important;
+	min-height: min(900px, 92vh);
+	max-height: none !important;
+	margin: 0 auto;
+	padding-bottom: 1.8rem;
+}
+
+.page-content {
+	gap: clamp(1.2rem, 3vh, 2rem);
+}
+
+.home-hero {
+	padding: clamp(0.75rem, 2vw, 1.4rem) 0 clamp(1.1rem, 3vh, 1.8rem);
+}
+
+.home-eyebrow {
+	margin: 0 0 0.55rem;
+	color: var(--pink-deep, #a34d68);
+	font-size: 0.88rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.home-tagline {
+	max-width: 42rem;
+	margin: 0;
+	color: var(--ink, #30343b);
+	font-size: clamp(1.2rem, 2.3vw, 1.75rem);
+	font-weight: 650;
+	line-height: 1.55;
+}
+
+.home-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.7rem;
+	margin-top: 1.1rem;
+}
+
+.home-action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.8rem;
+	padding: 0.65rem 1.05rem;
+	border: 1px solid var(--pencil-light, #b3b7bd);
+	border-radius: 0.6rem;
+	color: var(--ink, #30343b);
+	font-weight: 700;
+	text-decoration: none;
+	transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.home-action:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 14px rgba(36, 55, 68, 0.12);
+}
+
+.home-action:focus-visible,
+.project-card:focus-visible {
+	outline: 3px solid #387a9d;
+	outline-offset: 3px;
+}
+
+.home-action-primary {
+	border-color: #397e9e;
+	background: #397e9e;
+	color: #fff;
+}
+
+.home-action-secondary {
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.project-showcase {
+	padding-top: clamp(1.1rem, 3vh, 1.8rem);
+	border-top: 1px dashed var(--pencil-light, #b3b7bd);
+}
+
+.project-showcase-heading {
+	margin-bottom: 0.9rem;
+}
+
+.project-showcase-heading h2 {
+	margin: 0;
+	color: var(--ink, #30343b);
+	font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.project-showcase-heading p {
+	max-width: 42rem;
+	margin: 0.35rem 0 0;
+	color: var(--pencil, #6e747d);
+	line-height: 1.6;
+}
+
+.project-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.7rem;
+}
+
+.project-card {
+	display: flex;
+	min-height: 7rem;
+	flex-direction: column;
+	gap: 0.35rem;
+	padding: 0.9rem 1rem;
+	border: 1px solid rgba(101, 132, 150, 0.32);
+	border-radius: 0.65rem;
+	background: rgba(255, 255, 255, 0.54);
+	color: inherit;
+	text-decoration: none;
+	transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.project-card:hover {
+	transform: translateY(-2px);
+	border-color: #5c95ad;
+	box-shadow: 0 7px 16px rgba(36, 55, 68, 0.1);
+}
+
+.project-card-title {
+	color: #285c74;
+	font-weight: 750;
+	line-height: 1.35;
+}
+
+.project-card-description {
+	color: var(--pencil, #6e747d);
+	font-size: 0.94rem;
+	line-height: 1.55;
+}
+
+.project-card-badge {
+	align-self: flex-start;
+	margin-top: 0.15rem;
+	padding: 0.18rem 0.48rem;
+	border-radius: 999px;
+	background: rgba(219, 156, 94, 0.18);
+	color: #765125;
+	font-size: 0.76rem;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.entries {
+	margin-top: 0.4rem;
+	padding-top: 1rem;
+	border-top: 1px dashed var(--pencil-light, #b3b7bd);
+}
+
+.notebook-extras {
+	min-height: 150px;
+}
+
+.sayori-sketch {
+	bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+	.desk-surface {
+		display: block !important;
+		height: auto !important;
+		min-height: 100vh;
+		overflow: visible !important;
+	}
+}
+
+@media (max-width: 640px) {
+	body {
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
+	}
+	.desk-surface {
+		display: block !important;
+		height: auto !important;
+		min-height: 100vh;
+		padding: 0;
+		overflow: visible !important;
+	}
+	.notebook-page {
+		width: 100% !important;
+		height: auto !important;
+		min-height: 100vh;
+		max-height: none !important;
+		margin: 0;
+		padding-bottom: 1.4rem;
+		transform: none;
+	}
+	.project-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.project-card {
+		min-height: 0;
+		padding: 0.8rem 0.9rem;
+	}
+	.home-tagline {
+		font-size: 1.2rem;
+	}
+	.home-actions {
+		gap: 0.5rem;
+	}
+	.home-action {
+		min-height: 2.65rem;
+		padding: 0.58rem 0.78rem;
+		font-size: 0.91rem;
+	}
+	.sayori-sketch {
+		display: none;
+	}
+}

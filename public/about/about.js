@@ -13,9 +13,17 @@
 	}
 
 	function safeHref(href) {
-		if (typeof href !== 'string') return '#';
-		if (/^(https?:|mailto:|\/)/i.test(href)) return href;
-		return '#';
+		if (typeof href !== 'string' || !/^(https?:|mailto:|\/)/i.test(href)) return '#';
+		try {
+			const target = new URL(href, window.location.href);
+			if (['sayori.org', 'blog.sayori.org'].includes(target.hostname)) {
+				const path = window.SayoriI18n?.localizedPath?.(target.pathname, LANG) || target.pathname;
+				return `${path}${target.search}${target.hash}`;
+			}
+			return href;
+		} catch {
+			return href;
+		}
 	}
 
 	/* Render text with optional {label, href} link substitutions, like the home page. */

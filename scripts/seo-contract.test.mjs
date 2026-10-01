@@ -30,18 +30,15 @@ test("each localized public page has one matching canonical and a reciprocal hre
 	}
 });
 
-test("home page copy leads with the game-maker identity and highest-priority work", () => {
+test("home page keeps the compact legacy entry surface", () => {
 	const home = read("public/index.html");
-	assert.match(home, /用 Godot 做独立游戏/);
-	assert.match(home, /试玩《梦醒边界》/);
-	assert.match(home, /看开发记录/);
-	const start = home.indexOf('class="project-showcase"');
-	const showcase = home.slice(start, home.indexOf("</section>", start));
-	const order = ["梦醒边界", "DelayTrace", "TimeRewindLinker", "Enhanced Save System", "GeoScore"]
-		.map((name) => showcase.indexOf(name));
-	assert.ok(order.every((index) => index >= 0));
-	assert.deepEqual(order, [...order].sort((a, b) => a - b));
-	assert.match(showcase, /GodotHub 第三届命题 Jam 赛道二等奖/);
+	assert.doesNotMatch(home, /class="home-hero"/);
+	assert.doesNotMatch(home, /class="project-showcase"/);
+	assert.doesNotMatch(home, /homepage-sections\.css/);
+	assert.equal(home.match(/class="entry(?:\s|\")/g)?.length, 6);
+	for (const number of ["01", "02", "03", "04", "05", "06"]) {
+		assert.match(home, new RegExp(`class="entry-num">${number}<`));
+	}
 });
 
 test("sitemap includes all localized landing, about, and services routes", () => {

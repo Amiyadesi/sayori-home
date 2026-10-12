@@ -124,3 +124,6 @@ function canonical(html) {
 function read(relativePath) {
 	return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
+test("unknown URLs have a noindex 404 document instead of the Pages SPA fallback", () => {
+	assert.match(read("public/404.html"), /name="robots" content="noindex"/);
+});

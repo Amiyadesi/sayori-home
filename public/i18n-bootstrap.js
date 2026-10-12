@@ -50,7 +50,7 @@
 	function pathLanguage(path) {
 		if (path === "/en" || path.startsWith("/en/")) return "en";
 		if (path === "/zh-hant" || path.startsWith("/zh-hant/")) return "zh-Hant";
-		return null;
+		return isLocalizedPage(path) ? "zh-Hans" : null;
 	}
 
 	let query = "";
@@ -99,11 +99,12 @@
 	const htmlLanguage = preferred === "zh-Hans" ? "zh-CN" : preferred;
 	document.documentElement.lang = htmlLanguage;
 	document.documentElement.dataset.sayoriCurrentLanguage = preferred;
-	if (preferred !== "zh-Hans") document.documentElement.dataset.sayoriI18nPending = "true";
+	const pendingUntilReady = preferred !== "zh-Hans" && !isLocalizedPage(pathname);
+	if (pendingUntilReady) document.documentElement.dataset.sayoriI18nPending = "true";
 	window.SAYORI_I18N = {
 		defaultLanguage: "zh-Hans",
 		initialLanguage: preferred,
-		pendingUntilReady: preferred !== "zh-Hans",
+		pendingUntilReady,
 		localizedPath,
 	};
 })();

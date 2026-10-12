@@ -68,7 +68,7 @@
 		const path = window.location.pathname;
 		if (path === "/en" || path.startsWith("/en/")) return "en";
 		if (path === "/zh-hant" || path.startsWith("/zh-hant/")) return "zh-Hant";
-		return null;
+		return isLocalizedPage(path) ? "zh-Hans" : null;
 	})();
 	const browserLanguage = normalizeLanguage(
 		navigator.languages?.[0] || navigator.language || config.defaultLanguage || "zh-CN",

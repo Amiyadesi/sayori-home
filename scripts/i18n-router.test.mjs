@@ -17,6 +17,9 @@ test("locale-aware paths map the home, about, and services pages", () => {
 });
 
 test("the locale in a real URL takes precedence over browser preferences", () => {
+	const simplified = runRouter({ href: "https://sayori.org/about/", browserLanguage: "en-US" });
+	assert.equal(simplified.language, "zh-Hans");
+	assert.equal(simplified.documentLanguage, "zh-CN");
 	const english = runRouter({
 		href: "https://sayori.org/en/about/",
 		browserLanguage: "zh-CN",
@@ -30,6 +33,21 @@ test("the locale in a real URL takes precedence over browser preferences", () =>
 	});
 	assert.equal(traditional.language, "zh-Hant");
 	assert.equal(traditional.documentLanguage, "zh-Hant");
+});
+
+test("the bootstrap keeps every static language URL visible without an automatic redirect", () => {
+	for (const pathname of ["/", "/about/", "/services/", "/en/", "/zh-hant/about/"]) {
+		const url = new URL(pathname, "https://sayori.org");
+		const context = {
+			URL, document: { cookie: "sayori_locale=en", documentElement: { dataset: {} } },
+			localStorage: { getItem: () => "en", setItem() {} }, navigator: { language: "en-US" },
+			location: { href: url.href, pathname, search: "", hash: "", replace() { assert.fail("unexpected redirect"); } },
+		};
+		context.window = context;
+		vm.runInNewContext(read("public/i18n-bootstrap.js"), context);
+		assert.equal(context.document.documentElement.dataset.sayoriI18nPending, undefined);
+		assert.equal(context.SAYORI_I18N.initialLanguage, pathname.startsWith("/en/") ? "en" : pathname.startsWith("/zh-hant/") ? "zh-Hant" : "zh-Hans");
+	}
 });
 
 test("manual language selection navigates to the matching localized URL", () => {

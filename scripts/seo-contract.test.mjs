@@ -60,6 +60,17 @@ test("sitemap includes all localized landing, about, and services routes", () =>
 	assert.match(sitemap, /hreflang="x-default"/);
 });
 
+test("each profile page defines its main person in the same document", () => {
+	for (const locale of ["", "zh-hant/", "en/"]) {
+		const html = read(`public/${locale}about/index.html`);
+		const schema = JSON.parse(html.match(/<script[^>]+id="about-schema"[^>]*>([\s\S]*?)<\/script>/)[1]);
+		const profile = schema["@graph"].find((item) => item["@type"] === "ProfilePage");
+		assert.equal(profile.mainEntity["@type"], "Person", locale || "zh-Hans");
+		assert.ok(profile.mainEntity.name);
+		assert.equal(profile.mainEntity["@id"], "https://sayori.org/#person");
+	}
+});
+
 test("legacy URLs do not redirect live locale pages back to a query-only URL", () => {
 	const redirects = read("public/_redirects");
 	assert.match(redirects, /\/zh \/\?lang=zh 301/);

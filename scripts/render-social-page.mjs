@@ -5,17 +5,17 @@ const copy = {
 	zh: {
 		lang: "zh-CN", prefix: "", title: "社交账号", back: "回到书桌",
 		intro: "Amiya_desi 的作品、动态和交流入口，都放在这里。",
-		language: "切换语言", email: "联系我", note: "点击平台，打开我的主页或社区。",
+		language: "切换语言", email: "联系我", note: "点击平台，查看动态或和我联系。",
 	},
 	"zh-hant": {
 		lang: "zh-Hant", prefix: "/zh-hant", title: "社交帳號", back: "回到書桌",
 		intro: "Amiya_desi 的作品、動態和交流入口，都放在這裡。",
-		language: "切換語言", email: "聯絡我", note: "點擊平台，開啟我的主頁或社群。",
+		language: "切換語言", email: "聯絡我", note: "點擊平台，查看動態或和我聯絡。",
 	},
 	en: {
 		lang: "en", prefix: "/en", title: "Find me online", back: "Back to the desk",
 		intro: "My projects, updates, and places to keep in touch, all in one place.",
-		language: "Language", email: "Email me", note: "Choose a platform to open my profile or community.",
+		language: "Language", email: "Email me", note: "Choose a platform to follow or get in touch.",
 	},
 };
 

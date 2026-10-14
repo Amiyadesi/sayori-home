@@ -54,10 +54,11 @@ The GeoScore audit API is public under its documented limits and accepts public 
 ## Public links
 
 - About: https://sayori.org/about/
+- Social accounts: https://sayori.org/social/
 - itch.io: https://amiya-desi.itch.io/
 - Bilibili: https://space.bilibili.com/3546919890585725
 - YouTube: https://www.youtube.com/@Amiya_desi
-- X: https://x.com/KirstAdali78973
+- X: https://x.com/amiyadesiwa
 - Linux.do: https://linux.do/u/Amiya_desi
 - NodeLoc: https://www.nodeloc.com/u/amiya_desi/summary
 - Guestbook: https://blog.sayori.org/guestbook/

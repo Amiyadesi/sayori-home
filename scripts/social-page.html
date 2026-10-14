@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{lang}}" data-sayori-analytics-site="social">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#a8d4e6" />
+		<meta name="description" content="{{intro}}" />
+		<title>{{title}}</title>
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="canonical" href="{{canonical}}" />
+		<link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+		<meta property="og:title" content="{{title}}" />
+		<meta property="og:description" content="{{intro}}" />
+		<meta property="og:url" content="{{canonical}}" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<script src="/i18n-bootstrap.js?v=20261014-social"></script>
+		<script defer src="/i18n-router.js?v=20261014-social"></script>
+		<link rel="stylesheet" href="/about/about.css?v=20260816-business" />
+		<link rel="stylesheet" href="/social/social.css?v=20261014-social" />
+		<script type="application/ld+json">{{schema}}</script>
+	</head>
+	<body class="social-page">
+		<div class="desk-surface">
+			<nav class="social-toolbar" aria-label="{{language}}">
+				<a class="social-back" href="{{home}}">← {{back}}</a>
+				<select class="sayori-language-select" data-sayori-language-select aria-label="{{language}}">{{options}}</select>
+				<noscript><a href="/social/">简体</a> <a href="/zh-hant/social/">繁體</a> <a href="/en/social/">EN</a></noscript>
+			</nav>
+			<main class="letter-paper social-paper" id="main-content">
+				<span class="letter-tape" aria-hidden="true"></span>
+				<header class="social-heading">
+					<p class="social-name">Amiya_desi</p>
+					<h1>{{heading}}</h1>
+					<p>{{intro}}</p>
+				</header>
+				<nav aria-label="{{heading}}">
+					<ul class="social-links">
+					{{links}}
+					</ul>
+				</nav>
+				<footer class="social-footer">
+					<a href="mailto:{{address}}">{{email}} <span>{{address}}</span></a>
+					<p>{{note}}</p>
+				</footer>
+			</main>
+		</div>
+		<script defer src="/analytics.notebook.js?v=20260807-perf2"></script>
+	</body>
+</html>

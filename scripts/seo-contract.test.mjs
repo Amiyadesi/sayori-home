@@ -17,6 +17,9 @@ test("each localized public page has one matching canonical and a reciprocal hre
 		["public/services/index.html", "https://sayori.org/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
 		["public/zh-hant/services/index.html", "https://sayori.org/zh-hant/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
 		["public/en/services/index.html", "https://sayori.org/en/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
+		["public/social/index.html", "https://sayori.org/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
+		["public/zh-hant/social/index.html", "https://sayori.org/zh-hant/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
+		["public/en/social/index.html", "https://sayori.org/en/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
 	];
 	for (const [file, expectedCanonical, zhHans, zhHant, en] of pages) {
 		const html = read(file);
@@ -54,6 +57,9 @@ test("sitemap includes all localized landing, about, and services routes", () =>
 		"https://sayori.org/services/",
 		"https://sayori.org/zh-hant/services/",
 		"https://sayori.org/en/services/",
+		"https://sayori.org/social/",
+		"https://sayori.org/zh-hant/social/",
+		"https://sayori.org/en/social/",
 		"https://sayori.org/tools/",
 		"https://sayori.org/tools/subarutap/",
 	]);

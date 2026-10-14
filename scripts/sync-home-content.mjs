@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import OpenCC from "opencc-js";
+import { renderSocialPage } from "./render-social-page.mjs";
 
 const scriptFile = fileURLToPath(import.meta.url);
 const homeRoot = path.resolve(path.dirname(scriptFile), "..");
@@ -67,13 +68,15 @@ function main() {
 				language: lang,
 				...about,
 			});
+			writeSocialPage(lang, about.contact);
 		}
 	}
 
 	writeTraditionalData("surface", "home", REQUIRED_SURFACE_KEYS);
 	writeTraditionalData("truth", "lines", REQUIRED_TRUTH_KEYS);
 	if (fs.existsSync(path.join(sourceRoot, "about.zh.json"))) {
-		writeTraditionalData("about", "about", REQUIRED_ABOUT_KEYS);
+		const about = writeTraditionalData("about", "about", REQUIRED_ABOUT_KEYS);
+		writeSocialPage("zh-hant", about.contact);
 	}
 	writeTraditionalScript("services/services-i18n.js", "services/services-i18n.zh-hant.js");
 	writeTraditionalScript("tools/tools.js", "tools/tools.zh-hant.js");
@@ -105,6 +108,14 @@ function writeTraditionalData(sourceName, outputName, requiredKeys) {
 		language: "zh-hant",
 		...value,
 	});
+	return value;
+}
+
+function writeSocialPage(language, contact) {
+	const prefix = language === "zh" ? "" : language;
+	const destination = path.join(homeRoot, "public", prefix, "social", "index.html");
+	fs.mkdirSync(path.dirname(destination), { recursive: true });
+	fs.writeFileSync(destination, renderSocialPage(contact, language), "utf8");
 }
 
 function convertValue(value) {

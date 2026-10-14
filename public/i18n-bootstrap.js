@@ -36,7 +36,7 @@
 
 	function isLocalizedPage(path) {
 		const base = stripLocale(path);
-		return base === "/" || /^\/(?:about|services)\/?$/.test(base);
+		return base === "/" || /^\/(?:about|services|social)\/?$/.test(base);
 	}
 
 	function localizedPath(path, language) {

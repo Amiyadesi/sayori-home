@@ -3,8 +3,8 @@
 
 	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
 	const DATA_LANG = LANG === 'zh-Hant' ? 'zh-hant' : LANG === 'zh-Hans' ? 'zh' : 'en';
-	const DATA_URL = `/assets/data/about-${DATA_LANG}.json?v=20260917-profile`;
-	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json?v=20260917-profile`;
+	const DATA_URL = `/assets/data/about-${DATA_LANG}.json?v=20261014-social`;
+	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json?v=20261014-social`;
 
 	const $ = (id) => document.getElementById(id);
 

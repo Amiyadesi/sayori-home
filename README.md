@@ -12,6 +12,7 @@
 
 - `index.html`、`en/index.html`、`zh-hant/index.html` — 简体中文、English、繁體中文的独立首页 URL
 - `about/index.html`、`en/about/index.html`、`zh-hant/about/index.html` — 三语关于页
+- `social/index.html`、`en/social/index.html`、`zh-hant/social/index.html` — 三语社交聚合页，由同步命令生成，勿直接改账号列表
 - `services/index.html`、`en/services/index.html`、`zh-hant/services/index.html` — 三语公共服务页
 - `zh/` 与 `zh/services/` — 旧链接的 noindex 兼容页；旧 `?lang=` 参数会迁移至对应语言 URL
 - `i18n-bootstrap.js` / `i18n-router.js` — 语言检测、偏好保存与真实语言路径切换
@@ -32,6 +33,7 @@
 
 - `surface.zh.json` / `surface.en.json`：标题、入口、公共服务快捷入口、音乐按钮、贴纸短句。03 号入口指向 `/about/`。
 - `about.zh.json` / `about.en.json`：`/about/` 长期名片信的分节、落款、底部 FAQ 和联系方式。
+- 社交页复用 `about.*.json` 的 `contact.links` 和 `contact.email`。添加账号只需修改此列表，`label` 为平台名，`href` 为 HTTPS 链接，可选 `handle` 展示用户名；简体源会自动转换为繁体。页面模板在 `scripts/social-page.html`，样式在 `public/social/social.css`。
 - `truth.zh.json` / `truth.en.json`：终端命令、隐藏彩蛋、角色 `.chr` 对话、终端标题和提示。
 
 同步命令：
@@ -57,3 +59,4 @@ node .\scripts\sync-home-content.mjs
 - `https://sayori.org/zh-hant/`：繁體中文主页
 - `https://sayori.org/en/`：English homepage
 - 对应语言的 `about/` 与 `services/` 路径分别展示关于页和公共服务说明
+- 对应语言的 `social/` 路径汇总公开社交账号、作品和联系入口；首页第二个入口指向该页，Bilibili 终端命令仍指向真实 B站账号

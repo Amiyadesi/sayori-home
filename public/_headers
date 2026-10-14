@@ -29,6 +29,9 @@
 /i18n-router.js
   Cache-Control: public, max-age=31536000, immutable
 
+/social/social.css
+  Cache-Control: public, max-age=31536000, immutable
+
 /i18n-bootstrap.js
   Cache-Control: public, max-age=31536000, immutable
 

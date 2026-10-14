@@ -11,6 +11,8 @@ test("locale-aware paths map the home, about, and services pages", () => {
 	const result = runRouter({ href: "https://sayori.org/about/" });
 	assert.equal(result.localizedPath("/", "en"), "/en/");
 	assert.equal(result.localizedPath("/about/", "en"), "/en/about/");
+	assert.equal(result.localizedPath("/social/", "en"), "/en/social/");
+	assert.equal(result.localizedPath("/en/social/", "zh-Hant"), "/zh-hant/social/");
 	assert.equal(result.localizedPath("/services/", "zh-Hant"), "/zh-hant/services/");
 	assert.equal(result.localizedPath("/en/about/", "zh-Hans"), "/about/");
 	assert.equal(result.localizedPath("/tools/", "en"), "/tools/");
@@ -36,7 +38,7 @@ test("the locale in a real URL takes precedence over browser preferences", () =>
 });
 
 test("the bootstrap keeps every static language URL visible without an automatic redirect", () => {
-	for (const pathname of ["/", "/about/", "/services/", "/en/", "/zh-hant/about/"]) {
+	for (const pathname of ["/", "/about/", "/services/", "/social/", "/en/social/", "/zh-hant/social/", "/en/", "/zh-hant/about/"]) {
 		const url = new URL(pathname, "https://sayori.org");
 		const context = {
 			URL, document: { cookie: "sayori_locale=en", documentElement: { dataset: {} } },
@@ -72,6 +74,12 @@ test("switching from one localized page preserves its page type", () => {
 	assert.equal(result.assignedUrl, "/zh-hant/about/");
 });
 
+test("manual language changes stay on the social page", () => {
+	const result = runRouter({ href: "https://sayori.org/en/social/?from=home#links", linkLanguage: "zh-Hant" });
+	result.clickLanguageControl();
+	assert.equal(result.assignedUrl, "/zh-hant/social/?from=home#links");
+});
+
 test("ordinary same-site links are rewritten to the current language route", () => {
 	const result = runRouter({
 		href: "https://sayori.org/en/",
@@ -93,6 +101,9 @@ test("localized landing and profile pages load the language bootstrap and router
 		"public/services/index.html",
 		"public/en/services/index.html",
 		"public/zh-hant/services/index.html",
+		"public/social/index.html",
+		"public/en/social/index.html",
+		"public/zh-hant/social/index.html",
 	];
 	for (const relativePath of paths) {
 		const html = read(relativePath);

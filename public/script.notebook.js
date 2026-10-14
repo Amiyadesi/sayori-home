@@ -3,7 +3,7 @@ const root = document.documentElement;
 
 const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
 const DATA_LANG = PATH_LANG === 'zh-Hant' ? 'zh-hant' : PATH_LANG === 'zh-Hans' ? 'zh' : 'en';
-const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json`;
+const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json?v=20261014-social`;
 const TRUTH_DATA_URL = `/assets/data/lines-${DATA_LANG}.json`;
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -776,7 +776,7 @@ function localizedHref(value) {
 		const locale = window.SayoriI18n?.language || PATH_LANG;
 		const path = target.pathname.replace(/^\/(?:en|zh-hant)(?=\/|$)/, '') || '/';
 		const prefix = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-hant' : '';
-		if (!['/', '/about/', '/services/'].includes(path)) return safe;
+		if (!['/', '/about/', '/services/', '/social/'].includes(path)) return safe;
 		target.pathname = prefix ? prefix + (path === '/' ? '/' : path) : path;
 		return target.href;
 	} catch { return safe; }

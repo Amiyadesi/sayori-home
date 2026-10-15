@@ -1,6 +1,6 @@
 # Amiya's Desk
 
-> Amiya_desi is an independent developer focused on indie games, while also building websites, tools, open-source projects, and public creative notes
+> Amiya_desi’s personal site gathers projects, selected work, writing, and public links.
 
 ## Identity
 
@@ -12,7 +12,7 @@
 - Main language: Chinese, with selected English pages
 - Site role: personal creator hub for games, tools, writing, and project records
 
-Amiya_desi uses Godot for game development and explores time mechanics, multi-window interaction, narrative puzzles, websites, browser tools, Docker, VPS, Cloudflare, and n8n-assisted content workflows
+The site includes games, web projects, tools, open-source work, writing, and notes from ongoing projects.
 
 ## Representative projects
 
@@ -31,8 +31,7 @@ Amiya_desi uses Godot for game development and explores time mechanics, multi-wi
 
 ## Current direction
 
-- Goal: complete and publish my first Steam game
-- Approach: bring lessons from small experiments into a more complete work, then document the decisions and results
+- Updates: projects, selected work, and public notes are added as they develop
 
 ## Public Services And Open Source
 

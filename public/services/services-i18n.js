@@ -35,6 +35,12 @@
 						links: [["https://geo.sayori.org/", "打开服务"], ["https://github.com/Amiyadesi/geoscore", "查看源码"]],
 					},
 					{
+						status: "public", statusLabel: "公开软件", title: "络笺 Relakeep",
+						description: "本地优先的个人数字资产与关系记忆软件，把邮箱、账号、电话卡、订阅和付款卡关联管理，支持加密备份与自建同步",
+						meta: ["本地免费", "加密存储", "支持自建"],
+						links: [["https://atlas.sayori.org/", "打开官网"], ["https://github.com/Amiyadesi/amiya-atlas", "查看源码"]],
+					},
+					{
 						status: "public", statusLabel: "公开运行", title: "Amiya 的白板",
 						description: "无需注册的轻量浏览器白板，适合临时画图、整理草图和讲清楚一个页面结构",
 						meta: ["无需账号", "临时草图", "自行保存"],
@@ -138,6 +144,7 @@
 				intro: "Available software gets a direct link; self-hostable projects get source links; unreleased projects are not presented as products already for sale",
 				items: [
 					{ status: "public", statusLabel: "Current SaaS", title: "GeoScore", description: "Evidence-first SEO and GEO audits for public pages, with a site profile, Evidence Map, prioritized fixes, and a Markdown report", meta: ["Currently free", "No registration", "MIT licensed"], links: [["https://geo.sayori.org/", "Open service"], ["https://github.com/Amiyadesi/geoscore", "View source"]] },
+					{ status: "public", statusLabel: "Public software", title: "Relakeep", description: "Local-first encrypted memory for personal digital assets and their relationships across emails, accounts, SIMs, subscriptions, and payment cards", meta: ["Free local use", "Encrypted vault", "Self-hostable"], links: [["https://atlas.sayori.org/en", "Open website"], ["https://github.com/Amiyadesi/amiya-atlas", "View source"]] },
 					{ status: "public", statusLabel: "Public", title: "Amiya Whiteboard", description: "A lightweight browser whiteboard for quick sketches, rough diagrams, and explaining a page structure", meta: ["No account", "Temporary sketches", "Save your work"], links: [["https://board.sayori.org/", "Open whiteboard"]] },
 					{ status: "public", statusLabel: "Public", title: "Resource directory", description: "A categorized shelf of useful tools, references, communities, and open-source sites with local and external search", meta: ["No account", "Categorized index", "Ongoing archive"], links: [["https://nav.sayori.org/", "Open directory"]] },
 					{ status: "public", statusLabel: "Public", title: "GeoScore Public Audit API", description: "Factual audits, PageSpeed evidence, Evidence Maps, and FixPacks for public domains, exposed as bounded SSE and JSON endpoints", meta: ["OpenAPI 3.1", "Public targets only", "Limited quota"], links: [["https://geo-api.sayori.org/openapi.json", "Open OpenAPI"], ["https://geo.sayori.org/docs", "Read the guides"]] },

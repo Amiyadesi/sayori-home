@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>先让方块走起来 · Amiya 的未保存版本</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/unsaved/game.css" />
+    <script type="module" src="/unsaved/app.js"></script>
+  </head>
+  <body data-pagefind-ignore class="page-game" data-scene="first">
+    <a class="skip" href="#main">跳到游戏</a>
+    <div class="wrap">
+      <header class="toolbar" id="toolbar"></header>
+      <div id="notice" role="status"></div>
+      <main id="main">
+        <section class="page-title">
+          <p class="overline">起点留下的可玩片段</p>
+          <h1>先让方块<br />走起来。</h1>
+          <p class="lead">
+            没有世界观设定集，没有三十个系统。<br />先让一件小事，真的发生。
+          </p>
+        </section>
+        <section class="game-layout">
+          <div>
+            <div class="game-screen">
+              <div class="game-screen-head">
+                <span>FIRST_ROOM / 可玩改编</span
+                ><span>作者：Amiya 的「起点」</span>
+              </div>
+              <div
+                id="board"
+                class="board"
+                tabindex="0"
+                role="group"
+                aria-label="推箱关卡。方向键或 WASD 移动，Z 撤销。"
+              ></div>
+              <p id="board-status" class="status" role="status">
+                把箱子推到圆形开关，再走到旗帜。
+              </p>
+              <div class="board-controls">
+                <div class="dpad" aria-label="方向控制">
+                  <button data-move="up" aria-label="向上">↑</button
+                  ><button data-move="left" aria-label="向左">←</button
+                  ><button data-move="down" aria-label="向下">↓</button
+                  ><button data-move="right" aria-label="向右">→</button>
+                </div>
+                <div class="board-actions">
+                  <button id="undo">撤销一步 / Z</button
+                  ><button id="restart-board">重新开始</button>
+                </div>
+              </div>
+            </div>
+            <p class="caption">
+              每次只走一格，无计时。棋盘获得焦点时才接收方向键；也可一直用按钮操作。
+            </p>
+          </div>
+          <aside class="game-aside">
+            <h2>盒子里只有这些</h2>
+            <p>
+              薄荷色方块是你。木箱可以推，不能拉。圆形开关被箱子触发后会一直通电。旗帜是结束的地方。
+            </p>
+            <p>
+              如果把箱子推到了角落，按「撤销一步」。不需要因为一次失误从头证明自己。
+            </p>
+            <div class="note">
+              <p>「起点」的留言：</p>
+              <p>
+                美术还没学会，所以大家先长得比较方。不是极简主义，是我目前真的只会这个（
+              </p>
+              <p>
+                如果你走到旗子那里，会有一个结果。虽然我已经知道那个结果是什么，还是想等你自己看到。
+              </p>
+            </div>
+            <p class="source">
+              这是为 ARG
+              新作的关卡，不是对作者某款旧作的复刻；灵感来自公开的学习与 Game
+              Jam 记录。
+            </p>
+          </aside>
+        </section>
+        <section class="unlock" data-unlock="first" hidden>
+          <h2>你让它走到了最后。</h2>
+          <p>
+            「起点」把这次通关记得很认真。它本来准备了一句很夸张的获奖感言，最后只留下：噢，原来真的有人会玩。
+          </p>
+          <p>旗帜背后还有一张纸。上面不是下一关的密码，而是一句被划掉的话：</p>
+          <p><s>只要我足够强，就一定能做出好东西。</s></p>
+          <p>
+            旁边的笔迹更小：「后来我把这句话写进过别的文章。不过，不是原封不动写进去的。」
+          </p>
+          <div class="actions">
+            <a
+              class="button"
+              data-route="margins"
+              href="https://blog.sayori.org/unsaved/margins/"
+              >去博客，看后来补上的话</a
+            >
+          </div>
+        </section>
+        <section class="main-section prose">
+          <h2>第一面旗，不负责证明一生</h2>
+          <p>
+            这当然很小。小到你可能只花了几分钟，就看懂了它的全部规则。可它需要有一个能移动的角色，一条能通过的路，和一个真的会触发的结束条件。
+          </p>
+          <p>
+            「旁观者」本来还想补充更多评价。「起点」暂时把它的评论框关掉了。
+          </p>
+          <p>先高兴一会儿嘛。又不收费。</p>
+        </section>
+      </main>
+      <footer class="footer" id="footer"></footer>
+      <noscript><p class="warning">可玩关卡需要启用 JavaScript。</p></noscript>
+    </div>
+  </body>
+</html>

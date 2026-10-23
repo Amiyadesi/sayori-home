@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>还剩六小时 · Amiya 的未保存版本</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/unsaved/game.css" />
+    <script type="module" src="/unsaved/app.js"></script>
+  </head>
+  <body data-pagefind-ignore class="page-workshop" data-scene="jam">
+    <a class="skip" href="#main">跳到编辑器</a>
+    <div class="wrap">
+      <header class="toolbar" id="toolbar"></header>
+      <div id="notice" role="status"></div>
+      <main id="main">
+        <section class="page-title">
+          <p class="overline">工程副本 / 范围取舍练习</p>
+          <h1>还剩六小时。<br />这次，我来改。</h1>
+          <p class="lead">
+            你手里有六格开发预算。目标很具体：<br />让角色穿过缺口，到达旗帜，并真的结束游戏。
+          </p>
+          <p class="caption">
+            没有真实倒计时。每格是本作虚构的规划成本，不代表现实开发工时。
+          </p>
+        </section>
+        <section class="two-col">
+          <div>
+            <h2>这一次，留下什么？</h2>
+            <p>删掉功能不扣分。可以先试一个坏主意，再亲手改回来。</p>
+            <div class="modules" id="modules">
+              <label
+                ><input
+                  type="checkbox"
+                  name="module"
+                  value="move"
+                  checked
+                /><span
+                  ><strong>移动 · 2 格</strong
+                  ><small>让角色回应操作</small></span
+                ></label
+              ><label
+                ><input type="checkbox" name="module" value="bridge" /><span
+                  ><strong>桥 · 2 格</strong><small>穿过中央缺口</small></span
+                ></label
+              ><label
+                ><input type="checkbox" name="module" value="goal" /><span
+                  ><strong>终点 · 1 格</strong
+                  ><small>到旗帜时触发结束</small></span
+                ></label
+              ><label
+                ><input type="checkbox" name="module" value="undo" /><span
+                  ><strong>撤销 · 1 格</strong
+                  ><small>保留过程中的试错</small></span
+                ></label
+              ><label
+                ><input
+                  type="checkbox"
+                  name="module"
+                  value="boss"
+                  checked
+                /><span
+                  ><strong>巨型 Boss · 4 格</strong
+                  ><small>很帅，但与这条路无关</small></span
+                ></label
+              ><label
+                ><input type="checkbox" name="module" value="shop" /><span
+                  ><strong>商店 · 3 格</strong
+                  ><small>还没有东西需要购买</small></span
+                ></label
+              ><label
+                ><input type="checkbox" name="module" value="daily" /><span
+                  ><strong>日常任务 · 2 格</strong
+                  ><small>可我们只需要走完今天</small></span
+                ></label
+              >
+            </div>
+            <output class="budget" id="budget" aria-live="polite"
+              >6 / 6 格</output
+            ><button class="primary" id="test-build">试玩这个版本</button>
+            <p id="build-status" class="status" role="status"></p>
+            <p class="caption">
+              改变模块后，再点「试玩这个版本」。棋盘使用刚才实际构建的配置。
+            </p>
+          </div>
+          <div>
+            <div class="game-screen">
+              <div class="game-screen-head">
+                <span>JAM / 工作副本</span
+                ><span id="build-label">等待构建</span>
+              </div>
+              <div
+                id="board"
+                class="board"
+                tabindex="0"
+                role="group"
+                aria-label="Jam 关卡。方向键或 WASD 移动。"
+              ></div>
+              <p id="board-status" class="status" role="status">
+                先在左边构建一个版本，再操作角色。
+              </p>
+              <div class="board-controls">
+                <div class="dpad" aria-label="方向控制">
+                  <button data-move="up" aria-label="向上">↑</button
+                  ><button data-move="left" aria-label="向左">←</button
+                  ><button data-move="down" aria-label="向下">↓</button
+                  ><button data-move="right" aria-label="向右">→</button>
+                </div>
+                <div class="board-actions">
+                  <button id="undo">撤销一步 / Z</button
+                  ><button id="restart-board">重开当前版本</button>
+                </div>
+              </div>
+            </div>
+            <div class="note">
+              <p>「起点」：我还是想把 Boss 放进去。</p>
+              <p>「工具箱」：我找到了一套商店插件。</p>
+              <p>「旁观者」：你们先看一眼那个洞，好不好。</p>
+            </div>
+          </div>
+        </section>
+        <section class="unlock" data-unlock="jam" hidden>
+          <h2>这回，结束条件真的执行了。</h2>
+          <p>
+            以前的工程并没有突然变得简单。只是你能说清楚：我现在要玩家经历什么，又准备删掉哪些妨碍它的东西。
+          </p>
+          <p>
+            「起点」没看到它的
+            Boss。不过它看到了旗帜，决定暂时接受这个结局。「工具箱」把没用上的东西收好，没有丢。「旁观者」第一次没抢着写赛后总结。
+          </p>
+          <div class="note">
+            <p class="meta">本作虚构的提交记录 / 不是 GitHub 历史</p>
+            <p>
+              <s>增加更多内容，直到感觉够好</s><br /><strong
+                >先确保这个人能走到最后</strong
+              >
+            </p>
+          </div>
+          <div class="actions">
+            <a
+              class="button"
+              data-route="shelf"
+              href="https://blog.sayori.org/unsaved/shelf/"
+              >回博客，把证据放到署名旁</a
+            >
+          </div>
+        </section>
+        <section class="main-section prose">
+          <h2>那个真实的最后六小时</h2>
+          <p>
+            在公开的 GMTK 复盘里，Amiya
+            写到：最后六小时才重新检查工程，发现自己失去了对结构的控制；随后删减做不完的谜题，围绕一个目标抢救地图，在最后十分钟提交。
+          </p>
+          <p>
+            这段经历并不是一条「做小就一定更好」的定律。它更像一个具体的问题：当真正需要作出选择时，作者有没有回到制作现场？
+          </p>
+          <p>这里的格子和桥是新的，但这个问题来自那篇文章。</p>
+          <p class="source">
+            <a
+              href="https://blog.sayori.org/posts/after-gmtk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >阅读真实的 GMTK Jam 复盘（可选，离开游戏）</a
+            >
+          </p>
+        </section>
+      </main>
+      <footer class="footer" id="footer"></footer>
+    </div>
+  </body>
+</html>

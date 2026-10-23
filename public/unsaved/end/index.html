@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>这一页，留给现在 · Amiya 的未保存版本</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/unsaved/game.css" />
+    <script type="module" src="/unsaved/app.js"></script>
+  </head>
+  <body data-pagefind-ignore class="page-end" data-scene="end">
+    <a class="skip" href="#main">跳到最后一幕</a>
+    <div class="wrap">
+      <header class="toolbar" id="toolbar"></header>
+      <div id="notice" role="status"></div>
+      <main id="main">
+        <section class="hero">
+          <div>
+            <p class="overline">现在，轮到那个没有标签的人</p>
+            <h1>这一页，<br />留给现在。</h1>
+            <p class="lead">
+              你没有找到一个藏得更深的标准答案。<br />你把几段原本分开的经历，带到了同一张桌上。
+            </p>
+            <p>三份旧介绍都还在。它们不再要求删掉另外两份。</p>
+          </div>
+        </section>
+        <section class="main-section">
+          <div class="section-head">
+            <h2>最后一幕，带上哪两件？</h2>
+            <p class="caption">改变后记，不分好坏。通关后可以重新选。</p>
+          </div>
+          <div class="souvenirs">
+            <label
+              ><span class="object" aria-hidden="true">⚑</span
+              ><input type="checkbox" name="souvenir" value="flag" /><strong
+                >第一面旗</strong
+              ><small>我做过的东西，真的有人玩。</small></label
+            ><label
+              ><span class="object" aria-hidden="true">▤</span
+              ><input type="checkbox" name="souvenir" value="tool" /><strong
+                >工具箱</strong
+              ><small>那些绕路，未必都白走。</small></label
+            ><label
+              ><span class="object" aria-hidden="true">✎</span
+              ><input type="checkbox" name="souvenir" value="margin" /><strong
+                >后来补上的话</strong
+              ><small>我可以改变，也可以还没想好。</small></label
+            >
+          </div>
+          <div class="actions">
+            <button class="primary" id="start-ending">把它们带进最后一幕</button
+            ><span id="souvenir-status" class="status" role="status"></span>
+          </div>
+          <div id="final-game" hidden>
+            <div class="keepsake-windows" aria-label="带来的纪念物">
+              <span data-object="flag">⚑ 起点的小窗</span
+              ><span data-object="tool">▤ 工具箱的小窗</span
+              ><span data-object="margin">✎ 旁观者的小窗</span>
+            </div>
+            <div class="game-layout">
+              <div class="game-screen">
+                <div class="game-screen-head">
+                  <span id="ending-stage">作者仍在这里</span
+                  ><span>最后一次试玩</span>
+                </div>
+                <div
+                  id="board"
+                  class="board"
+                  tabindex="0"
+                  role="group"
+                  aria-label="最后的关卡。方向键或 WASD 移动。"
+                ></div>
+                <p id="board-status" class="status" role="status">
+                  带着两件纪念物，走到最后的窗口。
+                </p>
+                <div class="board-controls">
+                  <div class="dpad" aria-label="方向控制">
+                    <button data-move="up" aria-label="向上">↑</button
+                    ><button data-move="left" aria-label="向左">←</button
+                    ><button data-move="down" aria-label="向下">↓</button
+                    ><button data-move="right" aria-label="向右">→</button>
+                  </div>
+                  <div class="board-actions">
+                    <button id="undo">撤销一步 / Z</button
+                    ><button id="restart-board">重新开始</button>
+                  </div>
+                </div>
+              </div>
+              <aside class="game-aside">
+                <h2 id="final-caption">这次没有人催你。</h2>
+                <p>
+                  「起点」把旗插稳了。「工具箱」确认路能走。「旁观者」本来想写一段更漂亮的结束语。
+                </p>
+                <p>现在，它们把操作权交给你。</p>
+                <p>
+                  最后一幕的规则，你已经学过了。不是要再考一次，只是想让这一段路真正结束在你的手里。
+                </p>
+                <p class="caption">这次没有箱子、预算或隐藏条件。</p>
+              </aside>
+            </div>
+          </div>
+        </section>
+        <div id="ending-results" hidden tabindex="-1">
+          <article class="ending-letter" data-ending="make" hidden>
+            <p class="meta">后记 / 第一面旗 + 工具箱</p>
+            <h2>明天打开的，是工程。</h2>
+            <p>
+              窗口里没出现庆功画面。桌上多了一面旗，一个工具箱，还有一张很短的待办：把下一关做出来。
+            </p>
+            <p>
+              「起点」又开始讲它那个很帅的
+              Boss。「工具箱」已经准备好拿材料。「旁观者」伸手拦住了它们。
+            </p>
+            <p>它这次没有说「你们做不好」。它说：先把第一步给我看看。</p>
+            <p>于是一个方块又动了起来。和最开始很像，也和最开始不太一样。</p>
+            <p>这次，作者知道它为什么会动。也知道有个人，曾经陪它走到最后。</p>
+          </article>
+          <article class="ending-letter" data-ending="share" hidden>
+            <p class="meta">后记 / 第一面旗 + 后来补上的话</p>
+            <h2>这一页，有人读到了。</h2>
+            <p>发布说明终于多了一行：可以玩了。</p>
+            <p>
+              「旁观者」检查了三遍措辞，还是想补一句「其实还有很多不足」。「起点」趁它不注意，把句号换成了感叹号。
+            </p>
+            <p>最后保留下来的版本，两种标点都有一点。</p>
+            <p>
+              它不保证作品会被很多人喜欢。也不因为这个保证不存在，就撤回刚才那声开心。
+            </p>
+            <p>
+              屏幕这边的人并不认识屏幕那边的人。但有一段操作、一点犹豫、一个小小的结尾，已经从一个人那里到了另一个人这里。
+            </p>
+          </article>
+          <article class="ending-letter" data-ending="space" hidden>
+            <p class="meta">后记 / 工具箱 + 后来补上的话</p>
+            <h2>空白也留了位置。</h2>
+            <p>
+              桌面没有被整理成一张漂亮的成绩单。工具箱旁边留了一块空地方，可以放没想清楚的事情，也可以只是放一杯水。
+            </p>
+            <p>
+              「工具箱」问：明天不用开工吗？「旁观者」说：可以开，也可以先睡一觉。
+            </p>
+            <p>
+              「起点」担心旗子会不会因此被收走。没有。已经走完的路，不会因为今天停下来就消失。
+            </p>
+            <p>
+              网页仍然可以打开。那三个版本还会吵架，新的想法也未必总是更成熟。
+            </p>
+            <p>
+              不过这一次，没有谁需要先证明自己的用处，才能在这一页留个位置。
+            </p>
+          </article>
+          <div class="prose">
+            <div class="note" data-unlock="room" hidden>
+              <h3>还有四个不怎么重要的音</h3>
+              <p>
+                它们从那间小房间跟过来了。「工具箱」说这至少算一套配乐系统。「旁观者」说不算。「起点」又敲了一下。
+              </p>
+              <p>好吧。反正挺好听的。</p>
+            </div>
+            <h2>你把它玩到了最后。</h2>
+            <p>
+              在这次游玩里，Amiya
+              不只是一个署名，也不是一串技能或待修复的问题。你玩过一件他想做的小东西，读过一些后来改变的判断，还亲手作过一次取舍。
+            </p>
+            <p>游戏到这里结束。作者的生活没有。</p>
+            <div class="actions">
+              <button id="download-keepsake">下载这次游玩的纪念页</button
+              ><button id="choose-again">看看另一种后记</button>
+            </div>
+          </div>
+        </div>
+        <section class="main-section credits" id="credits">
+          <h2>故事之后，去看看原来的文字</h2>
+          <p>
+            这些文章让本作有了具体的来处。故事采用其主题、部分公开事实与表达气质；独白、网页版本、所有关卡和结尾均为新作，没有读取私人日记或聊天记录。
+          </p>
+          <ul>
+            <li>
+              <a
+                href="https://blog.sayori.org/posts/after-gmtk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GMTK Jam 之后</a
+              >：最后六小时的取舍。
+            </li>
+            <li>
+              <a
+                href="https://blog.sayori.org/posts/summer-2026-end/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >19岁的苦夏</a
+              >：工具、控制感，以及想重新完成一次的心情。
+            </li>
+            <li>
+              <a
+                href="https://blog.sayori.org/posts/subarutap-and-selfthink/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >SubaruTap 开发与思考</a
+              >：临时起意的快乐，收集与创作之间的路。
+            </li>
+            <li>
+              <a
+                href="https://blog.sayori.org/posts/from-90-to-667/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >从90%+到66.7%</a
+              >：允许新的经历修订旧的判断。
+            </li>
+            <li>
+              <a
+                href="https://blog.sayori.org/posts/i-tried-to-measure-everything-by-value/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >我尝试用价值衡量一切</a
+              >：仍然没有轻易回答的问题。
+            </li>
+            <li>
+              <a
+                href="https://amiya-desi.itch.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Amiya_desi 的真实游戏作品</a
+              >：这里的关卡不是这些作品的替代品。
+            </li>
+          </ul>
+          <p>
+            视觉：原创 CSS 布局与游戏图形。声音：原创 Web Audio
+            合成音。无第三方字体、音频采样、角色素材或运行时追踪。游戏设计与实现：AI
+            协作制作，Amiya_desi 审阅中的版本。
+          </p>
+          <div class="actions">
+            <a data-route="about" href="/unsaved/">重新看看那三份介绍</a
+            ><a href="https://blog.sayori.org/">回到正常的书桌</a>
+          </div>
+        </section>
+      </main>
+      <footer class="footer" id="footer"></footer>
+    </div>
+  </body>
+</html>

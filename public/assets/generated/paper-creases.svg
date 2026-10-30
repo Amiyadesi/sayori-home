@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1000" preserveAspectRatio="none">
+  <defs>
+    <filter id="rough"><feTurbulence baseFrequency=".021 .07" numOctaves="2" seed="23" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
+    <path id="folds" d="M-20 112 91 148 132 210 207 239 268 318 284 420 320 489 M91 148 74 250 42 307 -10 330 M132 210 185 180 223 102 239 -20 M268 318 190 342 96 311 M284 420 214 451 167 521 -20 553 M910 635 813 667 780 743 691 790 680 899 625 1020 M813 667 801 567 847 499 910 487 M780 743 857 796 926 800 M691 790 614 760 562 697 M680 899 770 932 810 1017 M340 -20 364 81 412 125 419 214 M364 81 450 45 506 -15"/>
+  </defs>
+  <g fill="none" stroke-linejoin="round" filter="url(#rough)">
+    <use href="#folds" stroke="#594632" stroke-opacity=".13" stroke-width="9"/>
+    <use href="#folds" stroke="#604b3c" stroke-opacity=".2" stroke-width="2.4"/>
+    <use href="#folds" transform="translate(2 -2)" stroke="#fff1cf" stroke-opacity=".65" stroke-width="1.5"/>
+    <path d="M0 725Q44 709 53 670T98 602Q118 584 120 550 M53 670Q35 638 2 622 M98 602Q132 623 148 668 M900 218Q854 236 843 290T786 359Q763 384 757 424 M843 290Q874 314 903 309 M786 359Q757 343 735 305" stroke="#793f57" stroke-opacity=".18" stroke-width="1.6"/>
+    <path d="M0 726Q44 710 53 671T98 603Q118 585 120 551 M900 220Q854 238 843 292T786 361Q763 386 757 426" stroke="#fff2d7" stroke-opacity=".5" stroke-width=".8"/>
+  </g>
+</svg>

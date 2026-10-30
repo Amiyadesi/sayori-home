@@ -168,6 +168,7 @@
 		if (!contact) return;
 		setText($('contact-title'), contact.title);
 		const email = $('contact-email');
+		if (email) email.hidden = !contact.email;
 		if (email && contact.email) {
 			email.textContent = contact.email;
 			email.title = contact.emailLabel || '';
@@ -240,12 +241,24 @@
 
 	async function init() {
 		const data = await loadData();
+		const altered = new URLSearchParams(location.search).get('paper') === '0617';
+		if (altered) {
+			if (!data) throw new Error('简介数据读取失败');
+			const [{paperContent}, {initPaperMaterial}] = await Promise.all([import('/paper-content.js'), import('/paper-material.js?v=20261024-bio1')]);
+			initPaperMaterial();
+			Object.assign(data.letter, paperContent.about, {
+				backHref: '/?paper=0617',
+				signature: {line: paperContent.about.signature, ps: paperContent.about.ps}
+			});
+			data.faq = paperContent.faq;
+			data.contact = paperContent.contact;
+		}
 		if (data) {
 			renderMeta(data.meta);
 			renderLetter(data.letter);
 			renderFaq(data.faq);
 			renderContact(data.contact);
-			buildFaqSchema(data.faq);
+			if (!altered) buildFaqSchema(data.faq);
 		}
 		updateFootLink();
 		window.SayoriI18n?.ready?.();

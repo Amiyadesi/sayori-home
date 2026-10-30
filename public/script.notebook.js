@@ -3,7 +3,7 @@ const root = document.documentElement;
 
 const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
 const DATA_LANG = PATH_LANG === 'zh-Hant' ? 'zh-hant' : PATH_LANG === 'zh-Hans' ? 'zh' : 'en';
-const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json?v=20261014-social`;
+const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json?v=20261024-music`;
 const TRUTH_DATA_URL = `/assets/data/lines-${DATA_LANG}.json`;
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ let MUSIC = {
 		netease: '523658880',
 	},
 	sayoNara: {
-		youtube: 'vkqiC4KPeDs',
+		youtube: 'mLLlpSMnGiI',
 		netease: '523658877',
 	},
 };
@@ -213,6 +213,7 @@ let STICKY_QUOTES = PATH_LANG === 'en' ? STICKY_QUOTES_EN : STICKY_QUOTES_ZH;
 let currentLayer = 'dream';
 let locked = false;
 let homeData = null;
+let paperData = null;
 let cmdData = null;
 let cmdDataPromise = null;
 let matrixActive = false;
@@ -449,13 +450,28 @@ function toggleMusicPlayer(playerEl, frameEl, track, btn, opts = {}) {
 		return;
 	}
 	if (!opts.keepOthers) closeOtherPlayers(playerEl);
-	const src = buildPlayerSrc(track);
+	const src = track.audio || buildPlayerSrc(track);
 	if (!src) return;
 	playerEl.classList.toggle('is-netease', IS_CN && Boolean(track.netease));
 	playerEl.classList.toggle('is-hidden-player', opts.hidden === true);
 	playerEl.dataset.provider = IS_CN && track.netease ? 'netease' : 'youtube';
 	frameEl.allow = 'autoplay; encrypted-media';
-	frameEl.src = src;
+	if (track.audio) {
+		frameEl.hidden = true;
+		let audio = playerEl.querySelector('audio');
+		if (!audio) {
+			audio = document.createElement('audio'); audio.controls = true; audio.loop = true; audio.preload = 'none'; audio.volume = .22;
+			const credit = document.createElement('p'); credit.className = 'trace-music-credit';
+			credit.append(`${track.title} — Kevin MacLeod · `);
+			const license = document.createElement('a'); license.href = 'https://creativecommons.org/licenses/by/4.0/'; license.target = '_blank'; license.rel = 'noopener'; license.textContent = 'CC BY 4.0';
+			const source = document.createElement('a'); source.href = `https://incompetech.com/music/royalty-free/index.html?isrc=${track.isrc}`; source.target = '_blank'; source.rel = 'noopener'; source.textContent = '曲目来源';
+			credit.append(license,' · ',source); playerEl.append(audio,credit);
+			audio.addEventListener('error',() => { credit.textContent = '音频加载失败。关闭后可重试。'; revealMusicPlayer(playerEl,btn); });
+		}
+		audio.src = src;
+		playerEl.classList.add('trace-audio');
+		audio.play().catch(() => { revealMusicPlayer(playerEl,btn); audio.focus(); });
+	} else frameEl.src = src;
 	playerEl.hidden = false;
 	if (opts.hidden) {
 		playerEl.setAttribute('inert', '');
@@ -483,6 +499,8 @@ function revealMusicPlayer(playerEl, btn) {
 function closeMusicPlayer(playerEl, frameEl, btn) {
 	if (!playerEl || !frameEl) return;
 	if (playerEl.classList.contains('is-open')) {
+		const audio = playerEl.querySelector('audio');
+		if (audio) { audio.pause(); audio.currentTime = 0; }
 		playerEl.classList.remove('is-open');
 		frameEl.src = 'about:blank';
 		playerEl.hidden = true;
@@ -506,6 +524,7 @@ function closeAllMusic() {
 }
 
 function startTruthMusic() {
+	if (new URLSearchParams(location.search).get('paper') === '0617') return;
 	toggleMusicPlayer(truthPlayer, truthFrame, MUSIC.sayoNara, null, { hidden: true, keepOthers: true });
 }
 
@@ -553,6 +572,11 @@ async function loadHomeData() {
 		const res = await fetch(HOME_DATA_URL, { cache: 'default' });
 		if (!res.ok) return;
 		homeData = await res.json();
+		if (urlParams.get('paper') === '0617') {
+			paperData = (await import('./paper-content.js')).paperContent;
+			homeData.surface.stickyQuotes = paperData.sticky;
+			// Native service descriptions and destinations stay unchanged.
+		}
 		applyHomeData(homeData);
 	} catch (error) {
 		console.info('[home-config] skipped');
@@ -568,6 +592,8 @@ function applyHomeData(config) {
 	applyIntroConfig(config.intro);
 	applyServicesConfig(config.services);
 	bindSurfaceHandlers();
+	document.body.dataset.surfaceReady = "true";
+	window.dispatchEvent(new Event("sayori:surface-ready"));
 }
 
 function applyMetaConfig(meta) {
@@ -593,6 +619,7 @@ function applyMusicConfig(music) {
 	if (isPlainObject(music.tracks)) {
 		MUSIC = mergePlain(MUSIC, music.tracks);
 	}
+	if (paperData) MUSIC = paperData.music;
 	setText(document.querySelector('.music-label'), music.buttonLabel);
 	setAttr(musicBtn, 'aria-label', music.ariaLabel);
 	setAttr(pianoBtn, 'aria-label', music.pianoAriaLabel);
@@ -1182,6 +1209,12 @@ function initDreamInteractions() {
 }
 
 function initSideNotes() {
+	if (paperData) {
+		const render = () => { sideNotePool = shuffle([...paperData.notes]); renderSideNotes(); };
+		render();
+		window.matchMedia(SIDE_NOTE_MOBILE_QUERY).addEventListener('change',render);
+		return;
+	}
 	if (!sideNotesLayer || prefersReducedMotion()) return;
 	const cachedNotes = readCachedSideNotes();
 	if (cachedNotes.length) {
@@ -1846,6 +1879,7 @@ function setCssTimeMs(name, ms) {
 // ========== COMMAND HANDLER ==========
 
 function handleCommand(raw) {
+	if (!window.dispatchEvent(new CustomEvent("sayori:command", {detail:raw,cancelable:true}))) return;
 	appendOutput(`> ${raw}`, 'cmd-echo');
 	const trimmed = raw.trim();
 	const lowered = trimmed.toLowerCase();
@@ -1855,6 +1889,16 @@ function handleCommand(raw) {
 	if (terminalUrl) {
 		appendOutput(PATH_LANG === 'en' ? 'Do you want to go there? I can take you.' : '你想要去那里吗？那我帮你跳转吧', 'sayori-text');
 		setTimeout(() => { window.open(terminalUrl, '_blank', 'noopener'); }, 650);
+	} else if (cmd === 'open 0617' || cmd === '0617' || cmd === 'paper 0617') {
+		window.location.assign('/?paper=0617');
+	} else if (cmd === 'ls' || cmd === 'ls -a') {
+		printLines(cmdData?.responses?.ls || ['sayori.txt']);
+		appendOutput('.0617', 'muted');
+	} else if (cmd === 'cat 0617' || cmd === 'cat .0617') {
+		appendOutput('06 / 17 · 纸张背面有一份未署名的副本。输入 open 0617 查看。', 'muted');
+	} else if (cmd === 'chat') {
+		appendOutput('正在跳转到 chat.sayori.org ...', 'muted');
+		setTimeout(() => { window.open('https://chat.sayori.org/', '_blank', 'noopener'); }, 600);
 	} else if (cmd === 'help') {
 		printLines(cmdData?.responses?.help || ['no help available.']);
 	} else if (cmd === 'blog') {
@@ -1959,6 +2003,7 @@ function initTerminal() {
 	terminalOutput.innerHTML = '';
 	const greeting = cmdData?.greeting || (PATH_LANG === 'en' ? 'sayori.exe started. Type /help.' : 'sayori.exe 已启动。输入 /help 查看可用指令。');
 	appendOutput(greeting, 'sayori-text');
+	window.dispatchEvent(new Event('sayori:terminal-ready'));
 	setTimeout(() => terminalInput?.focus(), 100);
 }
 
@@ -1981,6 +2026,7 @@ function loadCmdData() {
 
 function initDate() {
 	if (!dateDisplay) return;
+	if (urlParams.get('paper') === '0617') { dateDisplay.textContent = '2026-06-17 · UTC+8'; return; }
 	const now = new Date();
 	const m = now.getMonth() + 1;
 	const d = now.getDate();
@@ -1994,7 +2040,7 @@ function initDate() {
 }
 
 async function initWeather() {
-	if (!weatherDisplay) return;
+	if (!weatherDisplay || urlParams.get('paper') === '0617') return;
 	try {
 		const lang = PATH_LANG === 'en' ? 'en' : 'zh';
 		const res = await fetch(`https://wttr.in/?format=%c%t&lang=${lang}`, {
@@ -2006,3 +2052,6 @@ async function initWeather() {
 		if (text && text.length < 30) weatherDisplay.textContent = text;
 	} catch {}
 }
+
+window.addEventListener('paper:return', () => restoreDream());
+window.addEventListener('paper:response', event => appendOutput(event.detail, 'muted'));

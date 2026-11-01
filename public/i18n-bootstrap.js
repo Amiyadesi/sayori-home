@@ -99,6 +99,28 @@
 	const htmlLanguage = preferred === "zh-Hans" ? "zh-CN" : preferred;
 	document.documentElement.lang = htmlLanguage;
 	document.documentElement.dataset.sayoriCurrentLanguage = preferred;
+	try {
+		if (new URLSearchParams(search).get("paper") === "0617") {
+			const root = document.documentElement;
+            const referrer = document.referrer ? new URL(document.referrer) : null;
+            const fromWorld = referrer && /(^|\.)sayori\.org$/.test(referrer.hostname) && referrer.searchParams.get('paper') === '0617';
+            const reload = performance.getEntriesByType('navigation')[0]?.type === 'reload' && document.cookie.includes('p34_world_v1=');
+            root.dataset.p34Entry = fromWorld || reload ? 'quiet' : 'morph';
+            if (root.dataset.p34Entry === 'quiet') root.classList.add('p34-world');
+            const worldStyle = document.createElement("link");
+            worldStyle.rel = "stylesheet";
+            worldStyle.href = "/p34-living.css?v=20261101-r5";
+            worldStyle.dataset.p34LivingStyle = "";
+            document.head.append(worldStyle);
+		} else if (document.referrer && new URL(document.referrer).origin === location.origin && new URL(document.referrer).searchParams.get('paper') === '0617') {
+			const travel = document.createElement('style');
+			travel.textContent = '@view-transition{navigation:auto}html::view-transition-old(root),html::view-transition-new(root){animation-duration:180ms}@media(prefers-reduced-motion:reduce){html::view-transition-old(root),html::view-transition-new(root){animation-duration:0ms}}';
+			document.head.append(travel);
+			const content = document.createElement('link');
+			content.rel = 'expect'; content.href = '#main-content'; content.setAttribute('blocking', 'render');
+			document.head.append(content);
+		}
+	} catch {}
 	const pendingUntilReady = preferred !== "zh-Hans" && !isLocalizedPage(pathname);
 	if (pendingUntilReady) document.documentElement.dataset.sayoriI18nPending = "true";
 	window.SAYORI_I18N = {

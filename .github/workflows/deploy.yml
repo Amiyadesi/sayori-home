@@ -40,6 +40,14 @@ jobs:
           ref: main
           path: content
 
+      # 跨站一致性测试要拿博客那份同名文件做比对。
+      - name: Checkout blog public surface
+        uses: actions/checkout@v6
+        with:
+          repository: Amiyadesi/sayori-blog
+          ref: main
+          path: blog
+
       - uses: actions/setup-node@v6
         with:
           node-version: 22
@@ -61,6 +69,8 @@ jobs:
         run: node scripts/sync-home-content.mjs
 
       - name: Run tests
+        env:
+          P34_BLOG_PUBLIC: blog/public
         run: npm test
 
       - name: Write deployment manifest

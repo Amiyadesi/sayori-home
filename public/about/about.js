@@ -244,14 +244,9 @@
 		const altered = new URLSearchParams(location.search).get('paper') === '0617';
 		if (altered) {
 			if (!data) throw new Error('简介数据读取失败');
-			const [{paperContent}, {initPaperMaterial}] = await Promise.all([import('/paper-content.js'), import('/paper-material.js?v=20261024-bio1')]);
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261102-r12');
 			initPaperMaterial();
-			Object.assign(data.letter, paperContent.about, {
-				backHref: '/?paper=0617',
-				signature: {line: paperContent.about.signature, ps: paperContent.about.ps}
-			});
-			data.faq = paperContent.faq;
-			data.contact = paperContent.contact;
+			data.letter.backHref = '/?paper=0617';
 		}
 		if (data) {
 			renderMeta(data.meta);

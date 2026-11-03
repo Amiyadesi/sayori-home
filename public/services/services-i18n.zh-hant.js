@@ -318,5 +318,10 @@
 	}
 
 	renderPage();
+	if (new URLSearchParams(window.location.search).get("paper") === "0617") {
+		import("/paper-material.js?v=20261102-r12").then(({ initPaperMaterial }) => {
+			initPaperMaterial();
+		}).catch(error => console.error("Abnormal page unavailable", error));
+	}
 	window.SayoriI18n?.ready?.();
 })();

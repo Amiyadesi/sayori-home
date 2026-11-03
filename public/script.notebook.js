@@ -299,6 +299,7 @@ document.addEventListener('pointerdown', (e) => {
 })();
 
 cornerFold?.addEventListener('click', () => {
+	if (new URLSearchParams(location.search).get('paper') === '0617') { window.dispatchEvent(new Event('p34:fold')); return; }
 	if (locked || currentLayer !== 'dream') return;
 	collapseToTruth();
 });
@@ -619,7 +620,6 @@ function applyMusicConfig(music) {
 	if (isPlainObject(music.tracks)) {
 		MUSIC = mergePlain(MUSIC, music.tracks);
 	}
-	if (paperData) MUSIC = paperData.music;
 	setText(document.querySelector('.music-label'), music.buttonLabel);
 	setAttr(musicBtn, 'aria-label', music.ariaLabel);
 	setAttr(pianoBtn, 'aria-label', music.pianoAriaLabel);
@@ -2026,7 +2026,6 @@ function loadCmdData() {
 
 function initDate() {
 	if (!dateDisplay) return;
-	if (urlParams.get('paper') === '0617') { dateDisplay.textContent = '2026-06-17 · UTC+8'; return; }
 	const now = new Date();
 	const m = now.getMonth() + 1;
 	const d = now.getDate();

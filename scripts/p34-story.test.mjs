@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createStory, migrateFromWorld, serializeStory, parseStory, discover,
-  finishWork, talk, advanceChapter, worksLocked, worldMood, topicsFor, CHAPTERS,
+  finishWork, finishPostcard, talk, advanceChapter, worksLocked, worldMood, topicsFor, CHAPTERS,
 } from '../public/p34-story.js';
 
 test('new story token round-trips and rejects junk', () => {
@@ -96,4 +96,23 @@ test('mood follows the chapter so the page can look like how she feels', () => {
   assert.equal(worldMood({ ...createStory(), chapter: 'closed' }), 'hollow');
   assert.equal(worldMood({ ...createStory(), chapter: 'free' }), 'warm');
   assert.equal(CHAPTERS.length, 8);
+});
+
+test('v2 story saves migrate without losing discoveries, relationships or retired work records',()=>{
+  const old=parseStory('2.2.1.32.25.83.9.7');
+  assert.equal(old.valid,true);assert.equal(old.story.chapter,'doubt');
+  assert.equal(old.story.trust,32);assert.equal(old.story.pressure,25);
+  assert.deepEqual(old.story.works,{light:1,words:1,drift:1});assert.equal(old.story.post,0);
+  const next=finishPostcard(old.story,3);
+  assert.equal(parseStory(serializeStory(next)).story.post,3);
+  assert.deepEqual(next.works,old.story.works);
+});
+
+test('replaying creations and rereading clues cannot farm relationship progress',()=>{
+  let s=finishPostcard(createStory(),1);const trust=s.trust;
+  s=finishPostcard(s,1);assert.equal(s.trust,trust);
+  const once=finishWork(s,'light');assert.equal(finishWork(once,'light').trust,once.trust);
+  s=discover(s,'old-version').story;s=discover(s,'update-log').story;
+  assert.equal(s.topics.length,new Set(s.topics).size);
+  for(const bad of ['3.1.1.20.0.0.0.0.7','3.1.1.20.0.zz.0.0.0','2.1.1.NaN.0.0.0.0'])assert.equal(parseStory(bad).valid,false);
 });

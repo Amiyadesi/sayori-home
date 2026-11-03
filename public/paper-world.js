@@ -1,27 +1,19 @@
-// Fictional project notes, shared by the native home surfaces and terminal.
-export const paperRecord = Object.freeze({
-  date: '2026-06-17', zone: 'UTC+8', build: 'P34-0617', version: '0.3.4',
-  index: '02:13 · 人工填写版本索引；不是导出或运行证明。',
-  author: '03:40 · 作者记录：手边没有可执行文件。',
-  image: '同一构建的房间截图：原稿只有一扇门。',
-  changed: '同一构建的房间截图：多出第二扇门，署名也变了。'
-});
-
 export function paperCommand(raw) {
   const command = raw.trim().toLowerCase().replace(/^\//, '');
   switch (command) {
     case 'help':
       return { text: 'ls · cat 0617 · whoami · clear · motion off / on · exit · home' };
     case 'ls':
-      return { text: '0617.txt\nroom.png' };
+      return { text: '0617.txt' };
     case 'cat 0617':
     case 'cat 0617.txt':
     case 'cat .0617':
-      return { text: `${paperRecord.date} ${paperRecord.zone}\n${paperRecord.build} / ${paperRecord.version}\n${paperRecord.index}\n${paperRecord.author}` };
-    case 'cat room.png':
-      return { text: `${paperRecord.build} / room.png\n原稿：一扇门。署名：Amiya_desi。` };
+      return { text: 'Amiya_desi / 0617\n页面上的字可以回应你。' };
     case 'whoami':
       return { text: 'owner: Amiya_desi\nreader: —' };
+    case 'note':
+    case 'hello':
+      return { text: '活字版心：我就在这页排好的字行之间，回正面点按字句就能直接和我交谈。' };
     case 'clear': case 'cls':
       return { action: 'clear' };
     case 'motion off':

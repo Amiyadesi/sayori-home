@@ -1,9 +1,7 @@
 export const paperContent = {
   notes: [],
   sticky: ['今天，先不改了。', '这里的字也可以拿起来。', '留一小块地方给新东西。'],
-  social: [
-    { label: 'Sayori Chat', handle: 'chat.sayori.org', href: 'https://chat.sayori.org/' }
-  ],
+  social: [],
   contact: { title: '联系', links: [
     { label: '社交账号', href: '/social/?paper=0617' }
   ] },

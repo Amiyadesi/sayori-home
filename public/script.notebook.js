@@ -1896,9 +1896,6 @@ function handleCommand(raw) {
 		appendOutput('.0617', 'muted');
 	} else if (cmd === 'cat 0617' || cmd === 'cat .0617') {
 		appendOutput('06 / 17 · 纸张背面有一份未署名的副本。输入 open 0617 查看。', 'muted');
-	} else if (cmd === 'chat') {
-		appendOutput('正在跳转到 chat.sayori.org ...', 'muted');
-		setTimeout(() => { window.open('https://chat.sayori.org/', '_blank', 'noopener'); }, 600);
 	} else if (cmd === 'help') {
 		printLines(cmdData?.responses?.help || ['no help available.']);
 	} else if (cmd === 'blog') {

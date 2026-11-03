@@ -2,6 +2,8 @@
 
 静态主页。可直接部署到 Cloudflare Pages。
 
+Project 34 本轮可玩开发分支与本地双站预览见 [docs/NATIVE-PLAY.md](docs/NATIVE-PLAY.md)。
+
 推荐 Pages 设置：
 
 - Build command: 空

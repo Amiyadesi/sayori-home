@@ -49,7 +49,7 @@ test('in-document scene hash parser validates boundaries and round-trips notes',
   assert.equal(parsed.valid,false);assert.equal(parsed.view,'blog');assert.equal(parsed.noteId,null);
  }
 });
-test('both sites ship the same active world; retired horror engines are absent',()=>{
+test('legacy codecs and motion stay compatible across sites; retired horror engines stay absent',()=>{
  const home=new URL('../public/',import.meta.url);
  // 本地是相邻仓库；CI 里由 workflow 检出到 blog/public 并通过环境变量指过来。
  const blog=process.env.P34_BLOG_PUBLIC

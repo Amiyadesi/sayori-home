@@ -106,11 +106,10 @@
             const fromWorld = referrer && /(^|\.)sayori\.org$/.test(referrer.hostname) && referrer.searchParams.get('paper') === '0617';
             const reload = performance.getEntriesByType('navigation')[0]?.type === 'reload' && document.cookie.includes('p34_world_v1=');
             root.dataset.p34Entry = fromWorld || reload ? 'quiet' : 'morph';
-            if (root.dataset.p34Entry === 'quiet') root.classList.add('p34-world');
             const worldStyle = document.createElement("link");
             worldStyle.rel = "stylesheet";
-            worldStyle.href = "/p34-living.css?v=20261102-r12";
-            worldStyle.dataset.p34LivingStyle = "";
+            worldStyle.href = "/p34-home.css?v=20261103-r13";
+            worldStyle.dataset.p34NativeStyle = "";
             document.head.append(worldStyle);
 		} else if (document.referrer && new URL(document.referrer).origin === location.origin && new URL(document.referrer).searchParams.get('paper') === '0617') {
 			const travel = document.createElement('style');

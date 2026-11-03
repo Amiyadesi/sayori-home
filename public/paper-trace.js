@@ -1,6 +1,6 @@
 if (new URLSearchParams(location.search).get('paper') === '0617') {
   const [{ paperCommand }, { initPaperMaterial }] = await Promise.all([
-    import('./paper-world.js'), import('./paper-material.js?v=20261102-r12')
+    import('./paper-world.js'), import('./paper-material.js?v=20261103-r13')
   ]);
   initPaperMaterial();
   window.addEventListener('pageshow', event => { if (event.persisted) initPaperMaterial(); });

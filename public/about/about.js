@@ -244,9 +244,6 @@
 		const altered = new URLSearchParams(location.search).get('paper') === '0617';
 		if (altered) {
 			if (!data) throw new Error('简介数据读取失败');
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261102-r12');
-			initPaperMaterial();
-			data.letter.backHref = '/?paper=0617';
 		}
 		if (data) {
 			renderMeta(data.meta);
@@ -256,6 +253,10 @@
 			if (!altered) buildFaqSchema(data.faq);
 		}
 		updateFootLink();
+		if (altered) {
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261103-r13');
+			initPaperMaterial();
+		}
 		window.SayoriI18n?.ready?.();
 	}
 

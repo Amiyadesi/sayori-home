@@ -1,0 +1,86 @@
+@import url('/p34-motion.css?v=20261102-r12');
+
+.p34-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.p34-native { --her-ink: #65508f; --her-green: #287b78; --her-gold: #996725; }
+.p34-native body { overflow-x: clip; overflow-y: auto; }
+.p34-native .notebook-page { animation: none; transform: rotate(-.5deg); min-height: min(940px, 96svh); height: auto; max-height: none; }
+.p34-native .page-header { position: relative; padding-right: 0; min-height: 130px; }
+.p34-native .page-title { color: var(--her-ink); max-width: min(94%, 38ch); line-height: 1.45; font-weight: 500; }
+.p34-native .title-text::after { background: #c6b5e8; }
+.p34-page-replies { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 16px 0 8px; font-size: 16px; color: #4b4961; }
+.p34-page-replies button { text-align: left; padding: 5px 0; border-bottom: 1px solid #b8a4d4; }
+.p34-page-replies button:hover { color: #7750ab; border-color: currentColor; }
+.p34-call, .p34-voice { font-size: 14px; color: #625879; padding: 4px 6px; }
+.p34-call { margin-top: 8px; border: 1px solid #b7a5d1; border-radius: 50% 45% 50% 38%; padding: 5px 14px; }
+.p34-voice { margin-left: 12px; }
+.p34-native :is(.p34-call, .p34-voice, .p34-page-replies button, .p34-play-controls button, .p34-launch):focus-visible { outline: 2px solid #8566af; outline-offset: 5px; }
+.p34-native .entry.p34-dropped { color: #665087; box-shadow: 0 8px 0 -6px #b7a5d1; }
+.p34-native .desk-surface { min-height: 100svh; height: auto; overflow: clip; padding-block: 24px; }
+.p34-route-playing .desk-surface { padding: 14px 2vw 100px; }
+.p34-route-playing .notebook-page { width: 96vw; min-height: 100svh; padding: 24px clamp(18px, 4vw, 70px) 20px; transform: none; transition: none; }
+.p34-route-playing .notebook-page::before { left: 16px; opacity: .22; }
+.p34-route-playing .page-header { padding-left: 18px; min-height: 110px; margin-bottom: 0; }
+.p34-route-playing .page-holes { left: 3px; opacity: .35; }
+.p34-route-playing .entries { position: relative; display: block; isolation: isolate; margin-bottom: 0; }
+.p34-route-playing .entry.p34-route-piece { position: absolute; margin: -9px 0 0; padding: 0; min-height: 18px; height: 18px; transform: none; border-radius: 0; gap: 0; display: flex; justify-content: center; text-align: center; transition: none; user-select: none; }
+.p34-route-playing .entry.p34-route-piece:hover { transform: none; }
+.p34-route-playing .entry.p34-route-piece :is(.entry-num, .entry-desc, .entry-arrow, .entry-underline) { display: none; }
+.p34-route-playing .entry.p34-route-piece .entry-body { display: contents; }
+.p34-route-playing .entry.p34-route-piece .entry-title { font-size: 14px; white-space: nowrap; line-height: 1.4; font-weight: 500; color: inherit; }
+.p34-route-piece[data-piece=rail] { background: #ece3f8; border-bottom: 3px solid #8260af; color: #59437e; box-shadow: 0 9px 16px -10px #65508f70; cursor: grab; touch-action: none; }
+.p34-route-piece[data-piece=rail]::before, .p34-route-piece[data-piece=rail]::after { content: ''; position: absolute; width: 9px; height: 9px; top: 3px; background: #8260af; border-radius: 50%; }
+.p34-route-piece[data-piece=rail]::before { left: -4px; } .p34-route-piece[data-piece=rail]::after { right: -4px; }
+.p34-route-piece[data-piece=rail][aria-pressed=true] { outline: 1px dashed #9c81bd; outline-offset: 7px; }
+.p34-route-playing .entry:is([data-piece=in], [data-piece=out]) { height: 60px; margin-top: -30px; border: 2px solid #4b9b92; border-radius: 48% 52% 47% 53%; color: #266d67; background: #e9f7f1; align-items: center; }
+.p34-route-piece[data-piece=in]::after { content: '入'; } .p34-route-piece[data-piece=out]::after { content: '出'; }
+.p34-route-piece:is([data-piece=in], [data-piece=out])::after { position: absolute; top: -25px; font-size: 13px; color: #367f79; }
+.p34-route-playing .entry[data-piece=goal] { height: 76px; margin-top: -38px; border: 2px dashed #c99b4f; border-radius: 50%; color: #916126; align-items: center; background: radial-gradient(circle, #fae7b995, #fff9ed20 74%); }
+.p34-route-piece[data-piece=goal]::after { content: '送到这里'; position: absolute; bottom: -26px; color: #916126; font-size: 13px; white-space: nowrap; }
+.p34-route-piece[data-piece=rest] { color: #8b8998; opacity: .65; background: none; }
+.p34-route-playing .margin-note { margin: 12px 0; }
+.p34-route-playing .notebook-extras { min-height: 56px; flex: none; }
+.p34-route-playing .sticky-note { left: auto; right: 8%; bottom: 12px; }
+.p34-route-playing .sayori-sketch { transform: translateX(40%) rotate(12deg) scale(.8); opacity: .35; pointer-events: none; }
+.p34-route-playing .side-notes-layer { opacity: .2; pointer-events: none; }
+.p34-flight { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 45; }
+.p34-launch { position: absolute; width: 32px; height: 32px; translate: -50% -50%; border-radius: 50%; border: 2px solid #7762aa; background: #fdfaff; box-shadow: 0 0 0 8px #bda7df30, 0 4px 15px #7961aa30; z-index: 3; touch-action: none; cursor: crosshair; }
+.p34-launch::after { content: '拖我瞄准'; position: absolute; top: 42px; left: -20px; width: 100px; text-align: left; font-size: 13px; color: #6d5c83; pointer-events: none; }
+.p34-route-caption { position: absolute; max-width: min(100%, 44ch); color: #655b77; line-height: 1.7; font-size: 16px; pointer-events: none; }
+.p34-route-status { grid-column: 1 / -1; margin: 0; font-size: 14px; line-height: 1.6; color: #6b5b7c; pointer-events: none; }
+.p34-route-status:empty { display: none; }
+.p34-play-controls { position: fixed; inset: auto 0 0; z-index: 65; padding: 14px max(24px, 4vw) 14px; padding-bottom: max(14px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1fr auto; gap: 7px 24px; background: #faf9f2f2; border-top: 1px solid #d8cfdf; box-shadow: 0 -12px 28px #fdfcf755; color: #57496b; font: 15px/1.5 var(--surface-font); }
+.p34-play-progress { display: flex; align-items: baseline; gap: 18px; }
+.p34-play-progress span { font-size: 13px; color: #81718e; }
+.p34-play-progress strong { font-weight: 500; }
+.p34-play-buttons { display: flex; gap: 20px; grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.p34-play-buttons button { padding: 6px 2px; border-bottom: 1px solid #a795ba; white-space: nowrap; }
+.p34-play-buttons button:first-child { color: #6e439d; border-bottom-width: 2px; }
+.p34-play-buttons button:disabled { color: #a6a0ad; border-color: transparent; cursor: default; }
+.p34-turn { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.p34-turn input { width: min(200px, 30vw); accent-color: #8965b3; }
+.p34-turn output { min-width: 34px; font-variant-numeric: tabular-nums; }
+.p34-native [hidden] { display: none !important; }
+@media (max-width: 640px) {
+  .p34-native .notebook-page { padding: 28px 18px 18px 36px; min-height: 100svh; }
+  .p34-native .desk-surface { padding-block: 0; }
+  .p34-native .page-title { font-size: 24px; max-width: 100%; }
+  .p34-native .page-header { min-height: 150px; }
+  .p34-route-playing .notebook-page { width: 100%; padding-inline: 14px; padding-bottom: 120px; }
+  .p34-route-playing .page-header { padding-left: 15px; }
+  .p34-page-replies { gap: 6px 18px; font-size: 15px; }
+  .p34-play-controls { padding: 10px 16px max(12px, env(safe-area-inset-bottom)); grid-template-columns: 1fr; gap: 6px; }
+  .p34-play-buttons { grid-column: 1; grid-row: 3; gap: 22px; justify-content: space-between; }
+  .p34-play-progress { gap: 12px; flex-wrap: wrap; }
+  .p34-play-progress strong { font-size: 14px; }
+  .p34-turn input { width: 42vw; }
+  .p34-route-caption { max-width: min(100%, 30ch); font-size: 15px; }
+  .p34-route-playing .entry.p34-route-piece .entry-title { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .p34-native *, .p34-native *::before, .p34-native *::after { scroll-behavior: auto !important; }
+}
+::view-transition { pointer-events: none; }
+::view-transition-group(p34-paper),
+::view-transition-group(p34-link-0), ::view-transition-group(p34-link-1),
+::view-transition-group(p34-link-2), ::view-transition-group(p34-link-3),
+::view-transition-group(p34-link-4), ::view-transition-group(p34-link-5) { animation-duration: 1000ms; animation-timing-function: cubic-bezier(.22, 1, .36, 1); }

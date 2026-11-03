@@ -49,13 +49,13 @@ test('in-document scene hash parser validates boundaries and round-trips notes',
   assert.equal(parsed.valid,false);assert.equal(parsed.view,'blog');assert.equal(parsed.noteId,null);
  }
 });
-test('legacy codecs and motion stay compatible across sites; retired horror engines stay absent',()=>{
+test('both sites ship the same active world; discarded games and horror engines are absent',()=>{
  const home=new URL('../public/',import.meta.url);
  // 本地是相邻仓库；CI 里由 workflow 检出到 blog/public 并通过环境变量指过来。
  const blog=process.env.P34_BLOG_PUBLIC
   ? pathToFileURL(path.resolve(process.env.P34_BLOG_PUBLIC) + path.sep)
   : new URL('../../sayori-blog/public/',import.meta.url);
- for(const file of ['p34-living.js','p34-living.css','p34-motion.js','p34-motion.css','p34-arc.js','p34-arc.css','p34-dialogue.js','p34-dialogue.css','p34-story.js','p34-typewalk.js','p34-works.js'])assert.equal(fs.readFileSync(new URL(file,home),'utf8'),fs.readFileSync(new URL(file,blog),'utf8'),file);
- for(const file of ['p34-organic.js','p34-organic.css'])assert.equal(fs.existsSync(new URL(file,home)),false);
+ for(const file of ['p34-living.js','p34-living.css','p34-motion.js','p34-motion.css','p34-arc.js','p34-arc.css','p34-dialogue.js','p34-dialogue.css','p34-story.js'])assert.equal(fs.readFileSync(new URL(file,home),'utf8'),fs.readFileSync(new URL(file,blog),'utf8'),file);
+ for(const file of ['p34-organic.js','p34-organic.css','p34-typewalk.js','p34-works.js'])assert.equal(fs.existsSync(new URL(file,home)),false);
  assert.equal(fs.existsSync(new URL('p34-decay.js',blog)),false);
 });

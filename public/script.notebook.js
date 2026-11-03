@@ -226,8 +226,6 @@ initDate();
 runWhenIdle(initWeather, 1800);
 loadHomeData().finally(() => {
 	window.SayoriI18n?.ready?.();
-	document.body.dataset.surfaceReady = 'true';
-	window.dispatchEvent(new Event('sayori:surface-ready'));
 	initDreamInteractions();
 	initSideNotes();
 });
@@ -595,6 +593,8 @@ function applyHomeData(config) {
 	applyIntroConfig(config.intro);
 	applyServicesConfig(config.services);
 	bindSurfaceHandlers();
+	document.body.dataset.surfaceReady = "true";
+	window.dispatchEvent(new Event("sayori:surface-ready"));
 }
 
 function applyMetaConfig(meta) {

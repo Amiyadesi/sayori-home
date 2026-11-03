@@ -1,6 +1,6 @@
 if (new URLSearchParams(location.search).get('paper') === '0617') {
   const [{ paperContent }, { initPaperMaterial }] = await Promise.all([
-    import('./paper-content.js'), import('./paper-material.js?v=20261103-r13')
+    import('./paper-content.js'), import('./paper-material.js?v=20261102-r12')
   ]);
   initPaperMaterial();
   window.addEventListener('pageshow', event => { if (event.persisted) initPaperMaterial(); });
@@ -13,5 +13,11 @@ if (new URLSearchParams(location.search).get('paper') === '0617') {
     item.querySelector('.social-platform').textContent = entry.label;
     item.querySelector('.social-handle').textContent = entry.handle;
     links.append(item);
+  }
+  const back = document.querySelector('.social-back');
+  if (back) {
+    const url = new URL(back.href);
+    url.searchParams.set('paper', '0617');
+    back.href = url.href;
   }
 }

@@ -1,10 +1,8 @@
 if (new URLSearchParams(location.search).get('paper') === '0617') {
   const [{ paperContent }, { initPaperMaterial }] = await Promise.all([
-    import('./paper-content.js'), import('./paper-material.js?v=20261102-r12')
+    import('./paper-content.js'), import('./paper-material.js?v=20261104-luminous')
   ]);
-  initPaperMaterial();
-  window.addEventListener('pageshow', event => { if (event.persisted) initPaperMaterial(); });
-  const links = document.querySelector('.social-links');
+    const links = document.querySelector('.social-links');
   const template = links?.firstElementChild;
   if (template) for (const entry of paperContent.social) {
     if ([...links.querySelectorAll('a')].some(link => link.href === entry.href)) continue;
@@ -20,4 +18,6 @@ if (new URLSearchParams(location.search).get('paper') === '0617') {
     url.searchParams.set('paper', '0617');
     back.href = url.href;
   }
+  initPaperMaterial();
+  window.addEventListener('pageshow', event => { if (event.persisted) initPaperMaterial(); });
 }

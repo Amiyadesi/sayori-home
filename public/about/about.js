@@ -16,7 +16,7 @@
 		if (typeof href !== 'string' || !/^(https?:|mailto:|\/)/i.test(href)) return '#';
 		try {
 			const target = new URL(href, window.location.href);
-			if (['sayori.org', 'blog.sayori.org'].includes(target.hostname)) {
+			if (target.hostname === 'sayori.org' || target.origin === window.location.origin) {
 				const path = window.SayoriI18n?.localizedPath?.(target.pathname, LANG) || target.pathname;
 				return `${path}${target.search}${target.hash}`;
 			}
@@ -242,13 +242,9 @@
 	async function init() {
 		const data = await loadData();
 		const altered = new URLSearchParams(location.search).get('paper') === '0617';
-		if (altered) {
-			if (!data) throw new Error('简介数据读取失败');
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261102-r12');
-			initPaperMaterial();
-			data.letter.backHref = '/?paper=0617';
-		}
+		if (altered && !data) throw new Error('简介数据读取失败');
 		if (data) {
+			if (altered && data.letter) data.letter.backHref = '/?paper=0617';
 			renderMeta(data.meta);
 			renderLetter(data.letter);
 			renderFaq(data.faq);
@@ -256,6 +252,10 @@
 			if (!altered) buildFaqSchema(data.faq);
 		}
 		updateFootLink();
+		if (altered) {
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-luminous');
+			initPaperMaterial();
+		}
 		window.SayoriI18n?.ready?.();
 	}
 

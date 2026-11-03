@@ -60,3 +60,27 @@ node .\scripts\sync-home-content.mjs
 - `https://sayori.org/en/`：English homepage
 - 对应语言的 `about/` 与 `services/` 路径分别展示关于页和公共服务说明
 - 对应语言的 `social/` 路径汇总公开社交账号、作品和联系入口；首页第二个入口指向该页，Bilibili 终端命令仍指向真实 B站账号
+
+
+## Luminous Atelier & Full-Page Breakout (`/?paper=0617`)
+
+当 URL 带有 `?paper=0617`（如 `https://sayori.org/?paper=0617`、`/en/?paper=0617`、`/zh-hant/?paper=0617`）时，首页切换为冷白青调全屏活页画室与全页经典挡板打砖块。不带 `?paper=0617` 时正常首页完全不受影响。
+
+- **游玩入口**：访问 `/?paper=0617`，点击画室中的 **「开始打弹球 / Play Breakout」** 按钮（或展开对话选择开局）。
+- **操作方式（仅在进入游戏后显示）**：
+  - 移动挡板：鼠标水平移动、触摸拖拽、或键盘 `A` / `D`、`ArrowLeft` / `ArrowRight`
+  - 发球：鼠标点击页面或按 `Space`
+  - 暂停 / 继续：按 `Esc` 或点击顶部 HUD 的 `Esc ⏸`
+  - 重开 / 退出：在暂停面板点击 **「重新开始 / Restart」** 或 **「收起球板 · 浏览页面 / Put Paddle Away · Browse Page」**，完整恢复画室页面与全部目标元素的原始子节点
+- **导航与返回**：
+  - 顶部栏 **「← 返回原主页 / ← Normal Home」**（或对话选项中的折回原主页）恢复常驻笔记本主页
+  - 下方次级抽屉 **「原站入口与工具 / Original Site & Tools」** 保留原始首页入口与工具节点
+- **跨站状态契约**：
+  - 共享 Cookie `p34_breakout_v1`：`v1.<runs>.<bestScore>.<maxCombo>.luminous`（仅在清场或球耗尽完赛时写入）
+  - localStorage `p34_breakout_recent_v1`：独立记录最近游玩场次列表
+  - 保留 `p34_world_v1`、`p34_story`、`p34_play_v1` 兼容导出
+- **本地测试命令**：
+
+```powershell
+node --test scripts/p34-breakout.test.mjs
+```

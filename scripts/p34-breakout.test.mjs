@@ -362,8 +362,14 @@ test('normal path stays inert when paper=0617 is absent', () => {
   assert.equal(cleanup(), undefined);
 });
 
-test('source invariants: unnamed girl identity, no innerHTML collider destruction, no hardcoded preview ports, and synced cache tags', () => {
+test('resuming hides the flex pause overlay', () => {
+  const css = fs.readFileSync(path.join(repoRoot, 'public/p34-luminous.css'), 'utf8');
+  assert.match(css, /\.p34-pause-modal\[hidden\]\s*\{\s*display:\s*none\s*!important;/);
+});
+
+test('source invariants: unnamed girl identity, open spatial composition, no drawer or return button, and synced cache tags', () => {
   const luminousSrc = fs.readFileSync(path.join(repoRoot, 'public/p34-luminous.js'), 'utf8');
+  const luminousCss = fs.readFileSync(path.join(repoRoot, 'public/p34-luminous.css'), 'utf8');
   const breakoutSrc = fs.readFileSync(path.join(repoRoot, 'public/p34-breakout.js'), 'utf8');
 
   // Never call the unnamed girl Amiya in luminous/breakout UI copy
@@ -378,19 +384,47 @@ test('source invariants: unnamed girl identity, no innerHTML collider destructio
   assert.ok(breakoutSrc.includes('p34-fracture-shard'), 'public/p34-breakout.js must create contact-local fracture shards');
   assert.ok(breakoutSrc.includes('p34-rescue-note'), 'public/p34-breakout.js must implement pre-loss physical rescue note');
 
-  // UI/copy/link coherence invariants:
-  // 1. No manual prose / extra explanation captions on page (leadCopy, playDesc, expDesc, tintDesc, controlsHint, drawerSub, bottom returnBar)
-  for (const bannedKey of ['leadCopy', 'leadGuestbookLink', 'playDesc', 'expDesc', 'tintDesc', 'controlsHint', 'drawerSub', 'returnLabel', 'returnBtn']) {
-    assert.ok(!luminousSrc.includes(bannedKey), `public/p34-luminous.js must not include redundant caption/control field ${bannedKey}`);
+  // Author rejection invariants:
+  // 1. No '原站入口与工具' drawer, no borrowed-six-nav mounting, no explicit '返回原主页' button, no card grid or filter/scrap cards
+  for (const bannedToken of [
+    '原站入口与工具',
+    '返回原主页',
+    'p34-orig-drawer',
+    'p34-nav-constellation',
+    'p34-services-host',
+    'borrowNode',
+    'toggleOrigDrawer',
+    'p34-return-link',
+    'data-p34-action="send-back"',
+    'p34-note-card',
+    'p34-filter-piece',
+    'p34-loose-draft',
+    'p34-loose-archives',
+    'leadCopy',
+    'leadGuestbookLink',
+    'playDesc',
+    'expDesc',
+    'tintDesc',
+    'controlsHint',
+    'drawerSub',
+    'returnLabel',
+    'returnBtn',
+    'topReturn',
+  ]) {
+    assert.ok(!luminousSrc.includes(bannedToken), `public/p34-luminous.js must not include obsolete drawer/card/return token ${bannedToken}`);
+    assert.ok(!luminousCss.includes(bannedToken), `public/p34-luminous.css must not include obsolete drawer/card/return token ${bannedToken}`);
   }
+
+  // 2. Hidden chat reply 'return-normal' remains one-click return
+  assert.ok(luminousSrc.includes("replyId === 'return-normal'"), 'chat reply return-normal must remain wired to sendBack()');
+  assert.match(luminousSrc, /id="p34-home-answers"[^>]+hidden/, 'chat choices stay hidden until engaged');
+  assert.match(luminousSrc, /setPointerCapture/, 'loop dragging must keep pointer capture');
+
   assert.ok(!luminousSrc.includes('/guestbook/?paper=0617'), 'primary own world must not link to /guestbook/?paper=0617');
-  assert.ok(
-    luminousSrc.includes('https://blog.sayori.org/notes/prism-and-paddle/?paper=0617'),
-    'first note must link to stable actual Blog route /notes/prism-and-paddle/?paper=0617'
-  );
+  assert.equal((luminousSrc.match(/href="https:\/\/blog\.sayori\.org\//g)||[]).length, 1, 'only one cross-site Blog entry');
   assert.ok(!luminousSrc.includes('去随笔页读全文'), 'must not make false full-text promise to Blog index');
 
-  // Subpage callers and generator template must carry updated ?v=20261104-luminous cache tag
+  // Subpage callers and generator template must carry updated ?v=20261104-pixelfx cache tag
   const callerFiles = [
     'public/about/index.html',
     'public/en/about/index.html',
@@ -406,7 +440,7 @@ test('source invariants: unnamed girl identity, no innerHTML collider destructio
   ];
   for (const rel of callerFiles) {
     const html = fs.readFileSync(path.join(repoRoot, rel), 'utf8');
-    assert.ok(html.includes('?v=20261104-luminous'), `${rel} missing updated ?v=20261104-luminous cache tag`);
+    assert.ok(html.includes('?v=20261104-pixelfx'), `${rel} missing updated ?v=20261104-pixelfx cache tag`);
     assert.ok(!html.includes('20260417b') && !html.includes('20260418a'), `${rel} still contains stale cache tag`);
   }
 });

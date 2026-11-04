@@ -319,7 +319,7 @@
 
 	renderPage();
 	if (new URLSearchParams(window.location.search).get("paper") === "0617") {
-		import("/paper-material.js?v=20261104-luminous").then(({ initPaperMaterial }) => {
+		import("/paper-material.js?v=20261104-pixelfx").then(({ initPaperMaterial }) => {
 			initPaperMaterial();
 		}).catch(error => console.error("Abnormal page unavailable", error));
 	}

@@ -109,7 +109,7 @@
             if (root.dataset.p34Entry === 'quiet') root.classList.add('p34-world');
             const worldStyle = document.createElement("link");
             worldStyle.rel = "stylesheet";
-            worldStyle.href = "/p34-luminous.css?v=20261104-luminous"; worldStyle.dataset.p34LuminousStyle = "";
+            worldStyle.href = "/p34-luminous.css?v=20261104-pixelfx"; worldStyle.dataset.p34LuminousStyle = "";
             worldStyle.dataset.p34LivingStyle = "";
             document.head.append(worldStyle);
 		} else if (document.referrer && new URL(document.referrer).origin === location.origin && new URL(document.referrer).searchParams.get('paper') === '0617') {

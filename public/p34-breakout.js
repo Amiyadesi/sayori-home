@@ -40,15 +40,15 @@ const GAME_COPY = {
     overRuns: '已完成局数',
     overBest: '历史最高',
     btnPlayAgain: '再来一局',
-    voiceStart: '光球放好啦，点击或者按空格就能弹出去！',
+    voiceStart: '好了，发球！',
     voicePaddle: '接得漂亮！',
-    voiceCheer1: '好角度！顺着光路弹上去了。',
-    voiceCheer2: '连续五次回弹！顺手帮你把那处撞裂的边角拼好啦。',
-    voiceCheer3: '连续八次回弹！整页的光线都跟着亮起来了。',
-    voiceRescue: '哎呀好险……我拿便签在旁边垫了一下，接住啦！',
-    voiceLifeLost: '没关系，深呼吸，下一颗准备好了。',
-    voiceOver: '收起球板，我把这里摆回去。',
-    rescueActive: '便签垫住啦！',
+    voiceCheer1: '这个角度漂亮！',
+    voiceCheer2: '这个我先扶一下。你接着打。',
+    voiceCheer3: '八下！你真打算把这里全拆掉？',
+    voiceRescue: '等一下——接住！这下不算。',
+    voiceLifeLost: '哎，漏了。再来，我还想看。',
+    voiceOver: '……好，先歇一下。还来吗？',
+    rescueActive: '我垫一下。',
     hudScore: '得分',
     hudCombo: '连击',
     hudLives: '剩余',
@@ -68,9 +68,9 @@ const GAME_COPY = {
     btnPlayAgain: 'Play Again',
     voiceStart: 'Orb is set! Click or press Space to send it across the page.',
     voicePaddle: 'Nice catch!',
-    voiceCheer1: 'Sharp angle! Riding the light path straight up.',
-    voiceCheer2: 'Five in a row! I pieced that fractured window back together for you.',
-    voiceCheer3: 'Eight consecutive bounces! The whole atelier is glowing.',
+    voiceCheer1: 'Nice angle!',
+    voiceCheer2: 'Five! I straightened one out.',
+    voiceCheer3: 'Eight! You really are taking this apart!',
     voiceRescue: 'Close one! I slid a note right under the edge to catch it!',
     voiceLifeLost: 'All good—take a breath, next orb is ready.',
     voiceOver: "Put the paddle away, and I'll put things back.",
@@ -179,6 +179,7 @@ function extractHitSnippet(el, relX) {
 export function startBreakoutGame({
   page,
   motion,
+  fx,
   speak,
   onExit,
   lang = 'zh',
@@ -568,7 +569,7 @@ export function startBreakoutGame({
         clip-path:${cleavage.shardAPoly};
         transform:translate(${driftX}px, ${driftY}px) rotate(${rot}deg);
         opacity:${isFinalBreak ? '0.84' : '0.72'};
-        filter:drop-shadow(${-cleavage.dirX * 2}px 4px 10px rgba(30, 142, 202, 0.24));
+        filter:drop-shadow(${-cleavage.dirX * 2}px 4px 10px rgba(98, 52, 156, 0.24));
       `;
       fractureLayer.append(shardA);
       col.shards.push(shardA);
@@ -752,6 +753,15 @@ export function startBreakoutGame({
 
     // Spawn finite luminous sparks at exact contact point (hitX, hitY)
     spawnSparks(hitX, hitY, isBroken ? 16 : 9);
+    if (fx) {
+      const screenX = hitX;
+      const screenY = hitY - currentCameraY;
+      fx.parryClash(screenX, screenY, normalX, normalY, {
+        tier: isBroken ? 3 : col.hits > 1 ? 2 : 1,
+        palette: isBroken ? 'gold' : 'cyan',
+        scale: isBroken ? 1.25 : 1.0,
+      });
+    }
   }
 
   function spawnSparks(docX, docY, count = 12) {
@@ -766,7 +776,7 @@ export function startBreakoutGame({
         vy: Math.sin(angle) * speed,
         life: 1,
         decay: 1.9 + Math.random() * 1.4,
-        color: i % 3 === 0 ? '#FFB76D' : '#45D4F2',
+        color: i % 3 === 0 ? '#E66CEB' : '#FFE747',
         size: 2 + Math.random() * 2.8,
       });
     }
@@ -784,13 +794,14 @@ export function startBreakoutGame({
         gameAnimate(
           damaged.element,
           [
-            { boxShadow: '0 0 0px rgba(69, 212, 242, 0)', transform: 'scale(0.98)' },
-            { boxShadow: '0 0 24px rgba(69, 212, 242, 0.55)', transform: 'scale(1.01)', offset: 0.45 },
-            { boxShadow: '0 0 0px rgba(69, 212, 242, 0)', transform: 'scale(1)' },
+            { filter: 'drop-shadow(0 0 0px rgba(255, 231, 71, 0))', transform: 'scale(0.98)' },
+            { filter: 'drop-shadow(0 0 12px rgba(255, 231, 71, 0.55))', transform: 'scale(1.01)', offset: 0.45 },
+            { filter: 'drop-shadow(0 0 0px rgba(255, 231, 71, 0))', transform: 'scale(1)' },
           ],
           { duration: 520 },
           damaged
         );
+        if (fx && damaged) { fx.collectBurst(damaged.x + damaged.width * 0.5, damaged.y + damaged.height * 0.5 - currentCameraY, { palette: 'cyan', scale: 1.2 }); }
         setVoice(copy.voiceCheer2);
         motion?.tone(5, true);
       }
@@ -822,6 +833,7 @@ export function startBreakoutGame({
       rescueNoteEl.hidden = false;
       updateRescueNoteDOM();
       spawnSparks(ball.x, paddleDocY, 18);
+      if (fx) { fx.manaNova(ball.x, paddleDocY - currentCameraY, { palette: 'gold', scale: 1.2 }); }
       motion?.tone(5, true);
       setVoice(copy.voiceRescue);
     }
@@ -1112,7 +1124,7 @@ export function startBreakoutGame({
         const p1 = trail[i];
         const p2 = trail[i + 1];
         const prog = i / trail.length;
-        ctx.strokeStyle = `rgba(69, 212, 242, ${(prog * 0.45).toFixed(2)})`;
+        ctx.strokeStyle = `rgba(255, 231, 71, ${(prog * 0.45).toFixed(2)})`;
         ctx.lineWidth = ballRadius * (0.4 + prog * 0.8);
         ctx.lineCap = 'round';
         ctx.beginPath();
@@ -1140,11 +1152,11 @@ export function startBreakoutGame({
     ctx.save();
     const paddleGradient = ctx.createLinearGradient(paddleX, screenPaddleY, paddleX, screenPaddleY + paddleHeight);
     paddleGradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-    paddleGradient.addColorStop(1, 'rgba(223, 243, 252, 0.85)');
+    paddleGradient.addColorStop(1, 'rgba(255, 231, 71, 0.85)');
     ctx.fillStyle = paddleGradient;
-    ctx.strokeStyle = '#45D4F2';
+    ctx.strokeStyle = '#FFE747';
     ctx.lineWidth = 1.8;
-    ctx.shadowColor = 'rgba(69, 212, 242, 0.45)';
+    ctx.shadowColor = 'rgba(255, 231, 71, 0.45)';
     ctx.shadowBlur = 12;
     ctx.beginPath();
     ctx.roundRect(paddleX, screenPaddleY, paddleWidth, paddleHeight, 8);
@@ -1169,11 +1181,11 @@ export function startBreakoutGame({
       ballRadius + 4
     );
     ballGrad.addColorStop(0, '#FFFFFF');
-    ballGrad.addColorStop(0.4, '#E2F7FD');
-    ballGrad.addColorStop(0.85, '#45D4F2');
-    ballGrad.addColorStop(1, 'rgba(69, 212, 242, 0)');
+    ballGrad.addColorStop(0.4, '#FFF9B4');
+    ballGrad.addColorStop(0.85, '#FFE747');
+    ballGrad.addColorStop(1, 'rgba(255, 231, 71, 0)');
     ctx.fillStyle = ballGrad;
-    ctx.shadowColor = '#45D4F2';
+    ctx.shadowColor = '#FFE747';
     ctx.shadowBlur = 14;
     ctx.beginPath();
     ctx.arc(screenBallX, screenBallY, ballRadius, 0, Math.PI * 2);
@@ -1237,6 +1249,13 @@ export function startBreakoutGame({
 
         if (stepRes.hitPaddle) {
           motion?.tone(3, true);
+          if (fx) {
+            fx.parryClash(ball.x, paddleDocY - currentCameraY, 0, -1, {
+              tier: combo >= 5 ? 3 : combo >= 2 ? 2 : 1,
+              palette: combo >= 5 ? 'gold' : 'cyan',
+              scale: 1.1,
+            });
+          }
         }
 
         if (stepRes.hitCollider) {

@@ -418,13 +418,13 @@ test('source invariants: unnamed girl identity, open spatial composition, no dra
   // 2. Hidden chat reply 'return-normal' remains one-click return
   assert.ok(luminousSrc.includes("replyId === 'return-normal'"), 'chat reply return-normal must remain wired to sendBack()');
   assert.match(luminousSrc, /id="p34-home-answers"[^>]+hidden/, 'chat choices stay hidden until engaged');
-  assert.match(luminousSrc, /setPointerCapture/, 'loop dragging must keep pointer capture');
+  assert.match(luminousSrc, /setPointerCapture/, 'page-edge dragging must keep pointer capture');
 
   assert.ok(!luminousSrc.includes('/guestbook/?paper=0617'), 'primary own world must not link to /guestbook/?paper=0617');
   assert.equal((luminousSrc.match(/href="https:\/\/blog\.sayori\.org\//g)||[]).length, 1, 'only one cross-site Blog entry');
   assert.ok(!luminousSrc.includes('去随笔页读全文'), 'must not make false full-text promise to Blog index');
 
-  // Subpage callers and generator template must carry updated ?v=20261104-pixelfx cache tag
+  // Subpage callers and generator template must carry updated ?v=20261104-fold cache tag
   const callerFiles = [
     'public/about/index.html',
     'public/en/about/index.html',
@@ -440,7 +440,7 @@ test('source invariants: unnamed girl identity, open spatial composition, no dra
   ];
   for (const rel of callerFiles) {
     const html = fs.readFileSync(path.join(repoRoot, rel), 'utf8');
-    assert.ok(html.includes('?v=20261104-pixelfx'), `${rel} missing updated ?v=20261104-pixelfx cache tag`);
+    assert.ok(html.includes('?v=20261104-fold'), `${rel} missing updated ?v=20261104-fold cache tag`);
     assert.ok(!html.includes('20260417b') && !html.includes('20260418a'), `${rel} still contains stale cache tag`);
   }
 });

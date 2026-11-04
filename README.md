@@ -64,15 +64,15 @@ node .\scripts\sync-home-content.mjs
 
 ## Project 34 异常世界 (`/?paper=0617`)
 
-访问 `/?paper=0617`。粉紫、蓝、黄、黑的整页空间；正常站点不启用这些资源。
+访问 `/?paper=0617`。当前候选用整页平面的折叠、拉伸和换位呈现她的空间；配色尚未由作者定稿。正常站点不启用这些资源。
 
-- 拽住粉色圈松手：文字让路，弹射轨迹连带撞动标题。
-- 点 `34.` 或藏在线头背后的按钮：真实模块连续换位；问号、感叹号和下方的字也能碰。
+- 拉住右侧边缘再松手：整页平面、文字和按钮按不同幅度跟随，再弹回原位。
+- 点左上角的折线记号切换三种摆法；逗号、下方的三个声音字和线头藏着不同的交互。
 - 点「打乱这里」开始全页弹球。鼠标、触摸或 A/D 控挡板，Space 发球，Esc 暂停；暂停里退出会整理回异常网页。
-- 点「···」找她说话；「送我回去吧」恢复原始主页节点与监听器。每站只留一个跨站入口。
+- 点「说句话」找她说话，回复会改变背景结构；「送我回去吧」恢复原始主页节点与监听器。每站只留一个跨站入口。
 
 仍使用 `p34_world_v1`、`p34_story` 与 `p34_breakout_v1` 存档契约，未迁移玩家数据。事件驱动粒子参考 PixelFX，许可见 `public/third-party/pixelfx-LICENSE.txt`。
 
 ```powershell
-node --test scripts/p34-breakout.test.mjs scripts/p34-living.test.mjs
+node --test scripts/p34-breakout.test.mjs scripts/p34-living.test.mjs scripts/p34-dialogue.test.mjs scripts/p34-story.test.mjs
 ```

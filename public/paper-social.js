@@ -1,6 +1,6 @@
 if (new URLSearchParams(location.search).get('paper') === '0617') {
   const [{ paperContent }, { initPaperMaterial }] = await Promise.all([
-    import('./paper-content.js'), import('./paper-material.js?v=20261104-pixelfx')
+    import('./paper-content.js'), import('./paper-material.js?v=20261104-fold')
   ]);
     const links = document.querySelector('.social-links');
   const template = links?.firstElementChild;

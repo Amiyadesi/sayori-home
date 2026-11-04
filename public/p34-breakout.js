@@ -776,7 +776,7 @@ export function startBreakoutGame({
         vy: Math.sin(angle) * speed,
         life: 1,
         decay: 1.9 + Math.random() * 1.4,
-        color: i % 3 === 0 ? '#E66CEB' : '#FFE747',
+        color: i % 3 === 0 ? '#EF795F' : '#F6C668',
         size: 2 + Math.random() * 2.8,
       });
     }
@@ -794,9 +794,9 @@ export function startBreakoutGame({
         gameAnimate(
           damaged.element,
           [
-            { filter: 'drop-shadow(0 0 0px rgba(255, 231, 71, 0))', transform: 'scale(0.98)' },
+            { filter: 'drop-shadow(0 0 0px rgba(246, 198, 104, 0))', transform: 'scale(0.98)' },
             { filter: 'drop-shadow(0 0 12px rgba(255, 231, 71, 0.55))', transform: 'scale(1.01)', offset: 0.45 },
-            { filter: 'drop-shadow(0 0 0px rgba(255, 231, 71, 0))', transform: 'scale(1)' },
+            { filter: 'drop-shadow(0 0 0px rgba(246, 198, 104, 0))', transform: 'scale(1)' },
           ],
           { duration: 520 },
           damaged
@@ -1154,7 +1154,7 @@ export function startBreakoutGame({
     paddleGradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
     paddleGradient.addColorStop(1, 'rgba(255, 231, 71, 0.85)');
     ctx.fillStyle = paddleGradient;
-    ctx.strokeStyle = '#FFE747';
+    ctx.strokeStyle = '#F6C668';
     ctx.lineWidth = 1.8;
     ctx.shadowColor = 'rgba(255, 231, 71, 0.45)';
     ctx.shadowBlur = 12;
@@ -1181,11 +1181,11 @@ export function startBreakoutGame({
       ballRadius + 4
     );
     ballGrad.addColorStop(0, '#FFFFFF');
-    ballGrad.addColorStop(0.4, '#FFF9B4');
-    ballGrad.addColorStop(0.85, '#FFE747');
-    ballGrad.addColorStop(1, 'rgba(255, 231, 71, 0)');
+    ballGrad.addColorStop(0.4, '#FFF1CA');
+    ballGrad.addColorStop(0.85, '#F6C668');
+    ballGrad.addColorStop(1, 'rgba(246, 198, 104, 0)');
     ctx.fillStyle = ballGrad;
-    ctx.shadowColor = '#FFE747';
+    ctx.shadowColor = '#F6C668';
     ctx.shadowBlur = 14;
     ctx.beginPath();
     ctx.arc(screenBallX, screenBallY, ballRadius, 0, Math.PI * 2);

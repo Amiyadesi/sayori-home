@@ -4,14 +4,14 @@ import {
   advanceEncounterState,
   serializeWorldState,
   createWorldSession,
-} from './p34-living.js?v=20261104-pixelfx';
-import { createMotion, segmentGraphemes } from './p34-motion.js?v=20261104-pixelfx';
-import { discover } from './p34-story.js?v=20261104-pixelfx';
-import { startBreakoutGame } from './p34-breakout.js?v=20261104-pixelfx';
-import { readBreakoutCookie } from './p34-breakout-state.js?v=20261104-pixelfx';
-import { createParticleStage } from './p34-fx.js?v=20261104-pixelfx';
+} from './p34-living.js?v=20261104-fold';
+import { createMotion, segmentGraphemes } from './p34-motion.js?v=20261104-fold';
+import { discover } from './p34-story.js?v=20261104-fold';
+import { startBreakoutGame } from './p34-breakout.js?v=20261104-fold';
+import { readBreakoutCookie } from './p34-breakout-state.js?v=20261104-fold';
+import { createParticleStage } from './p34-fx.js?v=20261104-fold';
 
-const STYLE_HREF = '/p34-luminous.css?v=20261104-pixelfx';
+const STYLE_HREF = '/p34-luminous.css?v=20261104-fold';
 
 /**
  * Resolves participating Home/Blog/Store links with ?paper=0617.
@@ -57,20 +57,18 @@ export function transformParticipatingHref(originalHref, contextLocation = (type
 
 const COPY = {
   zh: {
-    pageTitle: '嘿，你来啦。', blog: '我写的',
-    headline: ['诶？', '有人来了！'], again: ['噢！', '是你呀。'],
-    first: '等一下，那个还没放稳——', returning: '这次想先碰哪个？',
-    fromBlog: '看完了？来，换我给你看点好玩的。',
-    play: '打乱这里', pull: '拉一下', talk: '找我？', close: '先这样',
-    lower: ['再', '来', '一', '下', '！'], secret: '这里也藏着东西。',
+    pageTitle: '……诶？', blog: '我写的东西',
+    headline: ['等一下。', '还没放好！'], again: ['你来啦。', '快看这个。'],
+    first: '先别动，我刚把这一边拎起来——', returning: '今天想拆哪一块？',
+    fromBlog: '看完了？来，这次换你动手。',
+    play: '打乱这里', talk: '说句话',
   },
   en: {
-    pageTitle: 'Oh! You are here.', blog: 'My scribbles',
-    headline: ['Oh!', 'Someone’s here!'], again: ['Hey!', 'You’re back.'],
-    first: 'Wait, that one isn’t attached yet—', returning: 'What shall we poke first?',
-    fromBlog: 'Done reading? Come on, let me show you something.',
-    play: 'Make a mess', pull: 'Pull me', talk: 'Hey?', close: 'Later',
-    lower: ['O', 'N', 'C', 'E', '!'], secret: 'Something is hiding here, too.',
+    pageTitle: 'Oh, hey.', blog: 'My writing',
+    headline: ['Wait.', 'Not finished!'], again: ['Hey, you.', 'Look at this.'],
+    first: 'Hold on. I was just moving this bit—', returning: 'What are we taking apart today?',
+    fromBlog: 'Done reading? Your turn to make a mess.',
+    play: 'Make a mess', talk: 'Say something',
   },
 };
 
@@ -118,10 +116,10 @@ export function deformSurface(motion, el, options = {}) {
   const dx = Number.isFinite(options.dx) ? options.dx : 0;
   const dy = Number.isFinite(options.dy) ? options.dy : 9;
   const tilt = Number.isFinite(options.tilt) ? options.tilt : -2.1;
-  const accent = options.color || '#5470FF';
+  const accent = options.color || '#284CCE';
 
   if (options.fx) {
-    const pal = accent === '#FFE747' ? 'gold' : accent === '#E66CEB' ? 'arcane' : 'blue';
+    const pal = accent === '#F6C668' ? 'gold' : accent === '#EF795F' ? 'arcane' : 'blue';
     if (options.fxMode === 'spark') {
       options.fx.directionalSpark(cx, cy, options.aimAngle ?? -Math.PI / 3, { palette: pal });
     } else {
@@ -388,91 +386,85 @@ export function mountLuminousHome() {
     const headline = first ? copy.headline : copy.again;
     page = document.createElement('div');
     page.className = 'p34-page';
+    page.dataset.arrangement = '0';
     page.innerHTML = `
-      <header class="p34-horizon">
-        <button type="button" class="p34-signature" data-p34-action="shuffle" aria-label="${en ? 'Rearrange my page' : '换个摆法'}">34<span aria-hidden="true">.</span></button>
-        <a class="p34-blog-link" href="https://blog.sayori.org/?paper=0617">${copy.blog}<span aria-hidden="true">↗</span></a>
-      </header>
-      <section class="p34-playground" aria-label="${en ? 'Her corner of the web' : '她的网页'}">
-        <svg class="p34-ribbon" viewBox="0 0 1200 900" preserveAspectRatio="none" aria-hidden="true"><path d="M-80 640 C120 930 430 810 370 620 S180 420 210 295 S550 160 680 340 S1140 560 1300 60"/><path class="p34-ribbon-dotted" d="M740 -40 C610 120 820 350 1010 290 S1230 630 1020 910"/></svg>
-        <h1 class="p34-headline"><button type="button" class="p34-head-word" data-p34-target="title" data-p34-action="poke-word">${headline[0]}</button><button type="button" class="p34-head-word" data-p34-target="title" data-p34-action="poke-word">${headline[1]}</button></h1>
-        <div class="p34-loop-home">
-          <svg class="p34-tether" viewBox="-280 -280 560 560" aria-hidden="true"><path d="M0 0 Q0 -80 0 -190"/></svg>
-          <button type="button" class="p34-pull-loop" data-p34-target="experiment" aria-label="${en ? 'Pull the loop and let go' : '拽住这个圈，松手试试'}">
-            <svg viewBox="0 0 240 240" aria-hidden="true"><defs><linearGradient id="p34-loop-fill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFB4F5"/><stop offset=".5" stop-color="#E66CEB"/><stop offset="1" stop-color="#A542E7"/></linearGradient></defs><path fill-rule="evenodd" d="M126 12 C208 -4 251 100 213 178 C182 246 58 243 22 176 C-13 112 39 29 126 12Z M126 74 C87 77 59 119 77 148 C93 177 150 180 167 147 C184 114 164 70 126 74Z" fill="url(#p34-loop-fill)"/><path d="M41 89 C63 46 105 31 143 35" fill="none" stroke="#FFE0FB" stroke-width="7" stroke-linecap="round"/><path d="M78 149 C107 191 166 174 177 141" fill="none" stroke="#6523A8" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/></svg>
-            <span class="p34-pull-label">${copy.pull}<span aria-hidden="true">↙</span></span>
-          </button>
+      <section class="p34-room" aria-label="${en ? 'Her place' : '她的地方'}">
+        <div class="p34-architecture" aria-hidden="true">
+          <div class="p34-fold p34-fold-mist"></div>
+          <div class="p34-fold p34-fold-page"></div>
+          <div class="p34-fold p34-fold-ink"></div>
+          <div class="p34-fold p34-fold-light"></div>
+          <svg class="p34-thread" viewBox="0 0 1400 1000" preserveAspectRatio="none"><path d="M-80 760 C190 1050 410 320 735 480 S1240 680 1510 120"/><path d="M900 -80 C1260 60 590 380 860 780 S1370 840 1460 1100"/></svg>
         </div>
+        <header class="p34-horizon">
+          <button type="button" class="p34-signature" data-p34-action="shuffle" aria-label="${en ? 'Move the whole page' : '把整页挪一挪'}"><svg viewBox="0 0 52 32" aria-hidden="true"><path d="M2 25 19 5 31 25 49 5"/><path d="M30 5h19v19"/></svg></button>
+          <button type="button" class="p34-sound-switch" data-p34-action="sound" hidden aria-label="开启声效" aria-pressed="false">♩</button>
+          <button type="button" class="p34-talk-trigger" data-p34-action="toggle-replies" aria-expanded="false" aria-controls="p34-home-answers">${copy.talk}<span aria-hidden="true">···</span></button>
+        </header>
+        <h1 class="p34-headline"><span class="p34-head-word" data-p34-target="title">${headline[0]}</span><span class="p34-head-word" data-p34-target="title">${headline[1]}</span></h1>
         <div class="p34-voice-place">
           <p class="p34-speech-line" aria-live="polite">${initialSpeech}</p>
-          <button type="button" class="p34-talk-trigger" data-p34-action="toggle-replies" aria-expanded="false" aria-controls="p34-home-answers"><span aria-hidden="true">···</span><span class="p34-talk-label">${copy.talk}</span></button>
-          <div id="p34-home-answers" class="p34-context-replies" hidden></div>
         </div>
-        <div class="p34-play-invitation" data-p34-target="work">
-          <svg class="p34-play-orbit" viewBox="0 0 250 250" aria-hidden="true"><ellipse cx="125" cy="125" rx="120" ry="50" transform="rotate(-28 125 125)"/></svg>
-          <button type="button" class="p34-play-btn" data-p34-action="start-breakout"><span aria-hidden="true">↗</span><strong>${copy.play}</strong></button>
+        <div id="p34-home-answers" class="p34-context-replies" hidden></div>
+        <div class="p34-play-invitation">
+          <span class="p34-invitation-small" data-p34-target="detail">${en ? 'I will fix it.' : '撞坏了，我会修。'}</span>
+          <button type="button" class="p34-play-btn" data-p34-action="start-breakout" data-p34-target="work">${copy.play}<svg viewBox="0 0 80 50" aria-hidden="true"><path d="M2 28 C25 35 55 35 70 12 M49 9 73 9 72 34"/></svg></button>
           <span class="p34-best-badge" data-p34-best-badge hidden></span>
         </div>
-        <button type="button" class="p34-loose-mark p34-question" data-p34-target="detail" data-p34-action="question" aria-label="${en ? 'Question mark' : '问号'}">?</button>
-        <button type="button" class="p34-loose-mark p34-bang" data-p34-target="detail" data-p34-action="bang" aria-label="${en ? 'Exclamation mark' : '感叹号'}">!</button>
-        <a class="p34-down" href="#p34-spill" aria-label="${en ? 'Look down here' : '往下看看'}">↓</a>
+        <button type="button" class="p34-page-edge" aria-label="${en ? 'Pull the edge of this page' : '拉一拉这页的边缘'}"><span aria-hidden="true">↔</span></button>
+        <div class="p34-unsettled" data-p34-target="note"><button type="button" data-p34-action="unsettled">${en ? 'This bit goes… where?' : '这一行到底放哪儿呢。'}</button><svg viewBox="0 0 300 36" aria-hidden="true"><path d="M4 20 Q85 36 150 15 T294 19"/></svg></div>
+        <button type="button" class="p34-comma" data-p34-action="comma" data-p34-target="detail" aria-label="${en ? 'Poke the comma' : '戳一下这个逗号'}">，</button>
+        <a class="p34-blog-link" data-p34-target="nav" href="https://blog.sayori.org/?paper=0617">${copy.blog}<span aria-hidden="true">↗</span></a>
+        <a class="p34-down" href="#p34-underfold" aria-label="${en ? 'Look underneath' : '看看下面'}"><span aria-hidden="true">↓</span></a>
       </section>
-      <section class="p34-spill" id="p34-spill" aria-label="${en ? 'Unfinished business' : '还没收拾的地方'}">
-        <svg class="p34-spill-loop" viewBox="0 0 1100 650" preserveAspectRatio="none" aria-hidden="true"><path d="M-40 250 C230 -20 900 -30 920 180 S120 610 150 410 S830 300 1150 610"/></svg>
-        <div class="p34-loose-words">${copy.lower.map((word,i) => `<button type="button" class="p34-loose-word" data-p34-target="title" data-p34-action="loose-word" style="--i:${i}">${word}</button>`).join('')}</div>
-        <button type="button" class="p34-marble" data-p34-action="marble" data-p34-target="detail" aria-label="${en ? 'Unwrap this ball' : '碰一下这颗球'}"><span aria-hidden="true">≈</span></button>
-        <button type="button" class="p34-zipper" data-p34-action="discover-seam" aria-label="${en ? 'Pull the loose end' : '拉开这条缝'}" aria-expanded="false"><svg viewBox="0 0 420 70" aria-hidden="true"><path d="M5 20 Q100 45 200 22 T380 25"/><circle cx="394" cy="26" r="12"/></svg></button>
-        <div class="p34-seam-reveal" hidden><p>${en ? 'Okay, you found my spare button.' : '好吧，被你翻到备用按钮了。'}</p><button type="button" data-p34-action="shuffle">${en ? 'Don’t press it' : '不许按'}</button></div>
-        <small class="p34-bottom-scribble" data-p34-target="detail">${en ? 'not finished. not tidying up.' : '还没做完。不收拾。'}</small>
+      <section class="p34-underfold" id="p34-underfold" aria-label="${en ? 'Things I am trying' : '她还在试的东西'}">
+        <div class="p34-under-sweep" aria-hidden="true"></div>
+        <h2 data-p34-target="title">${en ? 'Oh. Those too.' : '啊，这几个也在。'}</h2>
+        <div class="p34-noises">
+          <button type="button" data-p34-action="noise" data-p34-target="experiment" style="--i:0">${en ? 'pop' : '啪'}</button>
+          <button type="button" data-p34-action="noise" data-p34-target="experiment" style="--i:1">${en ? 'whoosh' : '咻'}</button>
+          <button type="button" data-p34-action="noise" data-p34-target="experiment" style="--i:2">${en ? 'BOOM' : '砰'}</button>
+        </div>
+        <button type="button" class="p34-loose-thread" data-p34-action="discover-seam" aria-label="${en ? 'Pull the loose thread' : '拉开这根线头'}" aria-expanded="false"><svg viewBox="0 0 500 90" aria-hidden="true"><path d="M-20 32 C100 110 140 -20 270 35 S410 50 460 32"/><path d="m448 23 16 9-12 13"/></svg></button>
+        <p class="p34-seam-reveal" hidden>${en ? 'Hey! I was saving that for later.' : '喂！这个我本来想晚点再给你看的。'}</p>
       </section>`;
     main.append(page);
     page.querySelectorAll('a[href]').forEach(adaptLink);
+    const headlineEl = page.querySelector('.p34-headline');
     const words = [...page.querySelectorAll('.p34-head-word')];
     const speechEl = page.querySelector('.p34-speech-line');
     const talkTrigger = page.querySelector('.p34-talk-trigger');
+    const talkLabel = talkTrigger.firstChild;
+    const talkMark = talkTrigger.lastElementChild;
     const answers = page.querySelector('.p34-context-replies');
-    const star = page.querySelector('.p34-pull-loop');
-    const tether = page.querySelector('.p34-tether path');
+    const edge = page.querySelector('.p34-page-edge');
     const launcher = page.querySelector('.p34-play-invitation');
-    const looseWords = [...page.querySelectorAll('.p34-loose-word')];
-    const moving = [...words, page.querySelector('.p34-loop-home'), page.querySelector('.p34-voice-place'), launcher, ...page.querySelectorAll('.p34-loose-mark'), ...looseWords];
-    let shuffleStep = 0;
-    let touched = 0;
-    let dodges = 0;
-    let dragging = null;
-    let releaseClick = false;
+    const folds = [...page.querySelectorAll('.p34-fold')];
+    const browseControls = [...page.querySelectorAll('.p34-play-invitation,.p34-page-edge,.p34-unsettled,.p34-comma,.p34-blog-link,.p34-down,.p34-underfold')];
+    const moving = [...folds, page.querySelector('.p34-thread'), headlineEl, page.querySelector('.p34-voice-place'), launcher, page.querySelector('.p34-unsettled'), page.querySelector('.p34-comma'), page.querySelector('.p34-blog-link'), edge];
+    let arrangement = 0, chatOpen = false, savedScroll = 0, dragging = null, touches = 0, launching = false;
 
-    function speak(text, animate = false) {
+    function speak(text, effect = false) {
       motion.cancelText(speechEl);
       speechEl.getAnimations().forEach(a => a.cancel());
-      if (animate) void motion.decode(speechEl, text);
+      if (effect) void motion.decode(speechEl, text);
       else speechEl.textContent = text;
     }
     function center(el) {
       const r = el.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
     }
-    function bump(el, x = 0, y = -18, angle = -4) {
-      void deformSurface(motion, el, { dx:x, dy:y, tilt:angle });
-    }
-    function scatterFrom(el, palette = 'arcane') {
-      const o = center(el);
-      const targets = [...words, ...looseWords].filter(target => {
-        const r = target.getBoundingClientRect();
-        return r.bottom > 0 && r.top < innerHeight;
-      }).map((target, i) => ({ ...center(target), onHit: () => {
-        bump(target, i % 2 ? 24 : -20, -16, i % 2 ? 6 : -6);
-        motion.tone(i % 5, true);
-      } }));
-      fx.homingVolley(o.x, o.y, targets, { palette });
+    function bump(el, dx = 0, dy = -18, tilt = -3) {
+      void deformSurface(motion, el, { dx, dy, tilt });
     }
     function shuffle() {
-      if (activeBreakoutCleanup) return;
-      shuffleStep = (shuffleStep + 1) % 3;
-      void motion.layout(moving, () => { page.dataset.shuffle = String(shuffleStep); }, 22);
-      const c = center(star);
-      fx.manaNova(c.x, c.y, { palette: shuffleStep === 1 ? 'gold' : 'cyan', scale: 1.15 });
-      speak(en ? ['Much better.', 'Wait. Like THIS.', 'No, no. Move over.'][shuffleStep] : ['这回顺眼了。', '等一下，我换个摆法。', '你别动，我来挪。'][shuffleStep]);
+      if (activeBreakoutCleanup || launching || dragging) return;
+      arrangement = (arrangement + 1) % 3;
+      void motion.layout(moving, () => { page.dataset.arrangement = String(arrangement); }, 14);
+      speak(en ? ['No. Back here.', 'Move over. Just a bit.', 'Yes. Like this.'][arrangement] : ['不对，还是挪回来。', '让一下，让一下。', '对，这样！'][arrangement]);
+      const c = center(edge);
+      fx.directionalSpark(c.x, c.y, -2.2, { palette:'cyan', scale:.9 });
+      motion.tone(arrangement, true);
     }
     function updateBest() {
       const stats = readBreakoutCookie();
@@ -481,173 +473,194 @@ export function mountLuminousHome() {
       if (stats.runs) badge.textContent = `${en ? 'best' : '最高'} ${stats.bestScore}`;
     }
     updateBest();
-    function launchBreakout() {
-      if (activeBreakoutCleanup) return;
-      closeChat();
+    async function launchBreakout() {
+      if (activeBreakoutCleanup || launching || dragging) return;
+      launching = true;
+      await closeChat(false);
+      await Promise.all(moving.flatMap(el => el.getAnimations().map(a => a.finished.catch(() => {}))));
+      if (destroyed || !mounted) { launching = false; return; }
+      launching = false;
       root.classList.add('p34-playing');
       activeBreakoutCleanup = startBreakoutGame({ page, motion, fx, speak,
         onExit() {
           root.classList.remove('p34-playing');
           activeBreakoutCleanup = null;
           updateBest();
-          speak(en ? 'There. Pretend that didn’t happen.' : '好了。假装刚才什么都没发生。');
+          speak(en ? 'There. Good as new. More or less.' : '好了。差不多恢复原样了。');
           page.querySelector('.p34-play-btn').focus({ preventScroll:true });
-        }, lang: document.documentElement.lang || '' });
+        }, lang:document.documentElement.lang || '' });
     }
-    function closeChat() {
-      void motion.layout(moving, () => { delete page.dataset.chat; }, 10);
+    function closeChat(focus = true) {
+      if (!chatOpen) return Promise.resolve();
+      chatOpen = false;
+      browseControls.forEach(el=>{el.inert=false;});
       answers.hidden = true;
+      page.querySelector('.p34-sound-switch').hidden=true;
+      talkLabel.nodeValue = copy.talk;
+      talkMark.textContent = '···';
       talkTrigger.setAttribute('aria-expanded', 'false');
       root.classList.remove('p34-talking');
+      const transition = motion.layout(moving, () => { delete page.dataset.chat; delete page.dataset.intent; }, 10);
+      window.scrollTo({ top:savedScroll, behavior:'instant' });
+      if (focus) talkTrigger.focus({ preventScroll:true });
+      return transition;
     }
-    function openChat() {
-      if (!answers.hidden) { closeChat(); return; }
-      answers.hidden = false;
-      talkTrigger.setAttribute('aria-expanded', 'true');
-      root.classList.add('p34-talking');
-      const choices = en
-        ? [['you','Who’s moving all this?'],['shuffle','Can you move that?'],['return-normal','Send me back?']]
-        : [['you','刚才是你在动？'],['shuffle','还能换个摆法？'],['return-normal','送我回去吧。']];
-      answers.replaceChildren(...choices.map(([id,label]) => {
-        const b = document.createElement('button'); b.type='button'; b.dataset.p34Reply=id; b.textContent=label; return b;
+    function showChat(id = 'root') {
+      const h = new Date().getHours();
+      const clues = getStory().clues;
+      const options = {
+        root: {
+          text:en ? 'Okay, I am listening.' : '嗯，我在听。', intent:'listen',
+          choices:en ? [['you','Who are you?'],['shuffle','Can you move the whole page?'],['return-normal','Send me back.']] : [['you','刚才就是你在动？'],['shuffle','能把整页都挪走吗？'],['return-normal','送我回去吧。']],
+        },
+        you: {
+          text:en ? 'Me. You caught me redecorating. I was NOT expecting company.' : '是我呀。刚才忙着挪东西，没注意有人进来。', intent:'peek',
+          choices:en ? [['play','Show me what you made.'],['time','Were you here all day?'],['close','Keep going. I will look around.']] : [['play','你刚才在做什么？'],['time','你一直在这里？'],['close','你接着弄，我随便看看。']],
+        },
+        shuffle: {
+          text:en ? 'Of course. Mind your feet.' : '当然。你站稳哦。', intent:'show',
+          choices:en ? [['shuffle-again','Again.'],['play','Now let me play.'],['close','Leave it like that.']] : [['shuffle-again','再来一下。'],['play','让我也玩玩。'],['close','就这样挺好。']],
+        },
+        time: {
+          text:en ? (h<6 ? 'You are up too? We can be a little quieter.' : 'I move things. Put them back. Move them again. It is fun.') : (h<6 ? '你也没睡？那小声一点。我倒是不困。' : h<12 ? '你那边是早上吗？我刚给这页换了个摆法。' : h<18 ? '刚才没干什么。戳了几下那个逗号。它每次都弹得不一样。' : '本来想今天不改了。然后又挪了一下。'), intent:'listen',
+          choices:en ? [['close','I will stay a bit.'],['play','A quick game?']] : [['close','那我陪你待会儿。'],['play','打两局？']],
+        },
+        found: {
+          text:en ? 'You pulled THAT? I thought I had tucked it away.' : '你连那根线都拉了？我以为我已经塞好了。', intent:'peek',
+          choices:en ? [['shuffle','What else can you move?'],['close','I am going to keep looking.']] : [['shuffle','还有什么能动？'],['close','我再找找。']],
+        },
+      };
+      if (id === 'return-normal') { closeChat(false); void sendBack(); return; }
+      if (id === 'close') { closeChat(); return; }
+      if (id === 'play') { void launchBreakout(); return; }
+      if (id === 'shuffle-again') id = 'shuffle';
+      const node = options[id];
+      if (!node) throw new Error('Unknown Home conversation: ' + id);
+      if (id === 'root' && clues.includes('mirror-page')) node.choices[1]=['found',en ? 'About that loose thread…' : '那根线头下面是什么？'];
+      speak(node.text, id === 'you');
+      answers.replaceChildren(...node.choices.map(([replyId,label]) => {
+        const button=document.createElement('button');button.type='button';button.dataset.p34Reply=replyId;button.textContent=label;return button;
       }));
-      const sound = document.createElement('button'); sound.type='button'; sound.dataset.p34Action='sound';
-      sound.textContent='♪'; sound.setAttribute('aria-label', en ? 'Toggle sound' : '开关声音');
-      sound.setAttribute('aria-pressed', String(motion.sound)); answers.append(sound);
-      void motion.layout(moving, () => { page.dataset.chat = 'open'; }, 10);
-      void motion.animate(answers, [{ opacity:0, translate:'-12px 8px' }, { opacity:1, translate:'0 0' }], { duration:240 });
-    }
-
-    listen(star, 'pointerdown', e => {
-      if (e.button !== 0 || activeBreakoutCleanup) return;
-      e.preventDefault();
-      star.setPointerCapture(e.pointerId);
-      star.getAnimations().forEach(a => a.cancel());
-      dragging = { id:e.pointerId, x:e.clientX, y:e.clientY, dx:0, dy:0 };
-      star.classList.add('p34-grabbed');
-      words.forEach(el => el.getAnimations().forEach(a => a.cancel()));
-    });
-    listen(star, 'pointermove', e => {
-      if (!dragging || e.pointerId !== dragging.id) return;
-      const max = Math.min(innerWidth * .32, 250);
-      dragging.dx = Math.max(-max, Math.min(max, e.clientX-dragging.x));
-      dragging.dy = Math.max(-200, Math.min(200, e.clientY-dragging.y));
-      star.style.translate = `${dragging.dx}px ${dragging.dy}px`;
-      star.style.rotate = `${dragging.dx * .11}deg`;
-      words.forEach((el,i) => { el.style.translate=`${dragging.dx * (i ? -.11 : .06)}px ${dragging.dy * -.07}px`; });
-      tether.setAttribute('d', `M${dragging.dx} ${dragging.dy} Q${dragging.dx*.25} ${dragging.dy*.3-80} 0 -190`);
-    });
-    function releaseStar(cancelled = false) {
-      if (!dragging) return;
-      const { dx,dy } = dragging;
-      dragging = null;
-      star.classList.remove('p34-grabbed');
-      star.style.removeProperty('translate'); star.style.removeProperty('rotate');
-      tether.setAttribute('d', 'M0 0 Q0 -80 0 -190');
-      words.forEach(el=>{el.style.removeProperty('translate');});
-      const pulled = Math.hypot(dx,dy) > 12;
-      releaseClick = pulled;
-      if (!cancelled) {
-        if (pulled) {
-          const c=center(star);
-          fx.directionalSpark(c.x+dx,c.y+dy,Math.atan2(-dy,-dx),{palette:'gold'});
-          scatterFrom(star, touched++ % 2 ? 'blue' : 'arcane');
-          speak(en ? 'Ha! Again!' : (touched===1 ? '哈哈！你再拉远一点试试。' : '对对对，就这样！'));
-          motion.tone(4,true);
-        }
-        void motion.animate(star,[
-          {translate:`${dx}px ${dy}px`,rotate:`${dx*.11}deg`,scale:'1.04 .95'},
-          {translate:`${-dx*.2}px ${-dy*.2}px`,rotate:`${-dx*.025}deg`,scale:'.94 1.08',offset:.45},
-          {translate:`${dx*.06}px ${dy*.06}px`,rotate:'2deg',scale:'1.02 .99',offset:.72},
-          {translate:'0px 0px',rotate:'0deg',scale:'1'}
-        ],{duration:850,easing:'cubic-bezier(.22,.85,.28,1)'});
+      answers.firstElementChild.focus({preventScroll:true});
+      void motion.layout(moving,()=>{page.dataset.intent=node.intent;},14);
+      if(id==='shuffle') {
+        arrangement=(arrangement+1)%3;
+        void motion.layout(moving,()=>{page.dataset.arrangement=String(arrangement);},14);
+        const targets=[headlineEl,launcher,page.querySelector('.p34-unsettled')].map((el,i)=>({...center(el),onHit:()=>bump(el,i%2?20:-16,-12)}));
+        const c=center(edge);fx.homingVolley(c.x,c.y,targets,{palette:'cyan'});
       }
     }
-    listen(star,'pointerup',()=>releaseStar());
-    listen(star,'pointercancel',()=>releaseStar(true));
-    listen(star,'lostpointercapture',()=>releaseStar(true));
-    listen(star,'click',()=>{
-      if(releaseClick){ releaseClick=false; return; }
-      scatterFrom(star); bump(star,0,-30,14); motion.tone(2,true);
-      speak(en ? 'It stretches. Try pulling it.' : '不光能戳。拽住，松手！');
-    });
+    function openChat() {
+      if (chatOpen) { closeChat(); return; }
+      chatOpen=true;
+      browseControls.forEach(el=>{el.inert=true;});
+      savedScroll=window.scrollY;
+      window.scrollTo({top:0,behavior:'instant'});
+      answers.hidden=false;
+      const sound=page.querySelector('.p34-sound-switch');sound.hidden=false;sound.setAttribute('aria-pressed',String(motion.sound));sound.textContent=motion.sound?'♪':'♩';sound.setAttribute('aria-label',motion.sound?(en?'Mute sound':'关闭声效'):(en?'Enable sound':'开启声效'));
+      talkLabel.nodeValue=en?'Keep exploring':'接着逛';
+      talkMark.textContent='×';
+      talkTrigger.setAttribute('aria-expanded','true');
+      root.classList.add('p34-talking');
+      void motion.layout(moving,()=>{page.dataset.chat='open';},12);
+      showChat();
+      answers.querySelector('button').focus({preventScroll:true});
+    }
 
+    listen(edge,'pointerdown',e=>{
+      if(e.button!==0 || activeBreakoutCleanup || launching || chatOpen)return;
+      e.preventDefault();edge.setPointerCapture(e.pointerId);
+      moving.forEach(el=>el.getAnimations().forEach(a=>a.cancel()));
+      dragging={id:e.pointerId,x:e.clientX,y:e.clientY,dx:0,dy:0};
+      page.classList.add('p34-pulling');
+    });
+    listen(edge,'pointermove',e=>{
+      if(!dragging || dragging.id!==e.pointerId)return;
+      dragging.dx=Math.max(-220,Math.min(220,e.clientX-dragging.x));
+      dragging.dy=Math.max(-170,Math.min(170,e.clientY-dragging.y));
+      moving.forEach((el,i)=>{const k=[.25,.55,1,.8,.13,.1,.38,.85,.4,.7,.5,1][i];el.style.translate=`${dragging.dx*k}px ${dragging.dy*k}px`;});
+    });
+    function releaseEdge(cancelled=false) {
+      if(!dragging)return;
+      const {dx,dy}=dragging;dragging=null;page.classList.remove('p34-pulling');
+      moving.forEach((el,i)=>{
+        const from=el.style.translate;el.style.removeProperty('translate');
+        const rest=getComputedStyle(el).translate;
+        void motion.animate(el,[{translate:from},{translate:`${-dx*.08}px ${-dy*.08}px`,offset:.68},{translate:rest==='none'?'0 0':rest}],{duration:900,delay:i*8});
+      });
+      if(!cancelled && Math.hypot(dx,dy)>12){
+        const c=center(edge);fx.directionalSpark(c.x+dx,c.y+dy,Math.atan2(-dy,-dx),{palette:'cyan'});
+        speak(en?'Ha! You can move the whole thing.':'哈哈，是整页都能动。');motion.tone(3,true);touches++;
+      }
+    }
+    listen(edge,'pointerup',()=>releaseEdge());
+    listen(edge,'pointercancel',()=>releaseEdge(true));
+    listen(edge,'lostpointercapture',()=>releaseEdge(true));
+    listen(edge,'keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();shuffle();}});
     listen(page,'click',e=>{
-      if (activeBreakoutCleanup) return;
-      const button=e.target.closest('[data-p34-action], [data-p34-reply]');
-      if(!button) return;
+      if(activeBreakoutCleanup || launching || dragging)return;
+      const button=e.target.closest('[data-p34-action],[data-p34-reply]');if(!button)return;
       const replyId=button.dataset.p34Reply;
       if(replyId){
-        closeChat();
-        if(replyId === 'return-normal') void sendBack();
-        else if(replyId==='shuffle') shuffle();
-        else { speak(en ? 'Me. This bit’s mine. And that. Actually, all of it.' : '是我。这一块是我的，那一块也是。……现在这一整页都是。',true); scatterFrom(star,'cyan'); }
+        if (replyId === 'return-normal') { closeChat(false); void sendBack(); }
+        else showChat(replyId);
         return;
       }
       const c=center(button);
       switch(button.dataset.p34Action){
-        case 'toggle-replies': openChat(); break;
-        case 'sound': motion.setSound(!motion.sound);button.setAttribute('aria-pressed',String(motion.sound));if(motion.sound)motion.tone(2,true);break;
-        case 'shuffle': shuffle(); break;
-        case 'poke-word':
-          bump(button,(e.clientX-c.x)*.2,-24,5);fx.collectBurst(e.clientX||c.x,e.clientY||c.y,{palette:'cyan',scale:.8});
-          speak(en ? 'Hey! That’s my sentence.' : '喂！我话还没说完。'); break;
-        case 'start-breakout': launchBreakout(); break;
-        case 'question':
-          button.textContent=button.textContent==='?'?'!':'?';bump(button,-20,-25,-16);
-          fx.manaNova(c.x,c.y,{palette:'blue',scale:.85});
-          speak(en ? 'Exactly what I was about to ask you.' : '我还想问你呢。你怎么进来的？'); break;
-        case 'bang':
-          fx.parryClash(c.x,c.y,0,-1,{palette:'gold',scale:1.3});shuffle();
-          speak(en ? 'Okay! Not a doorbell!' : '知道了！这不是门铃！'); break;
-        case 'loose-word':
-          bump(button,0,-70,18);fx.collectBurst(c.x,c.y,{palette:'gold',scale:1.1});
-          touched++;
-          if(touched%3===0){void motion.layout(looseWords,()=>{page.dataset.spill=page.dataset.spill==='scatter'?'gather':'scatter';},45);speak(en?'Fine. You can rearrange these.':'好好好，这几个字给你摆。');}
+        case 'toggle-replies':openChat();break;
+        case 'start-breakout':launchBreakout();break;
+        case 'shuffle':shuffle();break;
+        case 'sound':motion.setSound(!motion.sound);button.setAttribute('aria-pressed',String(motion.sound));button.textContent=motion.sound?'♪':'♩';button.setAttribute('aria-label',motion.sound?(en?'Mute sound':'关闭声效'):(en?'Enable sound':'开启声效'));break;
+        case 'unsettled':
+          shuffle();bump(button,20,-30,7);speak(en?'No, not there either.':'啊不对，放那边也怪。');break;
+        case 'comma':
+          touches++;bump(button,24,-70,26);
+          fx.directionalSpark(c.x,c.y,-1.2,{palette:'gold',scale:1.2});
+          if(touches===1)speak(en?'It is not punctuation anymore.':'它现在已经不是标点了。');
+          motion.tone(touches,true);break;
+        case 'noise':{
+          const i=Number(button.style.getPropertyValue('--i'));
+          const target=page.querySelector('.p34-underfold h2');
+          bump(button,(i-1)*32,-45,i%2?12:-12);
+          if(i===0)fx.parryClash(c.x,c.y,0,-1,{palette:'gold',scale:1.4});
+          else if(i===1)fx.homingVolley(c.x,c.y,[{...center(target),onHit:()=>{bump(target,35,-20,4);}}],{palette:'cyan'});
+          else fx.manaNova(c.x,c.y,{palette:'arcane',scale:1.6});
+          motion.tone(i+2,true);break;
+        }
+        case 'discover-seam':{
+          const reveal=page.querySelector('.p34-seam-reveal');reveal.hidden=!reveal.hidden;button.setAttribute('aria-expanded',String(!reveal.hidden));
+          if(!reveal.hidden){setStory(discover(getStory(),'mirror-page').story);void motion.assemble(reveal,reveal.textContent);fx.directionalSpark(c.x,c.y,-.4,{palette:'gold'});motion.tone(4,true);}
           break;
-        case 'marble':
-          fx.manaNova(c.x,c.y,{palette:'cyan',scale:1.5});
-          scatterFrom(button,'blue');bump(button,0,-45,22);motion.tone(3,true);
-          speak(en?'You found the loud one.':'这颗声音特别大。……你把声音打开了吗？');break;
-        case 'discover-seam': {
-          const reveal=page.querySelector('.p34-seam-reveal');
-          button.setAttribute('aria-expanded',String(reveal.hidden));reveal.hidden=!reveal.hidden;
-          if(!reveal.hidden){const result=discover(getStory(),'mirror-page');setStory(result.story);fx.directionalSpark(c.x,c.y,0,{palette:'gold'});}
-          void motion.layout([page.querySelector('.p34-bottom-scribble')],()=>{},0);break;
         }
       }
     });
-    listen(launcher,'pointerenter',()=>{
-      if(dodges>=2 || activeBreakoutCleanup || root.classList.contains('p34-talking'))return;
-      dodges++;
-      void motion.layout([launcher],()=>{launcher.dataset.dodge=String(dodges);},0);
-      speak(en ? (dodges===1?'Oops. Missed.':'Okay, okay. I’ll stop.') : (dodges===1?'没按到。':'好啦，不躲了。'));
-    });
-    listen(window,'keydown',e=>{if(e.key==='Escape'&&!answers.hidden){closeChat();talkTrigger.focus();}});
-    let lastMove = performance.now();
+    listen(window,'keydown',e=>{if(e.key==='Escape'&&chatOpen){e.preventDefault();closeChat();}});
+    let lastMove=performance.now();
     listen(page,'pointermove',()=>{lastMove=performance.now();},{passive:true});
+    listen(page,'pointerdown',()=>motion.setSound(true),{once:true});
     function idleMove(){
-      if(!document.hidden&&!activeBreakoutCleanup&&!dragging&&answers.hidden&&performance.now()-lastMove>9000){
-        const target=page.querySelector('.p34-question');
-        bump(target,-12,-28,-12);
-        const c=center(target);fx.directionalSpark(c.x,c.y,-Math.PI/3,{palette:'arcane',scale:.8});
-        if(!touched) speak(en?'Psst. The loop stretches.':'喂。那个圈，是可以拽的。');
-        return;
-      }
-      later(idleMove,14000);
+      if(!document.hidden&&!activeBreakoutCleanup&&!launching&&!dragging&&!chatOpen&&performance.now()-lastMove>10000){
+        bump(page.querySelector('.p34-comma'),-18,-34,-18);
+        if(!touches){shuffle();speak(en?'One second. Moving this bit.':'等一下，我再挪一块。');}
+      } else later(idleMove,14000);
     }
     later(idleMove,14000);
-    listen(document,'visibilitychange',()=>{if(document.hidden)releaseStar(true);});
+    listen(document,'visibilitychange',()=>{if(document.hidden)releaseEdge(true);});
     root.classList.add('p34-ready');
     if(root.dataset.p34Entry!=='quiet'){
       const origin=titleOriginRect||beforePaper;
-      moving.slice(0,7).forEach((el,i)=>{
+      moving.forEach((el,i)=>{
         const r=el.getBoundingClientRect();
-        void motion.animate(el,[{translate:`${(origin.x-r.x)*.35}px ${(origin.y-r.y)*.4}px`,rotate:`${i%2?12:-15}deg`,opacity:0,scale:'.76'},{translate:'0px 0px',opacity:1,rotate:getComputedStyle(el).rotate==='none'?'0deg':getComputedStyle(el).rotate,scale:'1'}],{duration:1050,delay:i*65});
+        void motion.animate(el,[{translate:`${(origin.x-r.x)*.8}px ${(origin.y-r.y)*.7}px`,rotate:`${i%2?17:-12}deg`,opacity:0,scale:'.7'},{translate:'0 0',rotate:getComputedStyle(el).rotate==='none'?'0deg':getComputedStyle(el).rotate,opacity:1,scale:'1'}],{duration:1200,delay:i*28});
       });
-      void motion.assemble(speechEl,initialSpeech,sources);
-      later(()=>{const c=center(star);fx.collectBurst(c.x,c.y,{palette:'gold',scale:1.15});},500);
-      if(first) later(()=>{bump(star,8,30,-14);},950);
+      void motion.assemble(words[0],headline[0],sources);
+      void motion.liftGlyphs(sources,headlineEl);
+      if(first)later(()=>{
+        if(chatOpen || launching || activeBreakoutCleanup || touches)return;
+        bump(page.querySelector('.p34-unsettled'),8,45,-12);
+        speak(en?'Oh! You can see me moving it?':'……诶？你看得见我挪它？',true);
+      },1800);
     }
   }
 
@@ -678,7 +691,7 @@ export function mountLuminousHome() {
     style.dataset.p34LuminousStyle = '';
     document.head.append(style);
   }
-  if (!style.href.includes('20261104-pixelfx')) {
+  if (!style.href.includes('20261104-fold')) {
     style.href = STYLE_HREF;
   }
   if (style.sheet) {

@@ -253,7 +253,7 @@
 		}
 		updateFootLink();
 		if (altered) {
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-pixelfx');
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-fold');
 			initPaperMaterial();
 		}
 		window.SayoriI18n?.ready?.();

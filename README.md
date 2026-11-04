@@ -70,8 +70,9 @@ node .\scripts\sync-home-content.mjs
 - 作品页展示一个明确标记的交互试作。实验室的四个光点支持拖动、触屏和方向键；Shift 加大步长。
 - 「留住这个形状」仅在当前浏览器保存最近八条光线。旧稿可以逐条比较，不伪造作品发布历史。
 - 「聊两句」中可以请她送回原站，恢复原始 DOM 和已有交互。留言后端未接入，输入不会发送。声音由访客主动开启。
+- 入场时，原站标题和入口被光带带走，她的文字与导航从对应位置展开；送回时反向归位。点击随时打断入场，减少动态设置下直接切换。
 
-共享实现为 `p34-space.js/css`、`p34-light.js`、`p34-space-content.js`；现有 `p34-motion.js` 提供文字与布局动效，原有世界 Cookie 契约保留。无弹球、后期剧情或正式人物定稿。
+共享实现为 `p34-space.js/css`、`p34-light.js`、`p34-passage.js`、`p34-space-content.js`；现有 `p34-motion.js` 提供文字与布局动效，原有世界 Cookie 契约保留。无弹球、后期剧情或正式人物定稿。
 
 ```powershell
 python -m http.server 8980 --bind 127.0.0.1 --directory public
@@ -79,4 +80,4 @@ node scripts/sync-p34-space.mjs # 同步到相邻 sayori-blog/public
 node --test scripts/p34-space.test.mjs scripts/p34-living.test.mjs scripts/p34-dialogue.test.mjs scripts/p34-story.test.mjs scripts/paper-trace.test.mjs
 ```
 
-字体为 Noto Serif SC 的局部字集，许可在 `public/assets/p34/OFL.txt`。光带、折射与粒子由 Canvas 绘制；静态场景缓存，闲置时停帧，支持 reduced-motion。没有把参考图做成整页截图。
+字体为 Noto Serif SC 的局部字集，许可在 `public/assets/p34/OFL.txt`。光带、折射与粒子由 Canvas 绘制；背景独立缓存为合成层，鼠标视差不重绘背景。光点使用 transform 与已缓存的几何，拖动不逐帧强制布局；闲置停帧，支持 reduced-motion。没有把参考图做成整页截图。

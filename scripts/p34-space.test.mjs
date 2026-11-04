@@ -3,6 +3,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { roomFromURL, roomHref, mountSpace } from '../public/p34-space.js';
 import { lightPoint, INITIAL_LIGHT, readSketches } from '../public/p34-light.js';
+import { playPassage, cancelPassage } from '../public/p34-passage.js';
+
+test('reduced motion never captures geometry or creates a passage overlay', async () => {
+  globalThis.document = { hidden: false };
+  try {
+    const shell = {};
+    await playPassage(shell, null, { reduced: () => true }, true);
+    await playPassage(shell, null, { reduced: () => true }, false);
+    cancelPassage(shell);
+  } finally { delete globalThis.document; }
+});
 
 test('existing paper entry and deep room URLs retain their meaning', () => {
   for (const room of ['home', 'works', 'lab', 'archive', 'guestbook']) {
@@ -46,7 +57,7 @@ test('local sketches validate version, time, count and normalized geometry at th
 });
 
 test('Home and Blog ship exactly the same space and light implementation', () => {
-  for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js']) {
+  for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js']) {
     const blog = new URL(`../../sayori-blog/public/${file}`, import.meta.url);
     if (fs.existsSync(blog)) assert.equal(fs.readFileSync(new URL(`../public/${file}`, import.meta.url), 'utf8'), fs.readFileSync(blog, 'utf8'), file);
   }

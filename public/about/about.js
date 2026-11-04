@@ -252,7 +252,7 @@
 		}
 		updateFootLink();
 		if (altered) {
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-prism');
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-flow');
 			initPaperMaterial();
 		}
 		window.SayoriI18n?.ready?.();

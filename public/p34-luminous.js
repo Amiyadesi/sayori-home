@@ -1,4 +1,4 @@
-import { mountSpace } from './p34-space.js?v=20261104-prism';
+import { mountSpace } from './p34-space.js?v=20261104-flow';
 export async function mountLuminousHome() {
   if (document.querySelector('script[src*="script.notebook.js"]') && document.body.dataset.surfaceReady !== 'true') {
     await new Promise(resolve => window.addEventListener('sayori:surface-ready', resolve, { once: true }));

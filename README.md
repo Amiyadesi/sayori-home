@@ -62,17 +62,21 @@ node .\scripts\sync-home-content.mjs
 - 对应语言的 `social/` 路径汇总公开社交账号、作品和联系入口；首页第二个入口指向该页，Bilibili 终端命令仍指向真实 B站账号
 
 
-## Project 34 异常世界 (`/?paper=0617`)
+## Project 34：她的空间 (`/?paper=0617`)
 
-访问 `/?paper=0617`。当前候选用整页平面的折叠、拉伸和换位呈现她的空间；配色尚未由作者定稿。正常站点不启用这些资源。
+异常主页就是她的独立站，不是原站叠加主题。蓝色空间、折射光带与原生大字交流；点击光点时，真实导航和文字会重新摆位。普通入口仍使用原站。
 
-- 拉住右侧边缘再松手：整页平面、文字和按钮按不同幅度跟随，再弹回原位。
-- 点左上角的折线记号切换三种摆法；逗号、下方的三个声音字和线头藏着不同的交互。
-- 点「打乱这里」开始全页弹球。鼠标、触摸或 A/D 控挡板，Space 发球，Esc 暂停；暂停里退出会整理回异常网页。
-- 点「说句话」找她说话，回复会改变背景结构；「送我回去吧」恢复原始主页节点与监听器。每站只留一个跨站入口。
+- 首页、作品、实验室、旧稿与留言通过 `room` 查询参数切换，支持深链接、刷新和历史前后退；她的博客只保留一个跨站入口。
+- 作品页展示一个明确标记的交互试作。实验室的四个光点支持拖动、触屏和方向键；Shift 加大步长。
+- 「留住这个形状」仅在当前浏览器保存最近八条光线。旧稿可以逐条比较，不伪造作品发布历史。
+- 「聊两句」中可以请她送回原站，恢复原始 DOM 和已有交互。留言后端未接入，输入不会发送。声音由访客主动开启。
 
-仍使用 `p34_world_v1`、`p34_story` 与 `p34_breakout_v1` 存档契约，未迁移玩家数据。事件驱动粒子参考 PixelFX，许可见 `public/third-party/pixelfx-LICENSE.txt`。
+共享实现为 `p34-space.js/css`、`p34-light.js`、`p34-space-content.js`；现有 `p34-motion.js` 提供文字与布局动效，原有世界 Cookie 契约保留。无弹球、后期剧情或正式人物定稿。
 
 ```powershell
-node --test scripts/p34-breakout.test.mjs scripts/p34-living.test.mjs scripts/p34-dialogue.test.mjs scripts/p34-story.test.mjs
+python -m http.server 8980 --bind 127.0.0.1 --directory public
+node scripts/sync-p34-space.mjs # 同步到相邻 sayori-blog/public
+node --test scripts/p34-space.test.mjs scripts/p34-living.test.mjs scripts/p34-dialogue.test.mjs scripts/p34-story.test.mjs scripts/paper-trace.test.mjs
 ```
+
+字体为 Noto Serif SC 的局部字集，许可在 `public/assets/p34/OFL.txt`。光带、折射与粒子由 Canvas 绘制；静态场景缓存，闲置时停帧，支持 reduced-motion。没有把参考图做成整页截图。

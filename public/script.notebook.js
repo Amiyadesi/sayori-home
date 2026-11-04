@@ -213,7 +213,6 @@ let STICKY_QUOTES = PATH_LANG === 'en' ? STICKY_QUOTES_EN : STICKY_QUOTES_ZH;
 let currentLayer = 'dream';
 let locked = false;
 let homeData = null;
-let paperData = null;
 let cmdData = null;
 let cmdDataPromise = null;
 let matrixActive = false;
@@ -228,6 +227,8 @@ loadHomeData().finally(() => {
 	window.SayoriI18n?.ready?.();
 	initDreamInteractions();
 	initSideNotes();
+	document.body.dataset.surfaceReady = "true";
+	window.dispatchEvent(new Event("sayori:surface-ready"));
 });
 initMotion();
 
@@ -573,11 +574,6 @@ async function loadHomeData() {
 		const res = await fetch(HOME_DATA_URL, { cache: 'default' });
 		if (!res.ok) return;
 		homeData = await res.json();
-		if (urlParams.get('paper') === '0617') {
-			paperData = (await import('./paper-content.js')).paperContent;
-			homeData.surface.stickyQuotes = paperData.sticky;
-			// Native service descriptions and destinations stay unchanged.
-		}
 		applyHomeData(homeData);
 	} catch (error) {
 		console.info('[home-config] skipped');
@@ -593,8 +589,6 @@ function applyHomeData(config) {
 	applyIntroConfig(config.intro);
 	applyServicesConfig(config.services);
 	bindSurfaceHandlers();
-	document.body.dataset.surfaceReady = "true";
-	window.dispatchEvent(new Event("sayori:surface-ready"));
 }
 
 function applyMetaConfig(meta) {
@@ -1209,12 +1203,6 @@ function initDreamInteractions() {
 }
 
 function initSideNotes() {
-	if (paperData) {
-		const render = () => { sideNotePool = shuffle([...paperData.notes]); renderSideNotes(); };
-		render();
-		window.matchMedia(SIDE_NOTE_MOBILE_QUERY).addEventListener('change',render);
-		return;
-	}
 	if (!sideNotesLayer || prefersReducedMotion()) return;
 	const cachedNotes = readCachedSideNotes();
 	if (cachedNotes.length) {

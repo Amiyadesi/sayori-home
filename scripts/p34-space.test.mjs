@@ -57,7 +57,7 @@ test('local sketches validate version, time, count and normalized geometry at th
 });
 
 test('Home and Blog ship exactly the same space and light implementation', () => {
-  for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js']) {
+  for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js', 'p34-journey.js', 'p34-flight-levels.js', 'p34-orbit-core.js', 'p34-orbit.js', 'p34-adventure.js', 'p34-adventure.css']) {
     const blog = new URL(`../../sayori-blog/public/${file}`, import.meta.url);
     if (fs.existsSync(blog)) assert.equal(fs.readFileSync(new URL(`../public/${file}`, import.meta.url), 'utf8'), fs.readFileSync(blog, 'utf8'), file);
   }

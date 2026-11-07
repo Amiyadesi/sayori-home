@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 const home = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const blog = path.resolve(process.argv[2] || path.join(home, '../../sayori-blog/public'));
 if (!fs.existsSync(path.join(blog, 'paper-blog.js'))) throw new Error('Expected sayori-blog/public');
-for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js']) {
+for (const file of ['p34-space.js', 'p34-space.css', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js', 'p34-journey.js', 'p34-flight-levels.js', 'p34-orbit-core.js', 'p34-orbit.js', 'p34-adventure.js', 'p34-adventure.css']) {
   fs.copyFileSync(path.join(home, file), path.join(blog, file));
   console.log(file);
 }

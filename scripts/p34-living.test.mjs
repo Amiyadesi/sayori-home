@@ -55,7 +55,7 @@ test('both sites ship the same active world; discarded games and horror engines 
  const blog=process.env.P34_BLOG_PUBLIC
   ? pathToFileURL(path.resolve(process.env.P34_BLOG_PUBLIC) + path.sep)
   : new URL('../../sayori-blog/public/',import.meta.url);
- for(const file of ['p34-living.js','p34-living.css','p34-motion.js','p34-motion.css','p34-arc.js','p34-arc.css','p34-dialogue.js','p34-dialogue.css','p34-story.js'])assert.equal(fs.readFileSync(new URL(file,home),'utf8'),fs.readFileSync(new URL(file,blog),'utf8'),file);
+ for(const file of ['p34-living.js','p34-living.css','p34-motion.js','p34-motion.css','p34-arc.js','p34-arc.css','p34-dialogue.js','p34-dialogue.css','p34-story.js'])assert.equal(fs.readFileSync(new URL(file,home),'utf8').replaceAll('\r\n','\n'),fs.readFileSync(new URL(file,blog),'utf8').replaceAll('\r\n','\n'),file);
  for(const file of ['p34-organic.js','p34-organic.css','p34-typewalk.js','p34-works.js'])assert.equal(fs.existsSync(new URL(file,home)),false);
  assert.equal(fs.existsSync(new URL('p34-decay.js',blog)),false);
 });

@@ -52,14 +52,45 @@ test('the three revisions actually change returns for identical input', () => {
   assert.ok(new Set(vx.map(Math.round)).size===3);
 });
 
-test('bomb chains hit each brick once and a full charge fires a real laser', () => {
+test('bomb chains hit each brick once', () => {
   const g=new BreakoutGame({level:WORKSHOP});g.launch();
   const bombs=g.bricks.filter(b=>b.kind==='bomb');const normal=g.bricks.find(b=>b.kind==='normal');
   bombs[0].x=normal.x; bombs[0].y=normal.y; const before=g.stats.hits;
   g.damage(bombs[0],1); assert.equal(bombs[0].hp,0); assert.equal(normal.hp,0);assert.ok(g.stats.hits>before);
-  g.energy=100;const target=g.bricks.find(b=>b.hp>0);g.paddle.x=target.x;
-  assert.equal(g.laser(),true);assert.equal(target.hp,0);assert.ok(g.energy<100);
+});
+
+test('a sustained laser follows the paddle, burns durability, and cannot recharge itself', () => {
+  const g=new BreakoutGame({height:1200,level:STAGES[0]});g.launch();
+  const target=g.bricks.find(b=>b.hp===2), other=g.bricks.find(b=>b.x>g.width*.7);
+  g.paddle.x=target.x;g.energy=100;
+  assert.equal(g.laser(),true);assert.equal(g.laser(),false);
+  for(let i=0;i<16;i++)g.step(1/120,{target:target.x});
+  assert.ok(target.hp<2,'the beam must damage the brick while active');
+  for(let i=0;i<110;i++)g.step(1/120,{target:other.x});
+  assert.equal(target.hp,0);assert.equal(other.hp,0,'moving after activation must hit a new column');
+  assert.ok(g.laserTime>1,'the beam must last long enough to sweep');
+  assert.equal(g.energy,0,'laser destruction must not fund another laser');
   assert.equal(g.laser(),false);
+  for(let i=0;i<800&&g.laserTime>0;i++)g.step(1/120,{target:g.ball.x});
+  assert.equal(g.laserTime,0);
+});
+
+test('loss, clear and retry stop an active laser; resized paddles keep their contact width',()=>{
+  for(const end of ['miss','clear','retry']){
+    const g=new BreakoutGame();g.launch();g.energy=100;g.laser();
+    if(end==='retry')g.retry();
+    else if(end==='clear')for(const b of g.bricks)g.damage(b,3);
+    else {g.freeze=0;g.ball.y=g.height+60;g.step(1/120);}
+    assert.equal(g.laserTime,0,end);
+  }
+  for(const width of [600,1200]){
+    const g=new BreakoutGame({width});const w=g.paddle.w;
+    assert.ok(w>(width<800?108:128));
+    g.resize(width,width*.9);assert.equal(g.paddle.w,w);
+    const tuned=new BreakoutGame({width,edition:'tuned'});assert.ok(tuned.paddle.w>w);
+    g.launch();g.ball.x=g.paddle.x+w/2-1;g.ball.y=g.paddle.y-g.paddle.h/2-g.ball.r-1;g.ball.vx=0;g.ball.vy=500;
+    g.step(1/120);assert.equal(g.stats.returns,1,'the visible outer paddle must catch the ball');
+  }
 });
 
 test('clearing requires all bricks; perfect bump is timed and cannot be stacked by repeat', () => {

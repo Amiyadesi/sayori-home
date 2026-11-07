@@ -15,7 +15,7 @@ function decision(opinion='both') {
 }
 function reunited(){
   let s=journeyEvent(decision(),'withdraw');s=journeyEvent(s,'difference');s=journeyEvent(s,'opened','long-way');s=journeyEvent(s,'diagram');
-  return event(s,'draft',{}, {mode:'seeking',kind:'found'});
+  return journeyEvent(s,'found');
 }
 test('visits never count as play, and failed real trials qualify without a winning requirement',()=>{
   const s=newJourney();assert.equal(s.phase,'arrive');assert.throws(()=>journeyEvent(s,'visit'),/Unknown/);
@@ -31,12 +31,16 @@ test('campaign play does not impersonate a same-layout comparison',()=>{
 test('all opinions lead to the same creator-owned conflict, without morality scores',()=>{
   for(const opinion of ['free','clear','both','unsure']){const s=decision(opinion);assert.equal(s.phase,'choice');assert.equal(s.opinion,opinion);assert.ok(!('trust'in s)&&!('pressure'in s));assert.equal(journeyEvent(s,'withdraw').phase,'closed');}
 });
-test('reunion needs both sources and reaching the opening, not just returning a ball',()=>{
-  let s=journeyEvent(decision(),'withdraw');assert.throws(()=>event(s,'draft',{}, {mode:'seeking',kind:'found'}),/evidence/i);
+test('closed exploration finds her without starting a game or inventing more play',()=>{
+  let s=journeyEvent(decision(),'withdraw');assert.throws(()=>journeyEvent(s,'found'),/evidence/i);
   assert.throws(()=>journeyEvent(s,'diagram'),/source note/i);
+  assert.throws(()=>event(s,'draft',{}, {mode:'seeking',kind:'found'}),/Unknown game session/);
+  assert.throws(()=>event(s,'draft',{}, {mode:'campaign'}),/Closed works/);
+  const play=structuredClone(s.plays),last=[...s.lastReturn];
   s=journeyEvent(s,'difference');s=journeyEvent(s,'opened','long-way');s=journeyEvent(s,'diagram');
-  s=event(s,'draft',{returns:1},{mode:'seeking',kind:'return',offset:.8,vx:600,vy:-500});assert.equal(s.phase,'closed');
-  s=event(s,'draft',{}, {mode:'seeking',kind:'found'});assert.equal(s.phase,'found');
+  assert.equal(s.phase,'closed');
+  s=journeyEvent(s,'found');assert.equal(s.phase,'found');
+  assert.deepEqual(s.plays,play);assert.deepEqual(s.lastReturn,last);
 });
 test('the clue unlocks when the drawn ray actually reaches the right opening',()=>{
   assert.equal(reboundSketch(0,'draft').exit,false);

@@ -1,0 +1,85 @@
+name: Deploy Project 34 review
+
+on:
+  push:
+    branches: [feat/p34-original-breakout]
+    paths: ['public/**', 'scripts/**', '.github/workflows/p34-preview.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: project-34-review
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+        with:
+          repository: Amiyadesi/sayori-articles
+          ref: main
+          path: content
+      - uses: actions/checkout@v6
+        with:
+          repository: Amiyadesi/sayori-blog
+          ref: feat/p34-original-breakout
+          path: blog
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.1.3
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: blog/pnpm-lock.yaml
+      - name: Verify the game and journey
+        env:
+          P34_BLOG_PUBLIC: blog/public
+          CONTENT_DIR: ./content
+        run: |
+          npm ci
+          node scripts/sync-home-content.mjs
+          node --test scripts/p34-breakout.test.mjs scripts/p34-journey.test.mjs scripts/p34-feedback.test.mjs scripts/p34-space.test.mjs scripts/package-p34-preview.test.mjs scripts/paper-trace.test.mjs
+      - name: Build her notes
+        working-directory: blog
+        env:
+          P34_LOCAL_PREVIEW: '1'
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec tsx --test tests/paper-blog.test.ts
+          pnpm exec astro build --outDir .p34-preview
+      - name: Package an isolated, static review
+        run: |
+          export P34_HOME_SHA="$(git rev-parse HEAD)"
+          export P34_BLOG_SHA="$(git -C blog rev-parse HEAD)"
+          export P34_CONTENT_SHA="$(git -C content rev-parse HEAD)"
+          node scripts/package-p34-preview.mjs blog/.p34-preview
+      - name: Deploy preview, never production
+        working-directory: output/p34-preview
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: >
+          npx --yes wrangler@4.111.0 pages deploy .
+          --project-name sayori-home
+          --branch p34-journey
+          --commit-hash "${GITHUB_SHA}"
+          --commit-message "Project 34 complete journey review"
+      - name: Verify published source
+        env:
+          EXPECTED_HOME_SHA: ${{ github.sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          const url='https://p34-journey.sayori-home.pages.dev/journey-deployment.json';
+          const response=await fetch(url);
+          if(!response.ok)throw new Error(`Preview manifest: HTTP ${response.status}`);
+          const manifest=await response.json();
+          if(manifest.homeSha!==process.env.EXPECTED_HOME_SHA)throw new Error('Preview points at another Home commit');
+          console.log('https://p34-journey.sayori-home.pages.dev/?paper=0617');
+          NODE

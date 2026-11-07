@@ -29,6 +29,7 @@ jobs:
           repository: Amiyadesi/sayori-blog
           ref: feat/p34-original-breakout
           path: blog
+          fetch-depth: 0
       - uses: pnpm/action-setup@v6
         with:
           version: 11.1.3

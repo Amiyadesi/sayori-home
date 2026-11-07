@@ -50,8 +50,10 @@ jobs:
         working-directory: blog
         env:
           P34_LOCAL_PREVIEW: '1'
+          CONTENT_DIR: ../content
         run: |
           pnpm install --frozen-lockfile
+          pnpm run sync-content
           pnpm exec tsx --test tests/paper-blog.test.ts
           pnpm exec astro build --outDir .p34-preview
       - name: Package an isolated, static review

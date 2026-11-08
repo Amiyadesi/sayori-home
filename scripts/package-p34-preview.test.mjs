@@ -31,7 +31,7 @@ test('review package keeps the journey on one origin without changing source or 
   assert.doesNotMatch(fs.readFileSync(path.join(out,'index.html'),'utf8'),/analytics/);
   const note=fs.readFileSync(path.join(out,'notes/long-way/index.html'),'utf8');
   assert.match(note,/<article hidden\b/);
-  assert.match(note,/background:#08090a/);
+  assert.match(note,/p34-entry\.js/);
   assert.match(note,/href="\/\?paper=0617&amp;room=archive"/);
   assert.ok(fs.existsSync(path.join(out,'writing/index.html')));
   assert.equal(fs.existsSync(path.join(out,'_worker.js')),false);

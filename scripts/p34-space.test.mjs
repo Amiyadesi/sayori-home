@@ -57,7 +57,7 @@ test('local sketches validate version, time, count and normalized geometry at th
 });
 
 test('Home and Blog ship exactly the same space and light implementation', () => {
-  for (const file of ['p34-space.js', 'p34-space.css', 'p34-motion.js', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js', 'p34-journey.js', 'p34-breakout-levels.js', 'p34-breakout-core.js', 'p34-breakout.js', 'p34-breakout.css', 'p34-adventure.js', 'p34-adventure.css', 'p34-residue.js', 'p34-residue.css']) {
+  for (const file of ['p34-entry.js', 'p34-script.js', 'p34-guestbook.js', 'p34-space.js', 'p34-space.css', 'p34-motion.js', 'p34-light.js', 'p34-space-content.js', 'p34-passage.js', 'p34-journey.js', 'p34-breakout-levels.js', 'p34-breakout-core.js', 'p34-breakout.js', 'p34-breakout.css', 'p34-adventure.js', 'p34-adventure.css', 'p34-residue.js', 'p34-residue.css']) {
     const blog = process.env.P34_BLOG_PUBLIC ? `${process.env.P34_BLOG_PUBLIC}/${file}` : new URL(`../../sayori-blog/public/${file}`, import.meta.url);
     if (process.env.P34_BLOG_PUBLIC || fs.existsSync(blog)) assert.equal(fs.readFileSync(new URL(`../public/${file}`, import.meta.url), 'utf8'), fs.readFileSync(blog, 'utf8'), file);
   }

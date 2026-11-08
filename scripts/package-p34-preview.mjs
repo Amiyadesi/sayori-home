@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const version='20261107-residue';
-const shell=article=>`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>她写的</title><style>html,body{margin:0;background:#08090a}</style><link rel="stylesheet" data-p34-reading-style href="/p34-reading.css?v=${version}"></head><body>${article.replace('<article','<article hidden')}<script type="module">import {mountPaperBlog} from '/paper-blog.js?v=${version}';if(new URLSearchParams(location.search).get('paper')==='0617')await mountPaperBlog();else location.replace('https://blog.sayori.org/');</script></body></html>`;
+const version='20261108-revision';
+const shell=article=>`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><script src="/p34-entry.js?v=${version}"></script><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>她写的</title><style>html,body{margin:0;background:#294b7a}</style><link rel="stylesheet" data-p34-reading-style href="/p34-reading.css?v=${version}"></head><body>${article.replace('<article','<article hidden')}<script type="module">if(new URLSearchParams(location.search).get('paper')==='0617'){try{const {mountPaperBlog}=await import('/paper-blog.js?v=${version}');await mountPaperBlog();}catch(error){console.error('Space entry failed',error);window.dispatchEvent(new Event('p34:entry-error'));}}else location.replace('https://blog.sayori.org/');</script></body></html>`;
 
 export function packageJourney(homePublic,blogBuild,output){
   const posts=JSON.parse(fs.readFileSync(path.join(blogBuild,'her-space.json'),'utf8'));
@@ -31,7 +31,7 @@ export function packageJourney(homePublic,blogBuild,output){
       if(entry.name==='p34-space.js')after=after.replaceAll('href="/?paper=0617"','href="/writing/?paper=0617"')
         .replace("post ? post.href : '/?paper=0617'","post ? post.href : '/writing/?paper=0617'")
         .replace("if (ownNote) { cleanup(); location.assign('/'); return; }","if (site === 'blog') { cleanup(); location.assign('https://blog.sayori.org/'); return; }");
-      // Keep the original desk usable without connecting this review to live comments.
+      // Do not prefetch the original blog's comments; her guestbook loads only when opened.
       if(entry.name==='script.notebook.js')after=after.replace('runWhenIdle(loadGuestbookNotes, 3000);','');
       if(entry.name.endsWith('.html'))after=after.replace(/<script\b[^>]*src=["'][^"']*(?:analytics|umami)\.notebook\.js[^"']*["'][^>]*>\s*<\/script>/g,'');
       if(after!==before)fs.writeFileSync(file,after);

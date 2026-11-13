@@ -80,9 +80,15 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           const url='https://p34-journey.sayori-home.pages.dev/journey-deployment.json';
-          const response=await fetch(url);
-          if(!response.ok)throw new Error(`Preview manifest: HTTP ${response.status}`);
-          const manifest=await response.json();
-          if(manifest.homeSha!==process.env.EXPECTED_HOME_SHA)throw new Error('Preview points at another Home commit');
-          console.log('https://p34-journey.sayori-home.pages.dev/?paper=0617');
+          for(let attempt=0;attempt<6;attempt++){
+            const response=await fetch(`${url}?sha=${process.env.EXPECTED_HOME_SHA}&attempt=${attempt}`,{cache:'no-store'});
+            if(!response.ok)throw new Error(`Preview manifest: HTTP ${response.status}`);
+            const manifest=await response.json();
+            if(manifest.homeSha===process.env.EXPECTED_HOME_SHA){
+              console.log('https://p34-journey.sayori-home.pages.dev/?paper=0617');
+              break;
+            }
+            if(attempt===5)throw new Error(`Preview still points at ${manifest.homeSha}`);
+            await new Promise(resolve=>setTimeout(resolve,5000));
+          }
           NODE

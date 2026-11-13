@@ -51,7 +51,7 @@ test('3D dialogue arrives and departs glyph by glyph, with immediate reduced mot
     dialogue.show('等一下', [], 390, 844);
     dialogue.render(renderer, .001);
     assert.ok(words.children[0].children.every(glyph => glyph.visible && glyph.position.z === 0 && glyph.material[0].opacity === 1));
-    dialogue.show(LINES.arrival[0], [], 390, 844);
+    dialogue.show(LINES.loft.answerAuthor[1], [], 390, 844);
     dialogue.render(renderer, .001);
     const worldWidth = 8 * Math.tan(34 * Math.PI / 180) * 390 / 844;
     assert.ok(words.children.length > 1);

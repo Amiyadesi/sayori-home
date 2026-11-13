@@ -9,7 +9,6 @@ import {
   crossedDoor,
   computeFloorElevation,
   resolvePlayerMovement,
-  checkSightlineAlignment,
   findInteractiveTarget,
 } from '../public/p34-world3d.js';
 import { newJourney, journeyEvent } from '../public/p34-journey.js';
@@ -30,7 +29,7 @@ test('library books have physical reading stations without granting main-route u
 });
 
 test('ordinary doors trigger only on crossing their opening, at the right height and direction', () => {
-  const config = getLayerConfig('atrium', { westAligned: true });
+  const config = getLayerConfig('atrium', newJourney());
   const door = config.interactables.find(i => i.crossing);
   const plane = door.crossing.z;
   const before = { x: door.x, y: door.floorY, z: plane + .2 };
@@ -42,32 +41,39 @@ test('ordinary doors trigger only on crossing their opening, at the right height
   assert.equal(crossedDoor(before, before, config.interactables), undefined);
 });
 
-test('West gallery non-Euclidean loop wraps player until sightline is aligned, then enables staircase elevation', () => {
-  const unalignedState = newJourney();
-  const cfg1 = getLayerConfig('atrium', unalignedState);
-
-  // Walking north in the west gallery (X = -9.4, Z -> -5.5) triggers the loop back to Z = +4.8
-  const looped = resolvePlayerMovement({ x: -9.4, y: 0, z: -4.9 }, -9.4, -5.5, cfg1, unalignedState);
-  assert.equal(looped.looped, true);
-  assert.equal(looped.z, 4.8);
-
-  // Standing in the vantage circle (-6.5, 1.5) and looking West/North-West aligns the sightline
-  assert.equal(checkSightlineAlignment({ x: -6.5, y: 0, z: 1.5 }, 1.1), true);
-  assert.equal(checkSightlineAlignment({ x: 0, y: 0, z: 8.0 }, 1.1), false);
-
-  // Once aligned, walking north up the West Staircase raises player Y smoothly to 3.2m
-  const alignedState = journeyEvent(unalignedState, 'align-west');
-  const cfg2 = getLayerConfig('atrium', alignedState);
-  let pos = { x: -9.4, y: 0, z: -1.9 };
-  for (let z = -2.2; z >= -7.2; z -= 0.5) {
-    pos = resolvePlayerMovement(pos, -9.4, z, cfg2, alignedState);
-    assert.equal(pos.looped, false);
+test('optional passages loop back and the window mezzanine is reachable before solving anything', () => {
+  const state = newJourney(), config = getLayerConfig('atrium', state);
+  let pos = { ...config.spawn };
+  const route = [[-6.5, 8.8], [-6.5, 5.5], [-16, 5.5], [-16, 0], [-22, 0], [-22, -5], [-15, -5], [-15, -3.5], [-12, -3.5], [-12, 5.5], [-16, 5.5], [-16, 12], [-21.5, 12], [-21.5, 19.2], [0, 19.2], [0, 14.5], [15, 14.5], [15, 18], [21.3, 18], [21.3, 11]];
+  for (const [x, z] of route) {
+    for (let step = 0; step < 1000 && Math.hypot(x - pos.x, z - pos.z) > .15; step++) {
+      const distance = Math.hypot(x - pos.x, z - pos.z);
+      const next = resolvePlayerMovement(pos, pos.x + (x - pos.x) / distance * .1, pos.z + (z - pos.z) / distance * .1, config);
+      assert.ok(Math.hypot(next.x - pos.x, next.z - pos.z) <= .101, 'Walking unexpectedly relocated the player');
+      pos = next;
+    }
+    assert.ok(Math.hypot(x - pos.x, z - pos.z) < .2, `Blocked optional passage near ${x}, ${z}`);
   }
-  assert.ok(pos.y >= 3.1, `Expected player to reach mezzanine height 3.2m, got ${pos.y}`);
+  assert.ok(pos.y > 2, 'The optional staircase did not lead above the room');
+  assert.equal(state.westAligned, false);
+  assert.deepEqual(state.layers, ['atrium']);
+});
+
+test('west stairs can be walked from a fresh save without a frame or a position reset', () => {
+  const state = newJourney(), config = getLayerConfig('atrium', state);
+  assert.equal(config.interactables.some(i => i.kind === 'sightline'), false);
+  let pos = { x: -9.4, y: 0, z: -1.9 };
+  for (let z = -2; z >= -7.2; z -= .1) {
+    const next = resolvePlayerMovement(pos, -9.4, z, config);
+    assert.ok(Math.abs(next.z - pos.z) <= .101, 'The old west-gallery reset returned');
+    pos = next;
+  }
+  assert.ok(pos.y >= 3.1);
+  assert.ok(pos.z < -7);
 });
 
 test('2D Light Lab bridge solidification opens the chasm to the North High Platform', () => {
-  const initial = journeyEvent(newJourney(), 'align-west');
+  const initial = newJourney();
   const cfgBlocked = getLayerConfig('atrium', initial);
   // Attempting to walk from mezzanine (Z = -10.2, Y = 3.2) onto the unsolidified light bridge (Z = -11.5) is blocked by chasm-guard
   const blocked = resolvePlayerMovement({ x: 0, y: 3.2, z: -10.2 }, 0, -11.5, cfgBlocked, initial);
@@ -122,5 +128,4 @@ test('upper objects cannot be used through the floor and empty space is not walk
   }
   const edge = resolvePlayerMovement({ x: 8, y: 0, z: -12.4 }, 8, -13, cfg, state);
   assert.equal(edge.z, -12.4);
-  assert.equal(checkSightlineAlignment({ x: -6.5, z: 1.5 }, 0), false);
 });

@@ -6,7 +6,6 @@ import {
   journeyEvent,
   readJourney,
   cookieJourney,
-  isBridgeArch,
   pillarsAligned,
   identityClueCount,
   TARGET_PILLARS,
@@ -19,33 +18,21 @@ test('initial journey starts in atrium layer and requires spatial progression to
   assert.equal(s.currentLayer, 'atrium');
   assert.deepEqual(s.layers, ['atrium']);
   assert.throws(() => journeyEvent(s, 'visit'), /Unknown/);
-  assert.throws(() => journeyEvent(s, 'enter-layer', 'stacks'), /阶梯|光桥/);
   assert.throws(() => journeyEvent(s, 'enter-layer', 'loft'), /基准柱/);
 });
 
-test('west sightline alignment or 2D light arch bridge unlocks the second layer (stacks)', () => {
-  let s = newJourney();
-  s = journeyEvent(s, 'loop-walked');
-  assert.equal(s.loopCount, 1);
-  assert.equal(s.phase, 'shared');
-
-  const viaSightline = journeyEvent(s, 'align-west');
-  assert.equal(viaSightline.westAligned, true);
-  const inStacks = journeyEvent(viaSightline, 'enter-layer', 'stacks');
+test('the second layer is freely accessible without the retired frame gate', () => {
+  const inStacks = journeyEvent(newJourney(), 'enter-layer', 'stacks');
   assert.equal(inStacks.currentLayer, 'stacks');
   assert.deepEqual(inStacks.layers, ['atrium', 'stacks']);
   assert.equal(inStacks.phase, 'stacks');
-
-  // Also test unlocking via 2D Light Lab arch or save
-  const archedNodes = [[0.1, 0.7], [0.35, 0.25], [0.65, 0.28], [0.9, 0.72]];
-  assert.equal(isBridgeArch(archedNodes), true);
-  const viaLight = journeyEvent(newJourney(), 'light-saved', archedNodes);
-  assert.equal(viaLight.bridgeSolid, true);
-  assert.equal(journeyEvent(viaLight, 'enter-layer', 'stacks').currentLayer, 'stacks');
+  assert.equal(inStacks.westAligned, false);
+  const old = { ...inStacks, westAligned: true, loopCount: 3 };
+  assert.deepEqual(readJourney(JSON.stringify(old)).state, old);
 });
 
 test('2D blog blueprint and 3D spatial pillars unlock the third layer (her loft)', () => {
-  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  let s = journeyEvent(newJourney(), 'enter-layer', 'stacks');
   assert.equal(s.stacksUnlocked, false);
 
   // Blueprint slider on blog
@@ -90,7 +77,7 @@ test('a bridge needs both middle points raised and a saved sketch, not just a sa
 });
 
 test('discovering identity clues in her loft unlocks the first-chapter completion without fixing a morality score', () => {
-  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  let s = journeyEvent(newJourney(), 'enter-layer', 'stacks');
   s = journeyEvent(journeyEvent(s, 'opened', 'long-way'), 'diagram');
   s = journeyEvent(journeyEvent(s, 'sync-pillars'), 'enter-layer', 'loft');
 
@@ -108,7 +95,7 @@ test('discovering identity clues in her loft unlocks the first-chapter completio
 });
 
 test('complete 3D exploration state fits cookie budget and preserves legacy v1/v2 saves', () => {
-  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  let s = journeyEvent(newJourney(), 'enter-layer', 'stacks');
   s = journeyEvent(journeyEvent(s, 'opened', 'long-way'), 'diagram');
   s = journeyEvent(journeyEvent(s, 'sync-pillars'), 'enter-layer', 'loft');
   for (const c of ['atrium-survey', 'retired-relic', 'slot-34-log', 'dual-handwriting', 'rain-origin-trace']) {

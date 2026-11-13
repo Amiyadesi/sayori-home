@@ -1,97 +1,156 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { newJourney, journeyEvent, readJourney, trialReady, cookieJourney, availableVersions, STAGE_COUNT } from '../public/p34-journey.js';
-import { playDelta } from '../public/p34-breakout.js';
-import { reboundSketch } from '../public/p34-adventure.js';
+import {
+  newJourney,
+  journeyEvent,
+  readJourney,
+  cookieJourney,
+  isBridgeArch,
+  pillarsAligned,
+  identityClueCount,
+  TARGET_PILLARS,
+} from '../public/p34-journey.js';
+import { reboundSketch, layerFromURL } from '../public/p34-adventure.js';
 
-const zero=()=>({launches:0,returns:0,misses:0,clears:0,hits:0,perfect:0,seconds:0});
-function event(s,edition,delta,extra={}) {return journeyEvent(s,'play',{edition,mode:'trial',kind:'play',stage:0,score:100,seconds:20,delta:{...zero(),...delta},...extra});}
-function played(s,edition) {return event(s,edition,{launches:1,returns:6,hits:8,seconds:22},{kind:'return',offset:.4,vx:250,vy:-500});}
-function decision(opinion='both') {
-  let s=played(newJourney(),'draft');s=journeyEvent(s,'feedback',{version:'draft',value:'clear'});
-  s=played(s,'tuned');s=journeyEvent(s,'feedback',{version:'tuned',value:'free'});
-  s=played(s,'guided');return journeyEvent(s,'opinion',opinion);
-}
-function reunited(){
-  let s=journeyEvent(decision(),'withdraw');s=journeyEvent(s,'difference');s=journeyEvent(s,'opened','long-way');s=journeyEvent(s,'diagram');
-  return journeyEvent(s,'found');
-}
-test('visits never count as play, and failed real trials qualify without a winning requirement',()=>{
-  const s=newJourney();assert.equal(s.phase,'arrive');assert.throws(()=>journeyEvent(s,'visit'),/Unknown/);
-  assert.throws(()=>journeyEvent(s,'feedback',{version:'draft',value:'clear'}),/play/i);
-  const next=event(s,'draft',{launches:3,misses:3,seconds:28});assert.ok(trialReady(next,'draft'));
-  assert.equal(journeyEvent(next,'feedback',{version:'draft',value:'clear'}).phase,'tuned');
-  assert.equal(next.plays.draft.clears,0);
+test('initial journey starts in atrium layer and requires spatial progression to enter deeper layers', () => {
+  const s = newJourney();
+  assert.equal(s.phase, 'arrive');
+  assert.equal(s.currentLayer, 'atrium');
+  assert.deepEqual(s.layers, ['atrium']);
+  assert.throws(() => journeyEvent(s, 'visit'), /Unknown/);
+  assert.throws(() => journeyEvent(s, 'enter-layer', 'stacks'), /阶梯|光桥/);
+  assert.throws(() => journeyEvent(s, 'enter-layer', 'loft'), /基准柱/);
 });
-test('campaign play does not impersonate a same-layout comparison',()=>{
-  const s=event(newJourney(),'draft',{launches:1,returns:12,hits:40,clears:1,seconds:70},{mode:'campaign',kind:'clear'});
-  assert.equal(trialReady(s,'draft'),false);assert.equal(s.campaign.unlocked,1);
+
+test('west sightline alignment or 2D light arch bridge unlocks the second layer (stacks)', () => {
+  let s = newJourney();
+  s = journeyEvent(s, 'loop-walked');
+  assert.equal(s.loopCount, 1);
+  assert.equal(s.phase, 'shared');
+
+  const viaSightline = journeyEvent(s, 'align-west');
+  assert.equal(viaSightline.westAligned, true);
+  const inStacks = journeyEvent(viaSightline, 'enter-layer', 'stacks');
+  assert.equal(inStacks.currentLayer, 'stacks');
+  assert.deepEqual(inStacks.layers, ['atrium', 'stacks']);
+  assert.equal(inStacks.phase, 'stacks');
+
+  // Also test unlocking via 2D Light Lab arch or save
+  const archedNodes = [[0.1, 0.7], [0.35, 0.25], [0.65, 0.28], [0.9, 0.72]];
+  assert.equal(isBridgeArch(archedNodes), true);
+  const viaLight = journeyEvent(newJourney(), 'light-saved', archedNodes);
+  assert.equal(viaLight.bridgeSolid, true);
+  assert.equal(journeyEvent(viaLight, 'enter-layer', 'stacks').currentLayer, 'stacks');
 });
-test('all opinions lead to the same creator-owned conflict, without morality scores',()=>{
-  for(const opinion of ['free','clear','both','unsure']){const s=decision(opinion);assert.equal(s.phase,'choice');assert.equal(s.opinion,opinion);assert.ok(!('trust'in s)&&!('pressure'in s));assert.equal(journeyEvent(s,'withdraw').phase,'closed');}
+
+test('2D blog blueprint and 3D spatial pillars unlock the third layer (her loft)', () => {
+  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  assert.equal(s.stacksUnlocked, false);
+
+  // Blueprint slider on blog
+  assert.equal(reboundSketch(0).exit, false);
+  assert.equal(reboundSketch(0.5).exit, false);
+  const aligned = reboundSketch(0.85);
+  assert.equal(aligned.exit, true);
+  assert.match(aligned.path, /^M240 450 L/);
+
+  // Must open long-way before recording diagram
+  assert.throws(() => journeyEvent(s, 'diagram'), /source note/i);
+  s = journeyEvent(s, 'opened', 'long-way');
+  s = journeyEvent(s, 'diagram');
+  assert.equal(s.diagram, true);
+
+  // Syncing pillars from projector or rotating them manually unlocks Loft
+  const synced = journeyEvent(s, 'sync-pillars');
+  assert.equal(synced.stacksUnlocked, true);
+  assert.ok(pillarsAligned(synced.pillars));
+
+  let manual = s;
+  manual = journeyEvent(manual, 'rotate-pillar', { pillar: 'west', value: TARGET_PILLARS.west });
+  manual = journeyEvent(manual, 'rotate-pillar', { pillar: 'center', value: TARGET_PILLARS.center });
+  assert.equal(manual.stacksUnlocked, false);
+  manual = journeyEvent(manual, 'rotate-pillar', { pillar: 'east', value: TARGET_PILLARS.east });
+  assert.equal(manual.stacksUnlocked, true);
+
+  const inLoft = journeyEvent(manual, 'enter-layer', 'loft');
+  assert.equal(inLoft.currentLayer, 'loft');
+  assert.deepEqual(inLoft.layers, ['atrium', 'stacks', 'loft']);
+  assert.equal(inLoft.phase, 'loft');
 });
-test('closed exploration finds her without starting a game or inventing more play',()=>{
-  let s=journeyEvent(decision(),'withdraw');assert.throws(()=>journeyEvent(s,'found'),/evidence/i);
-  assert.throws(()=>journeyEvent(s,'diagram'),/source note/i);
-  assert.throws(()=>event(s,'draft',{}, {mode:'seeking',kind:'found'}),/Unknown game session/);
-  assert.throws(()=>event(s,'draft',{}, {mode:'campaign'}),/Closed works/);
-  const play=structuredClone(s.plays),last=[...s.lastReturn];
-  s=journeyEvent(s,'difference');s=journeyEvent(s,'opened','long-way');s=journeyEvent(s,'diagram');
-  assert.equal(s.phase,'closed');
-  s=journeyEvent(s,'found');assert.equal(s.phase,'found');
-  assert.deepEqual(s.plays,play);assert.deepEqual(s.lastReturn,last);
+
+test('discovering identity clues in her loft unlocks the first-chapter completion without fixing a morality score', () => {
+  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  s = journeyEvent(journeyEvent(s, 'opened', 'long-way'), 'diagram');
+  s = journeyEvent(journeyEvent(s, 'sync-pillars'), 'enter-layer', 'loft');
+
+  assert.throws(() => journeyEvent(s, 'complete-loft'), /线索/);
+  s = journeyEvent(s, 'clue', 'slot-34-log');
+  assert.equal(identityClueCount(s), 1);
+  assert.throws(() => journeyEvent(s, 'complete-loft'), /线索/);
+
+  s = journeyEvent(s, 'clue', 'dual-handwriting');
+  s = journeyEvent(s, 'clue', 'rain-origin-trace');
+  assert.equal(identityClueCount(s), 3);
+  s = journeyEvent(s, 'complete-loft');
+  assert.equal(s.phase, 'after');
+  assert.ok(!('trust' in s) && !('pressure' in s));
 });
-test('the clue unlocks when the drawn ray actually reaches the right opening',()=>{
-  assert.equal(reboundSketch(0,'draft').exit,false);
-  assert.equal(reboundSketch(.6,'draft').exit,false);
-  const free=reboundSketch(.9,'draft');assert.equal(free.exit,true);assert.match(free.path,/L956 /);
-  assert.equal(reboundSketch(.9,'guided').exit,false);
+
+test('complete 3D exploration state fits cookie budget and preserves legacy v1/v2 saves', () => {
+  let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
+  s = journeyEvent(journeyEvent(s, 'opened', 'long-way'), 'diagram');
+  s = journeyEvent(journeyEvent(s, 'sync-pillars'), 'enter-layer', 'loft');
+  for (const c of ['atrium-survey', 'retired-relic', 'slot-34-log', 'dual-handwriting', 'rain-origin-trace']) {
+    s = journeyEvent(s, 'clue', c);
+  }
+  s = journeyEvent(s, 'light-saved', [[0.1, 0.2], [0.3, 0.3], [0.6, 0.3], [0.85, 0.7]]);
+  s = journeyEvent(s, 'complete-loft');
+  s = journeyEvent(s, 'letter');
+
+  const raw = JSON.stringify(s);
+  assert.ok(encodeURIComponent(raw).length <= 3800, `Cookie length: ${encodeURIComponent(raw).length}`);
+  assert.equal(readJourney(raw).error, '');
+  assert.deepEqual(readJourney(raw).state, s);
+  assert.deepEqual(cookieJourney(`other=1; p34_journey_v2=${encodeURIComponent(raw)}`).state, s);
+
+  // Legacy v1 migration
+  const oldV1 = { v: 1, phase: 'after', light: 2, lightSketch: [[0.1, 0.2], [0.3, 0.6], [0.5, 0.2], [0.8, 0.7]], leftLetter: true, touched: true };
+  const mig1 = cookieJourney(`p34_journey_v1=${encodeURIComponent(JSON.stringify(oldV1))}`);
+  assert.equal(mig1.error, '');
+  assert.equal(mig1.migrated, true);
+  assert.equal(mig1.state.bridgeSolid, true);
+  assert.equal(mig1.state.leftLetter, true);
+
+  // Legacy v2 breakout save compatibility
+  const legacyBreakoutV2 = {
+    v: 2, phase: 'tuned', touched: true, light: 2, lightSketch: [[0.1, 0.2], [0.3, 0.3], [0.6, 0.3], [0.8, 0.7]],
+    opened: ['long-way'], diagram: true, leftLetter: false,
+  };
+  const mig2 = readJourney(JSON.stringify(legacyBreakoutV2));
+  assert.equal(mig2.error, '');
+  assert.equal(mig2.state.diagram, true);
+  assert.equal(mig2.state.bridgeSolid, true);
 });
-test('ending requires placement and actual attempts, keeps the old placement, and leaves all revisions playable',()=>{
-  let s=reunited();s=journeyEvent(s,'keepsake','round');s=journeyEvent(s,'make');assert.throws(()=>journeyEvent(s,'continue'),/change together/);
-  s=event(s,'tuned',{}, {mode:'workshop',kind:'place',x:900});assert.equal(s.workshop.x,900);assert.equal(s.workshop.placed,true);
-  s=event(s,'tuned',{launches:1,misses:1},{mode:'workshop',kind:'miss'});assert.throws(()=>journeyEvent(s,'continue'),/change together/);
-  s=event(s,'tuned',{launches:1,misses:1},{mode:'workshop',kind:'miss'});s=journeyEvent(s,'continue');
-  assert.equal(s.phase,'after');assert.equal(s.workshop.kept,900);assert.notEqual(s.workshop.x,900);assert.deepEqual(availableVersions(s),['draft','tuned','guided']);
-});
-test('the chosen return stays on the desk when later games produce different returns',()=>{
-  let s=reunited();const remembered=[...s.lastReturn];s=journeyEvent(s,'keepsake','round');s=journeyEvent(s,'make');
-  s=event(s,'tuned',{returns:1},{mode:'workshop',kind:'return',offset:-.7,vx:-500,vy:-300});
-  assert.deepEqual(s.keptReturn,remembered);assert.notDeepEqual(s.lastReturn,remembered);
-  assert.deepEqual(readJourney(JSON.stringify(s)).state.keptReturn,remembered);
-  const old={...s};delete old.keptReturn;assert.equal(readJourney(JSON.stringify(old)).error,'');
-  assert.ok(readJourney(JSON.stringify({...s,keptReturn:[3,0]})).error);
-});
-test('complete campaign and story fit the cookie and round-trip without dropping records',()=>{
-  let s=reunited();s=journeyEvent(s,'keepsake','empty');s=journeyEvent(s,'make');s=event(s,'tuned',{}, {mode:'workshop',kind:'place',x:1400});
-  s=event(s,'tuned',{launches:1,clears:1},{mode:'workshop',kind:'clear'});s=journeyEvent(s,'continue');
-  for(let stage=0;stage<STAGE_COUNT;stage++)s=event(s,'draft',{launches:2,returns:25,clears:1,hits:60,seconds:99},{mode:'campaign',kind:'clear',stage,score:19580,seconds:99});
-  s=journeyEvent(s,'light-saved',[[.1,.2],[.3,.6],[.5,.2],[.8,.7]]);
-  const raw=JSON.stringify(s);assert.ok(encodeURIComponent(raw).length<=3800,encodeURIComponent(raw).length);
-  assert.equal(readJourney(raw).error,'');assert.deepEqual(readJourney(raw).state,s);
-  assert.deepEqual(cookieJourney(`other=keep;p34_journey_v2=${encodeURIComponent(raw)}`).state,s);
-});
-test('clear then exit resumes the next stage; an older game cannot erase another completed stage',()=>{
-  let s=event(newJourney(),'draft',{clears:1},{mode:'campaign',kind:'clear'});
-  s=event(s,'draft',{}, {mode:'campaign',kind:'exit'});assert.equal(s.campaign.stage,1);
-  s=event(s,'draft',{clears:1},{mode:'campaign',kind:'clear',stage:1});
-  s=event(s,'draft',{clears:1},{mode:'campaign',kind:'clear',stage:0});assert.deepEqual(Object.keys(s.campaign.records),['0','1']);
-});
-test('old bird saves retain acquaintance/light/letters, not invented breakout play',()=>{
-  const old={v:1,phase:'after',light:2,lightSketch:[[.1,.2],[.3,.6],[.5,.2],[.8,.7]],leftLetter:true,touched:true,flights:{draft:{wins:19}}};
-  const imported=cookieJourney(`p34_journey_v1=${encodeURIComponent(JSON.stringify(old))}`);
-  assert.equal(imported.error,'');assert.equal(imported.migrated,true);assert.equal(imported.state.phase,'shared');assert.deepEqual(imported.state.lightSketch,old.lightSketch);assert.equal(imported.state.leftLetter,true);assert.equal(imported.state.plays.draft.clears,0);
-  const early=newJourney();delete early.trials;delete early.lastReturn;assert.equal(readJourney(JSON.stringify(early)).error,'');
-});
-test('corrupt, oversized and future saves fail at the boundary',()=>{
-  const s=newJourney();for(const raw of ['{',JSON.stringify({...s,v:9}),JSON.stringify({...s,plays:{}}),JSON.stringify({...s,workshop:{...s.workshop,x:-2}}),JSON.stringify({...s,lastReturn:[Infinity,0]}),JSON.stringify({...s,extra:'长'.repeat(450)})])assert.ok(readJourney(raw).error);
+
+test('corrupt, oversized and invalid saves fail at the boundary', () => {
+  const s = newJourney();
+  for (const raw of [
+    '{',
+    JSON.stringify({ ...s, v: 9 }),
+    JSON.stringify({ ...s, layers: ['mars'] }),
+    JSON.stringify({ ...s, currentLayer: 'loft' }), // loft not in layers
+    JSON.stringify({ ...s, clues: ['fake-clue'] }),
+    JSON.stringify({ ...s, extra: '长'.repeat(2800) }),
+  ]) {
+    assert.ok(readJourney(raw).error, `Expected error for: ${raw.slice(0, 60)}`);
+  }
   assert.ok(cookieJourney('p34_journey_v2=%zz').error);
+  assert.equal(layerFromURL('https://sayori.org/?paper=0617&layer=stacks'), 'stacks');
+  assert.equal(layerFromURL('https://sayori.org/?paper=0617&layer=invalid'), 'atrium');
 });
-test('cumulative reports count once, and counter reversal is an error',()=>{
-  const r={kind:'return',elapsed:20,counts:{launches:1,returns:3,misses:0,clears:0,hits:6,perfect:1}};
-  const a=playDelta(r,{}),b=playDelta(r,a.current);assert.equal(a.delta.returns,3);assert.deepEqual(b.delta,zero());assert.throws(()=>playDelta({...r,elapsed:19},a.current),/倒退/);
-});
-test('active story no longer imports the rejected game or speaks in full stops',()=>{
-  const source=fs.readFileSync(new URL('../public/p34-adventure.js',import.meta.url),'utf8');assert.doesNotMatch(source,/p34-orbit|纸燕|月亮|。/);
+
+test('active adventure code no longer imports removed breakout or rejected mini-games', () => {
+  const source = fs.readFileSync(new URL('../public/p34-adventure.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /p34-breakout|p34-orbit|p34-story|纸燕|打砖块/);
 });

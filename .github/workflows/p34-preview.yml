@@ -46,7 +46,7 @@ jobs:
         run: |
           npm ci
           node scripts/sync-home-content.mjs
-          node --test scripts/p34-breakout.test.mjs scripts/p34-journey.test.mjs scripts/p34-feedback.test.mjs scripts/p34-space.test.mjs scripts/p34-entry.test.mjs scripts/p34-script.test.mjs scripts/p34-guestbook.test.mjs scripts/package-p34-preview.test.mjs scripts/paper-trace.test.mjs
+          node --test scripts/p34-world3d.test.mjs scripts/p34-journey.test.mjs scripts/p34-space.test.mjs scripts/p34-entry.test.mjs scripts/p34-script.test.mjs scripts/p34-guestbook.test.mjs scripts/package-p34-preview.test.mjs scripts/paper-trace.test.mjs
       - name: Build her notes
         working-directory: blog
         env:

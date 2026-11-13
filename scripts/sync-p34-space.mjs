@@ -14,6 +14,8 @@ export const SHARED_P34_FILES = [
   'p34-passage.js',
   'p34-journey.js',
   'p34-world3d.js',
+  'p34-building.js',
+  'p34-residents.js',
   'p34-typography.js',
   'p34-adventure.js',
   'p34-adventure.css',

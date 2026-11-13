@@ -13,8 +13,33 @@ import {
 } from '../public/p34-world3d.js';
 import { newJourney, journeyEvent } from '../public/p34-journey.js';
 import { GLTFLoader } from '../public/third-party/three/GLTFLoader.js';
+import { stepResident, WALKER_ROUTE } from '../public/p34-residents.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+test('resident walks an unobstructed loop, notices a gaze and yields instead of chasing', () => {
+  const config = getLayerConfig('atrium', newJourney());
+  const resident = { distance: 0, phase: 0 }, distantPlayer = { x: 22, z: 10, yaw: 0 };
+  let pos = { x: WALKER_ROUTE[0][0], z: WALKER_ROUTE[0][1], y: 0 };
+  for (let i = 0; i < 2000; i++) {
+    const next = stepResident(resident, .05, distantPlayer, false);
+    const resolved = resolvePlayerMovement(pos, next.x, next.z, config);
+    assert.ok(Math.hypot(resolved.x - next.x, resolved.z - next.z) < .001, 'Resident route crosses architecture');
+    assert.ok(Math.hypot(pos.x - next.x, pos.z - next.z) < .03, 'Resident jumped');
+    pos = { ...next, y: 0 };
+  }
+  const watchingPlayer = { x: pos.x, z: pos.z + 5, yaw: 0 };
+  const distance = resident.distance;
+  stepResident(resident, .05, watchingPlayer, true);
+  assert.equal(resident.mode, 'watching'); assert.equal(resident.distance, distance);
+  stepResident(resident, .05, watchingPlayer, false);
+  assert.ok(resident.distance > distance, 'A gaze through a wall should not stop the resident');
+  resident.distance = 0;
+  const nearPlayer = { x: WALKER_ROUTE[0][0], z: WALKER_ROUTE[0][1] + 1.8, yaw: 0 };
+  const away = stepResident(resident, .05, nearPlayer, true);
+  assert.equal(resident.mode, 'yielding');
+  assert.ok(Math.hypot(away.x - nearPlayer.x, away.z - nearPlayer.z) > 1.8);
+});
 
 test('library books have physical reading stations without granting main-route unlocks', () => {
   const posts = ['long-way', 'rain-folder', 'pulling-light'].map(slug => ({ slug, title: slug }));

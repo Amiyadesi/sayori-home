@@ -85,3 +85,15 @@ test('shipped GLB models parse cleanly via Three.js GLTFLoader', async () => {
     assert.ok(gltf.scene && gltf.scene.children.length >= 3, `${name} should contain 3D mesh nodes`);
   }
 });
+
+test('upper objects cannot be used through the floor and empty space is not walkable', () => {
+  const state = { ...newJourney(), westAligned: true, bridgeSolid: true };
+  const cfg = getLayerConfig('atrium', state);
+  const raised = cfg.interactables.filter(item => item.floorY !== undefined);
+  for (const item of raised) {
+    assert.equal(findInteractiveTarget({ x: item.x, y: 0, z: item.z + 1 }, 0, 0, [item]), null);
+  }
+  const edge = resolvePlayerMovement({ x: 8, y: 0, z: -12.4 }, 8, -13, cfg, state);
+  assert.equal(edge.z, -12.4);
+  assert.equal(checkSightlineAlignment({ x: -6.5, z: 1.5 }, 0), false);
+});

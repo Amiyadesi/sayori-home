@@ -79,6 +79,16 @@ test('2D blog blueprint and 3D spatial pillars unlock the third layer (her loft)
   assert.equal(inLoft.phase, 'loft');
 });
 
+test('a bridge needs both middle points raised and a saved sketch, not just a save click', () => {
+  const low = [[0.1, 0.7], [0.35, 0.65], [0.65, 0.68], [0.9, 0.7]];
+  const half = [[0.1, 0.7], [0.35, 0.25], [0.65, 0.68], [0.9, 0.7]];
+  const arch = [[0.1, 0.7], [0.35, 0.25], [0.65, 0.28], [0.9, 0.7]];
+  assert.equal(journeyEvent(newJourney(), 'light-saved', low).bridgeSolid, false);
+  assert.equal(journeyEvent(newJourney(), 'light-saved', half).bridgeSolid, false);
+  assert.equal(journeyEvent(newJourney(), 'light-moved', arch).bridgeSolid, false);
+  assert.equal(journeyEvent(newJourney(), 'light-saved', arch).bridgeSolid, true);
+});
+
 test('discovering identity clues in her loft unlocks the first-chapter completion without fixing a morality score', () => {
   let s = journeyEvent(journeyEvent(newJourney(), 'align-west'), 'enter-layer', 'stacks');
   s = journeyEvent(journeyEvent(s, 'opened', 'long-way'), 'diagram');

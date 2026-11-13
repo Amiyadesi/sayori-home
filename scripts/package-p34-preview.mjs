@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const version='20261113-quiet';
+const version='20261113-library';
 const shell=article=>`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><script src="/p34-entry.js?v=${version}"></script><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>她写的</title><style>html,body{margin:0;background:#294b7a}</style><link rel="stylesheet" data-p34-reading-style href="/p34-reading.css?v=${version}"></head><body>${article.replace('<article','<article hidden')}<script type="module">if(new URLSearchParams(location.search).get('paper')==='0617'){try{const {mountPaperBlog}=await import('/paper-blog.js?v=${version}');await mountPaperBlog();}catch(error){console.error('Space entry failed',error);window.dispatchEvent(new Event('p34:entry-error'));}}else location.replace('https://blog.sayori.org/');</script></body></html>`;
 
 export function packageJourney(homePublic,blogBuild,output){

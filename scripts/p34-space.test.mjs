@@ -5,6 +5,61 @@ import { roomFromURL, roomHref, mountSpace } from '../public/p34-space.js';
 import { lightPoint, INITIAL_LIGHT, readSketches } from '../public/p34-light.js';
 import { playPassage, cancelPassage } from '../public/p34-passage.js';
 import { SHARED_P34_FILES } from './sync-p34-space.mjs';
+import { createSpatialDialogue, wrapSpatialText } from '../public/p34-typography.js';
+import { LINES, CHOICES } from '../public/p34-script.js';
+import { FontLoader } from '../public/third-party/three/FontLoader.js';
+import { TextGeometry } from '../public/third-party/three/TextGeometry.js';
+
+test('spatial dialogue wraps Chinese and its font covers the live script with actual depth', () => {
+  assert.deepEqual(wrapSpatialText('你从正面过来的？\n等一下', 5), ['你从正面过', '来的？', '等一下']);
+  const data = JSON.parse(fs.readFileSync(new URL('../public/assets/p34/dialogue.typeface.json', import.meta.url)));
+  const text = JSON.stringify({ LINES, CHOICES });
+  for (const char of text) assert.ok(data.glyphs[char], `Missing 3D glyph: ${char}; run build-p34-font.mjs`);
+  const geometry = new TextGeometry(CHOICES.askWho, { font: new FontLoader().parse(data), size: .2, depth: .02 });
+  geometry.computeBoundingBox();
+  assert.ok(geometry.boundingBox.max.z > geometry.boundingBox.min.z);
+  geometry.dispose();
+});
+
+test('3D dialogue arrives and departs glyph by glyph, with immediate reduced motion', async () => {
+  const fetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: true, json: async () => JSON.parse(fs.readFileSync(new URL('../public/assets/p34/dialogue.typeface.json', import.meta.url))) });
+  globalThis.document = { activeElement: null };
+  let dialogue;
+  try {
+    let scene, reduced = false;
+    dialogue = await createSpatialDialogue({ reduced: () => reduced });
+    const renderer = { render(value) { scene = value; } };
+    dialogue.show('你从正面', [], 1280, 800);
+    dialogue.render(renderer, .05);
+    const words = scene.children.find(child => child.isGroup);
+    const glyphs = words.children[0].children;
+    assert.equal(glyphs.length, 4);
+    assert.ok(glyphs[0].visible);
+    assert.equal(glyphs[3].visible, false);
+    dialogue.render(renderer, .15);
+    assert.ok(glyphs[0].position.z > glyphs[3].position.z);
+    assert.ok(glyphs[0].rotation.y < glyphs[3].rotation.y);
+    dialogue.render(renderer, 1);
+    assert.ok(glyphs.every(glyph => glyph.position.z === 0 && glyph.material[0].opacity === 1));
+    dialogue.show(null, [], 1280, 800);
+    dialogue.render(renderer, .05);
+    assert.ok(glyphs[0].material[0].opacity < glyphs[3].material[0].opacity);
+    dialogue.render(renderer, 1);
+    assert.equal(scene.children.filter(child => child.isGroup).length, 1);
+    reduced = true;
+    dialogue.show('等一下', [], 390, 844);
+    dialogue.render(renderer, .001);
+    assert.ok(words.children[0].children.every(glyph => glyph.visible && glyph.position.z === 0 && glyph.material[0].opacity === 1));
+    dialogue.show(LINES.arrival[0], [], 390, 844);
+    dialogue.render(renderer, .001);
+    const worldWidth = 8 * Math.tan(34 * Math.PI / 180) * 390 / 844;
+    assert.ok(words.children.length > 1);
+    assert.ok(words.children.every(line => line.userData.span < worldWidth));
+  } finally {
+    dialogue?.dispose(); globalThis.fetch = fetch; delete globalThis.document;
+  }
+});
 
 test('reduced motion never captures geometry or creates a passage overlay', async () => {
   globalThis.document = { hidden: false };

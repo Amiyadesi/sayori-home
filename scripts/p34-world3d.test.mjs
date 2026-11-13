@@ -5,6 +5,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   getLayerConfig,
+  getLibraryConfig,
+  crossedDoor,
   computeFloorElevation,
   resolvePlayerMovement,
   checkSightlineAlignment,
@@ -14,6 +16,31 @@ import { newJourney, journeyEvent } from '../public/p34-journey.js';
 import { GLTFLoader } from '../public/third-party/three/GLTFLoader.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+test('library books have physical reading stations without granting main-route unlocks', () => {
+  const posts = ['long-way', 'rain-folder', 'pulling-light'].map(slug => ({ slug, title: slug }));
+  const config = getLibraryConfig(posts);
+  assert.equal(config.interactables.filter(i => i.kind === 'book').length, posts.length);
+  assert.equal(config.interactables.some(i => i.kind === 'projector' || i.kind === 'portal'), false);
+  const book = config.interactables.find(i => i.kind === 'book');
+  const before = { x: book.x, y: 0, z: book.z + 1.5 };
+  const after = resolvePlayerMovement(before, book.x, book.z, config);
+  assert.equal(after.z, before.z);
+  assert.equal(findInteractiveTarget(before, 0, 0, config.interactables)?.slug, book.slug);
+});
+
+test('ordinary doors trigger only on crossing their opening, at the right height and direction', () => {
+  const config = getLayerConfig('atrium', { westAligned: true });
+  const door = config.interactables.find(i => i.crossing);
+  const plane = door.crossing.z;
+  const before = { x: door.x, y: door.floorY, z: plane + .2 };
+  const after = { ...before, z: plane - .2 };
+  assert.equal(crossedDoor(before, after, config.interactables), door);
+  assert.equal(crossedDoor(after, before, config.interactables), undefined);
+  assert.equal(crossedDoor(before, { ...after, x: 8 }, config.interactables), undefined);
+  assert.equal(crossedDoor({ ...before, y: 0 }, { ...after, y: 0 }, config.interactables), undefined);
+  assert.equal(crossedDoor(before, before, config.interactables), undefined);
+});
 
 test('West gallery non-Euclidean loop wraps player until sightline is aligned, then enables staircase elevation', () => {
   const unalignedState = newJourney();

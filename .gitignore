@@ -7,3 +7,4 @@ content/
 
 # Generated from sayori-articles/home by scripts/sync-home-content.mjs.
 public/assets/data/
+public/games/juice-breakout/

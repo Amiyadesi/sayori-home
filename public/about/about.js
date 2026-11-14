@@ -244,16 +244,15 @@
 		const altered = new URLSearchParams(location.search).get('paper') === '0617';
 		if (altered && !data) throw new Error('简介数据读取失败');
 		if (data) {
-			if (altered && data.letter) data.letter.backHref = '/?paper=0617';
 			renderMeta(data.meta);
 			renderLetter(data.letter);
 			renderFaq(data.faq);
 			renderContact(data.contact);
-			if (!altered) buildFaqSchema(data.faq);
+			buildFaqSchema(data.faq);
 		}
 		updateFootLink();
 		if (altered) {
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-luminous');
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-flow');
 			initPaperMaterial();
 		}
 		window.SayoriI18n?.ready?.();

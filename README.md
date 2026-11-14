@@ -62,25 +62,24 @@ node .\scripts\sync-home-content.mjs
 - 对应语言的 `social/` 路径汇总公开社交账号、作品和联系入口；首页第二个入口指向该页，Bilibili 终端命令仍指向真实 B站账号
 
 
-## Luminous Atelier & Full-Page Breakout (`/?paper=0617`)
+## Project 34：她的空间 (`/?paper=0617`)
 
-当 URL 带有 `?paper=0617`（如 `https://sayori.org/?paper=0617`、`/en/?paper=0617`、`/zh-hant/?paper=0617`）时，首页切换为冷白青调全屏活页画室与全页经典挡板打砖块。不带 `?paper=0617` 时正常首页完全不受影响。
+正式入口为 `https://sayori.org/?paper=0617`，正常主页也可点「翻看纸角」。普通页面不加载 Three.js；进入后才加载网页背面的回廊、书库与阁楼。
 
-- **游玩入口**：访问 `/?paper=0617`，点击画室中的 **「开始打弹球 / Play Breakout」** 按钮（或展开对话选择开局）。
-- **操作方式（仅在进入游戏后显示）**：
-  - 移动挡板：鼠标水平移动、触摸拖拽、或键盘 `A` / `D`、`ArrowLeft` / `ArrowRight`
-  - 发球：鼠标点击页面或按 `Space`
-  - 暂停 / 继续：按 `Esc` 或点击顶部 HUD 的 `Esc ⏸`
-  - 重开 / 退出：在暂停面板点击 **「重新开始 / Restart」** 或 **「收起球板 · 浏览页面 / Put Paddle Away · Browse Page」**，完整恢复画室页面与全部目标元素的原始子节点
-- **导航与返回**：
-  - 顶部栏 **「← 返回原主页 / ← Normal Home」**（或对话选项中的折回原主页）恢复常驻笔记本主页
-  - 下方次级抽屉 **「原站入口与工具 / Original Site & Tools」** 保留原始首页入口与工具节点
-- **跨站状态契约**：
-  - 共享 Cookie `p34_breakout_v1`：`v1.<runs>.<bestScore>.<maxCombo>.luminous`（仅在清场或球耗尽完赛时写入）
-  - localStorage `p34_breakout_recent_v1`：独立记录最近游玩场次列表
-  - 保留 `p34_world_v1`、`p34_story`、`p34_play_v1` 兼容导出
-- **本地测试命令**：
+- WASD 移动，拖动画面环视，双击锁定鼠标，E 互动，Esc 暂停。暂停菜单可返回正常网页；触屏提供方向控制。
+- 普通门洞在实际跨槛时切层。侧廊、窗室和夹层可自由探索；西侧巡行异物与东窗异物会对观察、靠近作出反应。
+- 折页台的 2D 草图改变回廊桥面；书库通往 `blog.sayori.org` 的 3D 阅览室，在真实笔记内调草图，再返回书库投射。
+- 对话是中央逐字出现、退场的立体字，没有蓝色蒙层、取景框或装饰光带。支持减少动态效果。
+- 浏览器前后退、刷新和返回原网页可用。探索进度用 `.sayori.org` Cookie 在两站间传递；旧存档保留兼容。公开留言复用既有评论服务，只有主动提交才发送。
+
+共享真源为 `public/p34-*`，3D 建筑在 `p34-world3d.js`，美术与居民在 `p34-building.js`、`p34-residents.js`，台词在 `p34-script.js`。少女身份与后续剧情未定。
 
 ```powershell
-node --test scripts/p34-breakout.test.mjs
+python -m http.server 8980 --bind 127.0.0.1 --directory public
+node scripts/sync-p34-space.mjs # 同步到相邻 sayori-blog/public
+npm test
 ```
+
+生产发布沿用 `.github/workflows/deploy.yml`：以最新 `main` 构建，先发布 Blog 再发布 Home，保留内容同步、双站一致性测试与线上健康检查。`p34-preview.yml` 仍用于隔离试玩。两站 `/deployment.json` 记录实际版本；回滚使用 Cloudflare Pages 中上一份成功的生产部署，不使用预览部署替代生产包。
+
+字体为 Noto Serif SC 的局部字集，许可在 `public/assets/p34/OFL.txt`。建筑与居民暂用程序材质和低模；未接在线 Gemini，移动真机和 Safari 性能仍待实测。

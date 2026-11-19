@@ -13,9 +13,28 @@ import {
 } from '../public/p34-world3d.js';
 import { newJourney, journeyEvent } from '../public/p34-journey.js';
 import { GLTFLoader } from '../public/third-party/three/GLTFLoader.js';
-import { stepResident, WALKER_ROUTE } from '../public/p34-residents.js';
+import * as THREE from '../public/third-party/three/three.module.min.js';
+import { addResidents, stepResident, WALKER_ROUTE } from '../public/p34-residents.js';
+import { createWorldAudio } from '../public/p34-audio.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+test('arrival conversation is opt-in and adds no movement barrier or save mutation', () => {
+  const state = newJourney(), before = JSON.stringify(state);
+  const fresh = getLayerConfig('atrium', state);
+  const echo = fresh.interactables.find(i => i.kind === 'talk-arrival');
+  assert.equal(echo.id, 'arrival-echo');
+  assert.equal(findInteractiveTarget(fresh.spawn, 0, 0, fresh.interactables), null);
+  assert.equal(findInteractiveTarget({ ...fresh.spawn, z: 6.8 }, 0, 0, fresh.interactables)?.id, echo.id);
+  let player = { ...fresh.spawn };
+  for (let z = 8.7; z >= 4; z -= .1) player = resolvePlayerMovement(player, 0, z, fresh);
+  assert.ok(player.z < 4.2, 'The apparition must not block the corridor');
+  assert.equal(JSON.stringify(state), before);
+  const greeted = getLayerConfig('atrium', journeyEvent(state, 'hello'));
+  assert.equal(greeted.interactables.some(i => i.kind === 'talk-arrival'), false);
+  assert.deepEqual(greeted.colliders, fresh.colliders);
+  assert.deepEqual(greeted.surfaces, fresh.surfaces);
+});
 
 test('resident walks an unobstructed loop, notices a gaze and yields instead of chasing', () => {
   const config = getLayerConfig('atrium', newJourney());
@@ -153,4 +172,27 @@ test('upper objects cannot be used through the floor and empty space is not walk
   }
   const edge = resolvePlayerMovement({ x: 8, y: 0, z: -12.4 }, 8, -13, cfg, state);
   assert.equal(edge.z, -12.4);
+});
+
+test('stacks and loft entities inhabit their layers without blocking routes, and world audio fails safe when muted', () => {
+  for (const layerId of ['stacks', 'loft']) {
+    const cfg = getLayerConfig(layerId, { ...newJourney(), stacksUnlocked: true });
+    const scene = new THREE.Scene();
+    let dialogueOpen = false;
+    const api = addResidents(THREE, scene, cfg, () => ({ x: 0, y: 0, z: 3, yaw: 0, pitch: 0 }), () => false, {
+      layerId,
+      isDialogueOpen: () => dialogueOpen,
+    });
+    const before = api.snapshot();
+    assert.equal(before.layer, layerId);
+    api.update(0.1);
+    dialogueOpen = true;
+    api.update(0.1);
+    assert.ok(scene.children.length >= 2);
+  }
+  const sound = createWorldAudio({ motion: { sound: false } });
+  sound.setLayer('loft');
+  sound.playFootstep('wood', false);
+  sound.playInteraction('fork');
+  sound.updateSpatial({ x: 0, z: 0, yaw: 0 }, 'loft', null, 0.05);
 });

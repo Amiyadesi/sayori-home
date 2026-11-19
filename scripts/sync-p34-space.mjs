@@ -16,6 +16,8 @@ export const SHARED_P34_FILES = [
   'p34-world3d.js',
   'p34-building.js',
   'p34-residents.js',
+  'p34-audio.js',
+  'p34-garden.js',
   'p34-typography.js',
   'p34-adventure.js',
   'p34-adventure.css',
@@ -40,7 +42,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   }
 
   fs.mkdirSync(path.join(blog, 'third-party/three'), { recursive: true });
-  for (const file of ['three.module.min.js', 'GLTFLoader.js', 'BufferGeometryUtils.js', 'CSS3DRenderer.js', 'FontLoader.js', 'TextGeometry.js', 'TTFLoader.js', 'opentype.module.js', 'LICENSE-opentype.txt', 'LICENSE.txt']) {
+  for (const file of ['three.module.min.js', 'Reflector.js', 'GLTFLoader.js', 'BufferGeometryUtils.js', 'CSS3DRenderer.js', 'FontLoader.js', 'TextGeometry.js', 'TTFLoader.js', 'opentype.module.js', 'LICENSE-opentype.txt', 'LICENSE.txt']) {
     fs.copyFileSync(path.join(home, 'third-party/three', file), path.join(blog, 'third-party/three', file));
   }
 }

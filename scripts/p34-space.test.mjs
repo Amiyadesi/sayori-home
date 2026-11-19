@@ -9,12 +9,18 @@ import { createSpatialDialogue, wrapSpatialText } from '../public/p34-typography
 import { LINES, CHOICES } from '../public/p34-script.js';
 import { FontLoader } from '../public/third-party/three/FontLoader.js';
 import { TextGeometry } from '../public/third-party/three/TextGeometry.js';
+import { TTFLoader } from '../public/third-party/three/TTFLoader.js';
 
 test('spatial dialogue wraps Chinese and its font covers the live script with actual depth', () => {
   assert.deepEqual(wrapSpatialText('你从正面过来的？\n等一下', 5), ['你从正面过', '来的？', '等一下']);
   const data = JSON.parse(fs.readFileSync(new URL('../public/assets/p34/dialogue.typeface.json', import.meta.url)));
   const text = JSON.stringify({ LINES, CHOICES });
-  for (const char of text) assert.ok(data.glyphs[char], `Missing 3D glyph: ${char}; run build-p34-font.mjs`);
+  const bytes = fs.readFileSync(new URL('../public/assets/p34/voice-serif.ttf', import.meta.url));
+  const voice = new TTFLoader().parse(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength));
+  for (const char of text) {
+    assert.ok(data.glyphs[char], `Missing 3D glyph: ${char}; run build-p34-font.mjs`);
+    assert.ok(voice.glyphs[char], `Missing voice serif glyph: ${char}`);
+  }
   const geometry = new TextGeometry(CHOICES.askWho, { font: new FontLoader().parse(data), size: .2, depth: .02 });
   geometry.computeBoundingBox();
   assert.ok(geometry.boundingBox.max.z > geometry.boundingBox.min.z);
@@ -56,6 +62,9 @@ test('3D dialogue arrives and departs glyph by glyph, with immediate reduced mot
     const worldWidth = 8 * Math.tan(34 * Math.PI / 180) * 390 / 844;
     assert.ok(words.children.length > 1);
     assert.ok(words.children.every(line => line.userData.span < worldWidth));
+    const buttons = [CHOICES.openLab, CHOICES.askWhere, CHOICES.askSafe, CHOICES.askSelf, CHOICES.busy, CHOICES.wander, CHOICES.leave].map(textContent => ({ textContent, style: {}, addEventListener() {} }));
+    dialogue.show(LINES.atrium.readyForStacks, buttons, 390, 844);
+    assert.ok(buttons.every(b => Number.parseFloat(b.style.top) >= 12 && Number.parseFloat(b.style.top) + 48 <= 832), 'Every mobile dialogue choice must remain on screen');
   } finally {
     dialogue?.dispose(); globalThis.fetch = fetch; delete globalThis.document;
   }

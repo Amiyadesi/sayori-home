@@ -6,5 +6,5 @@ const strings = value => typeof value === 'string' ? [value] : Object.values(val
 
 test('the editable script contains text, and her lines keep the author’s punctuation rule', () => {
   assert.ok(strings(LINES).every(line => line.trim() && !/[。.]$/.test(line)));
-  assert.ok(strings(CHOICES).every(label => label.trim()));
+  assert.ok(strings(CHOICES).every(label => label.trim() && !/[。.]$/.test(label)));
 });

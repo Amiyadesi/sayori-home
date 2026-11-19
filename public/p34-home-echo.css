@@ -1,0 +1,7 @@
+.desk-odd-object[data-garden-sky=morning] { --garden-edge: #b1d7dc; }
+.desk-odd-object[data-garden-sky=afternoon] { --garden-edge: #d8b979; }
+.desk-odd-object[data-garden-sky=dusk] { --garden-edge: #ca9369; }
+.desk-odd-object[data-garden-sky=midnight] { --garden-edge: #7d9dbd; }
+.desk-odd-object[data-garden-sky] svg { filter: drop-shadow(1px 0 2px var(--garden-edge)); }
+.page-footer .garden-backdoor { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -12px 0; color: inherit; opacity: .55; }
+.garden-backdoor:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; opacity: 1; }

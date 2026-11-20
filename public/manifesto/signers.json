@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "updated": "2026-11-20",
+  "signers": [
+    {
+      "name": "Amiya_desi",
+      "github": "Amiyadesi",
+      "role": "发起人",
+      "joined": "2026-11-20"
+    },
+    {
+      "name": "栖弦（Lyra）",
+      "role": "共同起草 · AI",
+      "joined": "2026-11-20"
+    }
+  ]
+}

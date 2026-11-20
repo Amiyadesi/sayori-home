@@ -20,8 +20,10 @@ test("localized manifesto pages, sitemap and sign-up resolve to their own routes
 			assert.ok(read("sitemap.xml").includes("<loc>https://sayori.org" + alt + "</loc>"));
 		}
 		assert.match(page, /Amiya_desi × 栖弦（Lyra）/);
-		assert.match(page, /creative-freedom-manifesto\/issues\/new\?template=creative-manifesto-signature\.yml/);
-		assert.match(page, /template=withdraw-signature\.yml/);
+		assert.match(page, /id="public-apply".*action="\/api\/manifesto-signature" method="post"/);
+		assert.match(page, /id="public-remove".*action="\/api\/manifesto-signature" method="post"/);
+		assert.match(page, /id="public-consent" type="checkbox" required/);
+		assert.doesNotMatch(page, /\/issues\/new/);
 		assert.match(page, /AI/);
 		assert.match(page, /<bdi>栖弦（Lyra）<\/bdi>/);
 	}
@@ -33,6 +35,7 @@ test("roster validation rejects markup, injected profile URLs, private fields an
 	const entry = { name: "Mira", github: "mira-creates", joined: roster.updated };
 	const validate = added => validateSigners({ ...roster, signers: [...signers, added] });
 	assert.equal(validate(entry).signers.length, 3);
+	assert.deepEqual(validate({ name: "Mira", joined: roster.updated }).signers.at(-1), { name: "Mira", joined: roster.updated });
 	for (const change of [
 		{ name: '<img src=x onerror="alert(1)">' },
 		{ name: "mira@example.com" },

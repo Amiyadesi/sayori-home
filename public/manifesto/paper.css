@@ -101,8 +101,19 @@ button:disabled { opacity: .55; cursor: auto; }
 .roll { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); padding: 0; gap: .45rem 1.2rem; margin: 1rem 0; }
 .roll li { list-style: none; min-width: 0; overflow-wrap: anywhere; }
 .roll small { font: .78rem/1.5 var(--ui); color: var(--muted); display: block; }
-.public-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; font: .88rem/1.5 var(--ui); }
-.public-join { font-weight: 700; }
+.public-form, .receipt { font: .94rem/1.6 var(--ui); }
+.public-nickname { width: min(100%, 28rem); }
+.public-form .public-consent { display: flex; align-items: center; gap: .55rem; width: fit-content; min-height: 44px; margin-block: .45rem .75rem; cursor: pointer; }
+.public-consent input { flex: none; min-height: auto; width: 1.2rem; height: 1.2rem; margin: 0; accent-color: var(--wine); }
+.form-status { margin: .55rem 0 0; color: var(--wine); }
+.form-status:empty { margin: 0; }
+.receipt { border-inline-start: 2px solid var(--brass); padding-inline-start: .9rem; }
+.receipt p { margin-bottom: .5rem; }
+.receipt code { overflow-wrap: anywhere; }
+.public-actions { margin-top: 1rem; font: .88rem/1.5 var(--ui); }
+.public-actions summary { cursor: pointer; color: var(--wine); text-decoration: underline; text-underline-offset: .2em; width: fit-content; }
+.public-actions form { margin: .6rem 0 1rem; }
+.public-actions > a { display: inline-block; margin-top: .55rem; }
 @media (max-width: 34rem) {
 	.desk-bar { padding-block: .8rem; }
 	.masthead { padding-bottom: 1.4rem; }

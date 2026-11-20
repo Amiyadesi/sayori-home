@@ -1,0 +1,9 @@
+name = "sayori-home"
+pages_build_output_dir = "public"
+compatibility_date = "2026-05-21"
+
+[[env.production.d1_databases]]
+binding = "MANIFESTO_SIGNATURES"
+database_name = "sayori-manifesto-signatures"
+database_id = "7475061b-b37f-44be-86ec-2eb85a67c268"
+migrations_dir = "migrations/manifesto"

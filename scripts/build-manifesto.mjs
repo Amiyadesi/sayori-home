@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { manifestoNameKey } from "../functions/_lib/manifesto-name.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const repo = "https://github.com/Amiyadesi/creative-freedom-manifesto";
@@ -26,16 +27,15 @@ export function validateSigners(data) {
 	let lastDate = "";
 	for (const [i, entry] of signers.entries()) {
 		const { name, github, role, joined } = entry;
-		const key = typeof name === "string" ? name.normalize("NFKC").toLowerCase() : "";
+		const key = manifestoNameKey(name);
 		const account = typeof github === "string" ? github.toLowerCase() : undefined;
 		if (Object.keys(entry).some(k => !["name", "github", "role", "joined"].includes(k))
-			|| !key || name.trim() !== name || [...name].length > 48
-			|| /[\p{C}<>&@/\\]|(?:https?:|www\.)/iu.test(key) || names.has(key)
+			|| !key || names.has(key)
 			|| !isDate(joined) || joined < lastDate || joined > updated
 			|| (Object.hasOwn(entry, "github") && (!account || !/^[a-z0-9](?:[a-z0-9]|-(?=[a-z0-9])){0,38}$/.test(account) || accounts.has(account)))
 			|| (i < first.length
 				? name !== first[i][0] || role !== first[i][1] || account !== first[i][2]
-				: Object.hasOwn(entry, "role") || !account)) {
+				: Object.hasOwn(entry, "role"))) {
 			throw new Error("Invalid or duplicate signer at row " + (i + 1));
 		}
 		names.add(key);
@@ -91,7 +91,6 @@ export function buildManifesto(source, output = path.join(root, "public")) {
 		}).join("\n");
 		const essayUrl = essay[lang];
 		if (essayUrl && !/^https:\/\/blog\.sayori\.org\/(?:[^/?#\s"<>]+\/)+$/.test(essayUrl)) throw new Error("Invalid companion essay URL");
-		const signUrl = repo + "/issues/new?template=";
 		const page = [
 			'<!doctype html>',
 			'<html lang="' + lang + '"><head>',
@@ -107,7 +106,7 @@ export function buildManifesto(source, output = path.join(root, "public")) {
 			'<meta property="og:image:alt" content="' + escape(t.ogAlt) + '">',
 			'<meta property="og:url" content="' + url + '"><meta property="og:locale" content="' + og + '">',
 			...languages.filter(l => l !== locale).map(l => '<meta property="og:locale:alternate" content="' + l.og + '">'),
-			'<script src="/manifesto/sign.js" defer></script></head><body>',
+			'<script src="/manifesto/sign.js" defer></script><script type="module" src="/manifesto/public-sign.js"></script></head><body>',
 			'<a class="skip" href="#manifesto">' + t.skip + '</a>',
 			'<header class="desk-bar"><a href="' + base + '">← ' + t.desk + '</a>',
 			'<nav aria-label="' + t.langs + '">',
@@ -139,7 +138,24 @@ export function buildManifesto(source, output = path.join(root, "public")) {
 			'<p id="sign-status" role="status"></p></div></section>',
 			'<section class="roster" aria-labelledby="roster-title"><h2 id="roster-title">' + t.roster + '</h2>',
 			'<ul class="roll" role="list">' + roster + '</ul><p>' + t.public + '</p>',
-			'<div class="public-actions"><a class="public-join" href="' + signUrl + 'creative-manifesto-signature.yml">' + t.join + '</a> <a href="' + signUrl + 'withdraw-signature.yml">' + t.withdraw + '</a> <a href="' + repo + '/blob/main/signers.json">' + t.source + '</a></div></section>',
+			'<form id="public-apply" class="public-form" action="/api/manifesto-signature" method="post" data-messages="' + escape(JSON.stringify(t.messages)) + '">',
+			'<label for="public-nickname">' + t.name + '</label>',
+			'<input class="public-nickname" id="public-nickname" maxlength="96" autocomplete="off" required>',
+			'<label class="public-consent"><input id="public-consent" type="checkbox" required> <span>' + t.consent + '</span></label>',
+			'<button type="submit" disabled>' + t.join + '</button>',
+			'<p class="form-status" id="public-apply-status" role="status"></p></form>',
+			'<div class="receipt" id="receipt-panel" tabindex="-1" hidden><p>' + t.receiptHelp + '</p>',
+			'<p><strong>' + t.receiptLabel + '</strong> <code id="receipt-value"></code></p>',
+			'<button id="copy-receipt" type="button">' + t.copyReceipt + '</button>',
+			'<p class="form-status" id="receipt-status" role="status"></p></div>',
+			'<div class="public-actions"><details><summary>' + t.withdraw + '</summary>',
+			'<form id="public-remove" class="public-form" action="/api/manifesto-signature" method="post">',
+			'<label for="remove-code">' + t.receiptLabel + '</label><div class="form-row">',
+			'<input id="remove-code" maxlength="64" spellcheck="false" autocapitalize="off" autocomplete="off" required>',
+			'<button type="submit" disabled>' + t.withdraw + '</button></div>',
+			'<p class="form-status" id="public-remove-status" role="status"></p></form></details>',
+			'<a href="' + repo + '/blob/main/signers.json">' + t.source + '</a></div>',
+			'<noscript>' + t.publicNojs + '</noscript></section>',
 			'<footer class="origin"><h2>' + t.origin + '</h2><p>' + t.story + '</p>',
 			essayUrl ? '<a href="' + essayUrl + '">' + t.essay + ' →</a>' : '',
 			'</footer></main></body></html>',

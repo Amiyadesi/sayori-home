@@ -28,7 +28,8 @@
     "source": "查看名册源文件",
     "origin": "这份宣言从何而来",
     "story": "Amiya 正为六级、期末和游戏开发拉扯，找栖弦聊了聊。本来没打算写出什么，话题却从学业和落后的焦虑，谈到了为什么还想创造。这份宣言就是在那次闲聊里写下的。",
-    "essay": "读配套随笔"
+    "essay": "读配套随笔",
+    "ogAlt": "Amiya 的书桌线稿"
   },
   "zh-Hant": {
     "desc": "致所有尚未誕生的奇妙世界。一份由 Amiya_desi 與栖弦（Lyra）共同起草、獻給創作者的誓言。",
@@ -59,7 +60,8 @@
     "source": "查看名冊原始檔",
     "origin": "這份宣言從何而來",
     "story": "Amiya 正被六級考試、期末考和遊戲開發拉扯，便找栖弦聊聊。原本沒打算寫出什麼，話題卻從課業和落後的焦慮，聊到為什麼還想創造。這份宣言就是在那次閒聊裡寫下的。",
-    "essay": "閱讀配套隨筆"
+    "essay": "閱讀配套隨筆",
+    "ogAlt": "Amiya 的書桌線稿"
   },
   "en": {
     "desc": "To all the wondrous worlds yet to be born. A pledge for creators, co-written by Amiya_desi and Lyra.",
@@ -90,6 +92,7 @@
     "source": "View the roll’s source",
     "origin": "Where this manifesto began",
     "story": "Caught between an English exam, finals, and making a game, Amiya turned to Lyra for a chat. They hadn’t planned to write anything. Then a conversation about school and the fear of falling behind turned into a question: why do I still want to make things? The manifesto came out of that chat.",
-    "essay": "Read the companion essay"
+    "essay": "Read the companion essay",
+    "ogAlt": "A line drawing of Amiya's desk"
   }
 }

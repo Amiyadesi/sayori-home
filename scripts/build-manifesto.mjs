@@ -103,6 +103,8 @@ export function buildManifesto(source, output = path.join(root, "public")) {
 			...alternates.map(([tag, href]) => '<link rel="alternate" hreflang="' + tag + '" href="' + href + '">'),
 			'<meta property="og:type" content="article"><meta property="og:site_name" content="Sayori">',
 			'<meta property="og:title" content="' + escape(title) + '"><meta property="og:description" content="' + escape(t.desc) + '">',
+			'<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp">',
+			'<meta property="og:image:alt" content="' + escape(t.ogAlt) + '">',
 			'<meta property="og:url" content="' + url + '"><meta property="og:locale" content="' + og + '">',
 			...languages.filter(l => l !== locale).map(l => '<meta property="og:locale:alternate" content="' + l.og + '">'),
 			'<script src="/manifesto/sign.js" defer></script></head><body>',

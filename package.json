@@ -3,6 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"pretest": "node scripts/build-manifesto.mjs",
 		"test": "node --test scripts/*.test.mjs functions/**/*.test.mjs"
 	},
 	"dependencies": {

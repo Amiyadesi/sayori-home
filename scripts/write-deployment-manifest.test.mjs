@@ -15,6 +15,7 @@ try {
 	const result = run(outputPath, {
 		DEPLOYMENT_CODE_SHA: "1".repeat(40),
 		DEPLOYMENT_CONTENT_SHA: "2".repeat(40),
+		DEPLOYMENT_MANIFESTO_SHA: "3".repeat(40),
 		DEPLOYMENT_BUILT_AT: "2026-07-16T04:05:06.000Z",
 		DEPLOYMENT_WORKFLOW_RUN: "https://github.com/Amiyadesi/sayori-home/actions/runs/123",
 	});
@@ -23,6 +24,7 @@ try {
 	assert.deepEqual(JSON.parse(fs.readFileSync(outputPath, "utf8")), {
 		codeSha: "1".repeat(40),
 		contentSha: "2".repeat(40),
+		manifestoSha: "3".repeat(40),
 		builtAt: "2026-07-16T04:05:06.000Z",
 		workflowRun: "https://github.com/Amiyadesi/sayori-home/actions/runs/123",
 	});
@@ -43,6 +45,7 @@ function run(outputPath, env) {
 	for (const name of [
 		"DEPLOYMENT_CODE_SHA",
 		"DEPLOYMENT_CONTENT_SHA",
+		"DEPLOYMENT_MANIFESTO_SHA",
 		"DEPLOYMENT_BUILT_AT",
 		"DEPLOYMENT_WORKFLOW_RUN",
 	]) {

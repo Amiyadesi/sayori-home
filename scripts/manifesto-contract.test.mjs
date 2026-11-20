@@ -1,43 +1,45 @@
+
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import path from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { validateSigners } from "./build-manifesto.mjs";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const page = fs.readFileSync(path.join(root, "public/manifesto/index.html"), "utf8");
-const registry = JSON.parse(fs.readFileSync(path.join(root, "public/manifesto/signers.json"), "utf8"));
-const template = fs.readFileSync(path.join(root, ".github/ISSUE_TEMPLATE/creative-manifesto-signature.yml"), "utf8");
+const read = file => fs.readFileSync(new URL("../public/" + file, import.meta.url), "utf8");
+const roster = JSON.parse(read("manifesto/signers.json"));
+const locales = ["/manifesto/", "/zh-hant/manifesto/", "/en/manifesto/"];
 
-test("creative manifesto retains its stable public route and author credit", () => {
-  assert.match(page, /https:\/\/sayori\.org\/manifesto\//);
-  assert.match(page, /创作自由宣言/);
-  assert.match(page, /Amiya_desi × 栖弦（Lyra）/);
+test("localized manifesto pages, sitemap and sign-up resolve to their own routes", () => {
+	for (const route of locales) {
+		const page = read(route.slice(1) + "index.html");
+		const url = "https://sayori.org" + route;
+		assert.ok(page.includes('rel="canonical" href="' + url + '"'));
+		assert.ok(page.includes('property="og:url" content="' + url + '"'));
+		assert.ok(page.includes('href="' + route + '" aria-current="page"'));
+		for (const alt of locales) {
+			assert.ok(page.includes('href="https://sayori.org' + alt + '"'));
+			assert.ok(read("sitemap.xml").includes("<loc>https://sayori.org" + alt + "</loc>"));
+		}
+		assert.match(page, /Amiya_desi × 栖弦（Lyra）/);
+		assert.match(page, /creative-freedom-manifesto\/issues\/new\?template=creative-manifesto-signature\.yml/);
+		assert.match(page, /template=withdraw-signature\.yml/);
+		assert.match(page, /AI/);
+		assert.match(page, /<bdi>栖弦（Lyra）<\/bdi>/);
+	}
 });
 
-test("the public signer registry has unique non-empty public names", () => {
-  assert.equal(registry.version, 1);
-  assert.ok(Array.isArray(registry.signers));
-  assert.ok(registry.signers.length > 0);
-  const names = new Set();
-  for (const signer of registry.signers) {
-    assert.equal(typeof signer.name, "string");
-    assert.ok(signer.name.trim());
-    assert.ok(signer.name.length <= 80);
-    assert.ok(!names.has(signer.name), `duplicate signer: ${signer.name}`);
-    names.add(signer.name);
-    if (signer.github !== undefined) {
-      assert.match(signer.github, /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i);
-    }
-    assert.doesNotMatch(JSON.stringify(signer), /@(?:gmail|outlook|qq)\.com/i);
-  }
-});
-
-test("joining the public roster stays an explicit opt-in review flow", () => {
-  assert.match(template, /公开署名确认/);
-  assert.match(template, /required: true/);
-  assert.match(page, /creative-manifesto-signature\.yml/);
-  assert.match(page, /signers\.json/);
-  assert.match(page, /本地签署/);
-  assert.doesNotMatch(page, /localStorage\.setItem\(/);
+test("roster validation rejects markup, injected profile URLs, private fields and duplicate accounts", () => {
+	assert.deepEqual(validateSigners(roster), roster);
+	const signers = roster.signers.slice(0, 2);
+	const entry = { name: "Mira", github: "mira-creates", joined: roster.updated };
+	const validate = added => validateSigners({ ...roster, signers: [...signers, added] });
+	assert.equal(validate(entry).signers.length, 3);
+	for (const change of [
+		{ name: '<img src=x onerror="alert(1)">' },
+		{ name: "mira@example.com" },
+		{ github: "x/../../evil" },
+		{ github: "AMIYADESI" },
+		{ name: "Ａｍｉｙａ＿ｄｅｓｉ" },
+		{ email: "test@example.com" },
+		{ role: "founder" },
+	]) assert.throws(() => validate({ ...entry, ...change }), /Invalid or duplicate signer/);
 });

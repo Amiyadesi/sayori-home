@@ -8,3 +8,11 @@ content/
 # Generated from sayori-articles/home by scripts/sync-home-content.mjs.
 public/assets/data/
 public/games/juice-breakout/
+
+# Generated from creative-freedom-manifesto by scripts/build-manifesto.mjs.
+manifesto-source/
+public/manifesto/index.html
+public/manifesto/signers.json
+public/zh-hant/manifesto/
+public/en/manifesto/
+public/sitemap.xml

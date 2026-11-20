@@ -46,6 +46,7 @@ if (isMain) {
 	await verifyHomeDeployment(process.argv[2] || "https://sayori.org", {
 		codeSha: required("DEPLOYMENT_CODE_SHA"),
 		contentSha: required("DEPLOYMENT_CONTENT_SHA"),
+		manifestoSha: required("DEPLOYMENT_MANIFESTO_SHA"),
 		builtAt: required("DEPLOYMENT_BUILT_AT"),
 		workflowRun: required("DEPLOYMENT_WORKFLOW_RUN"),
 	});

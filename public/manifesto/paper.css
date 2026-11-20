@@ -1,0 +1,122 @@
+
+:root {
+	--desk: #a8d4e6;
+	--paper: #fdfcf7;
+	--ink: #2a2a2a;
+	--muted: #60584a;
+	--wine: #793640;
+	--seal: #a65862;
+	--brass: #c39d62;
+	--line: #d9cbb5;
+	--body-serif: "Noto Serif CJK SC", "Songti SC", SimSun, Georgia, serif;
+	--ui: system-ui, sans-serif;
+	color: var(--ink);
+	background: var(--desk);
+}
+:lang(zh-Hant) { --body-serif: "Noto Serif CJK TC", "Songti TC", "PMingLiU", "Microsoft JhengHei", serif; }
+:lang(en) { --body-serif: Georgia, "Times New Roman", serif; }
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	padding: 0 clamp(12px, 4vw, 48px) clamp(34px, 8vw, 96px);
+	background: url("/assets/generated/paper-fibers.svg"), radial-gradient(ellipse at 28% 0%, #e4f3f5, transparent 64%), var(--desk);
+	font: 1.125rem/1.85 var(--body-serif);
+}
+a { color: var(--wine); text-underline-offset: .2em; }
+:focus-visible { outline: 3px solid #28586c; outline-offset: 4px; }
+.skip { position: absolute; top: .5rem; left: 1rem; background: var(--paper); padding: .5rem 1rem; z-index: 1; }
+.skip:not(:focus) { clip-path: inset(50%); }
+.desk-bar, .paper { max-width: 52rem; margin-inline: auto; }
+.desk-bar {
+	display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+	gap: .4rem 1rem; padding-block: 1.3rem;
+	font: .875rem/1.55 var(--ui);
+}
+.desk-bar nav { display: flex; gap: .85rem; flex-wrap: wrap; }
+.desk-bar a { color: #243f4a; }
+.desk-bar a[aria-current] { font-weight: 750; text-decoration-thickness: 2px; }
+.paper {
+	--inset: clamp(20px, 7.8vw, 80px);
+	padding: clamp(27px, 5vw, 52px) var(--inset) clamp(34px, 6vw, 60px);
+	background: url("/assets/generated/paper-fibers.svg"), var(--paper);
+	border: 1px solid #e1d4bc;
+	box-shadow: 0 4px 0 -1px #ede4d5, 0 8px 0 -2px #daceb9, 0 18px 40px #24495736;
+}
+.masthead { padding-bottom: 2.2rem; border-bottom: 1px solid var(--line); }
+.folio {
+	display: flex; justify-content: space-between; flex-wrap: wrap; gap: .25rem 1rem;
+	margin: 0 0 clamp(30px, 7vw, 68px); color: var(--muted);
+	font: .82rem/1.5 var(--ui); letter-spacing: .05em;
+}
+.folio span { border-inline-start: 3px solid var(--brass); padding-inline-start: .6rem; }
+h1, h2, p { margin-top: 0; }
+h1 { font-size: clamp(2.2rem, 7vw, 4.55rem); line-height: 1.13; margin-bottom: 1rem; text-wrap: balance; }
+html[lang="en"] h1 { max-width: 13ch; }
+.dedication { font-size: clamp(1.08rem, 2.6vw, 1.42rem); color: var(--wine); margin-bottom: 1.75rem; }
+html[lang="en"] .dedication { font-style: italic; }
+.byline { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .65rem; font: .85rem/1.8 var(--ui); }
+.byline span, .byline small { color: var(--muted); }
+.oath { padding-top: 2rem; font-size: 1.4rem; }
+.clauses p { margin-bottom: 1.15em; }
+.clauses strong, .closing strong { color: var(--wine); }
+.centerpiece {
+	margin: 2.4rem 0; padding: 1.25rem 0 1.25rem clamp(.8rem, 3vw, 1.75rem);
+	border-inline-start: 2px solid var(--brass);
+}
+.centerpiece p { margin-bottom: .65rem; }
+.centerpiece p:last-child { margin-bottom: 0; }
+.centerpiece strong { font-size: 1.18em; color: var(--wine); line-height: 1.5; }
+.closing { margin-block: 2.5rem 1.5rem; }
+.closing p { margin-bottom: .35rem; }
+.closing p:last-child { margin-top: .8rem; font-size: 1.16em; }
+.colophon { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 3rem; font: .86rem/1.6 var(--ui); color: var(--muted); }
+.colophon p { margin: 0; }
+.seal {
+	flex: 0 0 4.7rem; aspect-ratio: 1; display: grid; place-content: center; text-align: center;
+	border-radius: 46% 47% 44% 45%; transform: rotate(-12deg); color: #fff1d9;
+	background: radial-gradient(ellipse at 34% 22%, #ba6871, transparent 62%), var(--seal);
+	border: 4px ridge #8c464f; outline: 1px solid #843d49; box-shadow: 1px 3px 4px #51363844, inset 0 0 0 1px #efb0a36b;
+	font: 700 1.02rem/1.03 "Songti SC", "SimSun", serif; letter-spacing: .14em;
+}
+.seal span { font-size: .56rem; margin-bottom: .15rem; }
+.sign, .roster, .origin { border-top: 1px solid var(--line); padding-top: 1.9rem; }
+.roster, .origin { margin-top: 2.3rem; }
+h2 { font-size: clamp(1.4rem, 3.2vw, 1.85rem); line-height: 1.3; margin-bottom: .6rem; }
+.sign > p, .roster > p, .origin > p { font: .97rem/1.75 var(--ui); color: var(--muted); }
+form label { display: block; font: 650 .88rem/1.6 var(--ui); margin-bottom: .35rem; }
+.form-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: .6rem; }
+input, button { min-height: 44px; border: 1px solid #927e69; border-radius: 2px; font: 600 .94rem var(--ui); padding: .6rem .9rem; }
+input { flex: 1 1 14rem; min-width: 0; background: #fff; color: var(--ink); font-weight: 400; }
+button { cursor: pointer; color: #fff; background: var(--wine); }
+button:hover:not(:disabled) { background: #642a33; }
+button:disabled { opacity: .55; cursor: auto; }
+.certificate { margin-top: 1.4rem; border: 1px solid var(--brass); background: #f8f0e3; padding: clamp(16px, 4vw, 30px); overflow-wrap: anywhere; }
+.certificate small { color: var(--muted); font: .85rem var(--ui); }
+.certificate p { margin-bottom: .4rem; }
+#signed-name { font-size: 1.6rem; font-weight: 700; color: var(--wine); margin: .45rem 0 0; }
+.signed-actions { margin-top: .7rem; }
+.signed-actions button { background: transparent; color: var(--wine); }
+.signed-actions button:hover { background: #f0e4d2; }
+#sign-status { font: .875rem var(--ui); margin: .6rem 0 0; }
+.roll { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); padding: 0; gap: .45rem 1.2rem; margin: 1rem 0; }
+.roll li { list-style: none; min-width: 0; overflow-wrap: anywhere; }
+.roll small { font: .78rem/1.5 var(--ui); color: var(--muted); display: block; }
+.public-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; font: .88rem/1.5 var(--ui); }
+.public-join { font-weight: 700; }
+@media (max-width: 34rem) {
+	.desk-bar { padding-block: .8rem; }
+	.masthead { padding-bottom: 1.4rem; }
+	h1 { letter-spacing: 0; }
+	body { font-size: 1.0625rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+	#signed-copy:not([hidden]) .certificate { animation: ink-in .35s ease-out; }
+	@keyframes ink-in { from { opacity: .65; transform: translateY(3px); } }
+}
+@media print {
+	body, .paper, .certificate { padding: 0; background: #fff; border: 0; box-shadow: none; }
+	.skip, .desk-bar, .sign, .roster, .origin, .printing-copy .document,
+	.printing-copy .sign > :not(#signed-copy), .printing-copy #signed-copy > :not(.certificate) { display: none; }
+	.printing-copy .sign { display: block; border: 0; padding: 0; }
+	.colophon { break-inside: avoid; }
+}

@@ -5,10 +5,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '23 */6 * * *'
 
 concurrency:
   group: sayori-home-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
 
 permissions:
   contents: read
@@ -19,8 +21,26 @@ env:
   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
 jobs:
+  manifesto-update:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+    steps:
+      - id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          latest="$(gh api repos/Amiyadesi/creative-freedom-manifesto/branches/main --jq .commit.sha)"
+          live="$(curl -fsS --max-time 20 "https://sayori.org/deployment.json?manifesto-check=$GITHUB_RUN_ID" | jq -r '.manifestoSha // empty')"
+          if [[ "$latest" != "$live" ]]; then echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+
   verify:
     name: verify
+    needs: manifesto-update
+    if: always() && !cancelled() && (github.event_name != 'schedule' || needs.manifesto-update.outputs.changed == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -39,6 +59,14 @@ jobs:
           repository: Amiyadesi/sayori-articles
           ref: main
           path: content
+
+      - name: Checkout manifesto source and reviewed roster
+        uses: actions/checkout@v6
+        with:
+          repository: Amiyadesi/creative-freedom-manifesto
+          ref: main
+          path: manifesto-source
+          persist-credentials: false
 
       # 跨站一致性测试要拿博客那份同名文件做比对。
       - name: Checkout blog public surface
@@ -60,6 +88,7 @@ jobs:
         run: |
           echo "DEPLOYMENT_CODE_SHA=${GITHUB_SHA}" >> "${GITHUB_ENV}"
           echo "DEPLOYMENT_CONTENT_SHA=$(git -C content rev-parse HEAD)" >> "${GITHUB_ENV}"
+          echo "DEPLOYMENT_MANIFESTO_SHA=$(git -C manifesto-source rev-parse HEAD)" >> "$GITHUB_ENV"
           echo "DEPLOYMENT_BUILT_AT=$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')" >> "${GITHUB_ENV}"
           echo "DEPLOYMENT_WORKFLOW_RUN=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "${GITHUB_ENV}"
 
@@ -71,6 +100,7 @@ jobs:
       - name: Run tests
         env:
           P34_BLOG_PUBLIC: blog/public
+          MANIFESTO_DIR: ./manifesto-source
         run: npm test
 
       - name: Write deployment manifest

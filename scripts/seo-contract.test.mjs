@@ -62,6 +62,7 @@ test("sitemap includes all localized landing, about, and services routes", () =>
 		"https://sayori.org/en/social/",
 		"https://sayori.org/tools/",
 		"https://sayori.org/tools/subarutap/",
+		"https://sayori.org/manifesto/",
 	]);
 	assert.match(sitemap, /hreflang="x-default"/);
 });

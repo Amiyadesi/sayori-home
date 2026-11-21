@@ -20,11 +20,11 @@ test("visible Sayori artwork uses responsive derivatives", () => {
 	}
 });
 
-test("third-party analytics is not a head-blocking script", () => {
+test("analytics is a deferred first-party script, with no Google tag", () => {
 	for (const relativePath of ["public/index.html", "public/about/index.html"]) {
 		const html = read(relativePath);
 		assert.doesNotMatch(html, /googletagmanager\.com\/gtag\/js/);
-		assert.match(html, /<script defer src="[^\"]*analytics\.notebook\.js\?v=20260807-perf2"/);
+		assert.match(html, /<script defer src="[^\"]*analytics\.notebook\.js\?v=20261121-first-party"/);
 	}
 });
 

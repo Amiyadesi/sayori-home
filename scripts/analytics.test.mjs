@@ -13,8 +13,11 @@ const source = fs.readFileSync(
 test("analytics heartbeat is bounded and initialized once", () => {
 	assert.match(source, /const heartbeatMs = 60000;/);
 	assert.match(source, /dataset\.sayoriAnalyticsTracker/);
-	assert.match(source, /requestIdleCallback/);
-	assert.match(source, /data-sayori-ga4/);
+});
+
+test("the analytics script reports only to the first-party endpoint", () => {
+	assert.deepEqual(source.match(/https?:\/\/[^"'`\s]+/g), ["https://blog.sayori.org/api/analytics/event"]);
+	assert.doesNotMatch(source, /gtag|dataLayer|createElement/);
 });
 
 test("every public analytics entry point is identified and cache-busted", () => {
@@ -23,7 +26,7 @@ test("every public analytics entry point is identified and cache-busted", () => 
 		assert.match(html, /data-sayori-analytics-site="[^"]+"/, relativePath);
 		assert.match(
 			html,
-			/analytics\.notebook\.js\?v=20260807-perf2/,
+			/analytics\.notebook\.js\?v=20261121-first-party/,
 			relativePath,
 		);
 	}

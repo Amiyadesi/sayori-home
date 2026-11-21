@@ -2027,7 +2027,7 @@ async function initWeather() {
 	if (!weatherDisplay || urlParams.get('paper') === '0617') return;
 	try {
 		const lang = PATH_LANG === 'en' ? 'en' : 'zh';
-		const res = await fetch(`https://wttr.in/?format=%c%t&lang=${lang}`, {
+		const res = await fetch(`https://wttr.in/?format=%c%t&lang=${lang}&A`, {
 			headers: { 'Accept': 'text/plain' },
 			signal: AbortSignal.timeout(4000),
 		});

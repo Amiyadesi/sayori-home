@@ -37,6 +37,12 @@ test("non-critical home requests are scheduled after the initial script path", (
 	assert.match(source, /loadCmdData\(\)\.finally\(\(\) => initTerminal\(\)\)/);
 });
 
+test("the weather line asks wttr.in for plain text, which browsers no longer get by default", () => {
+	for (const file of ["public/script.notebook.js", "public/script.notebook.min.js"]) {
+		assert.match(read(file), /wttr\.in\/\?format=%c%t&lang=\$\{\w+\}&A`/);
+	}
+});
+
 test("versioned scripts and derived images are immutable", () => {
 	const headers = read("public/_headers");
 	assert.match(headers, /\/i18n-router\.js[\s\S]*max-age=31536000, immutable/);

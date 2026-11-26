@@ -37,6 +37,12 @@ try {
 	write(path.join(homeRoot, "public", "services", "services-i18n.js"), "window.copy = '简体';");
 	write(path.join(homeRoot, "public", "tools", "tools.js"), "window.copy = '简体';");
 
+	const gate = "if (location.search) document.documentElement.dataset.test = 'entry';";
+	write(path.join(homeRoot, "public", "p34-entry.js"), gate);
+	for (const { base } of locales) {
+		write(path.join(homeRoot, "public", base, "index.html"), '<head><script src="/p34-entry.js?v=test"></script></head>');
+	}
+
 	const result = spawnSync(process.execPath, [scriptDest], {
 		cwd: tmpRoot,
 		encoding: "utf8",
@@ -54,6 +60,8 @@ try {
 			if (kind !== "about") assert.equal(data.marker, (file === "zh-hant" ? "zh" : file) + (kind === "home" ? "-surface" : "-truth"));
 		}
 		assert.ok(fs.existsSync(path.join(homeRoot, "public", base, "social", "index.html")));
+		assert.equal(fs.readFileSync(path.join(homeRoot, "public", base, "index.html"), "utf8"),
+			"<head><script data-p34-entry>" + gate + "</script></head>");
 	}
 
 	assert.match(fs.readFileSync(path.join(homeRoot, "public", "zh-hant", "social", "index.html"), "utf8"), /測試/);

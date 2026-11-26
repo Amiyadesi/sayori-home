@@ -84,10 +84,23 @@ function main() {
 
 	syncSponsorAssets();
 	writeResumePages();
+	inlineP34Entry();
 
 	console.log(
 		"[sync-home-content] content/home and content/assets/sponsor -> sayori-home/public/assets",
 	);
+}
+
+function inlineP34Entry() {
+	const publicDir = path.join(homeRoot, "public");
+	const source = fs.readFileSync(path.join(publicDir, "p34-entry.js"), "utf8");
+	const entryTag = /<script (?:src="\/p34-entry\.js[^"]*"|data-p34-entry)>[\s\S]*?<\/script>/;
+	for (const { base } of RESUME_LOCALES) {
+		const file = path.join(publicDir, base, "index.html");
+		const html = fs.readFileSync(file, "utf8");
+		if (!entryTag.test(html)) fail("Project 34 entry missing from " + file);
+		fs.writeFileSync(file, html.replace(entryTag, () => "<script data-p34-entry>" + source + "</script>"));
+	}
 }
 
 function writeResumePages() {

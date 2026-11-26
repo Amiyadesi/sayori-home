@@ -2,9 +2,9 @@
 	'use strict';
 
 	const LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
-	const DATA_LANG = LANG === 'zh-Hant' ? 'zh-hant' : LANG === 'zh-Hans' ? 'zh' : 'en';
+	const DATA_LANG = LANG === 'zh-Hans' ? 'zh' : LANG.toLowerCase();
 	const DATA_URL = `/assets/data/about-${DATA_LANG}.json?v=20261014-social`;
-	const FALLBACK_URL = `/assets/data/about-${LANG === 'zh' ? 'en' : 'zh'}.json?v=20261014-social`;
+	const FALLBACK_URL = `/assets/data/about-${DATA_LANG === 'en' ? 'zh' : 'en'}.json?v=20261014-social`;
 
 	const $ = (id) => document.getElementById(id);
 
@@ -88,6 +88,11 @@
 		setText($('letter-title'), letter.title);
 		setText($('letter-stamp'), letter.dateStamp);
 		setText($('letter-intro'), letter.intro);
+		const resume = $('letter-resume');
+		if (resume && letter.resume?.label) {
+			setText(resume, letter.resume.label);
+			if (letter.resume.href) resume.href = safeHref(letter.resume.href);
+		}
 
 		const wrap = $('letter-sections');
 		if (wrap && Array.isArray(letter.sections)) {
@@ -206,8 +211,8 @@
 		const graph = {
 			'@context': 'https://schema.org',
 			'@type': 'FAQPage',
-			'@id': 'https://sayori.org/about/#faq',
-			url: 'https://sayori.org/about/',
+			'@id': document.querySelector('link[rel=canonical]').href + '#faq',
+			url: document.querySelector('link[rel=canonical]').href,
 			name: faq.title || 'FAQ',
 			mainEntity: items.map((item) => ({
 				'@type': 'Question',
@@ -222,7 +227,6 @@
 	}
 
 	function updateFootLink() {
-		setText($('foot-notice'), LANG === 'en' ? 'Amiya_desi · Independent software developer' : LANG === 'zh-Hant' ? 'Amiya_desi · 獨立軟體開發者' : 'Amiya_desi · 独立软件开发者');
 		const link = document.querySelector('.desk-foot a[data-sayori-language]');
 		if (link) link.replaceWith(window.SayoriI18n.createSelect());
 	}
@@ -252,7 +256,7 @@
 		}
 		updateFootLink();
 		if (altered) {
-			const {initPaperMaterial} = await import('/paper-material.js?v=20261104-flow');
+			const {initPaperMaterial} = await import('/paper-material.js?v=20261126-playable');
 			initPaperMaterial();
 		}
 		window.SayoriI18n?.ready?.();

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="{{htmlLang}}" data-sayori-analytics-site="resume" data-resume-mode="{{mode}}">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#1a1440" />
+		<meta name="description" content="{{description}}" />
+		<meta name="robots" content="{{robots}}" />
+		<title>{{title}}</title>
+		<link rel="icon" href="/favicon.png" type="image/png" />
+		<link rel="canonical" href="{{canonical}}" />
+		{{alternates}}
+		<meta property="og:site_name" content="Amiya的书桌" />
+		<meta property="og:title" content="{{title}}" />
+		<meta property="og:description" content="{{description}}" />
+		<meta property="og:url" content="{{canonical}}" />
+		<meta property="og:type" content="profile" />
+		<meta property="og:locale" content="{{ogLocale}}" />
+		<meta property="og:image" content="https://sayori.org/assets/resume/og.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="{{ogAlt}}" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="{{title}}" />
+		<meta name="twitter:description" content="{{description}}" />
+		<meta name="twitter:image" content="https://sayori.org/assets/resume/og.png" />
+		{{head}}
+		<script type="application/ld+json" id="resume-schema">{{schema}}</script>
+		<script type="application/json" id="resume-ui">{{ui}}</script>
+	</head>
+	<body class="resume">
+		<div class="scene" aria-hidden="true">
+			<div class="scene-sky"></div>
+			<div class="scene-stars"></div>
+			<div class="scene-ridge scene-ridge--far"></div>
+			<div class="scene-ridge scene-ridge--near"></div>
+		</div>
+		<header class="title" id="title">
+			<p class="title-back"><a href="{{backHref}}">← {{back}}</a></p>
+			<h1 class="title-logo"><img src="{{logo}}" width="598" height="78" alt="Amiya_desi" /></h1>
+			<p class="title-tagline">{{tagline}}</p>
+			<nav class="menu" aria-label="{{menuLabel}}">
+				<ol>{{menu}}</ol>
+			</nav>
+			<p class="title-press" aria-hidden="true">{{press}}</p>
+		</header>
+		<noscript><p class="noscript-note">{{noJs}}</p></noscript>
+		{{printHeader}}
+		<main class="desktop" id="main-content">{{windows}}
+		</main>
+		{{hud}}
+		<nav class="tray" aria-label="{{trayLabel}}" hidden></nav>
+		<footer class="resume-footer">
+			{{translationNote}}
+			<p>{{copyright}} · <a href="{{backHref}}">{{back}}</a></p>
+		</footer>
+		{{analytics}}
+	</body>
+</html>

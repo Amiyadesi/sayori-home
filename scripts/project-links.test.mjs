@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -6,8 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const publicFiles = [
-	"public/index.html",
-	"public/services/index.html",
+	...locales.flatMap(({ base }) => ["index.html", "services/index.html"].map(file => path.join("public", base, file))),
 	"public/services/services-i18n.js",
 	"public/llms.txt",
 ];
@@ -49,7 +49,7 @@ test("localized home data exposes the maintained tools and links", () => {
 		"https://blog.sayori.org/guestbook/",
 	];
 
-	for (const lang of ["zh", "en"]) {
+	for (const { file: lang } of locales) {
 		const config = JSON.parse(read(`public/assets/data/home-${lang}.json`));
 		const navHref = "https://nav.sayori.org/";
 		const serviceEntry = config.surface.entries.find((entry) => entry.action === "services");

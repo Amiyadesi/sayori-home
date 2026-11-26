@@ -11,27 +11,34 @@
 		<link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
 		<link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
 		<link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
 		<link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
 		<meta property="og:title" content="{{title}}" />
 		<meta property="og:description" content="{{intro}}" />
 		<meta property="og:url" content="{{canonical}}" />
+		<meta property="og:locale" content="{{ogLocale}}" />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://sayori.org/assets/generated/sayori-lineart.webp" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<script src="/i18n-bootstrap.js?v=20261104-flow"></script>
-		<script defer src="/i18n-router.js?v=20261014-social"></script>
+		<script src="/i18n-bootstrap.js?v=20261123-home9"></script>
+		<script defer src="/i18n-router.js?v=20261123-home9"></script>
 		<link rel="stylesheet" href="/about/about.css?v=20260816-business" />
 		<link rel="stylesheet" href="/social/social.css?v=20261014-social" />
 		<script type="application/ld+json">{{schema}}</script>
 			<link rel="stylesheet" href="/paper-trace.css?v=20261104-flow" />
-		<script type="module" src="/paper-social.js?v=20261104-flow"></script>
+		<script type="module" src="/paper-social.js?v=20261126-playable"></script>
 	</head>
 	<body class="social-page">
 		<div class="desk-surface">
 			<nav class="social-toolbar" aria-label="{{language}}">
 				<a class="social-back" href="{{home}}">← {{back}}</a>
 				<select class="sayori-language-select" data-sayori-language-select aria-label="{{language}}">{{options}}</select>
-				<noscript><a href="/social/">简体</a> <a href="/zh-hant/social/">繁體</a> <a href="/en/social/">EN</a></noscript>
+				<noscript>{{languageLinks}}</noscript>
 			</nav>
 			<main class="letter-paper social-paper" id="main-content">
 				<span class="letter-tape" aria-hidden="true"></span>

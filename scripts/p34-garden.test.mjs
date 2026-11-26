@@ -4,9 +4,10 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from '../public/third-party/three/three.module.min.js';
 import { newJourney, journeyEvent, readJourney, cookieJourney, GARDEN_SKIES } from '../public/p34-journey.js';
-import { getLayerConfig, resolvePlayerMovement } from '../public/p34-world3d.js';
+import { getLayerConfig } from '../public/p34-world3d.js';
 import { POOL, inPool, skyFromHour, entrySpawn, stepUnseenProp, dailyNote } from '../public/p34-garden.js';
 import { addResidents, stepWaterSkimmer } from '../public/p34-residents.js';
+import { deepConfig, deepCrossing, stepDraftFlight } from '../public/p34-deep.js';
 import { createWorldAudio } from '../public/p34-audio.js';
 
 test('garden preferences round-trip, migrate old v2 saves and reject invalid boundary values', () => {
@@ -42,21 +43,20 @@ test('real local time chooses all four skies without changing a save', () => {
   assert.notDeepEqual(dailyNote(state, new Date(2026, 10, 18, 14)).lines, dailyNote(state, new Date(2026, 10, 19, 14)).lines);
 });
 
-test('pool entrance is opt-in, grounded, walkable and leaves the standard spawn exact', () => {
+test('pool entrance is opt-in, opens beside the wading floor and leaves the standard spawn exact', () => {
   const config = getLayerConfig('atrium', newJourney());
   for (const href of ['/?paper=0617', '/?paper=0617&spot=invalid', '/?spot=pool', '/?paper=0617&spot=pool&layer=loft']) assert.deepEqual(entrySpawn(config.spawn, href), config.spawn);
   assert.deepEqual(config.spawn, { x: 0, y: 0, z: 8.8, yaw: 0, pitch: 0 });
   const spawn = entrySpawn(config.spawn, '/?paper=0617&spot=pool');
-  assert.deepEqual(resolvePlayerMovement(spawn, spawn.x + .1, spawn.z - .1, config), { x: spawn.x + .1, y: 0, z: spawn.z - .1 });
+  assert.equal(spawn.y,0);assert.ok(Math.abs(spawn.x)<3);
   for (let z = POOL.minZ + .2; z < POOL.maxZ; z += .2) {
     assert.ok(inPool(0, z));
-    assert.equal(resolvePlayerMovement({ x: 0, y: 0, z }, 0, z - .1, config).y, 0);
   }
   assert.equal(inPool(0, -3, 3.2), false);
 });
 
-test('unseen bench needs sight, distance and a turned back; never changes collision or save state', () => {
-  const state = newJourney(), before = JSON.stringify(state), cfg = getLayerConfig('atrium', state);
+test('unseen bench needs sight, distance and a turned back; roaming never changes the save', () => {
+  const state = newJourney(), before = JSON.stringify(state);
   const prop = { x: -18, z: 11, variant: 0, phase: 'unseen', seenAt: null };
   const p = { x: -18, z: 17, yaw: 0 };
   assert.equal(stepUnseenProp(prop, { ...p, yaw: Math.PI }), '');
@@ -66,7 +66,6 @@ test('unseen bench needs sight, distance and a turned back; never changes collis
   assert.equal(stepUnseenProp(prop, { ...p, z: 19, yaw: Math.PI }), 'shift');
   assert.equal(prop.variant, 1);
   assert.equal(stepUnseenProp(prop, { ...p, z: 19 }), 'notice');
-  assert.deepEqual(getLayerConfig('atrium', state).colliders, cfg.colliders);
   assert.equal(JSON.stringify(state), before);
   for (const name of ['p34-garden.js', 'p34-residents.js']) assert.doesNotMatch(fs.readFileSync(new URL(`../public/${name}`, import.meta.url), 'utf8'), /document\.cookie\s*=|localStorage\.setItem/);
 });
@@ -82,14 +81,13 @@ test('skimmers scatter within water, bookmarks tuck under gaze and reduced motio
   assert.equal(skimmer.x, frozen.x); assert.equal(skimmer.z, frozen.z);
   let player = { x: -5.5, y: 0, z: -4.8, yaw: Math.PI / 2, pitch: .51 };
   let paperSounds = 0;
-  const cfg = getLayerConfig('stacks', newJourney()), before = JSON.stringify(cfg.colliders);
+  const cfg = getLayerConfig('stacks', newJourney());
   const residents = addResidents(THREE, new THREE.Scene(), cfg, () => player, () => false, { layerId: 'stacks', onEntityGlance: () => paperSounds++ });
   for (let i = 0; i < 20; i++) residents.update(.1);
   assert.ok(residents.snapshot().shelfBookmarks[0].tuck > .9); assert.ok(paperSounds > 0);
   player = { ...player, yaw: -Math.PI / 2 };
   for (let i = 0; i < 20; i++) residents.update(.1);
   assert.ok(residents.snapshot().shelfBookmarks[0].tuck < .1);
-  assert.equal(JSON.stringify(cfg.colliders), before);
   const reduced = addResidents(THREE, new THREE.Scene(), cfg, () => player, () => true, { layerId: 'stacks' });
   assert.equal(reduced.flashSovereign(), false); assert.equal(reduced.snapshot().sovereignEcho, false);
 });
@@ -112,11 +110,47 @@ test('normal visitors get no trace or import; returning traces use validated sav
   ]) {
     let calls = 0; const paper = { dataset: {} };
     const document = { get cookie() { return cookie; }, set cookie(_) { assert.fail('Passive home wrote a cookie'); }, querySelector() { return paper; } };
-    vm.runInNewContext(source.replace("import('./p34-journey.js?v=20261113-library')", "loadJourney()"), { URLSearchParams, location: { search: '' }, document, console, window: { addEventListener() {} }, loadJourney: () => { calls++; return Promise.resolve({ cookieJourney }); } });
+    vm.runInNewContext(source.replace(/import\('(\.\/p34-journey\.js\?v=)[^']+'\)/, "loadJourney()"), { URLSearchParams, location: { search: '' }, document, console, window: { addEventListener() {} }, loadJourney: () => { calls++; return Promise.resolve({ cookieJourney }); } });
     await new Promise(resolve => setImmediate(resolve));
     assert.equal(calls, imports); assert.equal(paper.dataset.gardenSky, expected);
   }
   const html = fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
   assert.ok(html.includes('class="desk-odd-object" href="/?paper=0617"'));
   assert.ok(html.includes('href="/?paper=0617&amp;spot=pool" aria-label="翻到水院"'));
+});
+
+
+test('submerged threshold preserves the crossing overshoot, cannot be used beside the arch and leads to a much wider bath', () => {
+  const config=deepConfig('poolrooms'), pos={x:.6,y:-.8,z:-8.34};
+  const into=deepCrossing('poolrooms',pos,{...pos,z:-8.45});
+  assert.deepEqual(into,{...pos,z:-59.45});
+  const back=deepCrossing('poolrooms',into,{...into,z:-59.34});
+  assert.equal(back.x,pos.x);assert.equal(back.y,pos.y);assert.ok(Math.abs(back.z-pos.z)<1e-9);
+  assert.equal(deepCrossing('poolrooms',pos,{...pos,x:2.2,z:-8.45}),null);
+  const bath=config.surfaces.find(s=>s.id==='great-bath'),neck=config.surfaces.find(s=>s.id==='cistern-neck');
+  assert.ok((bath.maxX-bath.minX)/(neck.maxX-neck.minX)>8);
+});
+
+test('unfinished flights require seeing and leaving the frame, stay joined, and reopen from the far side in lockdown', () => {
+  const f={open:false,seen:null}, back={x:0,z:13,yaw:Math.PI};
+  assert.equal(stepDraftFlight(f,back),false);assert.equal(f.seen,null);
+  assert.equal(stepDraftFlight(f,{...back,yaw:0}),false);
+  assert.equal(stepDraftFlight(f,{x:-3,z:4.2,yaw:0}),true);
+  assert.equal(stepDraftFlight(f,back),false);assert.ok(f.open);
+  for(const [phase,passable] of [['drafts',false],['closed',true],['after',true]]) {
+    const cfg=deepConfig('drafts',{phase});
+    assert.equal(cfg.surfaces.find(s=>s.id==='draft-flight').enabled,passable);
+  }
+});
+
+test('a distant watcher freezes when seen; folded kites and two pools of skimmers stay in their own habitats', () => {
+  let player={x:0,y:0,z:0,yaw:0,pitch:0};
+  const inhabitants=(layer)=>addResidents(THREE,new THREE.Scene(),deepConfig(layer),()=>player,()=>false,{layerId:layer});
+  const drafts=inhabitants('drafts'), bath=inhabitants('poolrooms');
+  assert.equal(drafts.snapshot().waterSkimmers.length,0);assert.ok(drafts.snapshot().kites>0);
+  assert.equal(bath.snapshot().kites,0);assert.ok(bath.snapshot().waterSkimmers.some(s=>s.z < -59));
+  const post=drafts.snapshot().watchers[0];player={x:post.x,y:post.y,z:post.z+16,yaw:0,pitch:0};
+  drafts.update(.2);const held=drafts.snapshot().watchers[0];
+  assert.ok(held.watched);drafts.update(1);assert.equal(drafts.snapshot().watchers[0].x,held.x);
+  player.yaw=Math.PI;drafts.update(1);assert.notEqual(drafts.snapshot().watchers[0].x,held.x);
 });

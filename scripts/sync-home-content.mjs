@@ -3,6 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import OpenCC from "opencc-js";
 import { renderSocialPage } from "./render-social-page.mjs";
+import { RESUME_LOCALES, loadResumeContent } from "./resume-content.mjs";
+import { renderResumePage, resumePath } from "./render-resume-page.mjs";
 
 const scriptFile = fileURLToPath(import.meta.url);
 const homeRoot = path.resolve(path.dirname(scriptFile), "..");
@@ -22,7 +24,7 @@ const sponsorAssetsDestination = path.join(
 	"sponsor",
 );
 
-const LANGS = ["zh", "en"];
+const authoredLocales = RESUME_LOCALES.filter((locale) => !locale.derived);
 const toTraditional = OpenCC.Converter({ from: "cn", to: "t" });
 const REQUIRED_SURFACE_KEYS = ["meta", "surface", "profile", "services"];
 const REQUIRED_TRUTH_KEYS = ["responses", "eggs", "fallback", "greeting"];
@@ -37,7 +39,7 @@ function main() {
 
 	fs.mkdirSync(dataRoot, { recursive: true });
 
-	for (const lang of LANGS) {
+	for (const { file: lang, translated } of authoredLocales) {
 		const surface = readJson(`surface.${lang}.json`);
 		const truth = readJson(`truth.${lang}.json`);
 		validateObject(surface, REQUIRED_SURFACE_KEYS, `surface.${lang}.json`);
@@ -57,10 +59,9 @@ function main() {
 		writeJson(path.join(dataRoot, `home-${lang}.json`), homeConfig);
 		writeJson(path.join(dataRoot, `lines-${lang}.json`), truthConfig);
 
-		// about.{lang}.json is optional: only synced when present so the
-		// /about/ page can ship independently of the content repo version.
+		// Older Chinese and English sources can predate the separate about page.
 		const aboutFile = `about.${lang}.json`;
-		if (fs.existsSync(path.join(sourceRoot, aboutFile))) {
+		if (translated || fs.existsSync(path.join(sourceRoot, aboutFile))) {
 			const about = readJson(aboutFile);
 			validateObject(about, REQUIRED_ABOUT_KEYS, aboutFile);
 			writeJson(path.join(dataRoot, `about-${lang}.json`), {
@@ -82,10 +83,27 @@ function main() {
 	writeTraditionalScript("tools/tools.js", "tools/tools.zh-hant.js");
 
 	syncSponsorAssets();
+	writeResumePages();
 
 	console.log(
 		"[sync-home-content] content/home and content/assets/sponsor -> sayori-home/public/assets",
 	);
+}
+
+function writeResumePages() {
+	// resume.data.json is optional so older content checkouts still sync.
+	if (!fs.existsSync(path.join(sourceRoot, "resume.data.json"))) return;
+	let content;
+	try {
+		content = loadResumeContent(sourceRoot, toTraditional);
+	} catch (error) {
+		fail(`resume content invalid:\n${error.message}`);
+	}
+	for (const locale of RESUME_LOCALES) {
+		const destination = path.join(homeRoot, "public", ...resumePath(locale).split("/").filter(Boolean), "index.html");
+		fs.mkdirSync(path.dirname(destination), { recursive: true });
+		fs.writeFileSync(destination, renderResumePage({ data: content.data, text: content.texts[locale.id], locale }), "utf8");
+	}
 }
 
 function writeTraditionalScript(sourceName, outputName) {

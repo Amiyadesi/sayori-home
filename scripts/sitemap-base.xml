@@ -2,98 +2,506 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	<url>
 		<loc>https://sayori.org/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/zh-hant/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/en/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ja/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/fr/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ko/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/es/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/de/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/pt-br/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/about/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/zh-hant/about/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/en/about/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ja/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/fr/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ko/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/es/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/de/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/pt-br/about/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/about/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/about/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/about/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/about/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/about/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/about/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/about/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/about/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/about/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/about/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/services/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/zh-hant/services/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/en/services/</loc>
-		<lastmod>2026-09-26</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ja/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/fr/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ko/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/es/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/de/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/pt-br/services/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/services/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/services/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/services/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/services/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/services/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/services/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/services/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/services/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/services/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/services/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/social/</loc>
-		<lastmod>2026-10-14</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/zh-hant/social/</loc>
-		<lastmod>2026-10-14</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
 	</url>
 	<url>
 		<loc>https://sayori.org/en/social/</loc>
-		<lastmod>2026-10-14</lastmod>
+		<lastmod>2026-11-23</lastmod>
 		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
 		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
 		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ja/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/fr/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ko/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/es/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/de/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/pt-br/social/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/social/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/social/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/social/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/social/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/social/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/social/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/social/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/social/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/social/" />
 		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/social/" />
 	</url>
 	<url>
@@ -103,5 +511,131 @@
 	<url>
 		<loc>https://sayori.org/tools/subarutap/</loc>
 		<lastmod>2026-08-11</lastmod>
+	</url>
+	<url>
+		<loc>https://sayori.org/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/zh-hant/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/en/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ja/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/fr/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/ko/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/es/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/de/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
+	</url>
+	<url>
+		<loc>https://sayori.org/pt-br/resume/</loc>
+		<lastmod>2026-11-23</lastmod>
+		<xhtml:link rel="alternate" hreflang="zh-Hans" href="https://sayori.org/resume/" />
+		<xhtml:link rel="alternate" hreflang="zh-Hant" href="https://sayori.org/zh-hant/resume/" />
+		<xhtml:link rel="alternate" hreflang="en" href="https://sayori.org/en/resume/" />
+		<xhtml:link rel="alternate" hreflang="ja" href="https://sayori.org/ja/resume/" />
+		<xhtml:link rel="alternate" hreflang="fr" href="https://sayori.org/fr/resume/" />
+		<xhtml:link rel="alternate" hreflang="ko" href="https://sayori.org/ko/resume/" />
+		<xhtml:link rel="alternate" hreflang="es" href="https://sayori.org/es/resume/" />
+		<xhtml:link rel="alternate" hreflang="de" href="https://sayori.org/de/resume/" />
+		<xhtml:link rel="alternate" hreflang="pt-BR" href="https://sayori.org/pt-br/resume/" />
+		<xhtml:link rel="alternate" hreflang="x-default" href="https://sayori.org/resume/" />
 	</url>
 </urlset>

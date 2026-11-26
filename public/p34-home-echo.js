@@ -3,7 +3,7 @@
   if (new URLSearchParams(location.search).get('paper') === '0617') return;
   const row = document.cookie.split(';').map(s => s.trim()).find(s => s.startsWith('p34_journey_v2='));
   if (!row) return;
-  import('./p34-journey.js?v=20261113-library').then(({ cookieJourney }) => {
+  import('./p34-journey.js?v=20261126-playable').then(({ cookieJourney }) => {
     const loaded = cookieJourney(row);
     if (loaded.error) return;
     const paper = document.querySelector('.desk-odd-object');

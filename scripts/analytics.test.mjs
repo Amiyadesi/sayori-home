@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -21,7 +22,7 @@ test("the analytics script reports only to the first-party endpoint", () => {
 });
 
 test("every public analytics entry point is identified and cache-busted", () => {
-	for (const relativePath of ["public/index.html", "public/about/index.html", "public/sponsor/index.html"]) {
+	for (const relativePath of [...locales.flatMap(({ base }) => ["", "about/", "social/"].map(page => path.join("public", base, page, "index.html"))), "public/sponsor/index.html"]) {
 		const html = fs.readFileSync(path.join(root, relativePath), "utf8");
 		assert.match(html, /data-sayori-analytics-site="[^"]+"/, relativePath);
 		assert.match(

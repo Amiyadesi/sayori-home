@@ -28,7 +28,8 @@
 		},
 	};
 
-	const language = window.SayoriI18n?.language === "en" || document.documentElement.dataset.sayoriCurrentLanguage === "en" ? "en" : "zh";
+	const locale = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || "zh-Hans";
+	const language = locale.startsWith("zh") ? "zh" : "en";
 	const strings = copy[language];
 	const $ = (selector) => document.querySelector(selector);
 	const state = {

@@ -6,8 +6,8 @@ import { LINES, CHOICES } from '../public/p34-script.js';
 import { TTFLoader } from '../public/third-party/three/TTFLoader.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const source = process.argv[2];
-if (!source) throw new Error('Usage: node scripts/build-p34-font.mjs <NotoSerifSC[wght].ttf> (requires Python fonttools)');
+const source = process.argv[2] || (process.env.WINDIR && path.join(process.env.WINDIR, 'Fonts', 'NotoSerifSC-VF.ttf'));
+if (!source || !fs.existsSync(source)) throw new Error('Usage: node scripts/build-p34-font.mjs <NotoSerifSC[wght].ttf> (requires Python fonttools)');
 const target = path.join(root, 'public/assets/p34/voice-serif.ttf');
 execFileSync('python', ['-c', `
 import sys

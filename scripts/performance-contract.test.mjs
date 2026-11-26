@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -11,7 +12,7 @@ function read(relativePath) {
 }
 
 test("visible Sayori artwork uses responsive derivatives", () => {
-	for (const relativePath of ["public/index.html", "public/services/index.html"]) {
+	for (const relativePath of locales.flatMap(({ base }) => ["", "services/"].map(page => path.join("public", base, page, "index.html")))) {
 		const html = read(relativePath);
 		assert.match(html, /sayori-lineart-256\.webp\?v=20260807-perf 256w/);
 		assert.match(html, /sayori-lineart-512\.webp\?v=20260807-perf 512w/);
@@ -21,7 +22,7 @@ test("visible Sayori artwork uses responsive derivatives", () => {
 });
 
 test("analytics is a deferred first-party script, with no Google tag", () => {
-	for (const relativePath of ["public/index.html", "public/about/index.html"]) {
+	for (const relativePath of locales.flatMap(({ base }) => ["", "about/"].map(page => path.join("public", base, page, "index.html")))) {
 		const html = read(relativePath);
 		assert.doesNotMatch(html, /googletagmanager\.com\/gtag\/js/);
 		assert.match(html, /<script defer src="[^\"]*analytics\.notebook\.js\?v=20261121-first-party"/);

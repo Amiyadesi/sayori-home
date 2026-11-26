@@ -4,13 +4,17 @@
 	const STORAGE_KEY = "sayori:ui-language";
 	const MANUAL_COOKIE = "sayori_locale";
 	const AUTO_COOKIE = "sayori_locale_auto";
-	const PREFIXES = [["/zh-hant", "zh-Hant"], ["/en", "en"]];
+	const LOCALES = [{"id":"zh-Hans","base":""},{"id":"zh-Hant","base":"zh-hant"},{"id":"en","base":"en"},{"id":"ja","base":"ja"},{"id":"fr","base":"fr"},{"id":"ko","base":"ko"},{"id":"es","base":"es"},{"id":"de","base":"de"},{"id":"pt-BR","base":"pt-br"}];
+	const ALL = LOCALES.map(({ id }) => id);
+	const SHARED = ["zh-Hans", "zh-Hant", "en"];
 
 	function normalize(value) {
 		const input = String(value || "").toLowerCase();
 		if (input === "zh-hant" || input === "zh-tw" || input === "zh-hk" || input === "tw") return "zh-Hant";
 		if (input === "zh-hans" || input === "zh-cn" || input === "zh" || input === "cn") return "zh-Hans";
-		return "en";
+		const primary = input.split("-")[0];
+		if (primary === "pt") return "pt-BR";
+		return ["ja", "fr", "ko", "es", "de"].includes(primary) ? primary : "en";
 	}
 
 	function cookie(name) {
@@ -23,33 +27,44 @@
 
 	function save(value) {
 		try { localStorage.setItem(STORAGE_KEY, value); } catch {}
+		if (!SHARED.includes(value)) return;
 		document.cookie = `${MANUAL_COOKIE}=${encodeURIComponent(value)}; Domain=.sayori.org; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
 		document.cookie = `${AUTO_COOKIE}=; Domain=.sayori.org; Path=/; Max-Age=0; SameSite=Lax; Secure`;
 	}
 
 	function stripLocale(path) {
-		for (const [prefix] of PREFIXES) {
-			if (path === prefix || path.startsWith(prefix + "/")) return path.slice(prefix.length) || "/";
+		for (const { base } of LOCALES) {
+			if (base && (path === "/" + base || path.startsWith("/" + base + "/"))) return path.slice(base.length + 1) || "/";
 		}
 		return path || "/";
 	}
 
-	function isLocalizedPage(path) {
+	function pageLanguages(path) {
 		const base = stripLocale(path);
-		return base === "/" || /^\/(?:about|services|social)\/?$/.test(base);
+		return base === "/" || /^\/(?:about|services|social|resume)\/?$/.test(base) ? ALL : null;
+	}
+
+	function isLocalizedPage(path) {
+		return pageLanguages(path) !== null;
+	}
+
+	function pageLanguage(language, path) {
+		return (pageLanguages(path) || SHARED).includes(language) ? language : "en";
 	}
 
 	function localizedPath(path, language) {
 		const base = stripLocale(path);
-		if (!isLocalizedPage(base)) return path;
-		if (language === "en") return base === "/" ? "/en/" : "/en" + base;
-		if (language === "zh-Hant") return base === "/" ? "/zh-hant/" : "/zh-hant" + base;
-		return base;
+		const languages = pageLanguages(base);
+		if (!languages) return path;
+		const prefix = LOCALES.find(({ id }) => id === (languages.includes(language) ? language : "en")).base;
+		if (!prefix) return base;
+		return base === "/" ? `/${prefix}/` : `/${prefix}${base}`;
 	}
 
 	function pathLanguage(path) {
-		if (path === "/en" || path.startsWith("/en/")) return "en";
-		if (path === "/zh-hant" || path.startsWith("/zh-hant/")) return "zh-Hant";
+		for (const { id, base } of LOCALES) {
+			if (base && (path === "/" + base || path.startsWith("/" + base + "/"))) return id;
+		}
 		return isLocalizedPage(path) ? "zh-Hans" : null;
 	}
 
@@ -60,7 +75,7 @@
 	try {
 		const url = new URL(window.location.href);
 		const raw = url.searchParams.get("lang");
-		if (raw && ["zh", "zh-hans", "zh-hant", "en"].includes(raw.toLowerCase())) {
+		if (raw && ["zh", "zh-hans", "zh-hant", "en", "ja", "fr", "ko", "es", "de", "pt-br"].includes(raw.toLowerCase())) {
 			query = normalize(raw);
 			url.searchParams.delete("lang");
 			save(query);
@@ -80,6 +95,7 @@
 	if (!manual && stored) save(normalize(stored));
 
 	const preferred = explicitLanguage
+		|| (stored && !SHARED.includes(normalize(stored)) ? normalize(stored) : "")
 		|| (manual ? normalize(manual) : "")
 		|| (cookie(AUTO_COOKIE) ? normalize(cookie(AUTO_COOKIE)) : "")
 		|| (stored ? normalize(stored) : "")
@@ -96,9 +112,9 @@
 		save(explicitLanguage);
 	}
 
-	const htmlLanguage = preferred === "zh-Hans" ? "zh-CN" : preferred;
-	document.documentElement.lang = htmlLanguage;
-	document.documentElement.dataset.sayoriCurrentLanguage = preferred;
+	const language = pageLanguage(preferred, pathname);
+	document.documentElement.lang = language === "zh-Hans" ? "zh-CN" : language;
+	document.documentElement.dataset.sayoriCurrentLanguage = language;
 	try {
 		if (new URLSearchParams(search).get("paper") === "0617") {
 			const root = document.documentElement;
@@ -121,11 +137,12 @@
 			document.head.append(content);
 		}
 	} catch {}
-	const pendingUntilReady = preferred !== "zh-Hans" && !isLocalizedPage(pathname);
+	const pendingUntilReady = language !== "zh-Hans" && !isLocalizedPage(pathname);
 	if (pendingUntilReady) document.documentElement.dataset.sayoriI18nPending = "true";
 	window.SAYORI_I18N = {
 		defaultLanguage: "zh-Hans",
-		initialLanguage: preferred,
+		initialLanguage: language,
+		preferredLanguage: preferred,
 		pendingUntilReady,
 		localizedPath,
 	};

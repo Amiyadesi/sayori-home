@@ -1,10 +1,13 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import vm from "node:vm";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
+const pages = ["", "about/", "services/", "social/"];
+const pathFor = (locale, page) => "/" + (locale.base ? locale.base + "/" : "") + page;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 test("locale-aware paths map the home, about, and services pages", () => {
@@ -38,7 +41,8 @@ test("the locale in a real URL takes precedence over browser preferences", () =>
 });
 
 test("the bootstrap keeps every static language URL visible without an automatic redirect", () => {
-	for (const pathname of ["/", "/about/", "/services/", "/social/", "/en/social/", "/zh-hant/social/", "/en/", "/zh-hant/about/"]) {
+	for (const locale of locales) for (const page of pages) {
+		const pathname = pathFor(locale, page);
 		const url = new URL(pathname, "https://sayori.org");
 		const context = {
 			URL, document: { cookie: "sayori_locale=en", documentElement: { dataset: {} } },
@@ -48,7 +52,7 @@ test("the bootstrap keeps every static language URL visible without an automatic
 		context.window = context;
 		vm.runInNewContext(read("public/i18n-bootstrap.js"), context);
 		assert.equal(context.document.documentElement.dataset.sayoriI18nPending, undefined);
-		assert.equal(context.SAYORI_I18N.initialLanguage, pathname.startsWith("/en/") ? "en" : pathname.startsWith("/zh-hant/") ? "zh-Hant" : "zh-Hans");
+		assert.equal(context.SAYORI_I18N.initialLanguage, locale.id);
 	}
 });
 
@@ -91,25 +95,110 @@ test("ordinary same-site links are rewritten to the current language route", () 
 });
 
 test("localized landing and profile pages load the language bootstrap and router", () => {
-	const paths = [
-		"public/index.html",
-		"public/en/index.html",
-		"public/zh-hant/index.html",
-		"public/about/index.html",
-		"public/en/about/index.html",
-		"public/zh-hant/about/index.html",
-		"public/services/index.html",
-		"public/en/services/index.html",
-		"public/zh-hant/services/index.html",
-		"public/social/index.html",
-		"public/en/social/index.html",
-		"public/zh-hant/social/index.html",
-	];
+	const paths = pages.flatMap(page => locales.map(locale => "public" + pathFor(locale, page) + "index.html"));
 	for (const relativePath of paths) {
 		const html = read(relativePath);
 		assert.match(html, /i18n-bootstrap\.js/);
 		assert.match(html, /<script defer src="[^"]*i18n-router\.js/);
 		assert.doesNotMatch(html, /<script src="\/i18n-router\.js[^"]*"><\/script>/);
+	}
+});
+
+test("the résumé and core pages share nine editions; tools keep their unprefixed route", () => {
+	const result = runRouter({ href: "https://sayori.org/resume/" });
+	assert.equal(result.localizedPath("/resume/", "ja"), "/ja/resume/");
+	assert.equal(result.localizedPath("/ja/resume/", "pt-BR"), "/pt-br/resume/");
+	assert.equal(result.localizedPath("/fr/resume/", "zh-Hans"), "/resume/");
+	assert.equal(result.localizedPath("/ko/resume/", "zh-Hant"), "/zh-hant/resume/");
+	assert.equal(result.localizedPath("/resume/", "en"), "/en/resume/");
+	assert.equal(result.localizedPath("/about/", "ja"), "/ja/about/");
+	assert.equal(result.localizedPath("/", "de"), "/de/");
+	assert.equal(result.localizedPath("/es/resume/", "es"), "/es/resume/");
+	for (const page of pages) for (const locale of locales) {
+		assert.equal(result.localizedPath("/pt-br/" + page, locale.id), pathFor(locale, page));
+	}
+	assert.equal(result.localizedPath("/tools/", "fr"), "/tools/");
+});
+
+test("a nine-locale URL sets its own document language", () => {
+	for (const [pathname, language] of [["/pt-br/resume/", "pt-BR"], ["/ja/resume/", "ja"], ["/de/resume/", "de"]]) {
+		const result = runRouter({ href: `https://sayori.org${pathname}`, browserLanguage: "zh-CN" });
+		assert.equal(result.language, language, pathname);
+		assert.equal(result.documentLanguage, language, pathname);
+	}
+	for (const [browserLanguage, prefix] of [["fr-FR", "fr"], ["pt", "pt-br"], ["ja-JP", "ja"]]) {
+		const tools = runRouter({ href: "https://sayori.org/tools/", browserLanguage });
+		assert.equal(tools.language, "en", browserLanguage);
+		const resume = { href: "https://sayori.org/resume/", target: "" };
+		tools.clickLink(resume);
+		assert.equal(resume.href, `/${prefix}/resume/`, browserLanguage);
+	}
+});
+
+test("only the three shared editions write the cross-site locale cookie", () => {
+	const japanese = runRouter({ href: "https://sayori.org/resume/", linkLanguage: "ja" });
+	japanese.clickLanguageControl();
+	assert.equal(japanese.assignedUrl, "/ja/resume/");
+	assert.equal(japanese.savedLanguage, "ja");
+	assert.ok(!japanese.cookieWrites.some((value) => value.startsWith("sayori_locale=")), "ja stays on this site");
+
+	const english = runRouter({ href: "https://sayori.org/ja/resume/", linkLanguage: "en" });
+	english.clickLanguageControl();
+	assert.equal(english.assignedUrl, "/en/resume/");
+	assert.ok(english.cookieWrites.some((value) => value.startsWith("sayori_locale=en;")));
+});
+
+test("links from a nine-locale page land on a page that exists", () => {
+	const result = runRouter({ href: "https://sayori.org/ja/resume/" });
+	const about = { href: "https://sayori.org/about/", target: "" };
+	result.clickLink(about);
+	assert.equal(about.href, "/ja/about/");
+	const resume = { href: "https://sayori.org/resume/#awards", target: "" };
+	result.clickLink(resume);
+	assert.equal(resume.href, "/ja/resume/#awards");
+});
+
+test("explicit language links keep their own target", () => {
+	const result = runRouter({ href: "https://sayori.org/resume/" });
+	const japanese = { href: "https://sayori.org/ja/resume/", target: "", hasAttribute: (name) => name === "hreflang" };
+	result.clickLink(japanese);
+	assert.equal(japanese.href, "https://sayori.org/ja/resume/");
+});
+
+test("the bootstrap keeps nine-locale resume URLs without redirecting", () => {
+	for (const [pathname, language] of [["/resume/", "zh-Hans"], ["/ja/resume/", "ja"], ["/pt-br/resume/", "pt-BR"], ["/zh-hant/resume/", "zh-Hant"]]) {
+		const url = new URL(pathname, "https://sayori.org");
+		const writes = [];
+		const context = {
+			URL, document: { get cookie() { return "sayori_locale=en"; }, set cookie(value) { writes.push(value); }, documentElement: { dataset: {} } },
+			localStorage: { getItem: () => "en", setItem() {} }, navigator: { language: "en-US" },
+			location: { href: url.href, pathname, search: "", hash: "", replace() { assert.fail("unexpected redirect"); } },
+		};
+		context.window = context;
+		vm.runInNewContext(read("public/i18n-bootstrap.js"), context);
+		assert.equal(context.SAYORI_I18N.initialLanguage, language, pathname);
+		assert.equal(context.document.documentElement.lang, language === "zh-Hans" ? "zh-CN" : language, pathname);
+		if (!["zh-Hans", "zh-Hant", "en"].includes(language)) {
+			assert.ok(!writes.some((value) => value.startsWith("sayori_locale=")), pathname);
+		}
+	}
+});
+
+test("locale prefixes match the blog reading editions", async (t) => {
+	const blogRoot = process.env.P34_BLOG_PUBLIC
+		? path.resolve(process.env.P34_BLOG_PUBLIC, "..")
+		: path.resolve(root, "../sayori-blog");
+	const localesFile = path.join(blogRoot, "src/utils/blog-locales.mjs");
+	if (!fs.existsSync(localesFile)) {
+		t.skip("sayori-blog checkout not available");
+		return;
+	}
+	const { blogLocales } = await import(pathToFileURL(localesFile).href);
+	const expected = blogLocales.map(({ id, base }) => [id === "zh-CN" ? "zh-Hans" : id, base]);
+	for (const file of ["public/i18n-bootstrap.js", "public/i18n-router.js"]) {
+		const source = read(file);
+		const table = JSON.parse(source.match(/const LOCALES = (\[.*?\]);/s)[1]);
+		assert.deepEqual(table.map(({ id, base }) => [id, base]), expected, file);
 	}
 });
 
@@ -135,6 +224,7 @@ function runRouter({
 	let reloads = 0;
 	let prevented = false;
 	let assignedUrl = null;
+	const cookieWrites = [];
 	const documentElement = { lang: "", dataset: {} };
 	const head = { append() {} };
 	const location = {
@@ -164,7 +254,8 @@ function runRouter({
 		document: {
 			documentElement,
 			head,
-			cookie: "",
+			get cookie() { return ""; },
+			set cookie(value) { cookieWrites.push(value); },
 			querySelectorAll() { return []; },
 			createElement(tag) {
 				return {
@@ -194,6 +285,7 @@ function runRouter({
 		get reloads() { return reloads; },
 		get prevented() { return prevented; },
 		get assignedUrl() { return assignedUrl; },
+		cookieWrites,
 		localizedPath: context.window.SayoriI18n.localizedPath,
 		clickLanguageControl() {
 			assert.ok(delegatedClickHandler, "delegated language handler");

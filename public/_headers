@@ -88,3 +88,12 @@
 
 /assets/data/*
   Cache-Control: public, max-age=3600
+
+/resume/resume.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/resume/resume.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/resume/*
+  Cache-Control: public, max-age=86400

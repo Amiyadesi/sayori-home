@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
@@ -14,24 +15,18 @@ try {
 	const scriptDest = path.join(homeRoot, "scripts", "sync-home-content.mjs");
 	fs.mkdirSync(path.dirname(scriptDest), { recursive: true });
 	fs.copyFileSync(scriptPath, scriptDest);
-	for (const file of ["render-social-page.mjs", "social-page.html"]) {
+	for (const file of ["render-social-page.mjs", "social-page.html", "resume-content.mjs", "render-resume-page.mjs", "resume-page.html"]) {
 		fs.copyFileSync(path.join(path.dirname(scriptPath), file), path.join(homeRoot, "scripts", file));
 	}
 	fs.cpSync(path.join(path.resolve(path.dirname(scriptPath), ".."), "node_modules", "opencc-js"), path.join(homeRoot, "node_modules", "opencc-js"), { recursive: true });
 
-	writeJson(path.join(contentRoot, "home", "surface.zh.json"), {
-		meta: {}, surface: {}, profile: {}, services: {}, marker: "zh-surface",
-	});
-	writeJson(path.join(contentRoot, "home", "truth.zh.json"), {
-		responses: {}, eggs: {}, fallback: {}, greeting: {}, marker: "zh-truth",
-	});
-	writeJson(path.join(contentRoot, "home", "surface.en.json"), {
-		meta: {}, surface: {}, profile: {}, services: {}, marker: "en-surface",
-	});
-	writeJson(path.join(contentRoot, "home", "truth.en.json"), {
-		responses: {}, eggs: {}, fallback: {}, greeting: {}, marker: "en-truth",
-	});
-	for (const lang of ["zh", "en"]) {
+	for (const { file: lang } of locales.filter(l => !l.derived)) {
+		writeJson(path.join(contentRoot, "home", `surface.${lang}.json`), {
+			meta: {}, surface: {}, profile: {}, services: {}, marker: lang + "-surface",
+		});
+		writeJson(path.join(contentRoot, "home", `truth.${lang}.json`), {
+			responses: {}, eggs: {}, fallback: {}, greeting: {}, marker: lang + "-truth",
+		});
 		writeJson(path.join(contentRoot, "home", `about.${lang}.json`), {
 			meta: {}, letter: {}, faq: {},
 			contact: { email: "me@sayori.org", links: [{ label: "测试", href: "https://example.com/" }] },
@@ -52,15 +47,15 @@ try {
 	});
 	assert.equal(result.status, 0, result.stderr || result.stdout);
 
-	const zhHome = readJson(path.join(homeRoot, "public", "assets", "data", "home-zh.json"));
-	const enLines = readJson(path.join(homeRoot, "public", "assets", "data", "lines-en.json"));
-	const hantHome = readJson(path.join(homeRoot, "public", "assets", "data", "home-zh-hant.json"));
-	assert.equal(zhHome.marker, "zh-surface");
-	assert.equal(zhHome.language, "zh");
-	assert.equal(enLines.marker, "en-truth");
-	assert.equal(enLines.language, "en");
-	assert.equal(hantHome.language, "zh-hant");
-	assert.equal(hantHome.marker, "zh-surface");
+	for (const { file, base } of locales) {
+		for (const kind of ["home", "lines", "about"]) {
+			const data = readJson(path.join(homeRoot, "public", "assets", "data", `${kind}-${file}.json`));
+			assert.equal(data.language, file);
+			if (kind !== "about") assert.equal(data.marker, (file === "zh-hant" ? "zh" : file) + (kind === "home" ? "-surface" : "-truth"));
+		}
+		assert.ok(fs.existsSync(path.join(homeRoot, "public", base, "social", "index.html")));
+	}
+
 	assert.match(fs.readFileSync(path.join(homeRoot, "public", "zh-hant", "social", "index.html"), "utf8"), /測試/);
 	assert.match(fs.readFileSync(path.join(homeRoot, "public", "en", "social", "index.html"), "utf8"), /Find me online/);
 	assert.match(fs.readFileSync(path.join(homeRoot, "public", "services", "services-i18n.zh-hant.js"), "utf8"), /簡體/);

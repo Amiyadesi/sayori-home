@@ -1,4 +1,4 @@
-import { mountLuminousHome } from './p34-luminous.js?v=20261113-library';
+import { mountLuminousHome } from './p34-luminous.js?v=20261126-playable';
 let watchingHistory = false;
 export function initPaperMaterial() {
   if (new URLSearchParams(location.search).get('paper') !== '0617') return () => {};

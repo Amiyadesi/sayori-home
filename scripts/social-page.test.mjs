@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
@@ -6,13 +7,16 @@ import { renderSocialPage } from "./render-social-page.mjs";
 const contact = { email: "me@sayori.org", links: [{ label: "X", href: "https://x.com/amiyadesiwa" }] };
 
 test("social pages are complete static directories with matching locale routes", () => {
-	for (const [language, prefix, htmlLang] of [["zh", "", "zh-CN"], ["zh-hant", "/zh-hant", "zh-Hant"], ["en", "/en", "en"]]) {
+	for (const { file: language, base, htmlLang, id } of locales) {
+		const prefix = base ? "/" + base : "";
 		const html = renderSocialPage(contact, language);
 		assert.ok(html.includes(`<html lang="${htmlLang}"`));
 		assert.ok(html.includes(`rel="canonical" href="https://sayori.org${prefix}/social/"`));
 		assert.ok(html.includes(`class="social-back" href="${prefix}/"`));
 		assert.match(html, /class="social-link" href="https:\/\/x.com\/amiyadesiwa"/);
 		assert.match(html, /data-sayori-language-select/);
+		assert.deepEqual([...html.matchAll(/<option value="([^"]+)"/g)].map(match => match[1]), locales.map(item => item.id));
+		assert.ok(html.includes('<option value="' + id + '" selected>'));
 		assert.match(html, /href="mailto:me@sayori.org"/);
 		assert.doesNotMatch(html, /\{\{|<iframe/);
 	}
@@ -29,7 +33,8 @@ test("contact text is escaped and unsafe links fail the build", () => {
 });
 
 test("home's second entry routes to social without changing the real Bilibili account", () => {
-	for (const [language, prefix] of [["zh", ""], ["zh-hant", "/zh-hant"], ["en", "/en"]]) {
+	for (const { file: language, base } of locales) {
+		const prefix = base ? "/" + base : "";
 		const data = JSON.parse(fs.readFileSync(new URL(`../public/assets/data/home-${language}.json`, import.meta.url), "utf8"));
 		assert.equal(data.surface.entries[1].href, "/social/");
 		assert.ok(!data.surface.entries[1].external);

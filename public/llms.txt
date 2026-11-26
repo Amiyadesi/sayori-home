@@ -9,10 +9,14 @@
 - Blog: https://blog.sayori.org/
 - GitHub: https://github.com/Amiyadesi
 - Public contact: me@sayori.org
-- Main language: Chinese, with selected English pages
+- Original language: Chinese. The home, about, services, social, and résumé pages are available in Simplified Chinese (default), Traditional Chinese (/zh-hant/), English (/en/), Japanese (/ja/), French (/fr/), Korean (/ko/), Spanish (/es/), German (/de/), and Brazilian Portuguese (/pt-br/).
 - Site role: personal creator hub for games, tools, writing, and project records
 
 The site includes games, web projects, tools, open-source work, writing, and notes from ongoing projects.
+
+## Résumé
+
+- Résumé in nine languages (works, awards, skills, jam log): https://sayori.org/resume/ · English: https://sayori.org/en/resume/
 
 ## Representative projects
 

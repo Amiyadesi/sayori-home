@@ -2,7 +2,18 @@ const body = document.body;
 const root = document.documentElement;
 
 const PATH_LANG = window.SayoriI18n?.language || document.documentElement.dataset.sayoriCurrentLanguage || 'en';
-const DATA_LANG = PATH_LANG === 'zh-Hant' ? 'zh-hant' : PATH_LANG === 'zh-Hans' ? 'zh' : 'en';
+const DATA_LANG = PATH_LANG === 'zh-Hans' ? 'zh' : PATH_LANG.toLowerCase();
+const NOTEBOOK_UI = {
+	"zh-Hans": { note: "留言纸条", tear: "撕下", tearLabel: "撕下这张留言纸条", go: "你想要去那里吗？那我帮你跳转吧", opening: "正在打开", track: "曲目来源", audioError: "音频加载失败。关闭后可重试。", paper: "纸张背面有一份未署名的副本。输入 open 0617 查看。" },
+	"zh-Hant": { note: "留言紙條", tear: "撕下", tearLabel: "撕下這張留言紙條", go: "你想去那裡嗎？我帶你過去吧", opening: "正在開啟", track: "曲目來源", audioError: "音訊載入失敗。關閉後可重試。", paper: "紙張背面有一份未署名的副本。輸入 open 0617 查看。" },
+	"en": { note: "Guestbook note", tear: "Tear", tearLabel: "Tear away this note", go: "Do you want to go there? I can take you.", opening: "Opening", track: "Track source", audioError: "Audio could not load. Close and try again.", paper: "An unsigned copy is on the back. Type open 0617 to read it." },
+	"ja": { note: "ゲストブックのメモ", tear: "はがす", tearLabel: "このメモをはがす", go: "そこに行きたいの？ 案内するよ。", opening: "開いています：", track: "曲の出典", audioError: "音声を読み込めませんでした。閉じて再度お試しください。", paper: "裏に署名のない写しがある。open 0617 で読める。" },
+	"fr": { note: "Mot du livre d’or", tear: "Détacher", tearLabel: "Détacher ce mot", go: "Tu veux y aller ? Je peux t’y emmener.", opening: "Ouverture de", track: "Source du morceau", audioError: "Échec du chargement audio. Fermez puis réessayez.", paper: "Une copie non signée est au dos. Tape open 0617 pour la lire." },
+	"ko": { note: "방명록 메모", tear: "떼기", tearLabel: "이 메모 떼기", go: "거기 가고 싶어? 데려다줄게.", opening: "여는 중:", track: "곡 출처", audioError: "오디오를 불러오지 못했습니다. 닫고 다시 시도하세요.", paper: "뒷면에 서명 없는 사본이 있어. open 0617로 열어 봐." },
+	"es": { note: "Nota del libro de visitas", tear: "Arrancar", tearLabel: "Arrancar esta nota", go: "¿Quieres ir? Te llevo.", opening: "Abriendo", track: "Fuente de la pista", audioError: "No se pudo cargar el audio. Cierra y vuelve a intentarlo.", paper: "Hay una copia sin firmar al dorso. Escribe open 0617 para verla." },
+	"de": { note: "Gästebuchnotiz", tear: "Abreißen", tearLabel: "Diese Notiz abreißen", go: "Willst du dahin? Ich bringe dich hin.", opening: "Öffne", track: "Musikquelle", audioError: "Audio konnte nicht geladen werden. Schließe den Player und versuche es erneut.", paper: "Auf der Rückseite liegt eine unsignierte Kopie. Mit open 0617 kannst du sie lesen." },
+	"pt-BR": { note: "Recado do livro de visitas", tear: "Destacar", tearLabel: "Destacar este recado", go: "Quer ir até lá? Eu te levo.", opening: "Abrindo", track: "Fonte da faixa", audioError: "O áudio não carregou. Feche e tente novamente.", paper: "Há uma cópia sem assinatura no verso. Digite open 0617 para ler." },
+}[PATH_LANG];
 const HOME_DATA_URL = `/assets/data/home-${DATA_LANG}.json?v=20261024-music`;
 const TRUTH_DATA_URL = `/assets/data/lines-${DATA_LANG}.json`;
 
@@ -18,7 +29,7 @@ const IS_CN = (() => {
 		return tz.startsWith('Asia/Shanghai') || tz.startsWith('Asia/Chongqing') ||
 			tz.startsWith('Asia/Harbin') || tz.startsWith('Asia/Urumqi') ||
 			tz === 'PRC' || tz === 'Asia/Taipei' || tz === 'Asia/Hong_Kong' || tz === 'Asia/Macau';
-	} catch { return PATH_LANG === 'zh'; }
+	} catch { return PATH_LANG.startsWith('zh'); }
 })();
 
 // Music sources — official OST by Dan Salvato / Team Salvato
@@ -208,7 +219,7 @@ const STICKY_QUOTES_EN = [
 	"Don't forget breakfast.",
 ];
 
-let STICKY_QUOTES = PATH_LANG === 'en' ? STICKY_QUOTES_EN : STICKY_QUOTES_ZH;
+let STICKY_QUOTES = PATH_LANG.startsWith('zh') ? STICKY_QUOTES_ZH : STICKY_QUOTES_EN;
 
 let currentLayer = 'dream';
 let locked = false;
@@ -332,7 +343,7 @@ truthLayer?.addEventListener('click', (e) => {
 
 terminalWindow?.querySelector('.dot-close')?.addEventListener('click', () => {
 	if (locked || currentLayer !== 'truth') return;
-	appendOutput(cmdData?.terminal?.closeMessage || (PATH_LANG === 'en' ? 'Closing terminal...' : '正在关闭终端...'), 'muted');
+	appendOutput(cmdData?.terminal?.closeMessage || (PATH_LANG.startsWith('zh') ? '正在关闭终端...' : 'Closing terminal...'), 'muted');
 	setTimeout(restoreDream, 600);
 });
 
@@ -466,9 +477,9 @@ function toggleMusicPlayer(playerEl, frameEl, track, btn, opts = {}) {
 			const credit = document.createElement('p'); credit.className = 'trace-music-credit';
 			credit.append(`${track.title} — Kevin MacLeod · `);
 			const license = document.createElement('a'); license.href = 'https://creativecommons.org/licenses/by/4.0/'; license.target = '_blank'; license.rel = 'noopener'; license.textContent = 'CC BY 4.0';
-			const source = document.createElement('a'); source.href = `https://incompetech.com/music/royalty-free/index.html?isrc=${track.isrc}`; source.target = '_blank'; source.rel = 'noopener'; source.textContent = '曲目来源';
+			const source = document.createElement('a'); source.href = `https://incompetech.com/music/royalty-free/index.html?isrc=${track.isrc}`; source.target = '_blank'; source.rel = 'noopener'; source.textContent = NOTEBOOK_UI.track;
 			credit.append(license,' · ',source); playerEl.append(audio,credit);
-			audio.addEventListener('error',() => { credit.textContent = '音频加载失败。关闭后可重试。'; revealMusicPlayer(playerEl,btn); });
+			audio.addEventListener('error',() => { credit.textContent = NOTEBOOK_UI.audioError; revealMusicPlayer(playerEl,btn); });
 		}
 		audio.src = src;
 		playerEl.classList.add('trace-audio');
@@ -754,7 +765,7 @@ function renderServicesBoard(items) {
 		if (!item?.href) continue;
 		const link = document.createElement('a');
 		link.className = 'service-note service-note-large';
-		link.href = safeHref(item.href);
+		link.href = localizedHref(item.href);
 		if (item.external !== false) {
 			link.target = '_blank';
 			link.rel = 'noopener';
@@ -793,12 +804,10 @@ function localizedHref(value) {
 	if (!safe) return '#';
 	try {
 		const target = new URL(safe, window.location.href);
-		if (!['sayori.org', 'blog.sayori.org'].includes(target.hostname)) return safe;
-		const locale = window.SayoriI18n?.language || PATH_LANG;
-		const path = target.pathname.replace(/^\/(?:en|zh-hant)(?=\/|$)/, '') || '/';
-		const prefix = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-hant' : '';
-		if (!['/', '/about/', '/services/', '/social/'].includes(path)) return safe;
-		target.pathname = prefix ? prefix + (path === '/' ? '/' : path) : path;
+		const blog = target.hostname === 'blog.sayori.org';
+		if (!blog && target.hostname !== 'sayori.org' && target.origin !== location.origin) return safe;
+		if (blog && target.pathname !== '/') return safe;
+		target.pathname = window.SayoriI18n.localizedPath(target.pathname, PATH_LANG);
 		return target.href;
 	} catch { return safe; }
 }
@@ -1256,15 +1265,15 @@ function fillSideNoteSlots() {
 function createSideNote(index) {
 	const note = document.createElement('article');
 	note.className = 'side-note is-entering';
-	note.setAttribute('aria-label', PATH_LANG === 'en' ? 'Guestbook note' : '留言纸条');
+	note.setAttribute('aria-label', NOTEBOOK_UI.note);
 	note.dataset.noteSlot = String(index);
 	const content = document.createElement('span');
 	content.className = 'side-note-content';
 	const tear = document.createElement('button');
 	tear.type = 'button';
 	tear.className = 'side-note-tear';
-	tear.textContent = PATH_LANG === 'en' ? 'tear' : '撕下';
-	tear.setAttribute('aria-label', PATH_LANG === 'en' ? 'Tear away this note' : '撕下这张留言纸条');
+	tear.textContent = NOTEBOOK_UI.tear;
+	tear.setAttribute('aria-label', NOTEBOOK_UI.tearLabel);
 	tear.addEventListener('click', (event) => {
 		event.stopPropagation();
 		tearSideNote(note);
@@ -1734,7 +1743,7 @@ function stopMatrix() {
 
 function getLocalizedLine(lines) {
 	if (!lines) return '';
-	if (Array.isArray(lines)) return lines[PATH_LANG === 'en' ? 0 : 1] || lines[0] || '';
+	if (Array.isArray(lines)) return lines[PATH_LANG.startsWith('zh') ? 1 : 0] || lines[0] || '';
 	if (typeof lines === 'string') return lines;
 	return '';
 }
@@ -1875,7 +1884,7 @@ function handleCommand(raw) {
 	const terminalUrl = parseTerminalUrl(trimmed);
 
 	if (terminalUrl) {
-		appendOutput(PATH_LANG === 'en' ? 'Do you want to go there? I can take you.' : '你想要去那里吗？那我帮你跳转吧', 'sayori-text');
+		appendOutput(NOTEBOOK_UI.go, 'sayori-text');
 		setTimeout(() => { window.open(terminalUrl, '_blank', 'noopener'); }, 650);
 	} else if (cmd === 'open 0617' || cmd === '0617' || cmd === 'paper 0617') {
 		window.location.assign('/?paper=0617');
@@ -1883,14 +1892,14 @@ function handleCommand(raw) {
 		printLines(cmdData?.responses?.ls || ['sayori.txt']);
 		appendOutput('.0617', 'muted');
 	} else if (cmd === 'cat 0617' || cmd === 'cat .0617') {
-		appendOutput('06 / 17 · 纸张背面有一份未署名的副本。输入 open 0617 查看。', 'muted');
+		appendOutput(`06 / 17 · ${NOTEBOOK_UI.paper}`, 'muted');
 	} else if (cmd === 'help') {
 		printLines(cmdData?.responses?.help || ['no help available.']);
 	} else if (cmd === 'blog') {
-		appendOutput(PATH_LANG === 'en' ? 'Opening blog.sayori.org ...' : '正在跳转到 blog.sayori.org ...', 'muted');
-		setTimeout(() => { window.open('https://blog.sayori.org/', '_blank'); }, 600);
+		appendOutput(`${NOTEBOOK_UI.opening} blog.sayori.org …`, 'muted');
+		setTimeout(() => { window.open(localizedHref('https://blog.sayori.org/'), '_blank'); }, 600);
 	} else if (cmd === 'bilibili' || cmd === 'bili' || cmd === 'videos' || cmd === 'video') {
-		appendOutput(PATH_LANG === 'en' ? 'Opening Bilibili ...' : '正在跳转到 B 站主页 ...', 'muted');
+		appendOutput(`${NOTEBOOK_UI.opening} Bilibili …`, 'muted');
 		setTimeout(() => { window.open(BILIBILI_URL, '_blank'); }, 600);
 	} else if (cmd === 'about') {
 		printLines(cmdData?.responses?.about || ['sayori.org']);
@@ -1986,7 +1995,7 @@ function scrollTerminal() {
 function initTerminal() {
 	if (!terminalOutput) return;
 	terminalOutput.innerHTML = '';
-	const greeting = cmdData?.greeting || (PATH_LANG === 'en' ? 'sayori.exe started. Type /help.' : 'sayori.exe 已启动。输入 /help 查看可用指令。');
+	const greeting = cmdData?.greeting || (PATH_LANG.startsWith('zh') ? 'sayori.exe 已启动。输入 /help 查看可用指令。' : 'sayori.exe started. Type /help.');
 	appendOutput(greeting, 'sayori-text');
 	window.dispatchEvent(new Event('sayori:terminal-ready'));
 	setTimeout(() => terminalInput?.focus(), 100);
@@ -2014,9 +2023,8 @@ function initDate() {
 	const now = new Date();
 	const m = now.getMonth() + 1;
 	const d = now.getDate();
-	if (PATH_LANG === 'en') {
-		const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-		dateDisplay.textContent = `${m} / ${d} · ${weekdays[now.getDay()]}`;
+	if (!PATH_LANG.startsWith('zh')) {
+		dateDisplay.textContent = `${m} / ${d} · ${now.toLocaleDateString(PATH_LANG, { weekday: 'short' })}`;
 	} else {
 		const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
 		dateDisplay.textContent = `${m} / ${d} · 星期${weekdays[now.getDay()]}`;
@@ -2026,7 +2034,7 @@ function initDate() {
 async function initWeather() {
 	if (!weatherDisplay || urlParams.get('paper') === '0617') return;
 	try {
-		const lang = PATH_LANG === 'en' ? 'en' : 'zh';
+		const lang = PATH_LANG.split('-')[0];
 		const res = await fetch(`https://wttr.in/?format=%c%t&lang=${lang}&A`, {
 			headers: { 'Accept': 'text/plain' },
 			signal: AbortSignal.timeout(4000),

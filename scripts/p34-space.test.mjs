@@ -65,6 +65,14 @@ test('3D dialogue arrives and departs glyph by glyph, with immediate reduced mot
     const buttons = [CHOICES.openLab, CHOICES.askWhere, CHOICES.askSafe, CHOICES.askSelf, CHOICES.busy, CHOICES.wander, CHOICES.leave].map(textContent => ({ textContent, style: {}, addEventListener() {} }));
     dialogue.show(LINES.atrium.readyForStacks, buttons, 390, 844);
     assert.ok(buttons.every(b => Number.parseFloat(b.style.top) >= 12 && Number.parseFloat(b.style.top) + 48 <= 832), 'Every mobile dialogue choice must remain on screen');
+    const stances = Object.values(CHOICES.disagreement).map(textContent => ({ textContent, style: {}, addEventListener() {} }));
+    dialogue.show(LINES.drafts.prototype, stances, 390, 844);
+    dialogue.render(renderer, .01);
+    assert.ok(words.children.every(line => line.userData.span < worldWidth), 'The central prototype conversation must fit without clipping');
+    for (const b of stances) {
+      const top = parseFloat(b.style.top), left = parseFloat(b.style.left);
+      assert.ok(top >= 12 && top + 48 <= 832 && left >= 0 && left + parseFloat(b.style.width) <= 391);
+    }
   } finally {
     dialogue?.dispose(); globalThis.fetch = fetch; delete globalThis.document;
   }

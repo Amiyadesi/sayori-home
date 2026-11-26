@@ -1,3 +1,4 @@
+import { RESUME_LOCALES as locales } from "./resume-content.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -6,30 +7,47 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("each localized public page has one matching canonical and a reciprocal hreflang set", () => {
-	const pages = [
-		["public/index.html", "https://sayori.org/", "https://sayori.org/", "https://sayori.org/zh-hant/", "https://sayori.org/en/"],
-		["public/zh-hant/index.html", "https://sayori.org/zh-hant/", "https://sayori.org/", "https://sayori.org/zh-hant/", "https://sayori.org/en/"],
-		["public/en/index.html", "https://sayori.org/en/", "https://sayori.org/", "https://sayori.org/zh-hant/", "https://sayori.org/en/"],
-		["public/about/index.html", "https://sayori.org/about/", "https://sayori.org/about/", "https://sayori.org/zh-hant/about/", "https://sayori.org/en/about/"],
-		["public/zh-hant/about/index.html", "https://sayori.org/zh-hant/about/", "https://sayori.org/about/", "https://sayori.org/zh-hant/about/", "https://sayori.org/en/about/"],
-		["public/en/about/index.html", "https://sayori.org/en/about/", "https://sayori.org/about/", "https://sayori.org/zh-hant/about/", "https://sayori.org/en/about/"],
-		["public/services/index.html", "https://sayori.org/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
-		["public/zh-hant/services/index.html", "https://sayori.org/zh-hant/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
-		["public/en/services/index.html", "https://sayori.org/en/services/", "https://sayori.org/services/", "https://sayori.org/zh-hant/services/", "https://sayori.org/en/services/"],
-		["public/social/index.html", "https://sayori.org/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
-		["public/zh-hant/social/index.html", "https://sayori.org/zh-hant/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
-		["public/en/social/index.html", "https://sayori.org/en/social/", "https://sayori.org/social/", "https://sayori.org/zh-hant/social/", "https://sayori.org/en/social/"],
-	];
-	for (const [file, expectedCanonical, zhHans, zhHant, en] of pages) {
+const corePages = ["", "about/", "services/", "social/"];
+const route = (locale, page) => "/" + (locale.base ? locale.base + "/" : "") + page;
+const url = (locale, page) => "https://sayori.org" + route(locale, page);
+const expectedAlternates = page => Object.fromEntries([
+	...locales.map(locale => [locale.hreflang, url(locale, page)]),
+	["x-default", url(locales[0], page)],
+]);
+
+test("core pages have one canonical, their own language and complete reciprocal alternates", () => {
+	for (const page of corePages) for (const locale of locales) {
+		const file = "public" + route(locale, page) + "index.html";
 		const html = read(file);
-		assert.equal(canonical(html), expectedCanonical, file);
-		assert.deepEqual(alternates(html), {
-			"zh-Hans": zhHans,
-			"zh-Hant": zhHant,
-			en,
-			"x-default": zhHans,
-		}, file);
+		assert.equal((html.match(/rel="canonical"/g) || []).length, 1, file);
+		assert.equal(canonical(html), url(locale, page), file);
+		assert.equal(html.match(/<html lang="([^"]+)"/)[1], locale.htmlLang, file);
+		assert.ok(html.includes('property="og:locale" content="' + locale.ogLocale + '"'), file);
+		assert.equal((html.match(/<link rel="alternate" hreflang=/g) || []).length, 10, file);
+		assert.deepEqual(alternates(html), expectedAlternates(page), file);
+		if (page === "about/") assert.ok(html.includes('id="letter-resume" href="' + route(locale, "resume/") + '"'), file);
+	}
+});
+
+test("new editions ship the English shell assets and real localized content before JavaScript", () => {
+	const assets = html => [...html.matchAll(/<(?:script[^>]*?src|link rel="stylesheet" href)="([^"]+)"/g)].map(match => match[1]);
+	for (const page of corePages) {
+		const reference = assets(read("public/en/" + page + "index.html"));
+		for (const locale of locales.filter(item => item.translated)) {
+			const html = read("public" + route(locale, page) + "index.html");
+			assert.deepEqual(assets(html), reference, route(locale, page));
+			if (page === "" || page === "about/") {
+				const data = JSON.parse(read(`public/assets/data/${page ? "about" : "home"}-${locale.file}.json`));
+				assert.ok(html.includes("<title>" + data.meta.title + "</title>"), locale.id);
+				if (page) {
+					assert.equal(data.letter.backHref, route(locale, ""));
+					assert.equal(data.letter.resume.href, route(locale, "resume/"));
+					assert.ok(html.includes(data.letter.signature.ps), locale.id);
+				} else {
+					for (const entry of data.surface.entries) assert.ok(html.includes(entry.title), entry.title);
+				}
+			}
+		}
 	}
 });
 
@@ -48,29 +66,23 @@ test("sitemap includes all localized landing, about, and services routes", () =>
 	const sitemap = read("public/sitemap.xml");
 	const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 	assert.deepEqual(locations, [
-		"https://sayori.org/",
-		"https://sayori.org/zh-hant/",
-		"https://sayori.org/en/",
-		"https://sayori.org/about/",
-		"https://sayori.org/zh-hant/about/",
-		"https://sayori.org/en/about/",
-		"https://sayori.org/services/",
-		"https://sayori.org/zh-hant/services/",
-		"https://sayori.org/en/services/",
-		"https://sayori.org/social/",
-		"https://sayori.org/zh-hant/social/",
-		"https://sayori.org/en/social/",
+		...corePages.flatMap(page => locales.map(locale => url(locale, page))),
 		"https://sayori.org/tools/",
 		"https://sayori.org/tools/subarutap/",
+		...locales.map(locale => url(locale, "resume/")),
 		"https://sayori.org/manifesto/",
 		"https://sayori.org/zh-hant/manifesto/",
 		"https://sayori.org/en/manifesto/",
 	]);
-	assert.match(sitemap, /hreflang="x-default"/);
+	for (const block of sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+		const href = block[1].match(/<loc>([^<]+)/)[1];
+		const page = corePages.find(page => locales.some(locale => url(locale, page) === href));
+		if (page !== undefined) assert.deepEqual(alternates(block[1]), expectedAlternates(page), href);
+	}
 });
 
 test("each profile page defines its main person in the same document", () => {
-	for (const locale of ["", "zh-hant/", "en/"]) {
+	for (const locale of locales.map(l => l.base ? l.base + "/" : "")) {
 		const html = read(`public/${locale}about/index.html`);
 		const schema = JSON.parse(html.match(/<script[^>]+id="about-schema"[^>]*>([\s\S]*?)<\/script>/)[1]);
 		const profile = schema["@graph"].find((item) => item["@type"] === "ProfilePage");
@@ -83,7 +95,10 @@ test("each profile page defines its main person in the same document", () => {
 test("legacy URLs do not redirect live locale pages back to a query-only URL", () => {
 	const redirects = read("public/_redirects");
 	assert.match(redirects, /\/zh \/\?lang=zh 301/);
-	assert.match(redirects, /\/en \/en\/ 301/);
+	for (const locale of locales.slice(1)) for (const page of corePages) {
+		const target = route(locale, page);
+		assert.ok(redirects.split(/\r?\n/).includes(target.slice(0, -1) + " " + target + " 301"), target);
+	}
 	assert.match(redirects, /\/zh-hant \/zh-hant\/ 301/);
 	assert.doesNotMatch(redirects, /\/en\/ \/\?lang=en/);
 	assert.doesNotMatch(redirects, /\/en\/services\/ \/services\/\?lang=en/);
@@ -122,7 +137,7 @@ test("Cloudflare Pages keeps the existing security headers", () => {
 });
 
 function alternates(html) {
-	return Object.fromEntries([...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)]
+	return Object.fromEntries([...html.matchAll(/<(?:xhtml:)?link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)]
 		.map((match) => [match[1], match[2]]));
 }
 
